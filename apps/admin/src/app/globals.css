@@ -9,3 +9,22 @@
  * you can always add it with the @source directive.
  */
 @source '../../node_modules/@repo/ui';
+
+body {
+  letter-spacing: -0.03em;
+}
+
+@theme {
+  --color-primary: #65e8e8;
+  --color-primary-dark: #3ccaca;
+  --color-secondary: #488dff;
+  --color-yellow: #ffdba2;
+  --color-gray-1: #d9d9d9;
+  --color-gray-2: #6d6d6d;
+  --color-gray-dark-1: #939393;
+  --color-gray-dark-2: #5b6161;
+
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-inner-background-gray: #eeeeee;
+}

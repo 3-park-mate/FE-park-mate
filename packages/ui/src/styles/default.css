@@ -30,7 +30,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  /* --color-primary: var(--primary); */
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -41,6 +41,16 @@
   --radius-xl: calc(var(--radius) + 4px);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary: #65e8e8;
+  --color-primary-dark: #3ccaca;
+  --color-secondary: #488dff;
+  --color-yellow: #ffdba2;
+  --color-gray-1: #d9d9d9;
+  --color-gray-2: #6d6d6d;
+  --color-gray-dark-1: #939393;
+  --color-gray-dark-2: #5b6161;
+  --color-inner-background-gray: #eeeeee;
 }
 
 :root {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { GlobalContainerView } from '@repo/ui/components/base/CommonLayout';
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <GlobalContainerView className="bg-inner-background-gray">
+          {children}
+        </GlobalContainerView>
+      </body>
     </html>
   );
 }
