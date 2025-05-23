@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@commitlint/cz-commitlint": "^19.8.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "prettier": "^3.5.0",
@@ -26,5 +27,10 @@
   "engines": {
     "pnpm": ">=9",
     "node": ">=22"
+  },
+  "dependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "lucide-react": "^0.476.0"
   }
 }

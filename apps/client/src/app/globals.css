@@ -16,11 +16,15 @@ body {
 
 @theme {
   --color-primary: #65e8e8;
-  --color-primary-dark: #3ccaca;
+  --color-primary-dark: #5dd3d3;
   --color-secondary: #488dff;
   --color-yellow: #ffdba2;
   --color-gray-1: #d9d9d9;
   --color-gray-2: #6d6d6d;
+<<<<<<< HEAD
+=======
+  --color-gray-light-1: #f7f7f7;
+>>>>>>> 0c5ba78885fe3e236900828b38100112dd6a2297
   --color-gray-dark-1: #939393;
   --color-gray-dark-2: #5b6161;
 
