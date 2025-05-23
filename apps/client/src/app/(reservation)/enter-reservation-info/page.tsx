@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 
 interface ReservationInfoBoxProps {
   boxName: string;
