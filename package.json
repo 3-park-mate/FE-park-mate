@@ -26,5 +26,8 @@
   "engines": {
     "pnpm": ">=9",
     "node": ">=22"
+  },
+  "dependencies": {
+    "lucide-react": "^0.476.0"
   }
 }
