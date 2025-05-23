@@ -1,30 +1,8 @@
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import MenuButtonArea from './MenuButtonArea';
-
-const menuItems = [
-  {
-    icon: '/icon/star-icon-fill.svg',
-    label: '즐겨찾기',
-    href: '#',
-  },
-  {
-    icon: '/icon/user-icon-fill.svg',
-    label: '마이페이지',
-    href: '#',
-  },
-  {
-    icon: '/icon/chat-icon-fill.svg',
-    label: '채팅',
-    href: '#',
-  },
-  {
-    icon: '/icon/rsv-icon-fill.svg',
-    label: 'My예약',
-    href: '#',
-  },
-];
+import MenuButton from './MenuButton';
+import { menuItems } from '@/data/initialDatas';
 
 export default function MenuSection() {
   return (
@@ -34,7 +12,11 @@ export default function MenuSection() {
         flex flex-col"
     >
       <h2 className="font-semibold text-lg pb-5">주요서비스 바로가기</h2>
-      <MenuButtonArea items={menuItems} />
+      <div className="flex justify-between px-5">
+        {menuItems.map((menu) => (
+          <MenuButton item={menu} key={menu.label} />
+        ))}
+      </div>
       <Link
         href="/"
         className="bg-primary rounded-[20px]
