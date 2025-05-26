@@ -1,4 +1,4 @@
-import { PaddedLayout } from '@repo/ui/components/base/CommonLayout';
+import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 import ActionButton from './ActionButton';
 import Image from 'next/image';
 

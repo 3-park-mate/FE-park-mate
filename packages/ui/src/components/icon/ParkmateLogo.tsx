@@ -1,12 +1,21 @@
-export default function ParkmateLogo() {
+export default function ParkmateLogo({
+  size = 16,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
+  const aspectRatio = 121 / 16;
+  const width = size * aspectRatio;
+
   return (
     <svg
-      width="121"
-      height="16"
+      width={width}
+      height={size}
       viewBox="0 0 121 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="text-"
+      className={className}
     >
       <path
         d="M108.901 0.622009H120.297V5.00001H114.115V6.34201H118.493V10.28H114.115V11.622H120.297V16H108.901V0.622009Z"

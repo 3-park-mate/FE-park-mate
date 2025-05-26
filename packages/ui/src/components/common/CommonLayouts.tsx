@@ -5,7 +5,12 @@ export function GlobalContainerView({
   className,
 }: Readonly<{ children: React.ReactNode; className?: string }>) {
   return (
-    <div className={cn('min-h-screen max-w-[600px] mx-auto', className)}>
+    <div
+      className={cn(
+        'min-h-screen max-w-[600px] mx-auto border-x overflow-hidden',
+        className
+      )}
+    >
       {children}
     </div>
   );
