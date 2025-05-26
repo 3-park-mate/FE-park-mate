@@ -3,11 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/packages/ui/public/fonts/Pretendard-Regular.woff');
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
