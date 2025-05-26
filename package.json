@@ -34,6 +34,7 @@
     "@commitlint/config-conventional": "^19.8.1",
     "lucide-react": "^0.476.0",
     "react-day-picker": "8.10.1",
-    "react-kakao-maps-sdk": "^1.1.27"
+    "react-kakao-maps-sdk": "^1.1.27",
+    "react-hook-form": "^7.56.4"
   }
 }
