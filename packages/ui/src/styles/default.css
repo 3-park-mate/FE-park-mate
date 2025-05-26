@@ -48,8 +48,13 @@
   --color-yellow: #ffdba2;
   --color-gray-1: #d9d9d9;
   --color-gray-2: #6d6d6d;
+  --color-gray-3: #9a9a9a;
+  --color-gray-light-1: #f7f7f7;
   --color-gray-dark-1: #939393;
   --color-gray-dark-2: #5b6161;
+
+  --color-background: #ffffff;
+  --color-foreground: #000000;
   --color-inner-background-gray: #eeeeee;
 }
 
