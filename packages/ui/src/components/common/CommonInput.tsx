@@ -1,16 +1,26 @@
 import React from 'react';
 import { Input } from '../base/input';
+import { cn } from '../../lib/utils';
 
-export default function CommonInput() {
+export default function CommonInput({
+  className,
+  label,
+  id,
+  type = 'text',
+  ...props
+}: {
+  label: string;
+  className?: string;
+} & React.ComponentProps<'input'>) {
   return (
-    <div className="grid w-full items-center gap-1.5">
+    <div className={cn('grid w-full items-center gap-1.5', className)}>
       <label
-        htmlFor="email"
+        htmlFor={id}
         className="font-semibold text-[13px] text-gray-3 ms-1"
       >
-        이메일 주소
+        {label}
       </label>
-      <Input type="email" id="email" placeholder="abc@email.com" />
+      <Input type={type} id={id} {...props} />
     </div>
   );
 }

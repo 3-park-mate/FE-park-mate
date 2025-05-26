@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { GlobalContainerView } from '@repo/ui/components/base/CommonLayout';
+import { GlobalContainerView } from '@repo/ui/components/common/CommonLayouts';
 
 export const metadata: Metadata = {
   title: {
