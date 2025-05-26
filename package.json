@@ -31,6 +31,7 @@
   "dependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "lucide-react": "^0.476.0"
+    "lucide-react": "^0.476.0",
+    "react-hook-form": "^7.56.4"
   }
 }
