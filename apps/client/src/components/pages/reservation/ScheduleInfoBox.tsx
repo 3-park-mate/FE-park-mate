@@ -6,7 +6,7 @@ import { DateRange } from 'react-day-picker';
 
 export default function ScheduleInfoBox({ select }: { select: string }) {
   const [range, setRange] = useState<DateRange | undefined>(undefined);
-  return select !== 'location' ? (
+  return select !== 'selectSchedule' ? (
     <>
       <ReservationInfoBox boxName="날짜" buttonName="날짜 추가" />
     </>

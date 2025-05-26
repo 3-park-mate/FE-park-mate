@@ -12,6 +12,7 @@
   "devDependencies": {
     "@commitlint/cz-commitlint": "^19.8.1",
     "husky": "^9.1.7",
+    "kakao.maps.d.ts": "^0.1.40",
     "lint-staged": "^16.0.0",
     "prettier": "^3.5.0",
     "turbo": "^2.4.4",
@@ -32,6 +33,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "lucide-react": "^0.476.0",
-    "react-day-picker": "8.10.1"
+    "react-day-picker": "8.10.1",
+    "react-kakao-maps-sdk": "^1.1.27"
   }
 }
