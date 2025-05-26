@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '../base/input';
 import { cn } from '../../lib/utils';
 
-export default function CommonInput({
+export default function CommonInputWithLabel({
   className,
   label,
   id,
