@@ -7,7 +7,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-inner-background-gray">
       <header className="px-5 flex justify-between pt-10 pb-11">
         <ParkmateLogo />
         <NotificationButton />
