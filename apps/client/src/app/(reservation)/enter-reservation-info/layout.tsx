@@ -1,15 +1,13 @@
-import NotificationButton from '@/components/common/NotificationButton';
-import ReservationHeader from '@/components/pages/reservation/ReservationHeader';
-import ParkmateLogo from '@repo/ui/components/icon/ParkmateLogo';
-
 export default function layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen px-5">
-      <ReservationHeader />
+    <div className="px-5 min-h-screen bg-inner-background-gray">
+      <header className="text-[24px] font-semibold py-10">
+        예약 정보를 입력해주세요.
+      </header>
       {children}
     </div>
   );
