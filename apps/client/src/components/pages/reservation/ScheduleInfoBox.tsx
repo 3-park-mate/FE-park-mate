@@ -1,6 +1,7 @@
 'use client';
+
 import React, { useState } from 'react';
-import { Calendar } from '@repo/ui/components/base/calendar';
+import { Calendar } from '../../../../../../packages/ui/src/components/base/calendar';
 import { DateRange } from 'react-day-picker';
 
 export default function ScheduleInfoBox() {

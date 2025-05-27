@@ -1,5 +1,5 @@
 import { cn } from '@repo/ui/lib/utils';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 export default function ButtonWrapper({
   children,

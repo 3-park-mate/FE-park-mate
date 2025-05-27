@@ -1,7 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ReservationInfoBox } from './ReservationInfoBox';
-import { Input } from '@repo/ui/components/base/input';
 
 export default function VehicleInfoBox({ select }: { select: string }) {
   return select !== 'selectVehicle' ? (
