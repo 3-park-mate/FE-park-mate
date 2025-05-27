@@ -18,7 +18,12 @@ export default function UserInfoStep({
       <h1 className="text-2xl font-semibold pt-10 pb-5">
         유저 정보를 입력해 주세요.
       </h1>
-      <CommonInputWithLabel label="이름" id="name" placeholder="홍길동" />
+      <CommonInputWithLabel
+        label="이름"
+        id="name"
+        placeholder="홍길동"
+        {...register('name')}
+      />
       <CommonInputWithLabel
         label="전화번호"
         id="text"

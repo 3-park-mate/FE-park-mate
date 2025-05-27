@@ -20,9 +20,21 @@ export default function SignUpFunnel() {
 
   const [Funnel, setStep] = useFunnel<'step1' | 'step2' | 'step3'>('step1');
 
+  const { handleSubmit } = methods;
+
+  const onSubmit = (data: SignUpStoreDataType) => {
+    console.log('Form Data:', data);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <FormProvider {...methods}>
-      <form className="px-5">
+      <form className="px-5" onKeyDown={handleKeyDown}>
         <Funnel>
           <Funnel.step name="step1">
             <EmailVerifyStep onNext={() => setStep('step2')} />
@@ -35,7 +47,7 @@ export default function SignUpFunnel() {
           </Funnel.step>
           <Funnel.step name="step3">
             <UserInfoStep
-              onNext={() => setStep('step1')}
+              onNext={handleSubmit(onSubmit)}
               onBack={() => setStep('step2')}
             />
           </Funnel.step>
