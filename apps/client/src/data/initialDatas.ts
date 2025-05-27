@@ -1,4 +1,4 @@
-import { HomeMenuDataType } from '@/types/initialDataTypes';
+import { HomeMenuDataType, MyPageMenuDataType } from '@/types/initialDataTypes';
 
 export const menuItems: HomeMenuDataType[] = [
   {
@@ -19,6 +19,29 @@ export const menuItems: HomeMenuDataType[] = [
   {
     icon: '/icon/rsv-icon-fill.svg',
     label: 'My예약',
+    href: '#',
+  },
+];
+
+export const myPageMenus: MyPageMenuDataType[] = [
+  {
+    label: '회원정보 수정',
+    href: '#',
+  },
+  {
+    label: '내 차량',
+    href: '#',
+  },
+  {
+    label: '주차권',
+    href: '#',
+  },
+  {
+    label: '구매 내역',
+    href: '#',
+  },
+  {
+    label: '호스트 등록',
     href: '#',
   },
 ];
