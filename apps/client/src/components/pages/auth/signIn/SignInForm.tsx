@@ -1,7 +1,7 @@
 import { Button } from '@repo/ui/components/base/button';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
-import Link from 'next/link';
+import ToggleWelcomeSheet from '../ToggleWelcomeSheet';
 
 export default function SignInForm() {
   return (
@@ -20,12 +20,7 @@ export default function SignInForm() {
         />
         <Button className="w-full h-10 rounded-2xl mt-3">로그인</Button>
       </form>
-      <div className="flex gap-1 justify-center text-[13px] mt-4">
-        <p className="text-gray-2">파크메이트 계정이 없으신가요?</p>
-        <Link href="sign-up" className="font-semibold">
-          회원가입하기
-        </Link>
-      </div>
+      <ToggleWelcomeSheet />
     </PaddedLayout>
   );
 }
