@@ -1,9 +1,12 @@
+import { FilterInfoType } from '@/components/pages/reservation/ReservationInfoSection';
+
 export interface ReservationInfoBoxProps {
-  id?: string;
+  id?: keyof FilterInfoType;
   boxName?: string;
   buttonName?: string;
   isExpanded?: boolean;
   selected?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
+  filterInfo: FilterInfoType;
 }

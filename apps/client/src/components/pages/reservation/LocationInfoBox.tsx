@@ -5,6 +5,7 @@ import { Input } from '@repo/ui/components/base/input';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import SearchResultsList from './SearchLocationResults';
 import { cn } from '@repo/ui/lib/utils';
+import { FilterInfoType } from './ReservationInfoSection';
 
 export interface searchLocationResultType {
   position: {
@@ -15,7 +16,11 @@ export interface searchLocationResultType {
   road_address_name: string;
 }
 
-export default function LocationInfoBox() {
+export default function LocationInfoBox({
+  setFilterInfo,
+}: {
+  setFilterInfo: React.Dispatch<React.SetStateAction<FilterInfoType>>;
+}) {
   const [loading, error] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services'],
@@ -69,8 +74,15 @@ export default function LocationInfoBox() {
 
   const handleSelectLocation = (location: searchLocationResultType) => {
     setLocationInfo(location);
-    console.log(location);
+    setFilterInfo((prev) => ({
+      ...prev,
+      location: {
+        lat: location.position.lat,
+        lng: location.position.lng,
+      },
+    }));
     setSearchResults([]);
+    console.log(location);
   };
 
   return (

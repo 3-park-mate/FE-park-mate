@@ -10,8 +10,8 @@ import VehicleInfoBox from './VehicleInfoBox';
 
 export interface FilterInfoType {
   schedule?: {
-    entryTime: Date;
-    exitTime?: Date;
+    entryTime: string;
+    exitTime?: string;
   };
   location?: {
     lat: number;
@@ -21,38 +21,56 @@ export interface FilterInfoType {
 }
 
 export default function ReservationInfoSection() {
-  const [filterInfo, setFilterInfo] = useState<FilterInfoType>();
-  const [select, setSelect] = useState<
-    'scheduleInfo' | 'locationInfo' | 'vehicleInfo'
-  >('scheduleInfo');
+  const [filterInfo, setFilterInfo] = useState<FilterInfoType>({
+    schedule: { entryTime: '', exitTime: '' },
+    location: { lat: 0, lng: 0 },
+    evcharge: 0,
+  });
+  const [select, setSelect] = useState<'schedule' | 'location' | 'evcharge'>(
+    'schedule'
+  );
 
   return (
     <>
       <section className="space-y-4 pt-5 mx-4">
         <ReservationInfoBox
+          id="schedule"
           boxName="일정"
           buttonName="일정 추가"
-          selected={select === 'scheduleInfo'}
-          onClick={() => setSelect('scheduleInfo')}
+          filterInfo={filterInfo}
+          selected={select === 'schedule'}
+          onClick={() => setSelect('schedule')}
         >
-          <ScheduleInfoBox />
+          <ScheduleInfoBox setFilterInfo={setFilterInfo} />
         </ReservationInfoBox>
         <ReservationInfoBox
+          id="location"
           boxName="위치"
           buttonName="위치 추가"
-          selected={select === 'locationInfo'}
-          onClick={() => setSelect('locationInfo')}
+          filterInfo={filterInfo}
+          selected={select === 'location'}
+          onClick={() => setSelect('location')}
         >
-          <LocationInfoBox />
+          <LocationInfoBox setFilterInfo={setFilterInfo} />
         </ReservationInfoBox>
         <ReservationInfoBox
+          id="evcharge"
           boxName="차량"
           buttonName="차량 정보 추가"
-          selected={select === 'vehicleInfo'}
-          onClick={() => setSelect('vehicleInfo')}
+          filterInfo={filterInfo}
+          selected={select === 'evcharge'}
+          onClick={() => setSelect('evcharge')}
         >
           <VehicleInfoBox />
         </ReservationInfoBox>
+        <p>
+          "위치" 위도: {filterInfo.location?.lat} 경도:
+          {filterInfo.location?.lng}
+        </p>
+        <p>
+          "일정": 시작: {filterInfo.schedule?.entryTime}{' '}
+          {filterInfo.schedule?.exitTime}
+        </p>
       </section>
       <ButtonWrapper>
         <Button className="w-full py-6 text-xl font-semibold rounded-xl">

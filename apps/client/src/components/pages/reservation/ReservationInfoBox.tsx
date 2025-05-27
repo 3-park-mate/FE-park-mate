@@ -1,13 +1,15 @@
 import { ReservationInfoBoxProps } from '@/types/reservationType';
 
 export function ReservationInfoBox({
+  id = 'schedule',
   boxName = '',
   buttonName = '',
   selected,
   children,
   onClick,
+  filterInfo,
 }: ReservationInfoBoxProps) {
-  return selected ? (
+  return selected || filterInfo[id] ? (
     <>
       <div className="rounded-sm px-6 pt-4 bg-white shadow-md transition-all">
         <h2 className="text-2xl font-semibold">{boxName}</h2>
