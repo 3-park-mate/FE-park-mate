@@ -14,7 +14,7 @@ export default function PageHeader({
         className
       )}
     >
-      <div className="absolute left-0">
+      <div className="absolute left-0 flex justify-center">
         <BackButton className="ml-3" />
       </div>
       <h1 className="font-semibold">{title}</h1>

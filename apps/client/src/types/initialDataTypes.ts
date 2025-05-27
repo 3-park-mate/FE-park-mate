@@ -3,3 +3,8 @@ export interface HomeMenuDataType {
   label: string;
   href: string;
 }
+
+export interface MyPageMenuDataType {
+  label: string;
+  href: string;
+}
