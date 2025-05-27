@@ -1,6 +1,8 @@
+import { SignUpStoreDataType } from '@/types/storeDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 export default function UserInfoStep({
   onNext,
@@ -9,6 +11,8 @@ export default function UserInfoStep({
   onNext: () => void;
   onBack: () => void;
 }) {
+  const { register } = useFormContext<SignUpStoreDataType>();
+
   return (
     <section className="space-y-5">
       <h1 className="text-2xl font-semibold pt-10 pb-5">
@@ -19,6 +23,7 @@ export default function UserInfoStep({
         label="전화번호"
         id="text"
         placeholder="010-1234-5678"
+        {...register('phoneNumber')}
       />
       <CommonButton onClick={onNext} className="mt-6">
         다음

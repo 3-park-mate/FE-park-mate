@@ -1,20 +1,21 @@
 'use client';
 import { useFunnel } from '@/hooks/useFunnel';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import EmailVerifyStep from './step/EmailVerifyStep';
 import PasswordStep from './step/PasswordStep';
 import UserInfoStep from './step/UserInfoStep';
-
-type FormData = {
-  email: string;
-  name: string;
-  phone: string;
-  password: string;
-};
+import { SignUpStoreDataType } from '@/types/storeDataTypes';
 
 export default function SignUpFunnel() {
-  const methods = useForm<FormData>({
-    defaultValues: { email: '', name: '', phone: '', password: '' },
+  const methods = useForm<SignUpStoreDataType>({
+    defaultValues: {
+      email: '',
+      verifyCode: '',
+      name: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
   const [Funnel, setStep] = useFunnel<'step1' | 'step2' | 'step3'>('step1');

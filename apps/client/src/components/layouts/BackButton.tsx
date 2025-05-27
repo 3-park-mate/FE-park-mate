@@ -11,7 +11,6 @@ export default function BackButton({ className }: { className?: string }) {
     <button
       onClick={() => router.back()}
       className={cn('cursor-pointer', className)}
-      aria-label="뒤로가기"
     >
       <ChevronLeft />
     </button>
