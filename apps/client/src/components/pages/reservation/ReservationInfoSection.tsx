@@ -6,15 +6,29 @@ import LocationInfoBox from './LocationInfoBox';
 import { ReservationInfoBox } from './ReservationInfoBox';
 import { Button } from '@repo/ui/components/base/button';
 import ButtonWrapper from '@/components/common/ButtonWrapper';
+import VehicleInfoBox from './VehicleInfoBox';
+
+export interface FilterInfoType {
+  schedule?: {
+    entryTime: Date;
+    exitTime?: Date;
+  };
+  location?: {
+    lat: number;
+    lng: number;
+  };
+  evcharge?: number;
+}
 
 export default function ReservationInfoSection() {
+  const [filterInfo, setFilterInfo] = useState<FilterInfoType>();
   const [select, setSelect] = useState<
     'scheduleInfo' | 'locationInfo' | 'vehicleInfo'
   >('scheduleInfo');
 
   return (
-    <main>
-      <section className="space-y-4 pt-5">
+    <>
+      <section className="space-y-4 pt-5 mx-4">
         <ReservationInfoBox
           boxName="일정"
           buttonName="일정 추가"
@@ -36,13 +50,15 @@ export default function ReservationInfoSection() {
           buttonName="차량 정보 추가"
           selected={select === 'vehicleInfo'}
           onClick={() => setSelect('vehicleInfo')}
-        />
+        >
+          <VehicleInfoBox />
+        </ReservationInfoBox>
       </section>
       <ButtonWrapper>
         <Button className="w-full py-6 text-xl font-semibold rounded-xl">
           주차장 찾기
         </Button>
       </ButtonWrapper>
-    </main>
+    </>
   );
 }

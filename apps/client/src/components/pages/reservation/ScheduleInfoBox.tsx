@@ -1,11 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from '../../../../../../packages/ui/src/components/base/calendar';
 import { DateRange } from 'react-day-picker';
 
 export default function ScheduleInfoBox() {
   const [range, setRange] = useState<DateRange | undefined>(undefined);
+
+  useEffect(() => {
+    console.log(range);
+  }, [range]);
+
   return (
     <div className="flex flex-col items-center">
       <Calendar
