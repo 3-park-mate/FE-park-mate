@@ -1,4 +1,4 @@
-import { SignUpStoreDataType } from '@/types/storeDataTypes';
+import { SignUpStoreDataType } from '@/types/signUpDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import { useFormContext, useFormState } from 'react-hook-form';
