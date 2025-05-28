@@ -1,12 +1,13 @@
-import { SignUpStoreDataType } from '@/types/storeDataTypes';
+import { SignUpStoreDataType } from '@/types/signUpDataTypes';
 import { Button } from '@repo/ui/components/base/button';
 import { Input } from '@repo/ui/components/base/input';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const { register } = useFormContext<SignUpStoreDataType>();
+  const { errors } = useFormState<SignUpStoreDataType>();
 
   return (
     <section className="space-y-5">
@@ -19,6 +20,8 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           id="email"
           placeholder="abc@a.com"
           className="flex-1"
+          errorMessage={errors.email?.message}
+          maxLength={20}
           {...register('email')}
         />
         <Button className="mt-auto h-[44px] rounded-3xl">인증요청</Button>
