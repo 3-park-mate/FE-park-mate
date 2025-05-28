@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { signInSchema } from '@/schemas/signInSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleKeyDown } from '@/utils/formUtils';
+import OauthLoginButton from './OauthLoginButton';
+import PasswordInputWithLabel from '@repo/ui/components/common/PasswordInputWithLabel';
 
 export default function SignInForm() {
   const {
@@ -42,10 +44,9 @@ export default function SignInForm() {
           maxLength={20}
           {...register('email')}
         />
-        <CommonInputWithLabel
+        <PasswordInputWithLabel
           label="비밀번호"
           id="password"
-          type="password"
           placeholder="영문, 숫자, 특수문자 포함 8자 이상"
           maxLength={20}
           {...register('password')}
@@ -58,6 +59,7 @@ export default function SignInForm() {
           로그인
         </Button>
       </form>
+      <OauthLoginButton />
       <ToggleWelcomeSheet />
     </PaddedLayout>
   );
