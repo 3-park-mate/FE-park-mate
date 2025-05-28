@@ -5,9 +5,14 @@ import EmailVerifyStep from './step/EmailVerifyStep';
 import PasswordStep from './step/PasswordStep';
 import UserInfoStep from './step/UserInfoStep';
 import { SignUpStoreDataType } from '@/types/storeDataTypes';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpSchema } from '@/schemas/signUpSchema';
 
 export default function SignUpFunnel() {
   const methods = useForm<SignUpStoreDataType>({
+    resolver: zodResolver(signUpSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: {
       email: '',
       verifyCode: '',
@@ -17,15 +22,11 @@ export default function SignUpFunnel() {
       confirmPassword: '',
     },
   });
-
   const [Funnel, setStep] = useFunnel<'step1' | 'step2' | 'step3'>('step1');
-
   const { handleSubmit } = methods;
-
   const onSubmit = (data: SignUpStoreDataType) => {
     console.log('Form Data:', data);
   };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
