@@ -1,27 +1,39 @@
 'use client';
 import { useFunnel } from '@/hooks/useFunnel';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import EmailVerifyStep from './step/EmailVerifyStep';
 import PasswordStep from './step/PasswordStep';
 import UserInfoStep from './step/UserInfoStep';
-
-type FormData = {
-  email: string;
-  name: string;
-  phone: string;
-  password: string;
-};
+import { SignUpDataType, SignUpStoreDataType } from '@/types/authDataTypes';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpSchema } from '@/schemas/signUpSchema';
+import { handleKeyDown } from '@/utils/formUtils';
 
 export default function SignUpFunnel() {
-  const methods = useForm<FormData>({
-    defaultValues: { email: '', name: '', phone: '', password: '' },
+  const methods = useForm<SignUpStoreDataType>({
+    resolver: zodResolver(signUpSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      email: '',
+      verifyCode: '',
+      name: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
-
   const [Funnel, setStep] = useFunnel<'step1' | 'step2' | 'step3'>('step1');
+  const { handleSubmit } = methods;
+  const onSubmit = (data: SignUpStoreDataType) => {
+    const { email, password, name, phoneNumber } = data;
+    const signUpData: SignUpDataType = { email, password, name, phoneNumber };
+    console.log('SignUp Data:', signUpData);
+  };
 
   return (
     <FormProvider {...methods}>
-      <form className="px-5">
+      <form className="px-5" onKeyDown={handleKeyDown}>
         <Funnel>
           <Funnel.step name="step1">
             <EmailVerifyStep onNext={() => setStep('step2')} />
@@ -34,7 +46,7 @@ export default function SignUpFunnel() {
           </Funnel.step>
           <Funnel.step name="step3">
             <UserInfoStep
-              onNext={() => setStep('step1')}
+              onNext={handleSubmit(onSubmit)}
               onBack={() => setStep('step2')}
             />
           </Funnel.step>
