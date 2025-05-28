@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { signInSchema } from '@/schemas/signInSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleKeyDown } from '@/utils/formUtils';
+import OauthLoginButton from './OauthLoginButton';
 
 export default function SignInForm() {
   const {
@@ -58,6 +59,7 @@ export default function SignInForm() {
           로그인
         </Button>
       </form>
+      <OauthLoginButton />
       <ToggleWelcomeSheet />
     </PaddedLayout>
   );

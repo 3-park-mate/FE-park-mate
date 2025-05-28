@@ -7,7 +7,9 @@ export default function ToggleWelcomeSheet() {
       <div className="flex gap-1 justify-center text-[13px] mt-4">
         <p className="text-gray-2">파크메이트 계정이 없으신가요?</p>
         <SheetTrigger asChild>
-          <button className="font-semibold cursor-pointer">회원가입하기</button>
+          <button className="font-semibold cursor-pointer text-secondary">
+            회원가입하기
+          </button>
         </SheetTrigger>
       </div>
       <SignUpWelcomeSheet />
