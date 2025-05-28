@@ -13,3 +13,8 @@ export interface SignUpDataType {
   name: string;
   phoneNumber: string;
 }
+
+export interface SignInDataType {
+  email: string;
+  password: string;
+}
