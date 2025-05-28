@@ -1,4 +1,4 @@
-import { SignUpStoreDataType } from '@/types/signUpDataTypes';
+import { SignUpStoreDataType } from '@/types/authDataTypes';
 import { Button } from '@repo/ui/components/base/button';
 import { Input } from '@repo/ui/components/base/input';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';

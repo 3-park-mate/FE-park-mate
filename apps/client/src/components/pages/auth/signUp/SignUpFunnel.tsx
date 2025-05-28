@@ -4,9 +4,10 @@ import { useForm, FormProvider } from 'react-hook-form';
 import EmailVerifyStep from './step/EmailVerifyStep';
 import PasswordStep from './step/PasswordStep';
 import UserInfoStep from './step/UserInfoStep';
-import { SignUpDataType, SignUpStoreDataType } from '@/types/signUpDataTypes';
+import { SignUpDataType, SignUpStoreDataType } from '@/types/authDataTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/schemas/signUpSchema';
+import { handleKeyDown } from '@/utils/formUtils';
 
 export default function SignUpFunnel() {
   const methods = useForm<SignUpStoreDataType>({
@@ -28,11 +29,6 @@ export default function SignUpFunnel() {
     const { email, password, name, phoneNumber } = data;
     const signUpData: SignUpDataType = { email, password, name, phoneNumber };
     console.log('SignUp Data:', signUpData);
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
   };
 
   return (
