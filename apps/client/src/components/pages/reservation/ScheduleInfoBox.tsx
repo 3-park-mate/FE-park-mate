@@ -3,55 +3,38 @@
 import React, { useState } from 'react';
 import { Calendar } from '../../../../../../packages/ui/src/components/base/calendar';
 import { DateRange } from 'react-day-picker';
-import { FilterInfoType } from './ReservationInfoSection';
+import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 
-export default function ScheduleInfoBox({
-  setFilterInfo,
-}: {
-  setFilterInfo: React.Dispatch<React.SetStateAction<FilterInfoType>>;
-}) {
+export default function ScheduleInfoBox() {
   const [range, setRange] = useState<DateRange | undefined>(undefined);
   const [confirm, setConfirm] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  const handleSelectSchedule = (schedule: DateRange | undefined) => {
-    setRange(schedule);
-
-    setFilterInfo((prev) => ({
-      ...prev,
-      schedule: {
-        entryTime: `${schedule?.from?.getFullYear().toString()} ${schedule?.from?.getDay().toString()} ${schedule?.from?.getDate().toString()}`,
-        exitTime: `${schedule?.to?.getFullYear().toString()} ${schedule?.to?.getDay().toString()} ${schedule?.to?.getDate().toString()}`,
-      },
-    }));
-  };
+  const schedule = useParkingFilterStore((state) => state.schedule);
+  const setSchedule = useParkingFilterStore((state) => state.setSchedule);
 
   const handleConfirm = () => {
     if (range?.from && range.to) {
       console.log('일정 선택 완료');
       setConfirm(true);
+      setEdit(false);
+      setSchedule(range.from.toString(), range.to.toString());
     }
   };
-  4;
+
   return (
     <div className="flex flex-col items-center pt-3">
-      {confirm ? (
-        <>
-          <p>
-            {range?.from?.getFullYear().toString()}
-            {range?.from?.getDay().toString()}
-            {range?.from?.getDate().toString()}
-          </p>
-          <p>
-            {range?.to?.getFullYear().toString()}
-            {range?.to?.getDay().toString()} {range?.to?.getDate().toString()}
-          </p>
-        </>
+      {confirm && !edit ? (
+        <div onClick={() => setEdit(true)}>
+          <p> 일정 선택 테스트</p>
+          <p>{schedule?.entryTime}</p> <p>{schedule?.exitTime}</p>
+        </div>
       ) : (
         <>
           <Calendar
             mode="range"
             selected={range}
-            onSelect={handleSelectSchedule}
+            onSelect={setRange}
             className="rounded-md w-full bg-white"
           />
           <button onClick={handleConfirm}>확인</button>

@@ -1,14 +1,16 @@
-import { ReservationInfoBoxProps } from '@/types/reservationType';
+import { useParkingFilterStore } from '@/store/useParkingFilterStore';
+import { ReservationInfoBoxProps } from '@/types/filterInfoType';
 
-export function ReservationInfoBox({
+export function FilterInfoBox({
   id = 'schedule',
   boxName = '',
   buttonName = '',
   selected,
   children,
   onClick,
-  filterInfo,
 }: ReservationInfoBoxProps) {
+  const filterInfo = useParkingFilterStore((state) => state);
+
   return selected || filterInfo[id] ? (
     <>
       <div className="rounded-sm px-6 pt-4 bg-white shadow-md transition-all">

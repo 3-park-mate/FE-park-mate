@@ -1,15 +1,14 @@
 import React from 'react';
-import { searchLocationResultType } from './LocationInfoBox';
-
-interface SearchResultsListProps {
-  searchResults: searchLocationResultType[];
-  onSelect: (location: searchLocationResultType) => void;
-}
+import { useParkingFilterStore } from '@/store/useParkingFilterStore';
+import { SearchResultsListProps } from '@/types/filterInfoType';
 
 export default function SearchResultsList({
   searchResults,
-  onSelect,
+  setSearchResults,
+  setInputValue,
 }: SearchResultsListProps) {
+  const setLocation = useParkingFilterStore((state) => state.setLocation);
+
   return (
     <div className="w-full h-100 overflow-y-scroll ">
       <p className="sticky top-0 bg-white text-right text-xs">검색결과</p>
@@ -18,7 +17,11 @@ export default function SearchResultsList({
           <li
             key={`${data.content}-${index}`}
             className="h-14 border-b-1 content-center"
-            onClick={() => onSelect(data)}
+            onMouseDown={() => {
+              setSearchResults([]);
+              setInputValue(data.content);
+              setLocation(data.position.lat, data.position.lng, data.content);
+            }}
           >
             <p className="font-medium leading-tight mt-2">{data.content}</p>
             <p className="text-sm text-gray-2 leading-tight mb-2">
