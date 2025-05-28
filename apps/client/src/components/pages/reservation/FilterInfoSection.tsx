@@ -7,7 +7,6 @@ import { Button } from '@repo/ui/components/base/button';
 import ButtonWrapper from '@/components/common/ButtonWrapper';
 import VehicleInfoBox from './VehicleInfoBox';
 import LocationFilter from './LocationFilter';
-import { FilterInfoType } from '@/types/filterInfoType';
 
 export default function FilterInfoSection() {
   const [select, setSelect] = useState<'schedule' | 'location' | 'evcharge'>(

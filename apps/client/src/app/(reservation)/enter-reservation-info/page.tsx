@@ -1,4 +1,4 @@
-import ReservationInfoSection from '@/components/pages/reservation/FilterInfoSection';
+import FilterInfoSection from '@/components/pages/reservation/FilterInfoSection';
 import React from 'react';
 
 export default function page() {
@@ -8,7 +8,7 @@ export default function page() {
         검색 조건을 입력해주세요.
       </header>
       <main>
-        <ReservationInfoSection />
+        <FilterInfoSection />
       </main>
     </>
   );
