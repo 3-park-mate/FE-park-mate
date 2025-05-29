@@ -9,7 +9,7 @@ import VehicleInfoBox from './VehicleInfoBox';
 import LocationFilter from './LocationFilter';
 
 export default function FilterInfoSection() {
-  const [select, setSelect] = useState<'schedule' | 'location' | 'evcharge'>(
+  const [select, setSelect] = useState<'schedule' | 'mapCenter' | 'evcharge'>(
     'schedule'
   );
 
@@ -26,11 +26,11 @@ export default function FilterInfoSection() {
           <ScheduleInfoBox />
         </FilterInfoBox>
         <FilterInfoBox
-          id="location"
+          id="mapCenter"
           boxName="위치"
           buttonName="위치 추가"
-          selected={select === 'location'}
-          onClick={() => setSelect('location')}
+          selected={select === 'mapCenter'}
+          onClick={() => setSelect('mapCenter')}
         >
           <LocationFilter />
         </FilterInfoBox>

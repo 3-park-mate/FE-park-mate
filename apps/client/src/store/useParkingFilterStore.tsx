@@ -5,18 +5,27 @@ interface ParkingFilterStoreType {
     entryTime: string | null;
     exitTime?: string | null;
   };
-  location?: {
-    lat: number | null;
-    lng: number | null;
+  mapCenter?: {
+    lat: number;
+    lng: number;
     locationName: string | null;
+  };
+  mapBounds?: {
+    maxlat: number | null;
+    minlat: number | null;
+    maxlng: number | null;
+    minlng: number | null;
   };
   evcharge?: number;
   setSchedule: (entryTime: string | null, exitTime?: string | null) => void;
-  setLocation: (
-    lat: number | null,
-    lng: number | null,
-    loactionName: string | null
+  setMapCenter: (lat: number, lng: number, loactionName: string | null) => void;
+  setMapBounds: (
+    maxlat: number | null,
+    minlat: number | null,
+    maxlng: number | null,
+    minlng: number | null
   ) => void;
+
   setVehicle: (evcharge: number) => void;
 }
 
@@ -27,10 +36,12 @@ export const useParkingFilterStore = create<ParkingFilterStoreType>((set) => ({
     exitTime: '',
   },
   location: {
-    lat: null,
-    lng: null,
+    lat: 37.5727,
+    lng: 126.9695,
     locationName: '',
   },
+  mapBounds: { maxlat: null, minlat: null, maxlng: null, minlng: null },
+
   evcharge: 0,
 
   setSchedule: (entryTime, exitTime) => {
@@ -42,12 +53,23 @@ export const useParkingFilterStore = create<ParkingFilterStoreType>((set) => ({
     }));
   },
 
-  setLocation: (lat, lng, locationName) => {
+  setMapCenter: (lat, lng, locationName) => {
     set(() => ({
-      location: {
+      mapCenter: {
         lat,
         lng,
         locationName,
+      },
+    }));
+  },
+
+  setMapBounds: (maxlat, minlat, maxlng, minlng) => {
+    set(() => ({
+      mapBounds: {
+        maxlat,
+        minlat,
+        maxlng,
+        minlng,
       },
     }));
   },

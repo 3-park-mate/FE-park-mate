@@ -19,15 +19,15 @@ export default function LocationFilter() {
     searchLocationResultType[]
   >([]);
 
-  const loacation = useParkingFilterStore((state) => state.location);
-  const setLocation = useParkingFilterStore((state) => state.setLocation);
+  const loacation = useParkingFilterStore((state) => state.mapCenter);
+  const setMapCenter = useParkingFilterStore((state) => state.setMapCenter);
 
   useEffect(() => {
     if (loading) return;
 
     if (inputValue === '') {
       setSearchResults([]);
-      setLocation(null, null, null);
+      setMapCenter(37.5727, 126.9695, null);
       return;
     }
 

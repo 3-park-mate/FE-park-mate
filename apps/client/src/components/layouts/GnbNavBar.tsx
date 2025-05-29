@@ -13,7 +13,12 @@ export default function GnbNavBar() {
         <ul className="relative flex items-center justify-evenly px-2 h-full">
           <GnbMenu id="/" link="./" icon={Home} />
           <GnbMenu id="/myReservation" link="./myReservation" icon={Bookmark} />
-          <GnbMenu id="/map" link="./" icon={ParkingMarkerIcon} main />
+          <GnbMenu
+            id="/map-page"
+            link="./map-page"
+            icon={ParkingMarkerIcon}
+            main
+          />
           <GnbMenu id="/chat" link="./" icon={MessageSquareText} />
           <GnbMenu id="/my-page" link="./my-page" icon={User} />
         </ul>

@@ -7,7 +7,7 @@ export default function SearchResultsList({
   setSearchResults,
   setInputValue,
 }: SearchResultsListProps) {
-  const setLocation = useParkingFilterStore((state) => state.setLocation);
+  const setMapCenter = useParkingFilterStore((state) => state.setMapCenter);
 
   return (
     <div className="w-full h-100 overflow-y-scroll ">
@@ -20,7 +20,7 @@ export default function SearchResultsList({
             onMouseDown={() => {
               setSearchResults([]);
               setInputValue(data.content);
-              setLocation(data.position.lat, data.position.lng, data.content);
+              setMapCenter(data.position.lat, data.position.lng, data.content);
             }}
           >
             <p className="font-medium leading-tight mt-2">{data.content}</p>
