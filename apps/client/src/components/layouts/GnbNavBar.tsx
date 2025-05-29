@@ -1,9 +1,8 @@
 'use client';
 
-import ParkingMarkerIcon from '@repo/ui/components/icon/ParkingMarkerIcon';
-import { Bookmark, Home, MessageSquareText, User } from 'lucide-react';
 import React from 'react';
 import { GnbMenu } from './GnbMenu';
+import { gnbMenuData } from '@/data/gnbMenuData';
 
 export default function GnbNavBar() {
   return (
@@ -11,16 +10,15 @@ export default function GnbNavBar() {
       <div className="fixed bottom-0 rounded-t-5xl w-full h-[6.5rem] bg-gradient-to-t from-primary" />
       <nav className="fixed bottom-0 rounded-t-3xl w-full h-[4.688rem] bg-white">
         <ul className="relative flex items-center justify-evenly px-2 h-full">
-          <GnbMenu id="/" link="./" icon={Home} />
-          <GnbMenu id="/myReservation" link="./myReservation" icon={Bookmark} />
-          <GnbMenu
-            id="/map-page"
-            link="./map-page"
-            icon={ParkingMarkerIcon}
-            main
-          />
-          <GnbMenu id="/chat" link="./" icon={MessageSquareText} />
-          <GnbMenu id="/my-page" link="./my-page" icon={User} />
+          {gnbMenuData.map((menu) => (
+            <GnbMenu
+              key={menu.id}
+              id={menu.id}
+              link={menu.link}
+              icon={menu.icon}
+              main={menu.main || false}
+            />
+          ))}
         </ul>
       </nav>
     </div>

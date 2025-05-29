@@ -7,7 +7,7 @@ export const getCurrentLocationUtils = (): Promise<{
       reject(new Error('Geolocation을 지원하지 않습니다.'));
     }
 
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         resolve({ latitude, longitude });
