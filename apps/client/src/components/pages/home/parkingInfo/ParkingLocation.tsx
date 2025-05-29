@@ -16,7 +16,7 @@ export default function ParkingLocation({
           name={parkingLotName}
           locations={`${parkingLotDistance}m · ${parkingSpotName}`}
         />
-        <p className="flex items-center gap-1 text-gray-3 text-[13px]">
+        <p className="flex items-center gap-1 text-gray-3 text-13px">
           <Car fill="currentColor" className="text-gray-light-2" size={18} />
           {vehicleNumber}
         </p>

@@ -63,6 +63,9 @@
   --color-foreground: #000000;
   --color-inner-background-gray: #eeeeee;
   --color-inner-background-yellow: #faffef;
+
+  --text-13px: 0.8125rem;
+  --text-15px: 0.9375rem;
 }
 
 :root {

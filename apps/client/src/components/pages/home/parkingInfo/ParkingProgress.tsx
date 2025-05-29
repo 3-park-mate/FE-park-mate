@@ -7,7 +7,7 @@ export default function ParkingProgress() {
         1시간 23분 남음
       </p>
       <Progress value={33} />
-      <p className="pt-5 font-semibold text-primary-dark-50 text-[15px]">
+      <p className="pt-5 font-semibold text-primary-dark-50 text-15px">
         이용중
       </p>
     </div>
