@@ -5,7 +5,7 @@ export interface HomeTabType {
 }
 
 export interface HomeTabBarProps {
-  children: {
+  tabContents: {
     reservationParking: React.ReactNode;
     currentParking: React.ReactNode;
   };
