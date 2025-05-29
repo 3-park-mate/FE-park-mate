@@ -2,7 +2,7 @@ import { Progress } from '@repo/ui/components/base/progress';
 
 export default function ParkingProgress() {
   return (
-    <div className="pb-3">
+    <div className="pb-6">
       <p className="text-xs text-gray-dark-2 text-center pb-2">
         1시간 23분 남음
       </p>
