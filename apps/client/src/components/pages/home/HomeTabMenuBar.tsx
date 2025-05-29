@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { HomeTabMenu } from './HomeTabMenu';
 import { HomeTabBarProps } from '@/types/homeTabType';
+import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
-export function HomeTabMenuBar({ children }: HomeTabBarProps) {
+export function HomeTabMenuBar({ tabContents }: HomeTabBarProps) {
   const [tabMenu, setTabMenu] = useState<
     'reservationParking' | 'currentParking'
   >('reservationParking');
@@ -23,11 +24,11 @@ export function HomeTabMenuBar({ children }: HomeTabBarProps) {
           onClick={() => setTabMenu('currentParking')}
         />
       </ul>
-      <div className="px-4 py-2">
+      <PaddedLayout className="py-7">
         {tabMenu === 'reservationParking'
-          ? children.reservationParking
-          : children.currentParking}
-      </div>
+          ? tabContents.reservationParking
+          : tabContents.currentParking}
+      </PaddedLayout>
     </>
   );
 }
