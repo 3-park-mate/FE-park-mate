@@ -1,5 +1,5 @@
-import HomeMainHeader from '@/components/layouts/HomeMainHeader';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
+import HomeMainHeader from '@/components/pages/home/HomeMainHeader';
 
 export default function layout({
   children,
@@ -8,7 +8,6 @@ export default function layout({
 }>) {
   return (
     <div className="min-h-screen bg-white">
-      <HomeMainHeader />
       {children}
       <GnbNavBar />
     </div>

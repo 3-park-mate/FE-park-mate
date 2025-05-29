@@ -12,7 +12,7 @@ export function HomeTabMenu({
         className={cn(
           'py-4 text-[0.813rem] text-gray-2',
           selected &&
-            'border-b-4 border-primary-dark-50 text-black font-semibold'
+            'border-b-4 transition-all duration-100 border-primary-dark-50 text-black font-semibold'
         )}
       >
         {tabMenuName}
