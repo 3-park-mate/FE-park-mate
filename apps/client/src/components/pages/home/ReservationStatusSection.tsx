@@ -4,6 +4,7 @@ export default function ReservationStatusSection() {
   return (
     <div className="space-y-6">
       <ReservationInfoItem />
+      <ReservationInfoItem />
     </div>
   );
 }
