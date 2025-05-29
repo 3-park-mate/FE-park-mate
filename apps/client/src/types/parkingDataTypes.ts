@@ -1,10 +1,11 @@
-export interface ParkingInfoDataType {
+export interface ParkingLocationDataType {
   parkingLotName: string;
+  parkingLotDistance: number;
   parkingSpotName: string;
   vehicleNumber: string;
 }
 
-export interface ParkingInfoTimeDataType {
+export interface ParkingTimeDataType {
   entryTime: string;
   exitTime: string;
 }

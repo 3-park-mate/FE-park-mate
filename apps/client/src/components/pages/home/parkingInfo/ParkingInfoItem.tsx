@@ -5,13 +5,17 @@ import ParkingLocation from './ParkingLocation';
 import ParkingTime from './ParkingTime';
 import ParkingProgress from './ParkingProgress';
 import InfoToggleButton from './InfoToggleButton';
+import {
+  parkingLocationDummy,
+  parkingTimeDummy,
+} from '@/data/parkingDummyDatas';
 
 export default function ParkingInfoItem() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <ParkingLocation />
+      <ParkingLocation {...parkingLocationDummy} />
       <div>
         <div
           className={`transition-all duration-400 overflow-hidden space-y-6 ${
@@ -19,7 +23,7 @@ export default function ParkingInfoItem() {
           }`}
         >
           <hr />
-          <ParkingTime />
+          <ParkingTime {...parkingTimeDummy} />
           <hr />
           <ParkingProgress />
         </div>
