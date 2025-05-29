@@ -1,13 +1,14 @@
 import { HomeTabMenuBar } from '@/components/pages/home/HomeTabMenuBar';
-import UsageStatusSection from '@/components/pages/home/UsageStatusSection';
+import ReservationStatusSection from '@/components/pages/home/ReservationStatusSection';
+import UsingStatusSection from '@/components/pages/home/UsingStatusSection';
 
 export default function page() {
   return (
     <main>
       <HomeTabMenuBar
         tabContents={{
-          reservationParking: <div>예약 주차장 화면</div>,
-          currentParking: <UsageStatusSection />,
+          reservationParking: <ReservationStatusSection />,
+          currentParking: <UsingStatusSection />,
         }}
       />
     </main>
