@@ -28,7 +28,7 @@ export interface FilterInfoType {
     entryTime: string;
     exitTime?: string;
   };
-  location?: {
+  mapCenter?: {
     lat: number;
     lng: number;
     locationName?: string;
