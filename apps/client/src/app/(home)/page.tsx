@@ -1,11 +1,15 @@
-import ActionSection from '@/components/pages/home/ActionSection';
-import MenuSection from '@/components/pages/home/MenuSection';
+import { HomeTabMenuBar } from '@/components/pages/home/HomeTabMenuBar';
+import UsageStatusSection from '@/components/pages/home/UsageStatusSection';
 
 export default function page() {
   return (
     <main>
-      <ActionSection />
-      <MenuSection />
+      <HomeTabMenuBar
+        tabContents={{
+          reservationParking: <div>예약 주차장 화면</div>,
+          currentParking: <UsageStatusSection />,
+        }}
+      ></HomeTabMenuBar>
     </main>
   );
 }

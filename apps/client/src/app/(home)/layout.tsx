@@ -1,5 +1,4 @@
-import NotificationButton from '@/components/common/NotificationButton';
-import ParkmateLogo from '@repo/ui/components/icon/ParkmateLogo';
+import HomeMainHeader from '@/components/pages/home/HomeMainHeader';
 
 export default function layout({
   children,
@@ -7,11 +6,8 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen relative bg-inner-background-gray">
-      <header className="px-5 flex justify-between pt-10 pb-11">
-        <ParkmateLogo />
-        <NotificationButton />
-      </header>
+    <div className="min-h-screen bg-white">
+      <HomeMainHeader />
       {children}
     </div>
   );

@@ -21,7 +21,7 @@ export function PaddedLayout({
   children,
   className,
 }: Readonly<{ children: React.ReactNode; className?: string }>) {
-  return <div className={cn('px-5', className)}>{children}</div>;
+  return <div className={cn('px-6', className)}>{children}</div>;
 }
 
 export function CommonButton({
