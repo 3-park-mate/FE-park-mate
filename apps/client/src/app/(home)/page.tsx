@@ -1,11 +1,14 @@
-import ActionSection from '@/components/pages/home/ActionSection';
-import MenuSection from '@/components/pages/home/MenuSection';
+import { HomeTabMenuBar } from '@/components/pages/home/HomeTabMenuBar';
 
 export default function page() {
   return (
     <main>
-      <ActionSection />
-      <MenuSection />
+      <HomeTabMenuBar
+        children={{
+          reservationParking: <div>예약 주차장 화면</div>,
+          currentParking: <div>이용중 주차장 화면</div>,
+        }}
+      />
     </main>
   );
 }
