@@ -9,7 +9,7 @@ export default function page() {
           reservationParking: <div>예약 주차장 화면</div>,
           currentParking: <UsageStatusSection />,
         }}
-      ></HomeTabMenuBar>
+      />
     </main>
   );
 }

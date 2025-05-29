@@ -1,4 +1,4 @@
-import HomeMainHeader from '@/components/pages/home/HomeMainHeader';
+import HomeMainHeader from '@/components/layouts/HomeMainHeader';
 
 export default function layout({
   children,

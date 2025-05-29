@@ -1,5 +1,5 @@
 import SearchIcon from '@repo/ui/components/icon/SearchIcon';
-import MarkerIcon from '../../../../../../packages/ui/src/components/icon/MarkerIcon';
+import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 
 export default function HomeMainHeader() {
   return (
