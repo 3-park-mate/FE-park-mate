@@ -8,7 +8,6 @@ export default function layout({
 }>) {
   return (
     <div className="min-h-screen bg-white">
-      <HomeMainHeader />
       {children}
       <GnbNavBar />
     </div>
