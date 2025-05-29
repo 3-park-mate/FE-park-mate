@@ -7,7 +7,7 @@ import ParkingCarouselItem from './ParkingCarouselItem';
 
 export default function NearestParking() {
   return (
-    <div>
+    <section className="pl-6">
       <h2 className="text-[22px] font-bold py-4">주변 주차장을 둘러보세요.</h2>
       <Carousel
         opts={{
@@ -26,6 +26,6 @@ export default function NearestParking() {
           ))}
         </CarouselContent>
       </Carousel>
-    </div>
+    </section>
   );
 }

@@ -56,13 +56,17 @@
   --color-gray-light-2: #cccccd;
   --color-gray-dark-1: #939393;
   --color-gray-dark-2: #5b6161;
-
+  --color-red-1: #ff0404;
+  --color-purple-1: #e865ab;
   --color-navy-1: #00287a;
 
   --color-background: #ffffff;
   --color-foreground: #000000;
   --color-inner-background-gray: #eeeeee;
   --color-inner-background-yellow: #faffef;
+
+  --text-13px: 0.8125rem;
+  --text-15px: 0.9375rem;
 }
 
 :root {

@@ -29,7 +29,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       <div className="grid w-full items-center gap-1.5">
         <label
           htmlFor="verifyCode"
-          className="font-semibold text-[13px] text-gray-3 ms-1"
+          className="font-semibold text-13px text-gray-3 ms-1"
         >
           인증번호
         </label>

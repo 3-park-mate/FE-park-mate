@@ -20,7 +20,7 @@ export default function ParkingCarouselItem() {
         </div>
       </div>
       <ParkingSpotDetail name="주차장명" locations="100m" />
-      <p className="flex items-center gap-1 text-[13px]">
+      <p className="flex items-center gap-1 text-13px">
         <Star fill="currentColor" className="text-[#ffc800]" size={14} /> 4.9
       </p>
     </div>
