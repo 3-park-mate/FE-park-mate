@@ -30,7 +30,7 @@ export const myPageMenus: MyPageMenuDataType[] = [
   },
   {
     label: '내 차량',
-    href: '#',
+    href: 'my-car',
   },
   {
     label: '주차권',

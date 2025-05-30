@@ -4,6 +4,7 @@ import { Car } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ParkingLocation({
+  parkingLotUuid,
   parkingLotName,
   parkingLotDistance,
   parkingSpotName,

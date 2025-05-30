@@ -3,18 +3,29 @@ import { useState } from 'react';
 import ParkingLocation from './ParkingLocation';
 import ParkingTime from './ParkingTime';
 import InfoToggleButton from './InfoToggleButton';
-import {
-  parkingLocationDummy,
-  parkingTimeDummy,
-} from '@/data/parkingDummyDatas';
-import { Button } from '@repo/ui/components/base/button';
+import { Button, buttonVariants } from '@repo/ui/components/base/button';
+import { ReservationInfoItemDataType } from '@/types/reservationType';
+import Link from 'next/link';
 
-export default function ReservationInfoItem() {
+export default function ReservationInfoItem({
+  parkingLotUuid,
+  parkingLotName,
+  parkingSpotName,
+  entryTime,
+  exitTime,
+  vehicleNumber,
+}: ReservationInfoItemDataType) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <ParkingLocation {...parkingLocationDummy} />
+      <ParkingLocation
+        parkingLotUuid={parkingLotUuid}
+        parkingLotName={parkingLotName}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+        parkingLotDistance={100}
+      />
       <div>
         <div
           className={`transition-all duration-400 overflow-hidden space-y-6 ${
@@ -22,10 +33,15 @@ export default function ReservationInfoItem() {
           }`}
         >
           <hr />
-          <ParkingTime {...parkingTimeDummy} />
+          <ParkingTime entryTime={entryTime} exitTime={exitTime} />
           <hr />
           <div className="flex justify-center gap-3 items-center pb-9 pt-3">
-            <Button className="w-36 text-black">예약내역 확인</Button>
+            <Link
+              href="#"
+              className={`${buttonVariants({ variant: 'default' })} w-36 !text-black`}
+            >
+              주차장 상세보기
+            </Link>
             <Button className="w-36 bg-white border border-red-1 text-red-1">
               예약취소
             </Button>

@@ -7,3 +7,12 @@ export interface ReservationInfoBoxProps {
   onClick?: () => void;
   children?: React.ReactNode;
 }
+
+export interface ReservationInfoItemDataType {
+  parkingLotUuid: string;
+  parkingLotName: string;
+  parkingSpotName: string;
+  entryTime: string;
+  exitTime: string;
+  vehicleNumber: string;
+}
