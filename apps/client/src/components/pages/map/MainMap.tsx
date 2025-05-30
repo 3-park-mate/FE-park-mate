@@ -3,7 +3,15 @@
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { getCurrentLocationUtils } from '@/utils/getCurrentLocationUtils';
 import React, { useEffect } from 'react';
-import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
+import {
+  Map,
+  MapMarker,
+  MarkerClusterer,
+  useKakaoLoader,
+} from 'react-kakao-maps-sdk';
+import CurrentLocationButton from './CurrentLocationButton ';
+import { markerDummyData } from '@/data/markerDummyData';
+import { markerDataType } from '@/types/markerDataType';
 
 export default function MainMap() {
   const [loading, error] = useKakaoLoader({
@@ -12,6 +20,21 @@ export default function MainMap() {
   });
 
   const parkingFilter = useParkingFilterStore((state) => state);
+
+  const updateMapInfo = (map: kakao.maps.Map) => {
+    const center = map.getCenter();
+    const bounds = map.getBounds();
+    const swLatLng = bounds.getSouthWest();
+    const neLatLng = bounds.getNorthEast();
+    parkingFilter.setMapCenter(center.getLat(), center.getLng(), null);
+    parkingFilter.setMapBounds(
+      neLatLng.getLat(),
+      swLatLng.getLat(),
+      neLatLng.getLng(),
+      swLatLng.getLng()
+    );
+    console.log(parkingFilter);
+  };
 
   const currentLocation = async () => {
     try {
@@ -39,9 +62,27 @@ export default function MainMap() {
           lng: parkingFilter.mapCenter?.lng || 126.9695,
         }}
         level={5}
-        className="w-full min-h-screen z-0"
+        className="w-full relative min-h-screen z-0"
+        onDragEnd={(map) => updateMapInfo(map)}
+        onZoomChanged={(map) => updateMapInfo(map)}
         isPanto
-      />
+      >
+        <MarkerClusterer
+          gridSize={70}
+          averageCenter={true}
+          minLevel={7}
+          minClusterSize={1}
+          disableClickZoom
+        >
+          {markerDummyData.map((data: markerDataType) => (
+            <MapMarker
+              key={data.parkingLotUuid}
+              position={{ lat: data.latitude, lng: data.longitude }}
+            />
+          ))}
+        </MarkerClusterer>
+        <CurrentLocationButton onClick={currentLocation} />
+      </Map>
     </>
   );
 }
