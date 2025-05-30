@@ -12,8 +12,7 @@ export default function GnbNavBar() {
         <ul className="relative flex items-center justify-evenly px-2 h-full">
           {gnbMenuData.map((menu) => (
             <GnbMenu
-              key={menu.id}
-              id={menu.id}
+              key={menu.link}
               link={menu.link}
               icon={menu.icon}
               main={menu.main || false}

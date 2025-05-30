@@ -6,9 +6,9 @@ import { Dot } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export function GnbMenu({ id, main = false, link, icon: Icon }: GnbMenuType) {
+export function GnbMenu({ main = false, link, icon: Icon }: GnbMenuType) {
   const currentPage = usePathname();
-  const isCurrent = currentPage === id;
+  const isCurrent = currentPage === link;
 
   return main ? (
     <li className="px-6">
