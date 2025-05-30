@@ -4,6 +4,7 @@ import {
   CarouselItem,
 } from '@repo/ui/components/base/carousel';
 import ParkingCarouselItem from './ParkingCarouselItem';
+import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
 
 export default function NearestParking() {
   return (
@@ -16,12 +17,12 @@ export default function NearestParking() {
         className="w-full"
       >
         <CarouselContent className="select-none">
-          {Array.from({ length: 6 }).map((_, index) => (
+          {parkingCarouselItemsDummy.map((item, index) => (
             <CarouselItem
               key={index}
               className="flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]"
             >
-              <ParkingCarouselItem />
+              <ParkingCarouselItem {...item} />
             </CarouselItem>
           ))}
         </CarouselContent>
