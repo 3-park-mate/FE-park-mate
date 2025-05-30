@@ -10,7 +10,7 @@ import {
   parkingTimeDummy,
 } from '@/data/parkingDummyDatas';
 
-export default function ParkingInfoItem() {
+export default function UsingInfoItem() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
