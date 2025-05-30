@@ -8,7 +8,7 @@ export function GlobalContainerView({
   return (
     <div
       className={cn(
-        'min-h-screen max-w-[600px] mx-auto border-x overflow-hidden',
+        'min-h-screen max-w-[600px] mx-auto outline-x outline-1 overflow-hidden',
         className
       )}
     >

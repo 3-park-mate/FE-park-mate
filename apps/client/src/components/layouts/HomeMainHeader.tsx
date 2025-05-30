@@ -4,7 +4,7 @@ import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 export default function HomeMainHeader() {
   return (
     <>
-      <header className="flex justify-between items-center bg-white px-5 pt-10 pb-5 shadow-md">
+      <header className="flex justify-between items-center bg-white p-5 shadow-md">
         <div className="flex items-center space-x-2">
           <MarkerIcon className="size-6" />
           <p className="text-[0.813rem] font-semibold">서울 강남 코엑스 주변</p>

@@ -27,7 +27,7 @@ export default function SignUpWelcomeSheet() {
       >
         회원가입
       </Link>
-      <div className="flex gap-1 justify-center text-[13px] mt-2">
+      <div className="flex gap-1 justify-center text-13px mt-2">
         <p className="text-gray-2">이미 파크메이트 계정이 있으신가요?</p>
         <Link href="sign-in" className="font-semibold text-secondary">
           로그인하기

@@ -45,3 +45,30 @@ export const myPageMenus: MyPageMenuDataType[] = [
     href: '#',
   },
 ];
+
+export const progressBarStatusMap = [
+  {
+    threshold: 100,
+    label: '초과사용중',
+    remainingText: '시간이 초과되었습니다.',
+    labelColor: 'text-red-500',
+    progressColor: '[&>div]:bg-red-1',
+    remainingColor: 'text-red-1',
+  },
+  {
+    threshold: 90,
+    label: '이용종료 임박',
+    remainingText: '곧 이용시간이 종료됩니다.',
+    labelColor: 'text-purple-1',
+    progressColor: '[&>div]:bg-purple-1',
+    remainingColor: 'text-purple-1',
+  },
+  {
+    threshold: 0,
+    label: '이용중',
+    remainingText: '1시간 23분 남음',
+    labelColor: 'text-primary-dark',
+    progressColor: '[&>div]:bg-primary',
+    remainingColor: 'text-gray-dark-2',
+  },
+];
