@@ -5,6 +5,7 @@ import {
 } from '@/types/parkingDataTypes';
 
 export const parkingLocationDummy: ParkingLocationDataType = {
+  parkingLotUuid: '1',
   parkingLotName: '센트럴 파크 주차장',
   parkingLotDistance: 100,
   parkingSpotName: 'A-101',
