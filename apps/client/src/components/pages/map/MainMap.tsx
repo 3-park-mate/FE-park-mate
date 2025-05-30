@@ -63,10 +63,18 @@ export default function MainMap() {
         }}
         level={5}
         className="w-full relative min-h-screen z-0"
-        onDragEnd={(map) => updateMapInfo(map)}
+        onDrag={(map) => updateMapInfo(map)}
         onZoomChanged={(map) => updateMapInfo(map)}
         isPanto
       >
+        {parkingFilter.mapCenter?.lat && parkingFilter.mapCenter?.lng && (
+          <MapMarker
+            position={{
+              lat: parkingFilter.mapCenter?.lat,
+              lng: parkingFilter.mapCenter?.lng,
+            }}
+          />
+        )}
         <MarkerClusterer
           gridSize={70}
           averageCenter={true}

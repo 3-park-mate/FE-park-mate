@@ -1,5 +1,3 @@
-import { useParkingFilterStore } from '@/store/useParkingFilterStore';
-import { getCurrentLocationUtils } from '@/utils/getCurrentLocationUtils';
 import CurrentLocationIcon from '@repo/ui/components/icon/CurrentLocationIcon';
 import React from 'react';
 
@@ -8,8 +6,6 @@ export default function CurrentLocationButton({
 }: {
   onClick: () => void;
 }) {
-  const setMapCenter = useParkingFilterStore((state) => state.setMapCenter);
-
   return (
     <button
       onClick={onClick}
