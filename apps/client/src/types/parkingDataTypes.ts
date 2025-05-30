@@ -1,4 +1,5 @@
 export interface ParkingLocationDataType {
+  parkingLotUuid: string;
   parkingLotName: string;
   parkingLotDistance: number;
   parkingSpotName: string;
@@ -10,6 +11,16 @@ export interface ParkingTimeDataType {
   exitTime: string;
 }
 
-export interface NearParkingDataType {
+export interface ParkingCarouselItemDataType {
+  parkingLotUuid: string;
+  name: string;
+  distance: number;
+  thumbnailUrl: string;
+  baseFee: number;
   averageRating: number;
+}
+
+export interface ReviewSummaryType {
+  averageRating: number;
+  totalReviews: number;
 }

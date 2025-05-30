@@ -1,31 +1,22 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from '@repo/ui/components/base/carousel';
-import ParkingCarouselItem from './ParkingCarouselItem';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import ParkingCarousel from '@/components/common/ParkingCarousel';
 
 export default function NearestParking() {
   return (
     <section className="pl-6">
-      <h2 className="text-[22px] font-bold py-4">주변 주차장을 둘러보세요.</h2>
-      <Carousel
-        opts={{
-          align: 'start',
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="select-none">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <CarouselItem
-              key={index}
-              className="flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]"
-            >
-              <ParkingCarouselItem />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+      <div className="flex items-center justify-between">
+        <h2 className="text-[22px] font-bold py-4">
+          주변 주차장을 둘러보세요.
+        </h2>
+        <Link href="#" className="mr-6">
+          <p className="flex items-center gap-0.5 text-13px text-gray-2">
+            전체보기
+            <ChevronRight size={14} />
+          </p>
+        </Link>
+      </div>
+      <ParkingCarousel />
     </section>
   );
 }

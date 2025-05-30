@@ -1,9 +1,9 @@
-import ParkingInfoItem from './parkingInfo/ParkingInfoItem';
+import UsingInfoItem from './parkingInfo/UsingInfoItem';
 
 export default function UsingStatusSection() {
   return (
     <div className="space-y-6">
-      <ParkingInfoItem />
+      <UsingInfoItem />
     </div>
   );
 }
