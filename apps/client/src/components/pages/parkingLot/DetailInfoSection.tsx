@@ -10,7 +10,7 @@ import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
 export default function DetailInfoSection() {
   return (
     <section className="relative">
-      <div className="aspect-[375/455] flex items-center justify-center relative">
+      <div className="aspect-[155/102] flex items-center justify-center relative">
         <Image
           src="https://dummyimage.com/375x455"
           alt="주차장 이미지"
