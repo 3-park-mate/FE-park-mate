@@ -17,7 +17,7 @@ export default function DetailInfoSection() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
           <div className="flex justify-between items-start mb-2">

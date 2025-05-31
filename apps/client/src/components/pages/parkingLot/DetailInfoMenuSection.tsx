@@ -1,3 +1,4 @@
+import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import {
   CommonButton,
   PaddedLayout,
@@ -11,7 +12,7 @@ const iconData = [
   { Icon: ThumbsDown, label: '싫어요' },
 ];
 
-export default function ReservationSection() {
+export default function DetailInfoMenuSection() {
   return (
     <PaddedLayout className="py-5 space-y-5">
       <div className="flex justify-between px-4">
@@ -22,7 +23,11 @@ export default function ReservationSection() {
           </div>
         ))}
       </div>
-      <CommonButton className="bg-primary-dark">예약하기</CommonButton>
+      <AlwaysVisibleTooltip side="bottom" content="1시간 5,000원">
+        <CommonButton className="bg-primary-dark">
+          예약하기 (12/20)
+        </CommonButton>
+      </AlwaysVisibleTooltip>
     </PaddedLayout>
   );
 }
