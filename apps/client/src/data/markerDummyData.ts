@@ -307,3 +307,29 @@ export const markerDummyData: markerDataType[] = rawPositions.map((pos) => ({
   latitude: pos.lat,
   longitude: pos.lng,
 }));
+
+interface parkingLotSimpleInfoType {
+  name: string;
+  address: string;
+  distance: number;
+  thumbnailUrl: string;
+  baseFee: number;
+  evchargeType: number[];
+  averageRating: number;
+  reviewCount: number;
+  likeCount: number;
+  dislikeCount: number;
+}
+
+export const parkingLotSimpleInfoDummyData: parkingLotSimpleInfoType = {
+  name: '부산갈매기의 주차장',
+  address: '부산광역시 갈매기 3로 12',
+  distance: 350,
+  thumbnailUrl: 'https://dummyimage.com/102x102',
+  baseFee: 2000,
+  evchargeType: [1, 2],
+  averageRating: 4.5,
+  reviewCount: 12497,
+  likeCount: 1000,
+  dislikeCount: 4,
+};
