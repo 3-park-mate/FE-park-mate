@@ -2,7 +2,7 @@
 
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { getCurrentLocationUtils } from '@/utils/getCurrentLocationUtils';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Map,
   MapMarker,
@@ -12,6 +12,7 @@ import {
 import CurrentLocationButton from './CurrentLocationButton ';
 import { markerDummyData } from '@/data/markerDummyData';
 import { markerDataType } from '@/types/markerDataType';
+import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 
 export default function MainMap() {
   const [loading, error] = useKakaoLoader({
@@ -20,6 +21,7 @@ export default function MainMap() {
   });
 
   const parkingFilter = useParkingFilterStore((state) => state);
+  const [clickMarker, setClickMarker] = useState<string>('');
 
   const updateMapInfo = (map: kakao.maps.Map) => {
     const center = map.getCenter();
@@ -65,16 +67,9 @@ export default function MainMap() {
         className="w-full relative min-h-screen z-0"
         onDrag={(map) => updateMapInfo(map)}
         onZoomChanged={(map) => updateMapInfo(map)}
+        onClick={() => setClickMarker('')}
         isPanto
       >
-        {parkingFilter.mapCenter?.lat && parkingFilter.mapCenter?.lng && (
-          <MapMarker
-            position={{
-              lat: parkingFilter.mapCenter?.lat,
-              lng: parkingFilter.mapCenter?.lng,
-            }}
-          />
-        )}
         <MarkerClusterer
           gridSize={70}
           averageCenter={true}
@@ -86,6 +81,7 @@ export default function MainMap() {
             <MapMarker
               key={data.parkingLotUuid}
               position={{ lat: data.latitude, lng: data.longitude }}
+              onClick={() => setClickMarker(data.parkingLotUuid)}
             />
           ))}
         </MarkerClusterer>
