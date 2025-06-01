@@ -9,7 +9,7 @@ export default function CurrentLocationButton({
   return (
     <button
       onClick={onClick}
-      className="absolute bottom-25 right-5 z-10 bg-primary p-3 rounded-full shadow-md hover:bg-gray-100"
+      className="fixed bottom-25 right-5 z-10 bg-primary p-3 rounded-full shadow-md hover:bg-gray-100"
     >
       <CurrentLocationIcon className="size-8 stroke-white" />
     </button>

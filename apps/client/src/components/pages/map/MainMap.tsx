@@ -10,7 +10,10 @@ import {
   useKakaoLoader,
 } from 'react-kakao-maps-sdk';
 import CurrentLocationButton from './CurrentLocationButton ';
-import { markerDummyData } from '@/data/markerDummyData';
+import {
+  markerDummyData,
+  parkingLotSimpleInfoDummyData,
+} from '@/data/markerDummyData';
 import { markerDataType } from '@/types/markerDataType';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 
@@ -57,36 +60,34 @@ export default function MainMap() {
   if (error) return <div>카카오맵 로딩 실패: {error.message}</div>;
 
   return (
-    <>
-      <Map
-        center={{
-          lat: parkingFilter.mapCenter?.lat || 37.5727,
-          lng: parkingFilter.mapCenter?.lng || 126.9695,
-        }}
-        level={5}
-        className="w-full relative min-h-screen z-0"
-        onDrag={(map) => updateMapInfo(map)}
-        onZoomChanged={(map) => updateMapInfo(map)}
-        onClick={() => setClickMarker('')}
-        isPanto
+    <Map
+      center={{
+        lat: parkingFilter.mapCenter?.lat || 37.5727,
+        lng: parkingFilter.mapCenter?.lng || 126.9695,
+      }}
+      level={5}
+      className="w-full min-h-screen z-0"
+      onDrag={(map) => updateMapInfo(map)}
+      onZoomChanged={(map) => updateMapInfo(map)}
+      onClick={() => setClickMarker('')}
+      isPanto
+    >
+      <MarkerClusterer
+        gridSize={70}
+        averageCenter={true}
+        minLevel={7}
+        minClusterSize={1}
+        disableClickZoom
       >
-        <MarkerClusterer
-          gridSize={70}
-          averageCenter={true}
-          minLevel={7}
-          minClusterSize={1}
-          disableClickZoom
-        >
-          {markerDummyData.map((data: markerDataType) => (
-            <MapMarker
-              key={data.parkingLotUuid}
-              position={{ lat: data.latitude, lng: data.longitude }}
-              onClick={() => setClickMarker(data.parkingLotUuid)}
-            />
-          ))}
-        </MarkerClusterer>
-        <CurrentLocationButton onClick={currentLocation} />
-      </Map>
-    </>
+        {markerDummyData.map((data: markerDataType) => (
+          <MapMarker
+            key={data.parkingLotUuid}
+            position={{ lat: data.latitude, lng: data.longitude }}
+            onClick={() => setClickMarker(data.parkingLotUuid)}
+          />
+        ))}
+      </MarkerClusterer>
+      <CurrentLocationButton onClick={currentLocation} />
+    </Map>
   );
 }
