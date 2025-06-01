@@ -25,6 +25,13 @@ export function PaddedLayout({
   return <div className={cn('px-6', className)}>{children}</div>;
 }
 
+export function PaddedSection({
+  children,
+  className,
+}: Readonly<{ children: React.ReactNode; className?: string }>) {
+  return <section className={cn('px-6', className)}>{children}</section>;
+}
+
 export function CommonButton({
   children,
   className,

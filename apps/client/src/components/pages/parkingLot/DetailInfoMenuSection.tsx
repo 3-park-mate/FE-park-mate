@@ -1,20 +1,20 @@
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import {
   CommonButton,
-  PaddedLayout,
+  PaddedSection,
 } from '@repo/ui/components/common/CommonLayouts';
 import { MessageCircle, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 
 const iconData = [
   { Icon: MessageCircle, label: '채팅' },
   { Icon: Star, label: '즐겨찾기' },
-  { Icon: ThumbsUp, label: '좋아요' },
-  { Icon: ThumbsDown, label: '싫어요' },
+  { Icon: ThumbsUp, label: '좋아요 11' },
+  { Icon: ThumbsDown, label: '싫어요 9' },
 ];
 
 export default function DetailInfoMenuSection() {
   return (
-    <PaddedLayout className="py-5 space-y-5">
+    <PaddedSection className="py-5 space-y-5">
       <div className="flex justify-between px-4">
         {iconData.map((item, index) => (
           <div key={index} className="flex flex-col items-center gap-1">
@@ -28,6 +28,6 @@ export default function DetailInfoMenuSection() {
           예약하기 (12/20)
         </CommonButton>
       </AlwaysVisibleTooltip>
-    </PaddedLayout>
+    </PaddedSection>
   );
 }
