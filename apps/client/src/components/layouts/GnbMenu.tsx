@@ -15,7 +15,7 @@ export function GnbMenu({ main = false, link, icon: Icon }: GnbMenuType) {
       <Link href={link}>
         <Icon
           className={cn(
-            'absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 size-[4.375rem] rounded-3xl bg-primary outline-7 outline-white'
+            'absolute top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 size-[60px] rounded-3xl bg-primary outline-7 outline-white'
           )}
         />
       </Link>
