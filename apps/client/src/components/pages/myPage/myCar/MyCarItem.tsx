@@ -20,7 +20,9 @@ export default function MyCarItem({
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
         <p className="text-gray-dark-2 text-sm">{vehicleNumber}</p>
       </div>
-      <button className="pt-2 text-sm text-gray-2 cursor-pointer">삭제</button>
+      <button className="pt-2 text-sm text-gray-2 cursor-pointer hover:text-gray-700">
+        삭제
+      </button>
     </div>
   );
 }

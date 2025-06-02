@@ -4,3 +4,9 @@ export interface VehicleDataType {
   isDefault: boolean;
   nickname: string;
 }
+
+export interface AddMyCarDataType {
+  vehicleNumber: string;
+  isDefault: boolean;
+  nickname: string;
+}
