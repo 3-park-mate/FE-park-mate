@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../base/button';
 
@@ -22,6 +23,13 @@ export function PaddedLayout({
   className,
 }: Readonly<{ children: React.ReactNode; className?: string }>) {
   return <div className={cn('px-6', className)}>{children}</div>;
+}
+
+export function PaddedSection({
+  children,
+  className,
+}: Readonly<{ children: React.ReactNode; className?: string }>) {
+  return <section className={cn('px-6', className)}>{children}</section>;
 }
 
 export function CommonButton({
@@ -50,5 +58,40 @@ export function FixedBottomSection({
     >
       {children}
     </section>
+  );
+}
+
+export function CommonPriceBadge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        'text-xs bg-primary-dark-50 px-2 py-1 rounded-lg shadow-md',
+        className
+      )}
+    >
+      {children}
+      <span className="text-[10px] text-black/80">/1시간</span>
+    </div>
+  );
+}
+
+export function Rating({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={cn('flex items-center gap-1 text-13px pt-1', className)}>
+      <Star fill="currentColor" className="text-[#ffc800]" size={14} />
+      {children}
+    </p>
   );
 }
