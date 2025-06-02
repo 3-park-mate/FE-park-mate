@@ -1,4 +1,4 @@
-import { markerDataType } from '@/types/markerDataType';
+import { MarkerDataType, ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 
 const rawPositions = [
   { lat: 35.14538871, lng: 129.19709887 },
@@ -301,27 +301,14 @@ function getRandomAvailableSpot() {
   return Math.floor(Math.random() * 50);
 }
 
-export const markerDummyData: markerDataType[] = rawPositions.map((pos) => ({
+export const markerDummyData: MarkerDataType[] = rawPositions.map((pos) => ({
   parkingLotUuid: getRandomUuid(),
   availableSpots: getRandomAvailableSpot(),
   latitude: pos.lat,
   longitude: pos.lng,
 }));
 
-interface parkingLotSimpleInfoType {
-  name: string;
-  address: string;
-  distance: number;
-  thumbnailUrl: string;
-  baseFee: number;
-  evchargeType: number[];
-  averageRating: number;
-  reviewCount: number;
-  likeCount: number;
-  dislikeCount: number;
-}
-
-export const parkingLotSimpleInfoDummyData: parkingLotSimpleInfoType = {
+export const parkingLotSimpleInfoDummyData: ParkingLotSimpleInfoType = {
   name: '부산갈매기의 주차장',
   address: '부산광역시 갈매기 3로 12',
   distance: 350,

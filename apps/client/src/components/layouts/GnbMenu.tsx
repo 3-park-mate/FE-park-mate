@@ -1,17 +1,21 @@
 'use client';
 
-import { GnbMenuType } from '@/types/gnbMenuType';
+import { GnbMenuType } from '@/types/initialDataTypes';
 import { cn } from '@repo/ui/lib/utils';
-import { Dot } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export function GnbMenu({ main = false, link, icon: Icon }: GnbMenuType) {
+export function GnbMenu({
+  menuName,
+  main = false,
+  link,
+  icon: Icon,
+}: GnbMenuType) {
   const currentPage = usePathname();
   const isCurrent = currentPage === link;
 
   return main ? (
-    <li className="px-6">
+    <li className="px-10">
       <Link href={link}>
         <Icon
           className={cn(
@@ -21,18 +25,23 @@ export function GnbMenu({ main = false, link, icon: Icon }: GnbMenuType) {
       </Link>
     </li>
   ) : (
-    <li>
+    <li className="flex flex-col items-center w-full space-y-0">
       <Link href={link}>
         <Icon
           className={cn(
-            'relative stroke-primary-dark-50 cursor-pointer',
-            isCurrent && 'ease-in stroke-navy-1 after:content'
+            ' stroke-primary-dark-50 cursor-pointer',
+            isCurrent && 'ease-in stroke-navy-1'
           )}
         />
       </Link>
-      {isCurrent && !main && (
-        <Dot className="absolute bottom-2 stroke-primary-dark-50 ease-in-500" />
-      )}
+      <p
+        className={cn(
+          'text-[0.625rem] text-primary-dark-50',
+          isCurrent && 'text-navy-1'
+        )}
+      >
+        {menuName}
+      </p>
     </li>
   );
 }
