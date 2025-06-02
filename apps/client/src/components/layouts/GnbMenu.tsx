@@ -1,6 +1,6 @@
 'use client';
 
-import { GnbMenuType } from '@/types/GnbMenuType';
+import { GnbMenuType } from '@/types/gnbMenuType';
 import { cn } from '@repo/ui/lib/utils';
 import { Dot } from 'lucide-react';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ export function GnbMenu({ main = false, link, icon: Icon }: GnbMenuType) {
       <Link href={link}>
         <Icon
           className={cn(
-            'absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 size-[4.375rem] rounded-3xl bg-primary outline-7 outline-white'
+            'absolute top-2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3.5 size-[58px] rounded-3xl bg-primary outline-7 outline-white'
           )}
         />
       </Link>
