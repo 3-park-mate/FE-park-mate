@@ -15,10 +15,21 @@ export default function CommonInputWithLabel({
 } & React.ComponentProps<'input'>) {
   return (
     <div className={cn('grid w-full items-center gap-1.5', className)}>
-      <label htmlFor={id} className="font-semibold text-13px text-gray-3 ms-1">
+      <label
+        htmlFor={id}
+        className={`font-semibold text-13px text-gray-3 ms-1
+        ${errorMessage ? 'text-red-500' : ''}`}
+      >
         {label}
       </label>
-      <Input type={type} id={id} {...props} />
+      <Input
+        type={type}
+        id={id}
+        {...props}
+        className={
+          errorMessage ? 'border-red-300 focus-visible:border-red-400' : ''
+        }
+      />
       {errorMessage && (
         <p className="text-red-500 text-13px ms-1">{errorMessage}</p>
       )}
