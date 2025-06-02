@@ -14,7 +14,7 @@ import {
   markerDummyData,
   parkingLotSimpleInfoDummyData,
 } from '@/data/markerDummyData';
-import { markerDataType } from '@/types/markerDataType';
+import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 
 export default function MainMap() {
@@ -79,7 +79,7 @@ export default function MainMap() {
         minClusterSize={1}
         disableClickZoom
       >
-        {markerDummyData.map((data: markerDataType) => (
+        {markerDummyData.map((data: MarkerDataType) => (
           <MapMarker
             key={data.parkingLotUuid}
             position={{ lat: data.latitude, lng: data.longitude }}

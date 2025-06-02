@@ -6,7 +6,7 @@ import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import SearchResultsList from './SearchLocationResults';
 import { cn } from '@repo/ui/lib/utils';
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
-import { searchLocationResultType } from '@/types/filterInfoType';
+import { SearchLocationResultType } from '@/types/filterInfoType';
 
 export default function LocationFilter() {
   const [loading, error] = useKakaoLoader({
@@ -16,7 +16,7 @@ export default function LocationFilter() {
 
   const [inputValue, setInputValue] = useState('');
   const [searchResults, setSearchResults] = useState<
-    searchLocationResultType[]
+    SearchLocationResultType[]
   >([]);
 
   const loacation = useParkingFilterStore((state) => state.mapCenter);

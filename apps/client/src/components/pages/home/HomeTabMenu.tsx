@@ -1,4 +1,4 @@
-import { HomeTabType } from '@/types/homeTabType';
+import { HomeTabType } from '@/types/initialDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 
 export function HomeTabMenu({

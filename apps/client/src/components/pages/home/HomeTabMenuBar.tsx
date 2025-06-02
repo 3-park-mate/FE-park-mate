@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { HomeTabMenu } from './HomeTabMenu';
-import { HomeTabBarProps } from '@/types/homeTabType';
+import { HomeTabBarProps } from '@/types/initialDataTypes';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export function HomeTabMenuBar({ tabContents }: HomeTabBarProps) {
