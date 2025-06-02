@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function page() {
   return (
-    <main className="mt-[65px]">
+    <main className="relative mt-[65px]">
       <MainMap />
     </main>
   );
