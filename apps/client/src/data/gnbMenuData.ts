@@ -1,4 +1,4 @@
-import { GnbMenuType } from '@/types/GnbMenuType';
+import { GnbMenuType } from '@/types/gnbMenuType';
 import ParkingMarkerIcon from '@repo/ui/components/icon/ParkingMarkerIcon';
 import { Bookmark, Home, MessageSquareText, User } from 'lucide-react';
 

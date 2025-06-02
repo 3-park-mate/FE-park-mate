@@ -1,6 +1,6 @@
 'use client';
 
-import { GnbMenuType } from '@/types/GnbMenuType';
+import { GnbMenuType } from '@/types/gnbMenuType';
 import { cn } from '@repo/ui/lib/utils';
 import { Dot } from 'lucide-react';
 import Link from 'next/link';
