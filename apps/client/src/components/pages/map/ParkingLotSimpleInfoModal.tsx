@@ -34,7 +34,7 @@ export default function ParkingLotSimpleInfoModal({
         isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       )}
     >
-      <div className={cn('rounded-2xl px-[24px] py-[25px] bg-white shadow-xl')}>
+      <div className={cn('rounded-2xl px-[24px] py-[18px] bg-white shadow-xl')}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-1">
             <div>

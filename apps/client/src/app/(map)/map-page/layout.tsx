@@ -7,7 +7,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-screen overflow-hidden">
       <HomeMainHeader />
       {children}
       <GnbNavBar />

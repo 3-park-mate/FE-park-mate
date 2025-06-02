@@ -66,7 +66,7 @@ export default function MainMap() {
         lng: parkingFilter.mapCenter?.lng || 126.9695,
       }}
       level={5}
-      className="w-full min-h-screen z-0"
+      className="w-full h-screen z-0"
       onDrag={(map) => updateMapInfo(map)}
       onZoomChanged={(map) => updateMapInfo(map)}
       onClick={() => setClickMarker('')}
