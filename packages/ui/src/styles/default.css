@@ -188,3 +188,8 @@ body {
     Arial,
     sans-serif;
 }
+
+html body[data-scroll-locked] {
+  overflow-y: scroll !important;
+  margin-right: 0px !important;
+}

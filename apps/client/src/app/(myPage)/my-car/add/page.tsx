@@ -1,12 +1,12 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import MyCarListSection from '@/components/pages/myPage/myCar/MyCarListSection';
+import AddMyCarForm from '@/components/pages/myPage/myCar/AddMyCarForm';
 
 export default function page() {
   return (
     <>
-      <PageHeader title="내 차량" />
+      <PageHeader title="차량 등록" />
       <main>
-        <MyCarListSection />
+        <AddMyCarForm />
       </main>
     </>
   );
