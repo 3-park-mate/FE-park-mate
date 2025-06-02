@@ -4,7 +4,6 @@ import {
   Rating,
 } from '@repo/ui/components/common/CommonLayouts';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
-import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 

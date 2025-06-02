@@ -1,7 +1,7 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import DetailInfoSection from '@/components/pages/parkingLot/DetailInfoSection';
 import DetailInfoMenuSection from '@/components/pages/parkingLot/DetailInfoMenuSection';
-import ExtraInfoSection from '@/components/pages/parkingLot/ExtraInfoSection';
+import DetailExtraInfoSection from '@/components/pages/parkingLot/DetailExtraInfoSection';
 import { HomeTabMenu } from '@/components/pages/home/HomeTabMenu';
 import ReviewSection from '@/components/pages/parkingLot/ReviewSection';
 import ImageCarouselSection from '@/components/pages/parkingLot/ImageCarouselSection';
@@ -24,7 +24,7 @@ export default async function page({
           <HomeTabMenu tabMenuName="리뷰" />
         </ul>
         <section className="bg-inner-background-gray space-y-3">
-          <ExtraInfoSection />
+          <DetailExtraInfoSection />
           <ImageCarouselSection />
           <ReviewSection />
         </section>
