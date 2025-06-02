@@ -37,7 +37,7 @@ export default function ReservationInfoItem({
           <hr />
           <div className="flex justify-center gap-3 items-center pb-9 pt-3">
             <Link
-              href="#"
+              href={`/parking-lot/${parkingLotUuid}`}
               className={`${buttonVariants({ variant: 'default' })} w-36 !text-black`}
             >
               주차장 상세보기
