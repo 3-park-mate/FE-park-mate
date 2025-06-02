@@ -10,6 +10,11 @@
  */
 @source '../../node_modules/@repo/ui';
 
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/PretendardVariable.woff2');
+}
+
 body {
   overflow-y: scroll;
 }

@@ -95,3 +95,20 @@ export function Rating({
     </p>
   );
 }
+
+export function IconWithText({
+  Icon,
+  children,
+  className,
+}: {
+  Icon: React.ElementType;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('flex gap-1.5 text-sm', className)}>
+      <Icon className="w-4 h-4 shrink-0 mt-[3px]" />
+      <span>{children}</span>
+    </div>
+  );
+}

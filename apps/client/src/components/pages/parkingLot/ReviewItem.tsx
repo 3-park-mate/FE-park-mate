@@ -1,0 +1,37 @@
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import Image from 'next/image';
+
+export default function ReviewItem() {
+  return (
+    <div className="py-3">
+      <p className="pb-1">
+        홍*동
+        <span className="text-gray-3 text-sm ms-2">5.30 · 1시간 이용</span>
+      </p>
+      <div className="flex justify-between">
+        <p className="text-15px text-gray-2 pt-2">
+          여기에 리뷰 내용이 들어갑니다. 여기에 리뷰 내용이 들어갑니다. 여기에
+          리뷰 내용이 들어갑니다. 여기에 리뷰 내용이 들어갑니다.
+        </p>
+        <div className="relative rounded-md w-24 h-24 ml-3 flex-shrink-0">
+          <Image
+            src="https://dummyimage.com/155x102"
+            alt="리뷰 이미지"
+            fill
+            className="object-cover rounded-md"
+          />
+        </div>
+      </div>
+      <div className="flex gap-3 mt-2.5">
+        <button className="flex gap-1 text-sm text-gray-3 cursor-pointer">
+          <ThumbsUp size={16} fill="currentColor" className="text-gray-1" />
+          <span>11</span>
+        </button>
+        <button className="flex gap-1 text-sm text-gray-3 cursor-pointer">
+          <ThumbsDown size={16} fill="currentColor" className="text-gray-1" />
+          <span>9</span>
+        </button>
+      </div>
+    </div>
+  );
+}
