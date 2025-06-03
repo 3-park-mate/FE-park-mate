@@ -6,10 +6,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src",
-    "../../apps/client/src/components/common/AlertBell.tsx",
-    "../../apps/client/src/components/common/HeadingWithSubtext.tsx"
-  ],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

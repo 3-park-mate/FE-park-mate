@@ -7,12 +7,8 @@ import RatingOverview from './RatingOverview';
 import Image from 'next/image';
 import { Circle } from 'lucide-react';
 import { cn } from '@repo/ui/lib/utils';
-import { Button } from '@repo/ui/components/base/button';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
-import {
-  CommonButton,
-  CommonPriceBadge,
-} from '@repo/ui/components/common/CommonLayouts';
+import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 
 export default function ParkingLotSimpleInfoModal({
   parkingLotUuid,
