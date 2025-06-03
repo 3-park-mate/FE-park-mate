@@ -1,7 +1,9 @@
+import MyParkingLotSection from '@/components/pages/home/MyParkingLotSection';
+
 export default function Home() {
   return (
     <main>
-      <p>호스트 페이지</p>
+      <MyParkingLotSection />
     </main>
   );
 }
