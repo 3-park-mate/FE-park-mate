@@ -312,7 +312,7 @@ export const parkingLotSimpleInfoDummyData: ParkingLotSimpleInfoType = {
   name: '부산갈매기의 주차장',
   address: '부산광역시 갈매기 3로 12',
   distance: 350,
-  thumbnailUrl: 'https://dummyimage.com/110x110',
+  thumbnailUrl: 'https://dummyimage.com/90x90',
   baseFee: 2000,
   evchargeType: [1, 2],
   averageRating: 4.5,

@@ -12,7 +12,7 @@ export default function RatingOverview({
   dislikeCount: number;
 }) {
   return (
-    <div className="flex space-x-3 text-13px">
+    <div className="flex space-x-2 text-13px">
       <p className="flex items-center gap-1">
         <Star fill="currentColor" className="text-yellow-2" size={14} />
         {averageRating}

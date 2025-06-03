@@ -17,7 +17,6 @@ import {
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import { stat } from 'fs';
 
 export default function MainMap() {
   const [loading, error] = useKakaoLoader({
