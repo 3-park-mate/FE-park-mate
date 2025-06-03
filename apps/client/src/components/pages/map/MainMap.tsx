@@ -16,6 +16,7 @@ import {
 } from '@/data/markerDummyData';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
+import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 
 export default function MainMap() {
   const [loading, error] = useKakaoLoader({
@@ -24,6 +25,8 @@ export default function MainMap() {
   });
 
   const parkingFilter = useParkingFilterStore((state) => state);
+  const setGnbMenuBar = useGnbNavBarStore((state) => state.setActive);
+
   const [clickMarker, setClickMarker] = useState<string>('');
 
   const updateMapInfo = (map: kakao.maps.Map) => {
@@ -69,7 +72,10 @@ export default function MainMap() {
       className="w-full h-screen z-0"
       onDrag={(map) => updateMapInfo(map)}
       onZoomChanged={(map) => updateMapInfo(map)}
-      onClick={() => setClickMarker('')}
+      onClick={() => {
+        setClickMarker('');
+        setGnbMenuBar(true);
+      }}
       isPanto
     >
       <MarkerClusterer
@@ -83,10 +89,14 @@ export default function MainMap() {
           <MapMarker
             key={data.parkingLotUuid}
             position={{ lat: data.latitude, lng: data.longitude }}
-            onClick={() => setClickMarker(data.parkingLotUuid)}
+            onClick={() => {
+              setClickMarker(data.parkingLotUuid);
+              setGnbMenuBar(false);
+            }}
           />
         ))}
       </MarkerClusterer>
+      {clickMarker && <ParkingLotSimpleInfoModal parkingLotUuid="" />}
       <CurrentLocationButton onClick={currentLocation} />
     </Map>
   );
