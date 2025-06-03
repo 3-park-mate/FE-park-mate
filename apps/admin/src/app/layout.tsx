@@ -18,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <GlobalContainerView className="bg-inner-background-gray">
-          {children}
-        </GlobalContainerView>
+        <GlobalContainerView>{children}</GlobalContainerView>
       </body>
     </html>
   );
