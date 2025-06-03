@@ -112,3 +112,29 @@ export function IconWithText({
     </div>
   );
 }
+
+export function HeaderLayout({
+  children,
+  isShadow,
+  className,
+}: {
+  children: React.ReactNode;
+  isShadow?: boolean;
+  className?: string;
+}) {
+  return (
+    <>
+      <header
+        className={cn(
+          'h-13 flex items-center justify-center relative z-40 max-w-[600px] mx-auto',
+          'fixed top-0 left-0 right-0 bg-white transition-shadow',
+          isShadow && 'shadow-md',
+          className
+        )}
+      >
+        {children}
+      </header>
+      <div className="h-13" />
+    </>
+  );
+}
