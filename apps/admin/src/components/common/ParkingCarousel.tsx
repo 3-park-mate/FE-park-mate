@@ -3,9 +3,9 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@repo/ui/components/base/carousel';
-import ParkingCarouselItem from './ParkingCarouselItem';
 import { ChevronRightCircle } from 'lucide-react';
 import Link from 'next/link';
+import ParkingCarouselItem from './ParkingCarouselItem';
 import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
 
 export default function ParkingCarousel({
