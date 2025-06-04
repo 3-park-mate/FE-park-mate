@@ -6,6 +6,7 @@ import InfoToggleButton from './InfoToggleButton';
 import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { ReservationInfoItemDataType } from '@/types/reservationType';
 import Link from 'next/link';
+import ParkingQRModal from './qrModal/ParkingQRModal';
 
 export default function ReservationInfoItem({
   parkingLotUuid,
@@ -16,15 +17,26 @@ export default function ReservationInfoItem({
   vehicleNumber,
 }: ReservationInfoItemDataType) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isQRModalOpen, setQRModalOpen] = useState(false);
 
   return (
     <>
+      <ParkingQRModal
+        isOpen={isQRModalOpen}
+        onClose={() => setQRModalOpen(false)}
+        parkingLotUuid={parkingLotUuid}
+        entryTime={entryTime}
+        exitTime={exitTime}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+      />
       <ParkingLocation
         parkingLotUuid={parkingLotUuid}
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}
         parkingLotDistance={100}
+        onQRClick={() => setQRModalOpen(true)}
       />
       <div>
         <div
@@ -36,15 +48,15 @@ export default function ReservationInfoItem({
           <ParkingTime entryTime={entryTime} exitTime={exitTime} />
           <hr />
           <div className="flex justify-center gap-3 items-center pb-9 pt-3">
+            <Button className="w-36 bg-white border border-red-1 text-red-1">
+              예약취소
+            </Button>
             <Link
               href={`/parking-lot/${parkingLotUuid}`}
               className={`${buttonVariants({ variant: 'default' })} w-36 !text-black`}
             >
               주차장 상세보기
             </Link>
-            <Button className="w-36 bg-white border border-red-1 text-red-1">
-              예약취소
-            </Button>
           </div>
         </div>
         <InfoToggleButton isOpen={isOpen} setIsOpen={setIsOpen} />

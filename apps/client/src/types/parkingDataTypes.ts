@@ -11,6 +11,14 @@ export interface ParkingTimeDataType {
   exitTime: string;
 }
 
+export interface ParkingQRDataType {
+  parkingLotUuid: string;
+  entryTime: string;
+  exitTime: string;
+  parkingSpotName: string;
+  vehicleNumber: string;
+}
+
 export interface ParkingCarouselItemDataType {
   parkingLotUuid: string;
   name: string;

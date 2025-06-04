@@ -9,7 +9,8 @@ export default function ParkingLocation({
   parkingLotDistance,
   parkingSpotName,
   vehicleNumber,
-}: ParkingLocationDataType) {
+  onQRClick,
+}: ParkingLocationDataType & { onQRClick: () => void }) {
   return (
     <div className="flex justify-between items-center">
       <div>
@@ -22,15 +23,17 @@ export default function ParkingLocation({
           {vehicleNumber}
         </p>
       </div>
-      {/* parkingLotDistance 거리에 따라서 km, m 변환 추가 필요 */}
-      <div className="bg-white w-12 aspect-square rounded-lg drop-shadow-lg flex justify-center items-center">
+      <button
+        onClick={onQRClick}
+        className="bg-white w-12 aspect-square rounded-lg drop-shadow-lg flex justify-center items-center cursor-pointer"
+      >
         <Image
           src="https://dummyimage.com/32x32"
           alt="qr-image"
           width={32}
           height={32}
         />
-      </div>
+      </button>
     </div>
   );
 }
