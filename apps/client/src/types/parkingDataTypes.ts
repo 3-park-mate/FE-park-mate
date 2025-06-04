@@ -12,6 +12,7 @@ export interface ParkingTimeDataType {
 }
 
 export interface ParkingQRDataType {
+  parkingLotUuid: string;
   entryTime: string;
   exitTime: string;
   parkingSpotName: string;

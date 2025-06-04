@@ -4,19 +4,21 @@ import {
   HeaderLayout,
 } from '@repo/ui/components/common/CommonLayouts';
 import { ChevronLeft } from 'lucide-react';
-import ParkingQRInfoSection from './ParkingQRInfoSection';
+import ParkingQRInfo from './ParkingQRInfo';
 import { ParkingQRDataType } from '@/types/parkingDataTypes';
-
-interface Props extends ParkingQRDataType {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 export default function ParkingQRModal({
   isOpen,
   onClose,
-  ...ParkingQRData
-}: Props) {
+  parkingLotUuid,
+  parkingSpotName,
+  vehicleNumber,
+  entryTime,
+  exitTime,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+} & ParkingQRDataType) {
   if (!isOpen) return null;
 
   return (
@@ -30,7 +32,13 @@ export default function ParkingQRModal({
         </button>
         <h1 className="font-semibold">입출차 등록 QR</h1>
       </HeaderLayout>
-      <ParkingQRInfoSection {...ParkingQRData} />
+      <ParkingQRInfo
+        parkingLotUuid={parkingLotUuid}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+        entryTime={entryTime}
+        exitTime={exitTime}
+      />
     </GlobalContainerView>
   );
 }

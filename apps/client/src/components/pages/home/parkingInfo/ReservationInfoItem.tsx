@@ -6,7 +6,7 @@ import InfoToggleButton from './InfoToggleButton';
 import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { ReservationInfoItemDataType } from '@/types/reservationType';
 import Link from 'next/link';
-import ParkingQRModal from './ParkingQRModal';
+import ParkingQRModal from './qrModal/ParkingQRModal';
 
 export default function ReservationInfoItem({
   parkingLotUuid,
@@ -24,6 +24,7 @@ export default function ReservationInfoItem({
       <ParkingQRModal
         isOpen={isQRModalOpen}
         onClose={() => setQRModalOpen(false)}
+        parkingLotUuid={parkingLotUuid}
         entryTime={entryTime}
         exitTime={exitTime}
         parkingSpotName={parkingSpotName}

@@ -9,13 +9,39 @@ import {
   parkingLocationDummy,
   parkingTimeDummy,
 } from '@/data/parkingDummyDatas';
+import ParkingQRModal from './qrModal/ParkingQRModal';
 
 export default function UsingInfoItem() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isQRModalOpen, setQRModalOpen] = useState(false);
+  const {
+    parkingLotUuid,
+    parkingLotName,
+    parkingLotDistance,
+    parkingSpotName,
+    vehicleNumber,
+  } = parkingLocationDummy;
+  const { exitTime, entryTime } = parkingTimeDummy;
 
   return (
     <>
-      <ParkingLocation {...parkingLocationDummy} />
+      <ParkingQRModal
+        isOpen={isQRModalOpen}
+        onClose={() => setQRModalOpen(false)}
+        parkingLotUuid={parkingLotUuid}
+        entryTime={entryTime}
+        exitTime={exitTime}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+      />
+      <ParkingLocation
+        parkingLotUuid={parkingLotUuid}
+        parkingLotName={parkingLotName}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+        parkingLotDistance={100}
+        onQRClick={() => setQRModalOpen(true)}
+      />
       <div>
         <div
           className={`transition-all duration-400 overflow-hidden space-y-6 ${
@@ -23,7 +49,7 @@ export default function UsingInfoItem() {
           }`}
         >
           <hr />
-          <ParkingTime {...parkingTimeDummy} />
+          <ParkingTime entryTime={entryTime} exitTime={exitTime} />
           <hr />
           <ParkingProgress />
         </div>
