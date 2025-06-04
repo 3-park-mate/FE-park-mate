@@ -6,6 +6,7 @@ import InfoToggleButton from './InfoToggleButton';
 import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { ReservationInfoItemDataType } from '@/types/reservationType';
 import Link from 'next/link';
+import ParkingQRModal from './ParkingQRModal';
 
 export default function ReservationInfoItem({
   parkingLotUuid,
@@ -16,15 +17,25 @@ export default function ReservationInfoItem({
   vehicleNumber,
 }: ReservationInfoItemDataType) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isQRModalOpen, setQRModalOpen] = useState(false);
 
   return (
     <>
+      <ParkingQRModal
+        isOpen={isQRModalOpen}
+        onClose={() => setQRModalOpen(false)}
+        entryTime={entryTime}
+        exitTime={exitTime}
+        parkingSpotName={parkingSpotName}
+        vehicleNumber={vehicleNumber}
+      />
       <ParkingLocation
         parkingLotUuid={parkingLotUuid}
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}
         parkingLotDistance={100}
+        onQRClick={() => setQRModalOpen(true)}
       />
       <div>
         <div

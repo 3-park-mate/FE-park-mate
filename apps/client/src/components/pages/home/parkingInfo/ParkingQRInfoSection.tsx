@@ -1,4 +1,5 @@
 import ImageViewDialog from '@/components/common/ImageViewDialog';
+import { ParkingQRDataType } from '@/types/parkingDataTypes';
 import { formatDateParts } from '@/utils/datetimeUtils';
 import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import {
@@ -8,8 +9,20 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ParkingQRInfoSection() {
-  const { time, date } = formatDateParts('2025-05-30T09:00:00');
+export default function ParkingQRInfoSection(ParkingQRData: ParkingQRDataType) {
+  const entry = formatDateParts(ParkingQRData.entryTime);
+  const exit = formatDateParts(ParkingQRData.exitTime);
+
+  const timeItems = [
+    { label: '입차시간', time: entry.time, date: entry.date },
+    { label: '출차시간', time: exit.time, date: exit.date },
+  ];
+
+  const infoItems = [
+    { label: '주차면', value: ParkingQRData.parkingSpotName },
+    { label: '차량번호', value: ParkingQRData.vehicleNumber },
+    { label: '이용시간', value: '3시간' },
+  ];
 
   return (
     <PaddedLayout className="py-4 space-y-5">
@@ -32,36 +45,30 @@ export default function ParkingQRInfoSection() {
         <hr className="w-full border-t border-dashed border-gray-1 my-8" />
         <PaddedSection>
           <div className="flex gap-4">
-            <div className="w-1/2">
-              <p className="text-gray-2 text-15px pb-2">입차시간</p>
-              <div className="bg-gray-light-1 rounded-lg px-4 py-3">
-                <p className="font-semibold">{time}</p>
-                <p className="text-gray-2 text-15px">{date}</p>
+            {timeItems.map(({ label, time, date }) => (
+              <div key={label} className="w-1/2">
+                <p className="text-gray-2 text-15px pb-2">{label}</p>
+                <div className="bg-gray-light-1 rounded-lg px-4 py-3">
+                  <p className="font-semibold">{time}</p>
+                  <p className="text-gray-2 text-15px">{date}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="w-1/2">
-              <p className="text-gray-2 text-15px pb-2">출차시간</p>
-              <div className="bg-gray-light-1 rounded-lg px-4 py-3">
-                <p className="font-semibold">{time}</p>
-                <p className="text-gray-2 text-15px">{date}</p>
-              </div>
-            </div>
+            ))}
           </div>
-
           <div className="flex gap-4 py-4">
-            <div className="w-1/3">
-              <p className="text-gray-2 text-15px pb-2">주차면</p>
-              <p className="font-semibold ms-0.5">A-12</p>
-            </div>
-            <div className="w-1/3">
-              <p className="text-gray-2 text-15px pb-2">차량번호</p>
-              <p className="font-semibold ms-0.5">12가3456</p>
-            </div>
-            <div className="w-1/3">
-              <p className="text-gray-2 text-15px pb-2">이용시간</p>
-              <p className="font-semibold ms-0.5">3시간</p>
-            </div>
+            {infoItems.map(({ label, value }, index) => (
+              <div
+                key={label}
+                className={`w-1/3 pr-4 ${
+                  index !== infoItems.length - 1
+                    ? 'border-r border-gray-200'
+                    : ''
+                }`}
+              >
+                <p className="text-gray-2 text-15px pb-2">{label}</p>
+                <p className="font-semibold ms-0.5">{value}</p>
+              </div>
+            ))}
           </div>
         </PaddedSection>
       </div>
