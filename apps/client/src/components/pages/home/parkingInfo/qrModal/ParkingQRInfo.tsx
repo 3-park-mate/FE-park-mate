@@ -35,15 +35,15 @@ export default function ParkingQRInfo({
         <QRExtraInfoSection timeItems={timeItems} infoItems={infoItems} />
       </div>
       <div className="flex justify-center gap-3 items-center w-full">
+        <Button className="bg-white border border-red-1 text-red-1 w-1/2 h-10">
+          예약취소
+        </Button>
         <Link
           href={`/parking-lot/${parkingLotUuid}`}
           className={`${buttonVariants({ variant: 'default' })} w-1/2 !text-black h-10`}
         >
           주차장 상세보기
         </Link>
-        <Button className="bg-white border border-red-1 text-red-1 w-1/2 h-10">
-          예약취소
-        </Button>
       </div>
     </PaddedLayout>
   );
