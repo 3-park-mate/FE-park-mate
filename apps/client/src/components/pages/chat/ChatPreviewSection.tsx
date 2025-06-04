@@ -1,7 +1,7 @@
-import { ChatPreviewItemType } from '@/types/chatDataTypes';
-import { getTimeLabel } from '@/utils/getTimeLabel';
 import { cn } from '@repo/ui/lib/utils';
 import Image from 'next/image';
+import { ChatPreviewItemType } from '@/types/chatDataTypes';
+import { getTimeLabel } from '@/utils/getTimeLabel';
 
 export default function ChatPreviewSection({
   chatPreviewItem,
