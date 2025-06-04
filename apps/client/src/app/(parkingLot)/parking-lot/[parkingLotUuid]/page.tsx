@@ -1,10 +1,8 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import DetailInfoSection from '@/components/pages/parkingLot/DetailInfoSection';
 import DetailInfoMenuSection from '@/components/pages/parkingLot/DetailInfoMenuSection';
-import DetailExtraInfoSection from '@/components/pages/parkingLot/DetailExtraInfoSection';
 import { HomeTabMenu } from '@/components/pages/home/HomeTabMenu';
-import ReviewSection from '@/components/pages/parkingLot/ReviewSection';
-import ImageCarouselSection from '@/components/pages/parkingLot/ImageCarouselSection';
+import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 
 export default async function page({
   params,
@@ -23,11 +21,7 @@ export default async function page({
           <HomeTabMenu tabMenuName="홈" selected={true} />
           <HomeTabMenu tabMenuName="리뷰" />
         </ul>
-        <section className="bg-inner-background-gray space-y-3">
-          <DetailExtraInfoSection />
-          <ImageCarouselSection />
-          <ReviewSection />
-        </section>
+        <ParkingDetailContent />
       </main>
     </>
   );
