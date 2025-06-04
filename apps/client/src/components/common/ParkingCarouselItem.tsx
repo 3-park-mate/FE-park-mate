@@ -16,7 +16,7 @@ export default function ParkingCarouselItem({
   averageRating,
 }: ParkingCarouselItemDataType) {
   return (
-    <div>
+    <div className="max-w-[164px]">
       <Link href={`/parking-lot/${parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 
