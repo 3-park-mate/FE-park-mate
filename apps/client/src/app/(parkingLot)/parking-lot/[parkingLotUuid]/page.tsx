@@ -14,7 +14,7 @@ export default async function page({
   return (
     <>
       <PageHeader title="주차장 이름" />
-      <main>
+      <main className="pb-32">
         <DetailInfoSection />
         <DetailInfoMenuSection />
         <ul className="flex justify-between bg-inner-background-gray">
