@@ -5,9 +5,7 @@ export default function page() {
   const chatPreviewItems = chatPreviewItemDummyData;
   return (
     <main>
-      {chatPreviewItems.map((item, index) => (
-        <ChatPreviewSection key={index} chatPreviewItem={item} />
-      ))}
+      <ChatPreviewSection chatPreviewItems={chatPreviewItems} />
     </main>
   );
 }

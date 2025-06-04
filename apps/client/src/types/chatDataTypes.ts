@@ -5,5 +5,4 @@ export interface ChatPreviewItemType {
   lastMessage: string;
   updatedAt: string;
   unReadCount: number;
-  isOnline: boolean;
 }
