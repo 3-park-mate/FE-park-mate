@@ -14,6 +14,9 @@ export const getCurrentLocationUtils = (): Promise<{
       },
       (error) => {
         reject(error);
+      },
+      {
+        enableHighAccuracy: true,
       }
     );
   });

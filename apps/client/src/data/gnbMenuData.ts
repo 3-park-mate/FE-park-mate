@@ -21,7 +21,7 @@ export const gnbMenuData: GnbMenuType[] = [
   },
   {
     menuName: '채팅',
-    link: '/chat',
+    link: '/chat-list',
     icon: MessageSquareText,
   },
   {

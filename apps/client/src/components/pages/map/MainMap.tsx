@@ -48,8 +48,7 @@ export default function MainMap() {
     try {
       const { latitude, longitude } = await getCurrentLocationUtils();
       parkingFilter.setMapCenter(latitude, longitude, null);
-
-      console.log('현재위치', latitude, longitude);
+      // console.log('현재위치', latitude, longitude);
     } catch (error) {
       console.log('현재위치 실패', error);
     }
