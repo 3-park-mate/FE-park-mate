@@ -1,8 +1,8 @@
 'use client';
-import { cn } from '@repo/ui/lib/utils';
 import BackButton from './BackButton';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default function PageHeader({
   title,
@@ -34,21 +34,11 @@ export default function PageHeader({
   }, []);
 
   return (
-    <>
-      <header
-        className={cn(
-          'h-13 flex items-center justify-center relative z-40 max-w-[600px] mx-auto',
-          'fixed top-0 left-0 right-0 bg-white transition-shadow',
-          isScrolled && 'shadow-md',
-          className
-        )}
-      >
-        <div className="absolute left-0 flex justify-center">
-          <BackButton className="ml-3" />
-        </div>
-        <h1 className="font-semibold">{title}</h1>
-      </header>
-      <div className="h-13"></div>
-    </>
+    <HeaderLayout className={className} isShadow={isScrolled}>
+      <div className="absolute left-0 flex justify-center">
+        <BackButton className="ml-3" />
+      </div>
+      <h1 className="font-semibold">{title}</h1>
+    </HeaderLayout>
   );
 }
