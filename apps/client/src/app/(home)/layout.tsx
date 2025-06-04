@@ -11,7 +11,7 @@ export default function layout({
 }>) {
   return (
     <div className="min-h-screen bg-white pb-32">
-      <HomeMainHeader Icon={MarkerIcon} title="서울 코엑스 주변" />
+      <HomeMainHeader icon={<MarkerIcon />} title="서울 코엑스 주변" />
       <main>
         {children}
         {homeExtra}

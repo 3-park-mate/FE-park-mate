@@ -1,5 +1,6 @@
 import HomeMainHeader from '@/components/layouts/HomeMainHeader';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
+import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 
 export default function layout({
   children,
@@ -8,7 +9,7 @@ export default function layout({
 }>) {
   return (
     <div className="h-screen overflow-hidden">
-      <HomeMainHeader />
+      <HomeMainHeader icon={<MarkerIcon />} title="서울 코엑스 주변" isShadow />
       {children}
       <GnbNavBar />
     </div>

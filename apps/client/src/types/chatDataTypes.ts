@@ -1,6 +1,6 @@
 export interface ChatPreviewItemType {
   chatRoomId: string;
-  profileImage: string;
+  parkingLotThumbnailUrl: string;
   chatRoomName: string;
   lastMessage: string;
   updatedAt: string;

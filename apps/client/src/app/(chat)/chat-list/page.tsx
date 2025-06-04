@@ -1,14 +1,13 @@
-import ChatPreview from '@/components/pages/chat/ChatPreview';
 import { chatPreviewItemDummyData } from '@/data/chatDatas';
-import React from 'react';
+import ChatPreviewSection from '@/components/pages/chat/ChatPreviewSection';
 
 export default function page() {
   const chatPreviewItems = chatPreviewItemDummyData;
   return (
-    <div>
+    <main>
       {chatPreviewItems.map((item, index) => (
-        <ChatPreview key={index} chatPreviewItem={item} />
+        <ChatPreviewSection key={index} chatPreviewItem={item} />
       ))}
-    </div>
+    </main>
   );
 }

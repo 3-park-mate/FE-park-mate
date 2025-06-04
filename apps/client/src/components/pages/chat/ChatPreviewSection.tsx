@@ -1,9 +1,9 @@
-import { cn } from '@repo/ui/lib/utils';
-import Image from 'next/image';
 import { ChatPreviewItemType } from '@/types/chatDataTypes';
 import { getTimeLabel } from '@/utils/getTimeLabel';
+import { cn } from '@repo/ui/lib/utils';
+import Image from 'next/image';
 
-export default function ChatPreview({
+export default function ChatPreviewSection({
   chatPreviewItem,
 }: {
   chatPreviewItem: ChatPreviewItemType;
@@ -21,7 +21,7 @@ export default function ChatPreview({
   const timeLabel = getTimeLabel(updatedAt);
 
   return (
-    <div className="flex justify-between items-center gap-3 py-3.5">
+    <section className="flex justify-between items-center gap-3 py-4">
       <div className="relative">
         <Image
           src={parkingLotThumbnailUrl}
@@ -31,19 +31,19 @@ export default function ChatPreview({
           className="rounded-full shrink-0"
         />
         {isOnline && (
-          <p className="absolute bottom-0.5 right-0 rounded-full size-[10px] bg-green border-white border-2"></p>
+          <span className="absolute bottom-0.5 right-0 rounded-full size-[10px] bg-green border-white border-2"></span>
         )}
       </div>
       <>
         <div className="w-full">
-          <p className="text-16px text-black font-semibold">{chatRoomName}</p>{' '}
+          <h2 className="text-16px text-black font-semibold">{chatRoomName}</h2>{' '}
           <p className="text-12px">{lastMessage}</p>
         </div>
         <div className="shrink-0 flex flex-col items-end">
           <p className="text-10px text-gray-3">{timeLabel}</p>
           <p
             className={cn(
-              'bg-red-2 font-semibold text-xs text-white size-[24px] rounded-[8px] flex items-center justify-center',
+              'bg-red-2 font-semibold text-xs text-white size-[22px] rounded-[8px] flex items-center justify-center',
               unReadCount === 0 && 'opacity-0'
             )}
           >
@@ -51,6 +51,6 @@ export default function ChatPreview({
           </p>
         </div>
       </>
-    </div>
+    </section>
   );
 }

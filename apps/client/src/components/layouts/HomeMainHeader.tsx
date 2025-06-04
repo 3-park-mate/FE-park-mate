@@ -1,21 +1,42 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import SearchIcon from '@repo/ui/components/icon/SearchIcon';
-import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import AlertBell from '../common/AlertBell';
 import { cn } from '@repo/ui/lib/utils';
 
 export default function HomeMainHeader({
-  Icon,
   title,
   className,
+  icon,
+  isShadow = false,
 }: {
-  Icon?: React.ElementType;
   title?: string;
   className?: string;
+  icon?: React.ReactNode;
+  isShadow?: boolean;
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="fixed top-0 w-full max-w-[600px] h-[65px] flex justify-between items-center bg-white p-5 shadow-md space-x-3 z-50">
+    <header
+      className={cn(
+        'fixed top-0 w-full max-w-[600px] h-[65px] flex justify-between items-center bg-white p-5 space-x-3 z-50',
+        (isScrolled || isShadow) && 'shadow-md'
+      )}
+    >
       <div className="w-full flex items-center gap-2">
-        {Icon && <Icon className="size-6" />}
+        {icon && icon}
         <p className={cn('text-[0.813rem] font-semibold', className)}>
           {title}
         </p>
