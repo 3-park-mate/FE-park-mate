@@ -1,6 +1,5 @@
 import HomeMainHeader from '@/components/layouts/HomeMainHeader';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
-import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 
 export default function layout({
   children,
@@ -11,7 +10,7 @@ export default function layout({
 }>) {
   return (
     <div className="min-h-screen bg-white pb-32">
-      <HomeMainHeader icon={<MarkerIcon />} title="서울 코엑스 주변" />
+      <HomeMainHeader title="서울 코엑스 주변" type="location" />
       <main>
         {children}
         {homeExtra}

@@ -19,7 +19,7 @@ export default function ReviewSection() {
         ))}
         <Link
           href="#"
-          className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-white !text-black mt-2`}
+          className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-white !text-black mt-4`}
           style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
         >
           리뷰 전체보기 <ChevronRight />

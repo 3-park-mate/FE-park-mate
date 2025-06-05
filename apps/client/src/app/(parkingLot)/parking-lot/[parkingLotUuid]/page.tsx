@@ -1,10 +1,13 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import DetailInfoSection from '@/components/pages/parkingLot/DetailInfoSection';
 import DetailInfoMenuSection from '@/components/pages/parkingLot/DetailInfoMenuSection';
-import DetailExtraInfoSection from '@/components/pages/parkingLot/DetailExtraInfoSection';
 import { HomeTabMenu } from '@/components/pages/home/HomeTabMenu';
-import ReviewSection from '@/components/pages/parkingLot/ReviewSection';
-import ImageCarouselSection from '@/components/pages/parkingLot/ImageCarouselSection';
+import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
+import {
+  parkingDetailDummy,
+  parkingOperationDummy,
+  reviewSummaryDummy,
+} from '@/data/parkingDummyDatas';
 
 export default async function page({
   params,
@@ -15,19 +18,33 @@ export default async function page({
 
   return (
     <>
-      <PageHeader title="주차장 이름" />
-      <main>
-        <DetailInfoSection />
-        <DetailInfoMenuSection />
+      <PageHeader title={parkingDetailDummy.name} />
+      <main className="pb-32">
+        <DetailInfoSection
+          thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}
+          baseFee={parkingOperationDummy.baseFee}
+          name={parkingDetailDummy.name}
+          averageRating={reviewSummaryDummy.averageRating}
+          totalReviews={reviewSummaryDummy.totalReviews}
+          distance={100}
+          availableSpots={10}
+          registeredParkingCount={parkingDetailDummy.registeredParkingCount}
+        />
+        <DetailInfoMenuSection
+          hostUuid={parkingDetailDummy.hostUuid}
+          parkingLotUuid={parkingLotUuid}
+          isActive={parkingOperationDummy.isActive}
+          like={1}
+          dislike={99}
+          baseFee={parkingOperationDummy.baseFee}
+          availableSpots={10}
+          registeredParkingCount={parkingDetailDummy.registeredParkingCount}
+        />
         <ul className="flex justify-between bg-inner-background-gray">
           <HomeTabMenu tabMenuName="홈" selected={true} />
           <HomeTabMenu tabMenuName="리뷰" />
         </ul>
-        <section className="bg-inner-background-gray space-y-3">
-          <DetailExtraInfoSection />
-          <ImageCarouselSection />
-          <ReviewSection />
-        </section>
+        <ParkingDetailContent />
       </main>
     </>
   );

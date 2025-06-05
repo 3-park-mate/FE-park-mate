@@ -10,12 +10,12 @@ export const gnbMenuData: GnbMenuType[] = [
   },
   {
     menuName: '즐겨찾기',
-    link: '/my-reservation',
+    link: '/favorites',
     icon: Bookmark,
   },
   {
     menuName: '지도',
-    link: '/map-page',
+    link: '/map',
     icon: ParkingMarkerIcon,
     main: true,
   },

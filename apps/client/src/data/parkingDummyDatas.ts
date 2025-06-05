@@ -1,7 +1,10 @@
 import {
   ParkingCarouselItemDataType,
+  ParkingDetailDataType,
   ParkingLocationDataType,
+  ParkingOperationDataType,
   ParkingTimeDataType,
+  ReviewSummaryDataType,
 } from '@/types/parkingDataTypes';
 
 export const parkingLocationDummy: ParkingLocationDataType = {
@@ -83,3 +86,48 @@ export const parkingCarouselItemsDummy: ParkingCarouselItemDataType[] = [
     averageRating: 4.5,
   },
 ];
+
+export const parkingDetailDummy: ParkingDetailDataType = {
+  hostUuid: '123e4567-e89b-12d3-a456-426614174000',
+  parkingLotType: '지상',
+  name: '강남 제1 주차장',
+  parkingCapacity: 100,
+  registeredParkingCount: 85,
+  zoneCode: '06236',
+  mainAddress: '서울특별시 강남구 테헤란로 123',
+  detailAddress: '지상 1층',
+  evChargingAvailable: true,
+  phoneNumber: '02-1234-5678',
+  extraInfo: '24시간 운영, 카드 결제 가능',
+  imageUrls: [
+    'https://dummyimage.com/310x204',
+    'https://dummyimage.com/150x150',
+  ],
+  parkingSpotChargeTypeList: [
+    {
+      chargeTypeId: 1,
+      chargeTypeName: 'AC단상',
+    },
+    {
+      chargeTypeId: 2,
+      chargeTypeName: 'AC3상',
+    },
+  ],
+};
+
+export const parkingOperationDummy: ParkingOperationDataType = {
+  parkingLotUuid: 'abc123-lot-uuid-456',
+  isActive: true,
+  validStartTime: '08:00',
+  validEndTime: '22:00',
+  baseIntervalMinutes: 30,
+  baseFee: 1000,
+  extraIntervalMinutes: 10,
+  extraFee: 500,
+  discountPercent: 10,
+};
+
+export const reviewSummaryDummy: ReviewSummaryDataType = {
+  averageRating: 4.5,
+  totalReviews: 128,
+};

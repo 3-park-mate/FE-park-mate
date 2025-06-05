@@ -8,8 +8,8 @@ export default function QRcodeBoxSection() {
       <p className="text-center text-gray-2 pt-2 pb-4 text-15px break-keep">
         주차장의 리더기에 아래 QR 코드를 인식시켜 주세요.
       </p>
-      <ImageViewDialog imgSrc="https://dummyimage.com/140x140">
-        <div className="relative w-[35vw] max-w-[200px] min-w-[140px] aspect-square bg-white rounded-lg drop-shadow-lg flex justify-center items-center cursor-pointer">
+      <ImageViewDialog imgSrc="https://dummyimage.com/140x140" title="QR코드">
+        <div className="relative w-[35vw] max-w-[200px] min-w-[140px] aspect-square bg-white rounded-lg drop-shadow-lg flex justify-center items-center">
           <Image
             src="https://dummyimage.com/140x140"
             alt="qr-image"

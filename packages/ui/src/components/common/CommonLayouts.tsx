@@ -71,12 +71,12 @@ export function CommonPriceBadge({
   return (
     <div
       className={cn(
-        'text-xs bg-primary-dark-50 px-2 py-1 rounded-lg shadow-md',
+        'text-xs bg-primary-dark-50 px-2 py-1 rounded-lg shadow-md font-semibold',
         className
       )}
     >
       {children}
-      <span className="text-[10px] text-black/80">/1시간</span>
+      <span className="text-[10px] text-black/70">/1시간</span>
     </div>
   );
 }
@@ -126,7 +126,7 @@ export function HeaderLayout({
     <>
       <header
         className={cn(
-          'h-13 flex items-center justify-center relative z-40 max-w-[600px] mx-auto',
+          'h-14 flex items-center justify-center relative z-40 max-w-[600px] mx-auto',
           'fixed top-0 left-0 right-0 bg-white transition-shadow',
           isShadow && 'shadow-md',
           className
@@ -134,7 +134,7 @@ export function HeaderLayout({
       >
         {children}
       </header>
-      <div className="h-13" />
+      <div className="h-14" />
     </>
   );
 }

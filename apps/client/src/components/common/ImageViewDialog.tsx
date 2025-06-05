@@ -9,22 +9,27 @@ import Image from 'next/image';
 
 export default function ImageViewDialog({
   children,
+  title,
   imgSrc,
 }: {
   children: React.ReactNode;
+  title?: string;
   imgSrc: string;
 }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className=" p-0 bg-white overflow-hidden border-none">
-        <DialogTitle className="text-center pt-4">QR코드</DialogTitle>
+      <DialogTrigger asChild className="cursor-pointer">
+        {children}
+      </DialogTrigger>
+      <DialogContent className="p-0 bg-white overflow-hidden border-none">
+        <DialogTitle className="text-center pt-4">{title}</DialogTitle>
         <DialogDescription className="hidden" />
-        <div className="relative aspect-square">
+        <div className="relative">
           <Image
             src={imgSrc}
             alt="image-large"
-            fill
+            width={800}
+            height={600}
             className="object-contain"
           />
         </div>

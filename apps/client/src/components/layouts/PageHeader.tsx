@@ -36,7 +36,7 @@ export default function PageHeader({
   return (
     <HeaderLayout className={className} isShadow={isScrolled}>
       <div className="absolute left-0 flex justify-center">
-        <BackButton className="ml-3" />
+        <BackButton className="ml-5" />
       </div>
       <h1 className="font-semibold">{title}</h1>
     </HeaderLayout>
