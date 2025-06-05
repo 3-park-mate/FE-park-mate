@@ -1,21 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import SearchIcon from '@repo/ui/components/icon/SearchIcon';
-import AlertBell from '../common/AlertBell';
 import { cn } from '@repo/ui/lib/utils';
 import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
 import BackButton from './BackButton';
-import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
+import { BellIcon } from 'lucide-react';
 
-export default function HomeMainHeader({
+export default function HostMainHeader({
   title,
-  type = 'backButton',
+  type = 'default',
   className,
   isShadow = false,
 }: {
   title?: string;
-  type: 'location' | 'backButton';
+  type?: 'default' | 'backButton';
   className?: string;
   isShadow?: boolean;
 }) {
@@ -37,19 +35,17 @@ export default function HomeMainHeader({
       isShadow={isShadow || isScrolled}
     >
       <div className="w-full flex items-center gap-2">
-        {type === 'location' ? <MarkerIcon /> : <BackButton />}
-        <p
-          className={cn(
-            'font-semibold',
-            type === 'location' && 'text-sm',
-            className
-          )}
-        >
-          {title}
-        </p>
+        {type === 'backButton' && <BackButton />}
+        <div className="flex items-baseline gap-1">
+          <span className="text-secondary font-extrabold text-xl">
+            파크메이트
+          </span>
+          <span className="text-gray-2 font-semibold text-[19px]">호스트</span>
+        </div>
+        <span className="text-gray-2">|</span>
+        <p className={cn('font-semibold', className)}>{title}</p>
       </div>
-      {type === 'location' && <SearchIcon className="size-[24px] flex-none" />}
-      <AlertBell count={4} />
+      <BellIcon className="text-secondary" />
     </HeaderLayout>
   );
 }

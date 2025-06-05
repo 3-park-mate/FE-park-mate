@@ -1,5 +1,5 @@
 import GnbNavBar from '@/components/layouts/GnbNavBar';
-import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
+import HostMainHeader from '@/components/layouts/HostMainHeader';
 
 export default function layout({
   children,
@@ -8,9 +8,7 @@ export default function layout({
 }>) {
   return (
     <div className="min-h-screen bg-white pb-32">
-      <HeaderLayout isShadow>
-        <h1 className="font-semibold">홈</h1>
-      </HeaderLayout>
+      <HostMainHeader title="홈" />
       {children}
       <GnbNavBar />
     </div>
