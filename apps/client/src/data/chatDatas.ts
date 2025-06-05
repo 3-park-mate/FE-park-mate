@@ -1,36 +1,159 @@
-import { ChatPreviewItemType } from '@/types/chatDataTypes';
+import {
+  ChatMessageType,
+  ChatPreviewItemType,
+  ChatRoomInfoType,
+} from '@/types/chatDataTypes';
 
 export const chatPreviewItemDummyData: ChatPreviewItemType[] = [
   {
-    chatRoomId: '',
-    parkingLotThumbnailUrl: 'https://dummyimage.com/48x48',
+    chatRoomId: '1',
     chatRoomName: '주차는 내가 왕',
     lastMessage: '지금바로 입차 가능합니다.',
     updatedAt: '2025-06-04T09:00:00',
     unReadCount: 0,
   },
   {
-    chatRoomId: '',
-    parkingLotThumbnailUrl: 'https://dummyimage.com/48x48',
+    chatRoomId: '1',
     chatRoomName: '부산주차장',
     lastMessage: '지금바로 입차 가능합니다.',
     updatedAt: '2025-06-03T14:00:00',
     unReadCount: 2,
   },
   {
-    chatRoomId: '',
-    parkingLotThumbnailUrl: 'https://dummyimage.com/48x48',
+    chatRoomId: '1',
     chatRoomName: '주차장3',
     lastMessage: '연락바랍니다.',
     updatedAt: '2025-05-29T09:42:00',
     unReadCount: 10,
   },
   {
-    chatRoomId: '',
-    parkingLotThumbnailUrl: 'https://dummyimage.com/48x48',
+    chatRoomId: '1',
     chatRoomName: '부산주차장',
     lastMessage: 'ㄴㅇㄹㄴㅇㄻ',
     updatedAt: '2024-05-29T09:42:00',
     unReadCount: 0,
   },
 ];
+
+export const ChatMessageDummyDatas: ChatMessageType[] = [
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '1',
+    senderUuid: 'b1',
+    message: '28일 예약 가능한가요?',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:42:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '1',
+    senderUuid: 'a1',
+    message: '5월 28일 오전 8시부터 오전 9시까지 예약 가능합니다.',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:42:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '2',
+    senderUuid: 'a1',
+    message: '이용 시간 초과 시 추가요금 부과되므로 유의바랍니다.',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:43:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '3',
+    senderUuid: 'b1',
+    message: '네.',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:50:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '4',
+    senderUuid: 'b1',
+    message: '예약 바로 진행할게요.',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:50:12',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '5',
+    senderUuid: 'b1',
+    message: '예약 바로 진행할게요.',
+    messageType: 'string',
+    createdAt: '2024-05-25T09:50:12',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '6',
+    senderUuid: 'a1',
+    message: '이용 시간 30분 초과되었습니다.',
+    messageType: 'string',
+    createdAt: '2024-05-28T09:50:12',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '7',
+    senderUuid: 'b1',
+    message: '지금 출발했어요.',
+    messageType: 'string',
+    createdAt: '2024-05-28T09:55:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '8',
+    senderUuid: 'b1',
+    message: '15분 안에 도착할 예정입니다.',
+    messageType: 'string',
+    createdAt: '2024-05-28T09:55:30',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '9',
+    senderUuid: 'a1',
+    message: '네. 도착하시면 연락 주세요.',
+    messageType: 'string',
+    createdAt: '2024-05-28T10:00:00',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '10',
+    senderUuid: 'b1',
+    message: '도착했어요!',
+    messageType: 'string',
+    createdAt: '2024-05-28T10:15:45',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '11',
+    senderUuid: 'a1',
+    message: '네 출차 부탁드립니다. 이용해주셔서 감사합니다.',
+    messageType: 'string',
+    createdAt: '2024-05-28T10:16:10',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '12',
+    senderUuid: 'b1',
+    message: '네.',
+    messageType: 'string',
+    createdAt: '2024-05-28T10:16:30',
+  },
+];
+
+export const ChatRoomInfoDummyData: ChatRoomInfoType = {
+  chatRoomName: '부산주차장',
+  usersProfile: [
+    {
+      userUuid: 'a1',
+      userNickName: '부산 제임스',
+      profileImageUrl: 'https://dummyimage.com/36x36',
+    },
+    {
+      userUuid: 'b1',
+      userNickName: '사용자1',
+      profileImageUrl: 'https://dummyimage.com/36x36',
+    },
+  ],
+};

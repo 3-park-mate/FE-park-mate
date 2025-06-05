@@ -138,3 +138,24 @@ export function HeaderLayout({
     </>
   );
 }
+
+export function TextBadge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className="flex justify-center py-5">
+      <p
+        className={cn(
+          'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
+          className
+        )}
+      >
+        {children}
+      </p>
+    </div>
+  );
+}
