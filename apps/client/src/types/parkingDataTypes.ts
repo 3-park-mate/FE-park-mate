@@ -28,7 +28,51 @@ export interface ParkingCarouselItemDataType {
   averageRating: number;
 }
 
-export interface ReviewSummaryType {
+export interface ReviewSummaryDataType {
   averageRating: number;
   totalReviews: number;
+}
+
+export interface ParkingSpotChargeType {
+  chargeTypeId: number;
+  chargeTypeName: string;
+}
+
+export interface ParkingDetailDataType {
+  hostUuid: string;
+  parkingLotType: string;
+  name: string;
+  parkingCapacity: number;
+  registeredParkingCount: number;
+  zoneCode: string;
+  mainAddress: string;
+  detailAddress: string;
+  evChargingAvailable: boolean;
+  phoneNumber: string;
+  extraInfo: string;
+  imageUrls: string[];
+  parkingSpotChargeTypeList: ParkingSpotChargeType[];
+}
+
+export interface ParkingOperationDataType {
+  parkingLotUuid: string;
+  isActive: boolean;
+  validStartTime: string;
+  validEndTime: string;
+  baseIntervalMinutes: number;
+  baseFee: number;
+  extraIntervalMinutes: number;
+  extraFee: number;
+  discountPercent: number;
+}
+
+export interface DetailInfoSectionProps {
+  thumbImageUrl: string;
+  baseFee: number;
+  name: string;
+  averageRating: number;
+  totalReviews: number;
+  distance: number;
+  availableSpots: number;
+  registeredParkingCount: number;
 }

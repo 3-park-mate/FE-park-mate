@@ -1,13 +1,15 @@
+import { Rating } from '@repo/ui/components/common/CommonLayouts';
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ReviewItem() {
   return (
     <div className="py-3">
-      <p className="pb-1">
-        홍*동
-        <span className="text-gray-3 text-sm ms-2">5.30 · 1시간 이용</span>
-      </p>
+      <p className="">홍*동</p>
+      <Rating className="!text-sm">
+        <span className="">4.5</span>
+        <span className="text-gray-3 text-sm ms-1">5.30 · 1시간 이용</span>
+      </Rating>
       <div className="flex justify-between">
         <p className="text-15px text-gray-2 pt-2">
           여기에 리뷰 내용이 들어갑니다. 여기에 리뷰 내용이 들어갑니다. 여기에
@@ -15,7 +17,7 @@ export default function ReviewItem() {
         </p>
         <div className="relative rounded-md w-24 h-24 ml-3 flex-shrink-0">
           <Image
-            src="https://dummyimage.com/155x102"
+            src="https://dummyimage.com/96x96"
             alt="리뷰 이미지"
             fill
             className="object-cover rounded-md"

@@ -71,12 +71,12 @@ export function CommonPriceBadge({
   return (
     <div
       className={cn(
-        'text-xs bg-primary-dark-50 px-2 py-1 rounded-lg shadow-md',
+        'text-xs bg-primary-dark-50 px-2 py-1 rounded-lg shadow-md font-semibold',
         className
       )}
     >
       {children}
-      <span className="text-[10px] text-black/80">/1시간</span>
+      <span className="text-[10px] text-black/70">/1시간</span>
     </div>
   );
 }
