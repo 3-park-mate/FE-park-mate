@@ -12,9 +12,14 @@ export default function ChatMessageBlock({
     <>
       {displayInfo.showDate && <TextBadge>{displayInfo.dateOnly}</TextBadge>}
       {displayInfo.showProfile && (
-        <p className="p-1.5 font-medium">
+        <TextWithImage
+          imageProps={{
+            src: 'https://dummyimage.com/45x45',
+            alt: displayInfo.senderProfile?.userNickName || '',
+          }}
+        >
           {displayInfo.senderProfile?.userNickName}
-        </p>
+        </TextWithImage>
       )}
       <ChatMessage
         message={message}

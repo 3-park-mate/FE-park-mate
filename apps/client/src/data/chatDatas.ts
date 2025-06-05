@@ -148,10 +148,12 @@ export const ChatRoomInfoDummyData: ChatRoomInfoType = {
     {
       userUuid: 'a1',
       userNickName: '부산 제임스',
+      profileImageUrl: 'https://dummyimage.com/36x36',
     },
     {
       userUuid: 'b1',
       userNickName: '사용자1',
+      profileImageUrl: 'https://dummyimage.com/36x36',
     },
   ],
 };

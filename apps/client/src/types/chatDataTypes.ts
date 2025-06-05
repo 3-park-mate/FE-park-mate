@@ -18,6 +18,7 @@ export interface ChatMessageType {
 export interface profileInfoType {
   userUuid: string;
   userNickName: string;
+  profileImageUrl: string;
 }
 
 export interface ChatRoomInfoType {

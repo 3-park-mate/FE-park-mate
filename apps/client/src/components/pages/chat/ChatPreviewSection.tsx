@@ -21,7 +21,7 @@ export default function ChatPreviewSection({
           onClick={(e) => router.push(`/chat-room/${item.chatRoomId}`)}
         >
           <Image
-            src={item.parkingLotThumbnailUrl}
+            src="https://dummyimage.com/45x45"
             alt={item.chatRoomName}
             width={48}
             height={48}
