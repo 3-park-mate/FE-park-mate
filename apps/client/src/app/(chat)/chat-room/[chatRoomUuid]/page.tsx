@@ -17,11 +17,9 @@ export default async function page({
         title={chatRoomInfo.chatRoomName}
         className="bg-gray-light-1"
       />
-      <PaddedLayout>
-        <main>
-          <ChatViewSection chatRoomInfo={chatRoomInfo} />
-        </main>
-      </PaddedLayout>
+      <main className="z-0 px-6">
+        <ChatViewSection chatRoomInfo={chatRoomInfo} />
+      </main>
     </>
   );
 }

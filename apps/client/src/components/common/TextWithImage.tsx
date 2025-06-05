@@ -21,7 +21,7 @@ export function TextWithImage({
       )}
     >
       <Image width={30} height={30} {...imageProps} className="rounded-full" />
-      <span>{children}</span>
+      <span className="font-medium">{children}</span>
     </div>
   );
 }

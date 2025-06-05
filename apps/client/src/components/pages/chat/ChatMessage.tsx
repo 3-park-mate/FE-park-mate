@@ -1,45 +1,34 @@
+import { formatTimeENUtils } from '@/utils/datetimeUtils';
 import { cn } from '@repo/ui/lib/utils';
 
 export default function ChatMessage({
   message,
-  senderUuid,
-  currentUserUuid,
   createdAt = '',
+  isFromMe,
 }: {
   message: string;
-  senderUuid: string;
-  currentUserUuid: string;
   createdAt?: string;
+  isFromMe: boolean;
 }) {
-  const date = new Date(createdAt);
+  const formattedTime = formatTimeENUtils(createdAt);
 
-  const fromMe = senderUuid === currentUserUuid;
   return (
-    <>
-      <div
+    <div
+      className={cn(
+        'w-full flex flex-col space-y-1 mb-2',
+        isFromMe ? 'items-end' : 'items-start'
+      )}
+    >
+      <p
         className={cn(
-          'w-full flex flex-col mb-1',
-          fromMe ? 'items-end' : 'items-start'
+          'inline-flex max-w-5/6 break-all bg-white px-3 py-2 border-1 border-gray-light-2 rounded-b-xl rounded-tr-xl text-sm font-medium',
+          isFromMe &&
+            'bg-primary-dark-50 text-white font-light border-0 rounded-tl-xl rounded-tr-none '
         )}
       >
-        <p
-          className={cn(
-            'inline-flex px-3 py-2 border-1 rounded-b-xl rounded-tr-xl text-sm',
-            fromMe &&
-              'bg-primary-dark-50 text-sm text-white rounded-tl-xl rounded-tr-none '
-          )}
-        >
-          {message}
-        </p>
-        {createdAt && (
-          <p className="text-gray-3 text-xs mt-1.5">
-            {Intl.DateTimeFormat('en-EN', {
-              hour: '2-digit',
-              minute: '2-digit',
-            }).format(date)}
-          </p>
-        )}
-      </div>
-    </>
+        {message}
+      </p>
+      <p className="text-gray-3 text-xs">{formattedTime}</p>
+    </div>
   );
 }

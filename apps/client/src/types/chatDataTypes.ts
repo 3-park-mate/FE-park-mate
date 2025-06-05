@@ -1,6 +1,5 @@
 export interface ChatPreviewItemType {
   chatRoomId: string;
-  parkingLotThumbnailUrl: string;
   chatRoomName: string;
   lastMessage: string;
   updatedAt: string;
@@ -16,12 +15,26 @@ export interface ChatMessageType {
   createdAt: string;
 }
 
+export interface profileInfoType {
+  userUuid: string;
+  userNickName: string;
+}
+
 export interface ChatRoomInfoType {
   chatRoomName: string;
-  hostUuid: string;
-  hostNickname: string;
-  parkingLotThumbnailUrl: string;
-  userUuid: string;
-  userNickname: string;
-  userProfileUrl: string;
+  usersProfile: profileInfoType[];
+}
+
+export interface ChatMessageDisplayInfoType {
+  showProfile: boolean;
+  senderProfile?: profileInfoType;
+  showDate: boolean;
+  dateOnly: string;
+  isFromMe: boolean;
+}
+
+export interface chatMessageBlockInfoType {
+  displayInfo: ChatMessageDisplayInfoType;
+  message: string;
+  createdAt: string;
 }

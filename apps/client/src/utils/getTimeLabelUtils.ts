@@ -1,4 +1,4 @@
-export function getTimeLabel(updatedAt: string): string {
+export function getTimeLabelUtils(updatedAt: string): string {
   const updated = new Date(updatedAt);
   const today = new Date();
 

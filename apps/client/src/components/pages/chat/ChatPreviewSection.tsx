@@ -1,19 +1,24 @@
+'use client';
+
 import { cn } from '@repo/ui/lib/utils';
 import Image from 'next/image';
 import { ChatPreviewItemType } from '@/types/chatDataTypes';
-import { getTimeLabel } from '@/utils/getTimeLabel';
+import { getTimeLabelUtils } from '@/utils/getTimeLabelUtils';
+import { useRouter } from 'next/navigation';
 
 export default function ChatPreviewSection({
   chatPreviewItems,
 }: {
   chatPreviewItems: ChatPreviewItemType[];
 }) {
+  const router = useRouter();
   return (
     <ul>
       {chatPreviewItems.map((item, index) => (
         <li
           key={index}
           className="flex justify-between items-center gap-3 py-4"
+          onClick={(e) => router.push(`/chat-room/${item.chatRoomId}`)}
         >
           <Image
             src={item.parkingLotThumbnailUrl}
@@ -31,7 +36,7 @@ export default function ChatPreviewSection({
             </div>
             <div className="shrink-0 flex flex-col items-end">
               <p className="text-10px text-gray-3">
-                {getTimeLabel(item.updatedAt)}
+                {getTimeLabelUtils(item.updatedAt)}
               </p>
               <p
                 className={cn(
