@@ -3,7 +3,7 @@ import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default function UserInfo() {
   return (
-    <PaddedLayout className="bg-gray-light-1 py-8">
+    <PaddedLayout className="bg-gray-light-1 pt-4 pb-7">
       <p className="text-17px">
         <b>홍길동</b>님, 안녕하세요.
       </p>

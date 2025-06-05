@@ -42,7 +42,7 @@ export default function HomeMainHeader({
         <p
           className={cn(
             'font-semibold',
-            type === 'location' && 'text-13px',
+            type === 'location' && 'text-sm',
             className
           )}
         >

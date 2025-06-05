@@ -1,3 +1,4 @@
+'use client';
 import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
 import {
   CommonPriceBadge,
@@ -6,8 +7,9 @@ import {
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import Image from 'next/image';
 import Link from 'next/link';
+import FavoriteButton from './FavoriteButton';
 
-export default function ParkingCarouselItem({
+export default function ParkingCardlItem({
   parkingLotUuid,
   name,
   distance,
@@ -16,7 +18,7 @@ export default function ParkingCarouselItem({
   averageRating,
 }: ParkingCarouselItemDataType) {
   return (
-    <div className="max-w-[164px]">
+    <div className="">
       <Link href={`/parking-lot/${parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 
@@ -27,6 +29,13 @@ export default function ParkingCarouselItem({
             alt="주차장 이미지"
             fill
             className="object-cover"
+          />
+          <FavoriteButton
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // 즐겨찾기 토글 처리
+            }}
           />
           <CommonPriceBadge className="absolute bottom-2 right-2">
             {baseFee.toLocaleString()}원
