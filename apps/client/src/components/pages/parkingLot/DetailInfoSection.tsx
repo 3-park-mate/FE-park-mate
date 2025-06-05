@@ -7,13 +7,23 @@ import {
   Rating,
 } from '@repo/ui/components/common/CommonLayouts';
 import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
+import { DetailInfoSectionProps } from '@/types/parkingDataTypes';
 
-export default function DetailInfoSection() {
+export default function DetailInfoSection({
+  thumbImageUrl,
+  baseFee,
+  name,
+  averageRating,
+  totalReviews,
+  distance,
+  availableSpots,
+  registeredParkingCount,
+}: DetailInfoSectionProps) {
   return (
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
         <Image
-          src="https://dummyimage.com/310x204"
+          src={thumbImageUrl}
           alt="주차장 이미지"
           fill
           className="object-cover"
@@ -25,15 +35,19 @@ export default function DetailInfoSection() {
               <span className="text-sm">파크메이트 주차장</span>
               <BadgeCheckIcon size={14} />
             </div>
-            <CommonPriceBadge className="text-black">5,000원</CommonPriceBadge>
+            <CommonPriceBadge className="text-black">
+              {baseFee.toLocaleString()}원
+            </CommonPriceBadge>
           </div>
-          <h1 className="text-2xl font-bold mb-2">
-            어반포트 광화문 S타워 주차장
-          </h1>
-          <Rating className="mb-3">4.9 (349)</Rating>
+          <h1 className="text-2xl font-bold mb-2">{name}</h1>
+          <Rating className="mb-3">
+            {averageRating} ({totalReviews})
+          </Rating>
           <div className="flex items-center gap-4 text-sm">
-            <IconWithText Icon={MapPin}>700m</IconWithText>
-            <IconWithText Icon={Car}>12/20 주차면</IconWithText>
+            <IconWithText Icon={MapPin}>{distance}m</IconWithText>
+            <IconWithText Icon={Car}>
+              {availableSpots}/{registeredParkingCount} 주차면
+            </IconWithText>
           </div>
         </div>
       </div>

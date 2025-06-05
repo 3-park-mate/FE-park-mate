@@ -5,7 +5,21 @@ import {
   PaddedSection,
 } from '@repo/ui/components/common/CommonLayouts';
 
-export default function DetailInfoMenuSection() {
+export default function DetailInfoMenuSection({
+  hostUuid,
+  like,
+  dislike,
+  baseFee,
+  availableSpots,
+  registeredParkingCount,
+}: {
+  hostUuid: string;
+  like: number;
+  dislike: number;
+  baseFee: number;
+  availableSpots: number;
+  registeredParkingCount: number;
+}) {
   return (
     <PaddedSection className="py-5 space-y-5">
       <nav>
@@ -13,8 +27,8 @@ export default function DetailInfoMenuSection() {
           {parkingLotDetailMenus.map((item, index) => {
             let label = item.label;
 
-            if (item.label === '좋아요') label = `좋아요 11`;
-            if (item.label === '싫어요') label = `싫어요 9`;
+            if (item.label === '좋아요') label = `좋아요 ${like}`;
+            if (item.label === '싫어요') label = `싫어요 ${dislike}`;
 
             return (
               <li key={index}>
@@ -27,9 +41,12 @@ export default function DetailInfoMenuSection() {
           })}
         </ul>
       </nav>
-      <AlwaysVisibleTooltip side="bottom" content="1시간 5,000원">
+      <AlwaysVisibleTooltip
+        side="bottom"
+        content={`1시간 ${baseFee.toLocaleString()}원`}
+      >
         <CommonButton className="bg-primary-dark">
-          예약하기 (12/20)
+          예약하기 ({availableSpots}/{registeredParkingCount})
         </CommonButton>
       </AlwaysVisibleTooltip>
     </PaddedSection>
