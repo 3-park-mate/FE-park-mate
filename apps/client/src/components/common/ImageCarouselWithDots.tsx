@@ -13,7 +13,7 @@ import ImageViewDialog from './ImageViewDialog';
 export default function ImageCarouselWithDots({
   images,
 }: {
-  images: { src: string }[];
+  images: string[];
 }) {
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
@@ -42,10 +42,10 @@ export default function ImageCarouselWithDots({
         <CarouselContent className="select-none">
           {images.map((img, index) => (
             <CarouselItem key={index} className="basis-5/6">
-              <ImageViewDialog imgSrc={img.src} title="이미지 상세보기">
+              <ImageViewDialog imgSrc={img} title="이미지 상세보기">
                 <div className="relative rounded-md overflow-hidden bg-gray-1 flex aspect-[3/2]">
                   <Image
-                    src={img.src}
+                    src={img}
                     alt={`이미지 ${index + 1}`}
                     fill
                     className="object-cover"

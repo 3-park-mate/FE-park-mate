@@ -2,6 +2,7 @@ import {
   ParkingCarouselItemDataType,
   ParkingDetailDataType,
   ParkingLocationDataType,
+  ParkingOperationDataType,
   ParkingTimeDataType,
   ReviewSummaryDataType,
 } from '@/types/parkingDataTypes';
@@ -112,6 +113,19 @@ export const parkingDetailDummy: ParkingDetailDataType = {
       chargeTypeName: 'AC3상',
     },
   ],
+};
+
+export const parkingOperationDummy: ParkingOperationDataType = {
+  parkingLotUuid: 'abc123-lot-uuid-456',
+  isActive: true,
+  dayOfWeek: 'MONDAY',
+  validStartTime: '08:00',
+  validEndTime: '22:00',
+  baseIntervalMinutes: 30,
+  baseFee: 1000,
+  extraIntervalMinutes: 10,
+  extraFee: 500,
+  discountPercent: 10,
 };
 
 export const reviewSummaryDummy: ReviewSummaryDataType = {

@@ -5,6 +5,7 @@ import { HomeTabMenu } from '@/components/pages/home/HomeTabMenu';
 import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 import {
   parkingDetailDummy,
+  parkingOperationDummy,
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
 
@@ -13,7 +14,7 @@ export default async function page({
 }: {
   params: Promise<{ parkingLotUuid: string }>;
 }) {
-  // const { parkingLotUuid } = await params;
+  const { parkingLotUuid } = await params;
 
   return (
     <>
@@ -21,7 +22,7 @@ export default async function page({
       <main className="pb-32">
         <DetailInfoSection
           thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}
-          baseFee={3000}
+          baseFee={parkingOperationDummy.baseFee}
           name={parkingDetailDummy.name}
           averageRating={reviewSummaryDummy.averageRating}
           totalReviews={reviewSummaryDummy.totalReviews}
@@ -31,9 +32,11 @@ export default async function page({
         />
         <DetailInfoMenuSection
           hostUuid={parkingDetailDummy.hostUuid}
+          parkingLotUuid={parkingLotUuid}
+          isActive={parkingOperationDummy.isActive}
           like={1}
           dislike={99}
-          baseFee={3000}
+          baseFee={parkingOperationDummy.baseFee}
           availableSpots={10}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
