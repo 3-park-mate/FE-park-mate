@@ -57,7 +57,6 @@ export interface ParkingDetailDataType {
 export interface ParkingOperationDataType {
   parkingLotUuid: string;
   isActive: boolean;
-  dayOfWeek: string;
   validStartTime: string;
   validEndTime: string;
   baseIntervalMinutes: number;

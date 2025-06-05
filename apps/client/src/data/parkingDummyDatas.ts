@@ -118,7 +118,6 @@ export const parkingDetailDummy: ParkingDetailDataType = {
 export const parkingOperationDummy: ParkingOperationDataType = {
   parkingLotUuid: 'abc123-lot-uuid-456',
   isActive: true,
-  dayOfWeek: 'MONDAY',
   validStartTime: '08:00',
   validEndTime: '22:00',
   baseIntervalMinutes: 30,
