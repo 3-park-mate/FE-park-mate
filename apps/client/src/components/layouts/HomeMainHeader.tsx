@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import SearchIcon from '@repo/ui/components/icon/SearchIcon';
 import AlertBell from '../common/AlertBell';
 import { cn } from '@repo/ui/lib/utils';
+import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
+import BackButton from './BackButton';
+import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 
 export default function HomeMainHeader({
   title,
+  type = 'backButton',
   className,
-  icon,
   isShadow = false,
 }: {
   title?: string;
+  type: 'location' | 'backButton';
   className?: string;
   icon?: React.ReactNode;
   isShadow?: boolean;
@@ -29,20 +33,24 @@ export default function HomeMainHeader({
   }, []);
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 w-full max-w-[600px] h-[65px] flex justify-between items-center bg-white p-5 space-x-3 z-50',
-        (isScrolled || isShadow) && 'shadow-md'
-      )}
+    <HeaderLayout
+      className={cn('p-5 space-x-3 z-50', className)}
+      isShadow={isShadow || isScrolled}
     >
       <div className="w-full flex items-center gap-2">
-        {icon && icon}
-        <p className={cn('text-[0.813rem] font-semibold', className)}>
+        {type === 'location' ? <MarkerIcon /> : <BackButton />}
+        <p
+          className={cn(
+            'font-semibold',
+            type === 'location' && 'text-13px',
+            className
+          )}
+        >
           {title}
         </p>
       </div>
-      <SearchIcon className="size-[24px] flex-none" />
+      {type === 'location' && <SearchIcon className="size-[24px] flex-none" />}
       <AlertBell count={4} />
-    </header>
+    </HeaderLayout>
   );
 }
