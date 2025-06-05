@@ -1,4 +1,4 @@
-import SortDropdown from '@/components/common/SortDropDown';
+import OptionsDropdown from '@/components/common/OptionsDropdown';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
 import HomeMainHeader from '@/components/layouts/HomeMainHeader';
 import FavoriteListSection from '@/components/pages/favorites/FavoriteListSection';
@@ -12,7 +12,7 @@ export default function page() {
       <HomeMainHeader title="즐겨찾기" type="backButton" />
       <main className="pb-32">
         <PaddedLayout>
-          <SortDropdown
+          <OptionsDropdown
             className="pt-1 pb-3"
             paramKey="sort"
             options={favoritesSortMenu}

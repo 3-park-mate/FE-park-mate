@@ -1,3 +1,4 @@
+'use client';
 import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
 import { Rating } from '@repo/ui/components/common/CommonLayouts';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
@@ -5,7 +6,7 @@ import { cn } from '@repo/ui/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ParkingCarouselItem({
+export default function ParkingCardItem({
   parkingLotUuid,
   name,
   thumbnailUrl,
@@ -13,7 +14,7 @@ export default function ParkingCarouselItem({
   isOperating,
 }: ParkingCarouselItemDataType) {
   return (
-    <div className="max-w-[164px]">
+    <div>
       <Link href={`/parking-lot/${parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 
@@ -31,12 +32,12 @@ export default function ParkingCarouselItem({
               isOperating ? 'bg-secondary' : 'bg-gray-400'
             )}
           >
-            {isOperating ? '운영중' : '닫힘'}
+            {isOperating ? '운영중' : '운영준비중'}
           </div>
         </div>
       </Link>
       <Link href={`/parking-lot/${parkingLotUuid}`} className="inline-block">
-        <p className="text-15px pb-0.5">{name}</p>
+        <p className="text-15px pb-0.5 font-semibold">{name}</p>
       </Link>
       <p className="flex gap-1 text-gray-3 text-13px">
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
