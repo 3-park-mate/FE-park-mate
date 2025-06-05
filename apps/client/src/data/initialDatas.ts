@@ -1,5 +1,4 @@
 import { HomeMenuDataType, MyPageMenuDataType } from '@/types/initialDataTypes';
-import { MessageCircle, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 
 export const menuItems: HomeMenuDataType[] = [
   {
@@ -74,9 +73,9 @@ export const progressBarStatusMap = [
   },
 ];
 
-export const parkingLotDetailMenus = [
-  { Icon: MessageCircle, label: '채팅' },
-  { Icon: Star, label: '즐겨찾기' },
-  { Icon: ThumbsUp, label: '좋아요' },
-  { Icon: ThumbsDown, label: '싫어요' },
+export const favoritesSortMenu = [
+  { label: '최신순', value: 'latest' },
+  { label: '별점 높은순', value: 'high-rate' },
+  { label: '가격 높은순', value: 'high-price' },
+  { label: '가격 낮은순', value: 'low-price' },
 ];
