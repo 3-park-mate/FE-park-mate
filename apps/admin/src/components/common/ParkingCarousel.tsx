@@ -5,7 +5,7 @@ import {
 } from '@repo/ui/components/base/carousel';
 import { ChevronRightCircle } from 'lucide-react';
 import Link from 'next/link';
-import ParkingCarouselItem from './ParkingCarouselItem';
+import ParkingCardItem from './ParkingCardItem';
 import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
 
 export default function ParkingCarousel({
@@ -24,9 +24,9 @@ export default function ParkingCarousel({
         {carouselDatas.map((item, index) => (
           <CarouselItem
             key={index}
-            className="flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]"
+            className="flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px] max-w-[180px]"
           >
-            <ParkingCarouselItem {...item} />
+            <ParkingCardItem {...item} />
           </CarouselItem>
         ))}
         <CarouselItem

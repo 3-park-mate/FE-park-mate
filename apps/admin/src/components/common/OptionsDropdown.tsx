@@ -15,7 +15,7 @@ export interface DropdownOption {
   value: string;
 }
 
-export default function SortDropdown({
+export default function OptionsDropdown({
   options,
   paramKey,
   defaultLabel = '정렬',
