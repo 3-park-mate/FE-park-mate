@@ -9,7 +9,7 @@ export const gnbNavItems: GnbNavItemDataType[] = [
   },
   {
     label: '내 주차장',
-    href: '/parking-lot',
+    href: '/my-parking-lot',
     icon: Car,
   },
   {
@@ -27,4 +27,9 @@ export const gnbNavItems: GnbNavItemDataType[] = [
     href: '/user',
     icon: User,
   },
+];
+
+export const myParkingLotSortMenu = [
+  { label: '운영중', value: 'active' },
+  { label: '운영준비중', value: 'pending' },
 ];

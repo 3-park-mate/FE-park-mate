@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
 
-export default function ParkingCardlItem({
+export default function ParkingCardItem({
   parkingLotUuid,
   name,
   distance,
@@ -18,7 +18,7 @@ export default function ParkingCardlItem({
   averageRating,
 }: ParkingCarouselItemDataType) {
   return (
-    <div className="">
+    <div>
       <Link href={`/parking-lot/${parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 

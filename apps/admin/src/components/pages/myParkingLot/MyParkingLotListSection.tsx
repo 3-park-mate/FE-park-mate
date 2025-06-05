@@ -1,14 +1,14 @@
-import ParkingCardItem from '@/components/common/ParkingCardItem';
 import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
+import ParkingCardItem from '../../common/ParkingCardItem';
 
-export default function FavoriteListSection({
-  favoriteDatas,
+export default function MyParkingLotListSection({
+  parkingLotDatas,
 }: {
-  favoriteDatas: ParkingCarouselItemDataType[];
+  parkingLotDatas: ParkingCarouselItemDataType[];
 }) {
   return (
     <section className="grid grid-cols-2 gap-4">
-      {favoriteDatas.map((item, index) => (
+      {parkingLotDatas.map((item, index) => (
         <ParkingCardItem key={index} {...item} />
       ))}
     </section>
