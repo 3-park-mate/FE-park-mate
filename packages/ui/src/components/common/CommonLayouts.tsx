@@ -159,3 +159,17 @@ export function TextBadge({
     </div>
   );
 }
+
+export function FormHeading({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <h1 className={cn('text-2xl font-semibold pt-10 pb-5', className)}>
+      {children}
+    </h1>
+  );
+}
