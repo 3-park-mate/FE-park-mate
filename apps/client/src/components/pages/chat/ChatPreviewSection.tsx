@@ -17,7 +17,7 @@ export default function ChatPreviewSection({
       {chatPreviewItems.map((item, index) => (
         <li
           key={index}
-          className="flex justify-between items-center gap-3 py-4"
+          className="flex justify-between items-center gap-3 py-4 cursor-pointer"
           onClick={(e) => router.push(`/chat-room/${item.chatRoomId}`)}
         >
           <Image

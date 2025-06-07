@@ -40,8 +40,8 @@ export default function ChatViewSection({
   }, []);
 
   return (
-    <section className="relative">
-      <ul className="pb-15">
+    <section className="relative mb-20">
+      <ul className="px-6">
         {chatMessages.map((message, index) => {
           const prevMessage = chatMessages[index - 1];
           const displayInfo = getChatDisplayInfoUtil({

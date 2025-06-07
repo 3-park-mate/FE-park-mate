@@ -1,4 +1,5 @@
 import PageHeader from '@/components/layouts/PageHeader';
+import ChatSenderSection from '@/components/pages/chat/ChatSenderSection';
 import ChatViewSection from '@/components/pages/chat/ChatViewSection';
 import { ChatRoomInfoDummyData } from '@/data/chatDatas';
 
@@ -16,8 +17,9 @@ export default async function page({
         title={chatRoomInfo.chatRoomName}
         className="bg-gray-light-1"
       />
-      <main className="z-0 px-6">
+      <main>
         <ChatViewSection chatRoomInfo={chatRoomInfo} />
+        <ChatSenderSection />
       </main>
     </>
   );
