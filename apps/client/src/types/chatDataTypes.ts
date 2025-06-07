@@ -27,15 +27,17 @@ export interface ChatRoomInfoType {
 }
 
 export interface ChatMessageDisplayInfoType {
+  isFromMe: boolean;
   showProfile: boolean;
   senderProfile?: profileInfoType;
   showDate: boolean;
-  dateOnly: string;
-  isFromMe: boolean;
+  date: string;
+  time: string;
 }
 
 export interface chatMessageBlockInfoType {
   displayInfo: ChatMessageDisplayInfoType;
   message: string;
+  messageType: string;
   createdAt: string;
 }

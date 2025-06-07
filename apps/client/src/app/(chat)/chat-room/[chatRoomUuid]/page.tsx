@@ -1,7 +1,6 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import ChatViewSection from '@/components/pages/chat/ChatViewSection';
 import { ChatRoomInfoDummyData } from '@/data/chatDatas';
-import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default async function page({
   params,

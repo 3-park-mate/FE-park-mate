@@ -1,17 +1,18 @@
-import { formatTimeENUtils } from '@/utils/datetimeUtils';
+import ImageViewDialog from '@/components/common/ImageViewDialog';
 import { cn } from '@repo/ui/lib/utils';
+import Image from 'next/image';
 
 export default function ChatMessage({
   message,
-  createdAt = '',
+  messageType,
+  time,
   isFromMe,
 }: {
   message: string;
-  createdAt?: string;
+  messageType: string;
+  time: string;
   isFromMe: boolean;
 }) {
-  const formattedTime = formatTimeENUtils(createdAt);
-
   return (
     <div
       className={cn(
@@ -19,16 +20,30 @@ export default function ChatMessage({
         isFromMe ? 'items-end' : 'items-start'
       )}
     >
-      <p
-        className={cn(
-          'inline-flex max-w-5/6 break-all bg-white px-3 py-2 border-1 border-gray-light-2 rounded-b-xl rounded-tr-xl text-sm font-medium',
-          isFromMe &&
-            'bg-primary-dark-50 text-white font-light border-0 rounded-tl-xl rounded-tr-none '
-        )}
-      >
-        {message}
-      </p>
-      <p className="text-gray-3 text-xs">{formattedTime}</p>
+      {messageType === 'text' ? (
+        <p
+          className={cn(
+            'inline-flex max-w-5/6 break-all bg-white px-3 py-2 border-1 border-gray-light-2 rounded-b-xl rounded-tr-xl text-sm font-medium',
+            isFromMe &&
+              'bg-primary-dark-50 text-white font-light border-0 rounded-tl-xl rounded-tr-none '
+          )}
+        >
+          {message}
+        </p>
+      ) : (
+        <>
+          <ImageViewDialog imgSrc={message} title="">
+            <Image
+              className="rounded-lg"
+              src={message}
+              alt={message}
+              width={200}
+              height={150}
+            />
+          </ImageViewDialog>
+        </>
+      )}
+      <p className="text-gray-3 text-xs">{time}</p>
     </div>
   );
 }

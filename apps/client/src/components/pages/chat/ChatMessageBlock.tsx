@@ -5,16 +5,17 @@ import { chatMessageBlockInfoType } from '@/types/chatDataTypes';
 
 export default function ChatMessageBlock({
   displayInfo,
+  messageType,
   message,
   createdAt,
 }: chatMessageBlockInfoType) {
   return (
     <>
-      {displayInfo.showDate && <TextBadge>{displayInfo.dateOnly}</TextBadge>}
+      {displayInfo.showDate && <TextBadge>{displayInfo.date}</TextBadge>}
       {displayInfo.showProfile && (
         <TextWithImage
           imageProps={{
-            src: 'https://dummyimage.com/45x45',
+            src: displayInfo.senderProfile?.profileImageUrl || '',
             alt: displayInfo.senderProfile?.userNickName || '',
           }}
         >
@@ -23,7 +24,8 @@ export default function ChatMessageBlock({
       )}
       <ChatMessage
         message={message}
-        createdAt={createdAt}
+        messageType={messageType}
+        time={displayInfo.time}
         isFromMe={displayInfo.isFromMe}
       />
     </>

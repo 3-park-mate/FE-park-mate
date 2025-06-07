@@ -56,6 +56,7 @@ export default function ChatViewSection({
               <ChatMessageBlock
                 displayInfo={displayInfo}
                 message={message.message}
+                messageType={message.messageType}
                 createdAt={message.createdAt}
               />
             </li>

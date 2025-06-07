@@ -1,5 +1,8 @@
 import { ChatMessageType, ChatRoomInfoType } from '@/types/chatDataTypes';
-import { formatFullDatePartsUtils } from '@/utils/datetimeUtils';
+import {
+  formatFullDatePartsUtils,
+  formatTimeENUtils,
+} from '@/utils/datetimeUtils';
 
 export function getChatDisplayInfoUtil({
   message,
@@ -22,18 +25,21 @@ export function getChatDisplayInfoUtil({
     (profile) => profile.userUuid === message.senderUuid
   );
 
-  const dateOnly = formatFullDatePartsUtils(message.createdAt).fullDate;
+  const date = formatFullDatePartsUtils(message.createdAt).fullDate;
   const prevDateOnly = prevMessage
     ? formatFullDatePartsUtils(prevMessage.createdAt).fullDate
     : null;
 
-  const showDate = !prevMessage || dateOnly !== prevDateOnly;
+  const showDate = !prevMessage || date !== prevDateOnly;
+
+  const time = formatTimeENUtils(message.createdAt);
 
   return {
     isFromMe,
     showProfile,
     senderProfile,
-    dateOnly,
     showDate,
+    date,
+    time,
   };
 }
