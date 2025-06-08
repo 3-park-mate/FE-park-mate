@@ -1,4 +1,5 @@
 'use client';
+import AddressSearchField from '@/components/common/AddressSearchField';
 import { Button } from '@repo/ui/components/base/button';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import {
@@ -17,22 +18,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         placeholder="주차장명을 작성해 주세요."
         maxLength={40}
       />
-      <div className="flex gap-2">
-        <CommonInputWithLabel
-          label="주소"
-          id="mainAddress"
-          placeholder="주소"
-        />
-        <Button className="mt-auto h-[44px] rounded-3xl bg-secondary">
-          주소찾기
-        </Button>
-      </div>
-      <CommonInputWithLabel
-        label="상세주소"
-        id="detailAddress"
-        placeholder="상세주소를 작성해 주세요. (ex. A동 1층)"
-        maxLength={40}
-      />
+      <AddressSearchField />
       <CommonTextArea
         label="기타 정보"
         id="extraInfo"
