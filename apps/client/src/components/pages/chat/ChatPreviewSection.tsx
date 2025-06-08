@@ -18,7 +18,7 @@ export default function ChatPreviewSection({
         <li
           key={index}
           className="flex justify-between items-center gap-3 py-4 cursor-pointer"
-          onClick={(e) => router.push(`/chat-room/${item.chatRoomId}`)}
+          onClick={() => router.push(`/chat-room/${item.chatRoomId}`)}
         >
           <Image
             src="https://dummyimage.com/45x45"
