@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Input } from '@repo/ui/components/base/input';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
-import SearchResultsList from './SearchLocationResults';
+import SearchLocationResults from './SearchLocationResults';
 import { cn } from '@repo/ui/lib/utils';
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { SearchLocationResultType } from '@/types/filterInfoType';
@@ -75,7 +75,7 @@ export default function LocationFilter() {
         className={cn('border-2 focus-visible:border-black/100 transition-all')}
       />
       {searchResults.length > 0 && (
-        <SearchResultsList
+        <SearchLocationResults
           searchResults={searchResults}
           setInputValue={setInputValue}
           setSearchResults={setSearchResults}

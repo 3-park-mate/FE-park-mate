@@ -1,27 +1,16 @@
-import React from 'react';
-import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { SearchResultsListProps } from '@/types/filterInfoType';
 
-export default function SearchLocationResults({
+export default function SearchResultsList({
   searchResults,
-  setSearchResults,
-  setInputValue,
 }: SearchResultsListProps) {
-  const setMapCenter = useParkingFilterStore((state) => state.setMapCenter);
-
   return (
-    <div className="w-full h-100 overflow-y-scroll ">
+    <div className="w-full pl-12 pr-6 max-h-screen overflow-y-scroll z-50">
       <p className="sticky top-0 bg-white text-right text-xs">검색결과</p>
       <ul className="">
         {searchResults.map((data, index) => (
           <li
             key={`${data.content}-${index}`}
-            className="h-14 border-b-1 content-center"
-            onMouseDown={() => {
-              setSearchResults([]);
-              setInputValue(data.content);
-              setMapCenter(data.position.lat, data.position.lng, data.content);
-            }}
+            className="h-14 content-center cursor-pointer"
           >
             <p className="font-medium leading-tight mt-2">{data.content}</p>
             <p className="text-sm text-gray-2 leading-tight mb-2">
