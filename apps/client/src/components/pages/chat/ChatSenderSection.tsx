@@ -4,8 +4,13 @@ import { useState } from 'react';
 import { Image, Send } from 'lucide-react';
 import { cn } from '@repo/ui/lib/utils';
 
-export default function ChatSenderSection() {
+export default function ChatSenderSection({
+  onHeightChange,
+}: {
+  onHeightChange?: (height: number) => void;
+}) {
   const [defaultMessage, setDefaultMessage] = useState<string>('');
+  const [textAreaHeight, setTextAreaHeight] = useState<number>();
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDefaultMessage(event.target.value);
@@ -26,8 +31,10 @@ export default function ChatSenderSection() {
     textarea.style.height = 'auto';
     if (textarea.scrollHeight < 196) {
       textarea.style.height = textarea.scrollHeight + 'px';
+      setTextAreaHeight(textarea.scrollHeight);
     } else {
       textarea.style.height = '196px';
+      setTextAreaHeight(196);
     }
     console.log(textarea.scrollHeight);
   };
@@ -52,7 +59,7 @@ export default function ChatSenderSection() {
           }
         }}
       />
-      <Image className="absolute bottom-4.5 left-3 size-8 stroke-1 stroke-gray-3 hover:stroke-gray-2" />
+      <Image className="absolute bottom-4.5 left-3 size-8 stroke-1 stroke-gray-3 hover:stroke-gray-2 cursor-pointer" />
       <button
         type="submit"
         disabled={!defaultMessage}
@@ -62,7 +69,7 @@ export default function ChatSenderSection() {
           className={cn(
             'rounded-full size-8.5 p-1 fill-white stroke-gray-1 bg-gray-1 transition-all duration-200',
             defaultMessage &&
-              'bg-primary-dark stroke-primary-dark  hover:stroke-primary hover:bg-primary'
+              'bg-primary-dark stroke-primary-dark  hover:stroke-primary hover:bg-primary cursor-pointer'
           )}
         />
       </button>
