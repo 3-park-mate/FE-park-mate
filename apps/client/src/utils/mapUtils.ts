@@ -1,17 +1,18 @@
-import { useParkingFilterStore } from '@/store/useParkingFilterStore';
-
-export const updateMapInfoUtil = (map: kakao.maps.Map) => {
-  const parkingFilter = useParkingFilterStore((state) => state);
-
+export const updateMapState = (
+  map: kakao.maps.Map,
+  setMapCenter: (lat: number, lng: number, locationName: string | null) => void,
+  setMapBounds: (
+    neLat: number,
+    swLat: number,
+    neLng: number,
+    swLng: number
+  ) => void
+) => {
   const center = map.getCenter();
   const bounds = map.getBounds();
-  const swLatLng = bounds.getSouthWest();
-  const neLatLng = bounds.getNorthEast();
-  parkingFilter.setMapCenter(center.getLat(), center.getLng(), null);
-  parkingFilter.setMapBounds(
-    neLatLng.getLat(),
-    swLatLng.getLat(),
-    neLatLng.getLng(),
-    swLatLng.getLng()
-  );
+  const ne = bounds.getNorthEast();
+  const sw = bounds.getSouthWest();
+
+  setMapCenter(center.getLat(), center.getLng(), null);
+  setMapBounds(ne.getLat(), sw.getLat(), ne.getLng(), sw.getLng());
 };

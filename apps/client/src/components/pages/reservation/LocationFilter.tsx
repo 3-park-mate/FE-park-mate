@@ -34,7 +34,7 @@ export default function LocationFilter() {
     if (inputValue !== loacation?.locationName) {
       const ps = new kakao.maps.services.Places();
 
-      ps.keywordSearch(inputValue, (data, status, _pagination) => {
+      ps.keywordSearch(inputValue, (data, status) => {
         if (status === kakao.maps.services.Status.OK) {
           console.log(data);
           let results = [];

@@ -28,10 +28,9 @@ export default function SearchLocationSection() {
 
     const ps = new kakao.maps.services.Places();
 
-    ps.keywordSearch(inputValue, (data, status, _pagination) => {
+    ps.keywordSearch(inputValue, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
         let results = [];
-        // console.log(data);
         for (var i = 0; i < data.length; i++) {
           results.push({
             position: {
@@ -43,7 +42,6 @@ export default function SearchLocationSection() {
           });
         }
         setSearchResults(results);
-        // console.log(searchResults);
       }
     });
   }, [inputValue]);
