@@ -10,8 +10,10 @@ import ChatMessageBlock from './ChatMessageBlock';
 
 export default function ChatViewSection({
   chatRoomInfo,
+  chatSenderHeight = 0, // 기본값 설정
 }: {
   chatRoomInfo: ChatRoomInfoType;
+  chatSenderHeight?: number; // 선택적 prop으로 기본값 설정
 }) {
   const [chatMessages, setChatMessages] = useState<ChatMessageType[]>(
     ChatMessageDummyDatas
@@ -21,14 +23,37 @@ export default function ChatViewSection({
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [refPosition, setRefPosition] = useState<number>(0);
+
+  useEffect(() => {
+    console.log('chatSenderHeight:', chatSenderHeight);
+    setRefPosition(chatSenderHeight);
+  }, [chatSenderHeight]);
+
+  const getChatMessages = async () => {
+    // 실제 API 호출 로직을 여기에 추가
+    // 예시로 더미 데이터를 사용
+    const event = new EventSource(
+      `http://localhost:9000/api/v1/chat/reactive/new/1`
+    );
+    event.onmessage = (e) => {
+      const newMessage: ChatMessageType = JSON.parse(e.data);
+      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+      scrollToBottomUtil(messagesEndRef, true);
+    };
+    event.onerror = (error) => {
+      console.error('Error receiving chat messages:', error);
+      event.close();
+    };
+  };
 
   // 메시지 도착 로직 추가
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      scrollToBottomUtil(messagesEndRef, false);
+      scrollToBottomUtil(messagesEndRef, true);
     }
-  }, [chatMessages]);
+  }, [chatMessages, chatSenderHeight]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +65,17 @@ export default function ChatViewSection({
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    getChatMessages();
+    return () => {
+      // 컴포넌트 언마운트 시 EventSource 닫기
+      const eventSource = new EventSource(
+        `http://localhost:9000/api/v1/chat/reactive/new/1`
+      );
+      eventSource.close();
     };
   }, []);
 
@@ -67,8 +103,9 @@ export default function ChatViewSection({
               </li>
             );
           })}
-          <div ref={messagesEndRef} />
         </ul>
+        <div style={{ height: `${refPosition}px` }} />
+        <div ref={messagesEndRef} />
         <ScrollToBottomButton show={isScrolled} targetRef={messagesEndRef} />
       </section>
     )
