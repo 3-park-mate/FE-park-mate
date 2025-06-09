@@ -3,7 +3,7 @@ import { useFunnel } from '@/hooks/useFunnel';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ParkingLotInfoStep from './step/ParkingLotInfoStep';
-import IsChargeableStep from './step/IsChargeableStep';
+import EvSpotSetupStep from './step/EvSpotSetupStep';
 
 export default function AddParkingLotFunnel() {
   //   const methods = useForm<SignUpStoreDataType>({
@@ -19,7 +19,7 @@ export default function AddParkingLotFunnel() {
   //       confirmPassword: '',
   //     },
   //   });
-  const [Funnel, setStep] = useFunnel<'step1' | 'step2'>('step1');
+  const [Funnel, setStep] = useFunnel<'step1' | 'step2' | 'step3'>('step1');
   //   const { handleSubmit } = methods;
   //   const onSubmit = (data: SignUpStoreDataType) => {
   //     const { email, password, name, phoneNumber } = data;
@@ -35,7 +35,7 @@ export default function AddParkingLotFunnel() {
           <ParkingLotInfoStep onNext={() => setStep('step2')} />
         </Funnel.step>
         <Funnel.step name="step2">
-          <IsChargeableStep />
+          <EvSpotSetupStep onNext={() => setStep('step3')} />
         </Funnel.step>
       </Funnel>
     </form>
