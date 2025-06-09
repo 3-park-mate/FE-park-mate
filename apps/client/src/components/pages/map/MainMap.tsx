@@ -10,10 +10,7 @@ import {
   useKakaoLoader,
 } from 'react-kakao-maps-sdk';
 import CurrentLocationButton from './CurrentLocationButton ';
-import {
-  markerDummyData,
-  parkingLotSimpleInfoDummyData,
-} from '@/data/markerDummyData';
+import { markerDummyData } from '@/data/markerDummyData';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';

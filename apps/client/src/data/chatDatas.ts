@@ -41,7 +41,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '1',
     senderUuid: 'b1',
     message: '28일 예약 가능한가요?',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:42:00',
   },
   {
@@ -49,7 +49,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '1',
     senderUuid: 'a1',
     message: '5월 28일 오전 8시부터 오전 9시까지 예약 가능합니다.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:42:00',
   },
   {
@@ -57,7 +57,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '2',
     senderUuid: 'a1',
     message: '이용 시간 초과 시 추가요금 부과되므로 유의바랍니다.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:43:00',
   },
   {
@@ -65,7 +65,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '3',
     senderUuid: 'b1',
     message: '네.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:50:00',
   },
   {
@@ -73,7 +73,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '4',
     senderUuid: 'b1',
     message: '예약 바로 진행할게요.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:50:12',
   },
   {
@@ -81,7 +81,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '5',
     senderUuid: 'b1',
     message: '예약 바로 진행할게요.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-25T09:50:12',
   },
   {
@@ -89,7 +89,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '6',
     senderUuid: 'a1',
     message: '이용 시간 30분 초과되었습니다.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T09:50:12',
   },
   {
@@ -97,7 +97,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '7',
     senderUuid: 'b1',
     message: '지금 출발했어요.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T09:55:00',
   },
   {
@@ -105,7 +105,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '8',
     senderUuid: 'b1',
     message: '15분 안에 도착할 예정입니다.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T09:55:30',
   },
   {
@@ -113,7 +113,7 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '9',
     senderUuid: 'a1',
     message: '네. 도착하시면 연락 주세요.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T10:00:00',
   },
   {
@@ -121,15 +121,23 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '10',
     senderUuid: 'b1',
     message: '도착했어요!',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T10:15:45',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '10',
+    senderUuid: 'b1',
+    message: 'https://dummyimage.com/200x150',
+    messageType: 'image',
+    createdAt: '2024-05-28T10:15:55',
   },
   {
     chatRoomUuid: '1',
     chatMessageUuid: '11',
     senderUuid: 'a1',
     message: '네 출차 부탁드립니다. 이용해주셔서 감사합니다.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T10:16:10',
   },
   {
@@ -137,8 +145,24 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     chatMessageUuid: '12',
     senderUuid: 'b1',
     message: '네.',
-    messageType: 'string',
+    messageType: 'text',
     createdAt: '2024-05-28T10:16:30',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '12',
+    senderUuid: 'b1',
+    message: 'test.',
+    messageType: 'text',
+    createdAt: '2024-05-30T09:16:30',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '12',
+    senderUuid: 'b1',
+    message: 'test.',
+    messageType: 'text',
+    createdAt: '2024-05-30T10:20:30',
   },
 ];
 

@@ -25,23 +25,23 @@ export function GnbMenu({
       </Link>
     </li>
   ) : (
-    <li className="flex flex-col items-center w-full space-y-0">
+    <li className="flex flex-col items-center justify-center w-full space-y-0">
       <Link href={link}>
         <Icon
           className={cn(
-            ' stroke-primary-dark-50 cursor-pointer',
+            ' stroke-primary-dark-50 cursor-pointer w-full',
             isCurrent && 'ease-in stroke-navy-1'
           )}
         />
+        <p
+          className={cn(
+            'text-[0.625rem] text-center text-primary-dark-50',
+            isCurrent && 'text-navy-1'
+          )}
+        >
+          {menuName}
+        </p>
       </Link>
-      <p
-        className={cn(
-          'text-[0.625rem] text-primary-dark-50',
-          isCurrent && 'text-navy-1'
-        )}
-      >
-        {menuName}
-      </p>
     </li>
   );
 }
