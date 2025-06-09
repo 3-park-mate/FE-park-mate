@@ -31,7 +31,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       />
       <Sheet key="bottom">
         <SheetTrigger asChild>
-          <CommonButton className="mt-8 bg-secondary">다음</CommonButton>
+          <CommonButton className="mt-10 bg-secondary">다음</CommonButton>
         </SheetTrigger>
         <IsChargeableSheet onNext={onNext} />
       </Sheet>

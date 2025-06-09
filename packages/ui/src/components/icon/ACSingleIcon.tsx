@@ -1,6 +1,6 @@
 import { cn } from '../../lib/utils';
 
-export default function ACSinglePhaseIcon({
+export default function ACSingleIcon({
   size = 20,
   className = '',
 }: {
