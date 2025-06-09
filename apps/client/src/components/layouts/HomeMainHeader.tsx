@@ -7,6 +7,7 @@ import { cn } from '@repo/ui/lib/utils';
 import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
 import BackButton from './BackButton';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
+import { useRouter } from 'next/navigation';
 
 export default function HomeMainHeader({
   title,
@@ -19,6 +20,7 @@ export default function HomeMainHeader({
   className?: string;
   isShadow?: boolean;
 }) {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -48,7 +50,11 @@ export default function HomeMainHeader({
           {title}
         </p>
       </div>
-      {type === 'location' && <SearchIcon className="size-[24px] flex-none" />}
+      {type === 'location' && (
+        <div onClick={() => router.push('/search-location')}>
+          <SearchIcon className="size-[24px] flex-none" />
+        </div>
+      )}
       <AlertBell count={4} />
     </HeaderLayout>
   );

@@ -2,7 +2,7 @@
 
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { getCurrentLocationUtils } from '@/utils/getCurrentLocationUtils';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Map,
   MapMarker,
@@ -14,12 +14,16 @@ import { markerDummyData } from '@/data/markerDummyData';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
+import { useSearchParams } from 'next/navigation';
 
 export default function MainMap() {
   const [loading, error] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
   });
+  const searchParams = useSearchParams();
+  const latParam = searchParams.get('lat');
+  const lngParam = searchParams.get('lng');
 
   const parkingFilter = useParkingFilterStore((state) => state);
   const setGnbMenuBar = useGnbNavBarStore((state) => state.setActive);
@@ -38,20 +42,24 @@ export default function MainMap() {
       neLatLng.getLng(),
       swLatLng.getLng()
     );
-    console.log(parkingFilter);
   };
 
   const currentLocation = async () => {
     try {
       const { latitude, longitude } = await getCurrentLocationUtils();
       parkingFilter.setMapCenter(latitude, longitude, null);
-      // console.log('현재위치', latitude, longitude);
     } catch (error) {
       console.log('현재위치 실패', error);
     }
   };
 
   useEffect(() => {
+    console.log(latParam, lngParam);
+    if (latParam && lngParam) {
+      parkingFilter.setMapCenter(Number(latParam), Number(lngParam), null);
+      return;
+    }
+
     currentLocation();
   }, []);
 
