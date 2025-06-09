@@ -1,35 +1,34 @@
-import { Input } from '../base/input';
 import { cn } from '../../lib/utils';
+import React from 'react';
+import { Textarea } from '../base/textarea';
 
-export default function CommonInputWithLabel({
+export default function CommonTextArea({
   className,
   label,
   id,
-  type = 'text',
   errorMessage,
   ...props
 }: {
-  label?: string;
+  label: string;
   className?: string;
   errorMessage?: string;
-} & React.ComponentProps<'input'>) {
+} & React.ComponentProps<'textarea'>) {
   return (
     <div className={cn('grid w-full items-center gap-1.5', className)}>
-      {label && (
-        <label
-          htmlFor={id}
-          className={`font-semibold text-13px text-gray-3 ms-1
+      <label
+        htmlFor={id}
+        className={`font-semibold text-13px text-gray-3 ms-1
         ${errorMessage ? 'text-red-500' : ''}`}
-        >
-          {label}
-        </label>
-      )}
-      <Input
-        type={type}
+      >
+        {label}
+      </label>
+      <Textarea
         id={id}
         {...props}
         className={
-          errorMessage ? 'border-red-300 focus-visible:border-red-400' : ''
+          errorMessage
+            ? 'border-red-300 focus-visible:border-red-400'
+            : 'resize-none min-h-[200px]'
         }
       />
       {errorMessage && (

@@ -2,7 +2,10 @@ import { SignUpStoreDataType } from '@/types/authDataTypes';
 import { Button } from '@repo/ui/components/base/button';
 import { Input } from '@repo/ui/components/base/input';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import {
+  CommonButton,
+  FormHeading,
+} from '@repo/ui/components/common/CommonLayouts';
 import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
@@ -11,9 +14,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
 
   return (
     <section className="space-y-5">
-      <h1 className="text-2xl font-semibold pt-10 pb-5">
-        이메일 인증을 해주세요.
-      </h1>
+      <FormHeading>이메일 인증을 해주세요.</FormHeading>
       <div className="flex gap-2">
         <CommonInputWithLabel
           label="이메일 주소"

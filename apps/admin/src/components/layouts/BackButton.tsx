@@ -2,16 +2,16 @@
 
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
-export default function BackButton({ className }: { className?: string }) {
-  const router = useRouter();
-
+export default function BackButton({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
-    <button
-      onClick={() => router.back()}
-      className={cn('cursor-pointer', className)}
-    >
+    <button onClick={onClick} className={cn('cursor-pointer', className)}>
       <ChevronLeft />
     </button>
   );
