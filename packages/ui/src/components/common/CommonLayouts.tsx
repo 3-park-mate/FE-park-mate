@@ -185,10 +185,15 @@ export function HeadingWithDesc({
 }) {
   return (
     <div>
-      <h1 className={cn('text-2xl font-semibold pt-10 pb-1', className)}>
+      <h1
+        className={cn(
+          'text-2xl font-semibold pt-10 pb-1 break-keep',
+          className
+        )}
+      >
         {heading}
       </h1>
-      <p className="text-gray-dark-1 pb-5 text-15px">{subHeading}</p>
+      <p className="text-gray-dark-1 pb-5 text-15px break-keep">{subHeading}</p>
     </div>
   );
 }

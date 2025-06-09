@@ -35,7 +35,10 @@ export default function AddParkingLotFunnel() {
           <ParkingLotInfoStep onNext={() => setStep('step2')} />
         </Funnel.step>
         <Funnel.step name="step2">
-          <EvSpotSetupStep onNext={() => setStep('step3')} />
+          <EvSpotSetupStep
+            onNext={() => setStep('step3')}
+            onBack={() => setStep('step1')}
+          />
         </Funnel.step>
       </Funnel>
     </form>
