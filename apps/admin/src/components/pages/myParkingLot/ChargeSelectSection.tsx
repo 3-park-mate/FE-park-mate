@@ -37,7 +37,7 @@ export default function ChargeSelectSection() {
       <hr />
       <p className="text-right px-3">
         <span className="text-gray-2 text-sm">전체 전기차 충전 주차면수</span>
-        <span className="font-semibold text-3xl text-secondary ms-2">3</span>
+        <span className="font-bold text-3xl text-secondary ms-2">3</span>
       </p>
     </section>
   );

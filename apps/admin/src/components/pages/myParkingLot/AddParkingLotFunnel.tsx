@@ -1,25 +1,11 @@
 'use client';
 import { useFunnel } from '@/hooks/useFunnel';
-import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import ParkingLotInfoStep from './step/ParkingLotInfoStep';
 import EvSpotSetupStep from './step/EvSpotSetupStep';
 import ParkingLotImagesStep from './step/ParkingLotImagesStep';
+import ParkingSpotSetupStep from './step/ParkingSpotSetupStep';
 
 export default function AddParkingLotFunnel() {
-  //   const methods = useForm<SignUpStoreDataType>({
-  //     resolver: zodResolver(signUpSchema),
-  //     mode: 'onChange',
-  //     reValidateMode: 'onChange',
-  //     defaultValues: {
-  //       email: '',
-  //       verifyCode: '',
-  //       name: '',
-  //       phoneNumber: '',
-  //       password: '',
-  //       confirmPassword: '',
-  //     },
-  //   });
   const [Funnel, _setStep] = useFunnel<'step1' | 'step2' | 'step3' | 'step4'>(
     'step1'
   );
@@ -28,12 +14,6 @@ export default function AddParkingLotFunnel() {
     _setStep(step);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  //   const { handleSubmit } = methods;
-  //   const onSubmit = (data: SignUpStoreDataType) => {
-  //     const { email, password, name, phoneNumber } = data;
-  //     const signUpData: SignUpDataType = { email, password, name, phoneNumber };
-  //     console.log('SignUp Data:', signUpData);
-  //   };
 
   return (
     // <FormProvider {...methods}>
@@ -52,6 +32,12 @@ export default function AddParkingLotFunnel() {
           <EvSpotSetupStep
             onNext={() => setStep('step4')}
             onBack={() => setStep('step2')}
+          />
+        </Funnel.step>
+        <Funnel.step name="step4">
+          <ParkingSpotSetupStep
+            onNext={() => setStep('step1')}
+            onBack={() => setStep('step3')}
           />
         </Funnel.step>
       </Funnel>
