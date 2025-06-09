@@ -1,5 +1,8 @@
 import { SignUpStoreDataType } from '@/types/authDataTypes';
-import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import {
+  CommonButton,
+  FormHeading,
+} from '@repo/ui/components/common/CommonLayouts';
 import PasswordInputWithLabel from '@repo/ui/components/common/PasswordInputWithLabel';
 import { useFormContext, useFormState } from 'react-hook-form';
 
@@ -15,9 +18,7 @@ export default function PasswordStep({
 
   return (
     <section className="space-y-5">
-      <h1 className="text-2xl font-semibold pt-10 pb-5">
-        비밀번호를 입력해 주세요.
-      </h1>
+      <FormHeading>비밀번호를 입력해 주세요.</FormHeading>
       <PasswordInputWithLabel
         label="비밀번호"
         id="password"

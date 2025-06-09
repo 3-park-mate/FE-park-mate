@@ -5,7 +5,10 @@ import { handleKeyDown } from '@/utils/formUtils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import {
+  CommonButton,
+  FormHeading,
+} from '@repo/ui/components/common/CommonLayouts';
 import { useState } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
 
@@ -44,9 +47,7 @@ export default function AddMyCarForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-5 px-6"
       >
-        <h1 className="text-2xl font-semibold pt-10 pb-5">
-          차량 정보를 입력해 주세요.
-        </h1>
+        <FormHeading>차량 정보를 입력해 주세요.</FormHeading>
         <CommonInputWithLabel
           label="차량 번호"
           id="vehicleNumber"

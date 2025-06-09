@@ -1,6 +1,9 @@
 import { SignUpStoreDataType } from '@/types/authDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import {
+  CommonButton,
+  FormHeading,
+} from '@repo/ui/components/common/CommonLayouts';
 import React from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 
@@ -42,9 +45,7 @@ export default function UserInfoStep({
 
   return (
     <section className="space-y-5">
-      <h1 className="text-2xl font-semibold pt-10 pb-5">
-        유저 정보를 입력해 주세요.
-      </h1>
+      <FormHeading>유저 정보를 입력해 주세요.</FormHeading>
       <CommonInputWithLabel
         label="이름"
         id="name"
