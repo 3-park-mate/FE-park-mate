@@ -148,6 +148,22 @@ export const ChatMessageDummyDatas: ChatMessageType[] = [
     messageType: 'text',
     createdAt: '2024-05-28T10:16:30',
   },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '12',
+    senderUuid: 'b1',
+    message: 'test.',
+    messageType: 'text',
+    createdAt: '2024-05-30T09:16:30',
+  },
+  {
+    chatRoomUuid: '1',
+    chatMessageUuid: '12',
+    senderUuid: 'b1',
+    message: 'test.',
+    messageType: 'text',
+    createdAt: '2024-05-30T10:20:30',
+  },
 ];
 
 export const ChatRoomInfoDummyData: ChatRoomInfoType = {

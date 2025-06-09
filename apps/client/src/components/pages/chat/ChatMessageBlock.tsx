@@ -7,7 +7,6 @@ export default function ChatMessageBlock({
   displayInfo,
   messageType,
   message,
-  createdAt,
 }: chatMessageBlockInfoType) {
   return (
     <>
