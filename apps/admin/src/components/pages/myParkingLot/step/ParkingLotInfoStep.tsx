@@ -29,12 +29,9 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         placeholder="기본 정보 이외에 사용자에게 알릴 정보를 작성해 주세요. (최대 500자)"
         maxLength={500}
       />
-      <Sheet key="bottom">
-        <SheetTrigger asChild>
-          <CommonButton className="mt-10 bg-secondary">다음</CommonButton>
-        </SheetTrigger>
-        <IsChargeableSheet onNext={onNext} />
-      </Sheet>
+      <CommonButton onClick={onNext} className="mt-10 bg-secondary">
+        다음
+      </CommonButton>
     </section>
   );
 }
