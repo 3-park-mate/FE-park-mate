@@ -68,6 +68,5 @@ export const formatFullDatePartsUtils = (dateString: string) => {
   const time = timeMatch?.[0] ?? '';
 
   const fullDate = formatted.replace(timeRegex, '');
-  console.log(fullDate);
   return { time, fullDate };
 };
