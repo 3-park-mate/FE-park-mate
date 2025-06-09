@@ -1,6 +1,5 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import ChatSenderSection from '@/components/pages/chat/ChatSenderSection';
-import ChatViewSection from '@/components/pages/chat/ChatViewSection';
+import ChatViewer from '@/components/pages/chat/chat-room/ChatViewer';
 import { ChatRoomInfoDummyData } from '@/data/chatDatas';
 
 export default async function page({
@@ -18,8 +17,7 @@ export default async function page({
         className="bg-gray-light-1"
       />
       <main>
-        <ChatViewSection chatRoomInfo={chatRoomInfo} />
-        <ChatSenderSection />
+        <ChatViewer chatRoomInfo={chatRoomInfo} />
       </main>
     </>
   );

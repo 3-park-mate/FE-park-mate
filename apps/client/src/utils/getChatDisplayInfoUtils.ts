@@ -5,34 +5,34 @@ import {
 } from '@/utils/datetimeUtils';
 
 export function getChatDisplayInfoUtil({
-  message,
+  currentMessage,
   prevMessage,
   currentUser,
   chatRoomInfo,
 }: {
-  message: ChatMessageType;
+  currentMessage: ChatMessageType;
   prevMessage?: ChatMessageType;
   currentUser: string;
   chatRoomInfo: ChatRoomInfoType;
 }) {
-  const isFromMe = message.senderUuid === currentUser;
+  const isFromMe = currentMessage.senderUuid === currentUser;
 
   const showProfile =
     !isFromMe &&
-    (!prevMessage || message.senderUuid !== prevMessage.senderUuid);
+    (!prevMessage || currentMessage.senderUuid !== prevMessage.senderUuid);
 
   const senderProfile = chatRoomInfo.usersProfile.find(
-    (profile) => profile.userUuid === message.senderUuid
+    (profile) => profile.userUuid === currentMessage.senderUuid
   );
 
-  const date = formatFullDatePartsUtils(message.createdAt).fullDate;
+  const date = formatFullDatePartsUtils(currentMessage.createdAt).fullDate;
   const prevDateOnly = prevMessage
     ? formatFullDatePartsUtils(prevMessage.createdAt).fullDate
     : null;
 
   const showDate = !prevMessage || date !== prevDateOnly;
 
-  const time = formatTimeENUtils(message.createdAt);
+  const time = formatTimeENUtils(currentMessage.createdAt);
 
   return {
     isFromMe,

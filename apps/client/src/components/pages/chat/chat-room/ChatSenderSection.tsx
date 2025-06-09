@@ -1,42 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Image, Send } from 'lucide-react';
 import { cn } from '@repo/ui/lib/utils';
 
 export default function ChatSenderSection({
-  onHeightChange,
+  setChatSenderHeight,
 }: {
-  onHeightChange?: (height: number) => void;
+  setChatSenderHeight: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [defaultMessage, setDefaultMessage] = useState<string>('');
-  const [textAreaHeight, setTextAreaHeight] = useState<number>();
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDefaultMessage(event.target.value);
-    autoResizeTextarea(event);
-  };
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleSubmit = (e?: React.FormEvent) => {
     if (defaultMessage === '') return;
     e?.preventDefault();
-
+    setDefaultMessage('');
     console.log('submit:', defaultMessage);
     // 메시지 전송 로직 추가
-    setDefaultMessage('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+    setChatSenderHeight(36);
   };
 
-  const autoResizeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.currentTarget;
+    setDefaultMessage(textarea.value);
     textarea.style.height = 'auto';
-    if (textarea.scrollHeight < 196) {
-      textarea.style.height = textarea.scrollHeight + 'px';
-      setTextAreaHeight(textarea.scrollHeight);
-    } else {
-      textarea.style.height = '196px';
-      setTextAreaHeight(196);
-    }
-    console.log(textarea.scrollHeight);
+    const newHeight = Math.min(textarea.scrollHeight, 196);
+    textarea.style.height = `${newHeight}px`;
+    setChatSenderHeight(newHeight);
   };
 
   return (
@@ -45,6 +39,7 @@ export default function ChatSenderSection({
       onSubmit={handleSubmit}
     >
       <textarea
+        ref={textareaRef}
         rows={1}
         name="message"
         onChange={handleChange}

@@ -36,8 +36,8 @@ export interface ChatMessageDisplayInfoType {
 }
 
 export interface chatMessageBlockInfoType {
-  displayInfo: ChatMessageDisplayInfoType;
-  message: string;
-  messageType: string;
-  createdAt: string;
+  prevMessage: ChatMessageType | undefined;
+  currentMessage: ChatMessageType;
+  currentUser: string;
+  chatRoomInfo: ChatRoomInfoType;
 }

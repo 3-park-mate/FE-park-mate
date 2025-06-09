@@ -8,15 +8,18 @@ export function ScrollToBottomButton({
   show,
   targetRef,
   className,
+  marginBottom = 36,
 }: {
   show: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
   className?: string;
+  marginBottom?: number;
 }) {
   return (
     <div
+      style={{ bottom: `${marginBottom - 36 + 80}px` }}
       className={cn(
-        'fixed bottom-20 flex justify-end pr-5 w-full max-w-[600px]',
+        `fixed flex justify-end pr-5 w-full max-w-[600px]`,
         className
       )}
     >
