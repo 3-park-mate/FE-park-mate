@@ -40,10 +40,6 @@ export default async function page({
           availableSpots={10}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
-        <ul className="flex justify-between bg-inner-background-gray">
-          <HomeTabMenu tabMenuName="홈" selected={true} />
-          <HomeTabMenu tabMenuName="리뷰" />
-        </ul>
         <ParkingDetailContent />
       </main>
     </>
