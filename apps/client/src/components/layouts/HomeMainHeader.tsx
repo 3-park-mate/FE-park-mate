@@ -52,7 +52,7 @@ export default function HomeMainHeader({
       </div>
       {type === 'location' && (
         <div onClick={() => router.push('/search-location')}>
-          <SearchIcon className="size-[24px] flex-none" />
+          <SearchIcon className="size-[24px] flex-none cursor-pointer" />
         </div>
       )}
       <AlertBell count={4} />

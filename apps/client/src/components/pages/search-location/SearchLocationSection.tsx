@@ -5,13 +5,14 @@ import { Input } from '@repo/ui/components/base/input';
 import { cn } from '@repo/ui/lib/utils';
 import { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
-import SearchResultsList from './SearchResultsList';
+import { searchLocationByKeywordUtil } from '@/utils/mapUtils';
 import BackButton from '@/components/layouts/BackButton';
+import SearchResultsList from './SearchResultsList';
 
 export default function SearchLocationSection() {
   const [loading, error] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
-    libraries: ['services'],
+    libraries: ['services', 'clusterer'],
   });
 
   const [inputValue, setInputValue] = useState('');
@@ -25,34 +26,20 @@ export default function SearchLocationSection() {
       setSearchResults([]);
       return;
     }
+    const fetchSearchResults = async () => {
+      const results = await searchLocationByKeywordUtil(inputValue);
+      setSearchResults(results);
+    };
 
-    const ps = new kakao.maps.services.Places();
-
-    ps.keywordSearch(inputValue, (data, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        let results = [];
-        for (var i = 0; i < data.length; i++) {
-          results.push({
-            position: {
-              lat: parseFloat(data[i]?.y || ''),
-              lng: parseFloat(data[i]?.x || ''),
-            },
-            content: data[i]?.place_name || '',
-            road_address_name: data[i]?.road_address_name || '',
-          });
-        }
-        setSearchResults(results);
-      }
-    });
+    fetchSearchResults();
   }, [inputValue]);
 
   if (loading) {
-    console.log('카카오맵 로딩중:');
+    return <div>지도 준비 중...</div>;
   }
 
   if (error) {
-    console.log('카카오맵 로딩 실패:', error.message);
-    return;
+    return <div>카카오맵 로딩 실패</div>;
   }
 
   return (
@@ -61,7 +48,6 @@ export default function SearchLocationSection() {
         <BackButton className="px-2" />
         <Input
           value={inputValue}
-          // onBlur={() => setInputValue('')}
           onChange={(e) => setInputValue(e.currentTarget.value)}
           placeholder="위치를 검색하세요"
           className={cn(
@@ -71,11 +57,7 @@ export default function SearchLocationSection() {
       </div>
 
       {searchResults.length > 0 && (
-        <SearchResultsList
-          searchResults={searchResults}
-          setInputValue={setInputValue}
-          setSearchResults={setSearchResults}
-        />
+        <SearchResultsList results={searchResults} />
       )}
     </div>
   );
