@@ -1,4 +1,4 @@
-export const getCurrentLocationUtils = (): Promise<{
+export const getCurrentLocationUtil = (): Promise<{
   latitude: number;
   longitude: number;
 }> => {
@@ -22,7 +22,7 @@ export const getCurrentLocationUtils = (): Promise<{
   });
 };
 
-export const watchLocationUtils = (): Promise<{
+export const watchLocationUtil = (): Promise<{
   latitude: number;
   longitude: number;
 }> => {

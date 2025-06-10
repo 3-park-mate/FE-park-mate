@@ -2,7 +2,7 @@ import React from 'react';
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { SearchResultsListProps } from '@/types/filterInfoType';
 
-export default function SearchResultsList({
+export default function SearchLocationResults({
   searchResults,
   setSearchResults,
   setInputValue,

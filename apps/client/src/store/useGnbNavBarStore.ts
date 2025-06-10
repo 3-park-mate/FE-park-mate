@@ -2,12 +2,12 @@ import { create } from 'zustand';
 
 interface GnbNavBarStore {
   active: boolean;
-  setActive: (active: boolean) => void;
+  setGnbNavBar: (active: boolean) => void;
 }
 
 export const useGnbNavBarStore = create<GnbNavBarStore>((set) => ({
   active: true,
-  setActive: (active) => {
+  setGnbNavBar: (active) => {
     set(() => ({
       active: active,
     }));
