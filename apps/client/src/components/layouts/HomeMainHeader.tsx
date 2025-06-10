@@ -8,6 +8,7 @@ import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
 import BackButton from './BackButton';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function HomeMainHeader({
   title,
@@ -51,9 +52,9 @@ export default function HomeMainHeader({
         </p>
       </div>
       {type === 'location' && (
-        <div onClick={() => router.push('/search-location')}>
+        <Link href="/search-location">
           <SearchIcon className="size-[24px] flex-none cursor-pointer" />
-        </div>
+        </Link>
       )}
       <AlertBell count={4} />
     </HeaderLayout>
