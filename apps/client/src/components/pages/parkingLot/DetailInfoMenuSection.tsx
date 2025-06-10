@@ -1,10 +1,7 @@
 import MenuIconListItem from '@/components/common/MenuIconListItem';
-import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
-import {
-  CommonButton,
-  PaddedSection,
-} from '@repo/ui/components/common/CommonLayouts';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { MessageCircle, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
+import ReservationButton from './ReservationButton';
 
 export default function DetailInfoMenuSection({
   hostUuid,
@@ -39,20 +36,13 @@ export default function DetailInfoMenuSection({
           </MenuIconListItem>
         </ul>
       </nav>
-      {isActive ? (
-        <AlwaysVisibleTooltip
-          side="bottom"
-          content={`1시간 ${baseFee.toLocaleString()}원`}
-        >
-          <CommonButton className="bg-primary-dark" disabled={!isActive}>
-            예약하기 ({availableSpots}/{registeredParkingCount})
-          </CommonButton>
-        </AlwaysVisibleTooltip>
-      ) : (
-        <CommonButton className="bg-primary-dark" disabled>
-          운영 준비중
-        </CommonButton>
-      )}
+      <ReservationButton
+        parkingLotUuid={parkingLotUuid}
+        isActive={isActive}
+        baseFee={baseFee}
+        availableSpots={availableSpots}
+        registeredParkingCount={registeredParkingCount}
+      />
     </PaddedSection>
   );
 }

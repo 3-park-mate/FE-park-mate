@@ -88,6 +88,5 @@ export const parkingDetailTabMenus: ParkingDatailTabMenuType[] = [
   { label: '정보', id: 'info' },
   { label: '주차장 옵션', id: 'options' },
   { label: '주차장 사진', id: 'images' },
-
   { label: '방문자 리뷰', id: 'reviews' },
 ];
