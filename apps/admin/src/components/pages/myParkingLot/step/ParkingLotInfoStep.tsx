@@ -27,7 +27,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         maxLength={40}
         {...register('parkingLot.name')}
       />
-      <AddressSearchField />
+      <AddressSearchField register={register} errors={errors} />
       <CommonTextArea
         label="기타 정보"
         id="extraInfo"
