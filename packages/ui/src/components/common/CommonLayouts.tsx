@@ -219,7 +219,7 @@ export function OptionIconWithText({
 }) {
   return (
     <div className={cn('flex flex-col gap-2 items-center', className)}>
-      <Icon className="w-6 h-6 sm:w-9 sm:h-9" />
+      <Icon className="w-6 h-6 sm:w-8.5 sm:h-8.5" />
       <p className="text-13px sm:text-15px">{children}</p>
     </div>
   );
