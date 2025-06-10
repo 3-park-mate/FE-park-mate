@@ -18,7 +18,7 @@ export default async function page({
 
   return (
     <>
-      <PageHeader title={parkingDetailDummy.name} />
+      <PageHeader title={parkingDetailDummy.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
         <DetailInfoSection
           thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}

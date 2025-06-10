@@ -9,7 +9,7 @@ export function GlobalContainerView({
   return (
     <div
       className={cn(
-        'min-h-screen max-w-[600px] mx-auto outline-x outline-1 overflow-hidden',
+        'min-h-screen max-w-[600px] mx-auto outline-x outline-1',
         className
       )}
     >
@@ -28,8 +28,18 @@ export function PaddedLayout({
 export function PaddedSection({
   children,
   className,
-}: Readonly<{ children: React.ReactNode; className?: string }>) {
-  return <section className={cn('px-6', className)}>{children}</section>;
+  ...props
+}: Readonly<
+  {
+    children: React.ReactNode;
+    className?: string;
+  } & React.HTMLAttributes<HTMLElement>
+>) {
+  return (
+    <section className={cn('px-6', className)} {...props}>
+      {children}
+    </section>
+  );
 }
 
 export function CommonButton({

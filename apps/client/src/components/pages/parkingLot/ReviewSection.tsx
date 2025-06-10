@@ -6,7 +6,7 @@ import { buttonVariants } from '@repo/ui/components/base/button';
 
 export default function ReviewSection() {
   return (
-    <PaddedSection className="bg-white py-7">
+    <PaddedSection className="bg-white py-7" id="reviews">
       <h2 className="text-lg font-semibold">
         방문자 리뷰 <span className="text-gray-3 text-base">349</span>
       </h2>

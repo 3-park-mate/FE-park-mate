@@ -6,9 +6,11 @@ import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default function PageHeader({
   title,
+  isShadow = true,
   className,
 }: {
   title?: string;
+  isShadow?: boolean;
   className?: string;
 }) {
   const path = usePathname();
@@ -34,7 +36,7 @@ export default function PageHeader({
   }, []);
 
   return (
-    <HeaderLayout className={className} isShadow={isScrolled}>
+    <HeaderLayout className={className} isShadow={isShadow && isScrolled}>
       <div className="absolute left-0 flex justify-center">
         <BackButton className="ml-5" />
       </div>
