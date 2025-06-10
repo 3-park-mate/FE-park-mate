@@ -6,8 +6,10 @@ import { cn } from '@repo/ui/lib/utils';
 import { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { searchLocationByKeywordUtil } from '@/utils/mapUtils';
-import BackButton from '@/components/layouts/BackButton';
 import SearchResultsList from './SearchResultsList';
+import SearchIcon from '@repo/ui/components/icon/SearchIcon';
+import { MousePointer2Icon, XIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function SearchLocationSection() {
   const [loading, error] = useKakaoLoader({
@@ -15,6 +17,8 @@ export default function SearchLocationSection() {
     libraries: ['services', 'clusterer'],
   });
 
+  const router = useRouter();
+  const [isScrolled, setIsScrolled] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [searchResults, setSearchResults] = useState<
     SearchLocationResultType[]
@@ -22,7 +26,7 @@ export default function SearchLocationSection() {
 
   useEffect(() => {
     if (loading) return;
-    if (inputValue === '') {
+    if (inputValue.trim() === '') {
       setSearchResults([]);
       return;
     }
@@ -43,22 +47,51 @@ export default function SearchLocationSection() {
   }
 
   return (
-    <div className="py-3">
-      <div className="flex pl-2 pr-8">
-        <BackButton className="px-2" />
-        <Input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.currentTarget.value)}
-          placeholder="위치를 검색하세요"
-          className={cn(
-            'border-2 focus-visible:border-black/100 transition-all'
-          )}
-        />
-      </div>
-
-      {searchResults.length > 0 && (
-        <SearchResultsList results={searchResults} />
-      )}
-    </div>
+    <>
+      <section
+        className={cn(
+          'fixed top-0 bg-gray-light-3 w-full max-w-[600px] z-50 flex items-center gap-4 pl-6 pr-5',
+          isScrolled && 'shadow-sm'
+        )}
+      >
+        <div className="relative w-full h-[52px] my-4">
+          <Input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.currentTarget.value)}
+            placeholder="위치를 검색하세요"
+            className={cn(
+              'peer absolute w-full h-full top-0 pl-10 border-0 text-lg bg-gray-1 placeholder-gray-400  focus:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary transition-all'
+            )}
+          />
+          <SearchIcon className="absolute top-0 size-5.5 h-full mx-3 stroke-gray-2 peer-focus:stroke-primary-dark-50 transition-colors z-50 " />
+        </div>
+        <button
+          type="button"
+          className="text-lg text-gray-2"
+          onClick={() => router.back()}
+        >
+          <p>Cancel</p>
+        </button>
+      </section>
+      <section className="px-6 pt-25">
+        {!inputValue.trim() && (
+          <button
+            type="button"
+            className="flex w-full items-center gap-3 bg-white border-1 rounded-lg py-3 px-4 cursor-pointer"
+            onClick={() => router.push('/map')}
+          >
+            <MousePointer2Icon className="rotate-90 fill-primary stroke-primary" />
+            <p className="text-lg py-1">Nearby</p>
+          </button>
+        )}
+        {searchResults.length > 0 && (
+          <SearchResultsList
+            results={searchResults}
+            keyword={inputValue}
+            setIsScrolled={setIsScrolled}
+          />
+        )}
+      </section>
+    </>
   );
 }

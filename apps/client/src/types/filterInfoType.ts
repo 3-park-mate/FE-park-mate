@@ -17,10 +17,6 @@ export interface SearchLocationResultType {
   road_address_name: string;
 }
 
-export interface SearchLocationResultsType {
-  results: SearchLocationResultType[];
-}
-
 export interface SearchResultsListProps {
   searchResults: SearchLocationResultType[];
   setSearchResults: (results: SearchLocationResultType[]) => void;

@@ -3,5 +3,5 @@ export default function layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="min-h-screen">{children}</div>;
+  return <div className="min-h-screen bg-gray-light-3">{children}</div>;
 }
