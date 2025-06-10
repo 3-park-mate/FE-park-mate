@@ -11,7 +11,6 @@ export interface AddParkingLotDataType {
     detailAddress: string;
     latitude: number;
     longitude: number;
-    isEvChargingAvailable: boolean;
     extraInfo: string;
   };
   parkingSpot: {
@@ -31,30 +30,31 @@ export interface AddParkingLotDataType {
 
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
-  parkingSpot: {
-    chargeable: {
-      parkingSpotType: string;
-      evChargeTypes: string[];
-    }[];
-    nonChargeable: {
-      parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
-      count: number;
-    }[];
-  };
-  parkingLotImage: {
-    imageUrls: string[];
-  };
+  // parkingSpot: {
+  //   chargeable: ChargeableParkingSpot[];
+  //   nonChargeable: NonChargeableParkingSpot[];
+  // };
+  // parkingLotImage: { imageUrls: string[] };
 }
 
 export interface ParkingLotForm {
   name: string;
-  capacity: number;
-  registeredCapacity: number;
+  // capacity: number;
+  // registeredCapacity: number;
   zoneCode: string;
   mainAddress: string;
   detailAddress: string;
-  latitude: number;
-  longitude: number;
-  isEvChargingAvailable: boolean;
+  // latitude: number;
+  // longitude: number;
   extraInfo: string;
+}
+
+export interface ChargeableParkingSpot {
+  parkingSpotType: string;
+  evChargeTypes: string[];
+}
+
+export interface NonChargeableParkingSpot {
+  parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
+  count: number;
 }
