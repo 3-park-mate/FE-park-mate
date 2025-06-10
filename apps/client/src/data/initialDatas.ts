@@ -1,4 +1,8 @@
-import { HomeMenuDataType, MyPageMenuDataType } from '@/types/initialDataTypes';
+import {
+  HomeMenuDataType,
+  MyPageMenuDataType,
+  ParkingDatailTabMenuType,
+} from '@/types/initialDataTypes';
 
 export const menuItems: HomeMenuDataType[] = [
   {
@@ -78,4 +82,11 @@ export const favoritesSortMenu = [
   { label: '별점 높은순', value: 'high-rate' },
   { label: '가격 높은순', value: 'high-price' },
   { label: '가격 낮은순', value: 'low-price' },
+];
+
+export const parkingDetailTabMenus: ParkingDatailTabMenuType[] = [
+  { label: '정보', id: 'info' },
+  { label: '주차장 옵션', id: 'options' },
+  { label: '주차장 사진', id: 'images' },
+  { label: '방문자 리뷰', id: 'reviews' },
 ];

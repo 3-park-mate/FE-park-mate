@@ -18,8 +18,8 @@ export default async function page({
 
   return (
     <>
-      <PageHeader title={parkingDetailDummy.name} />
-      <main className="pb-32">
+      <PageHeader title={parkingDetailDummy.name} isShadow={false} />
+      <main className="pb-32 bg-inner-background-gray">
         <DetailInfoSection
           thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}
           baseFee={parkingOperationDummy.baseFee}
@@ -40,10 +40,6 @@ export default async function page({
           availableSpots={10}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
-        <ul className="flex justify-between bg-inner-background-gray">
-          <HomeTabMenu tabMenuName="홈" selected={true} />
-          <HomeTabMenu tabMenuName="리뷰" />
-        </ul>
         <ParkingDetailContent />
       </main>
     </>

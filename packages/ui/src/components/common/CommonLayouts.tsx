@@ -9,7 +9,7 @@ export function GlobalContainerView({
   return (
     <div
       className={cn(
-        'min-h-screen max-w-[600px] mx-auto outline-x outline-1 overflow-hidden',
+        'min-h-screen max-w-[600px] mx-auto outline-x outline-1',
         className
       )}
     >
@@ -28,8 +28,18 @@ export function PaddedLayout({
 export function PaddedSection({
   children,
   className,
-}: Readonly<{ children: React.ReactNode; className?: string }>) {
-  return <section className={cn('px-6', className)}>{children}</section>;
+  ...props
+}: Readonly<
+  {
+    children: React.ReactNode;
+    className?: string;
+  } & React.HTMLAttributes<HTMLElement>
+>) {
+  return (
+    <section className={cn('px-6', className)} {...props}>
+      {children}
+    </section>
+  );
 }
 
 export function CommonButton({
@@ -194,6 +204,23 @@ export function HeadingWithDesc({
         {heading}
       </h1>
       <p className="text-gray-dark-1 pb-5 text-15px break-keep">{subHeading}</p>
+    </div>
+  );
+}
+
+export function OptionIconWithText({
+  Icon,
+  children,
+  className,
+}: {
+  Icon: React.ElementType;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('flex flex-col gap-2 items-center', className)}>
+      <Icon className="w-6 h-6 sm:w-8.5 sm:h-8.5" />
+      <p className="text-13px sm:text-15px">{children}</p>
     </div>
   );
 }

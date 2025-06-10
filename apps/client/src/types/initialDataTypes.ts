@@ -28,3 +28,8 @@ export interface HomeTabBarProps {
     currentParking: React.ReactNode;
   };
 }
+
+export interface ParkingDatailTabMenuType {
+  label: string;
+  id: string;
+}

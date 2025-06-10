@@ -8,7 +8,7 @@ export default function ReviewItem() {
       <p className="">홍*동</p>
       <Rating className="!text-sm">
         <span className="">4.5</span>
-        <span className="text-gray-3 text-sm ms-1">5.30 · 1시간 이용</span>
+        <span className="text-gray-3 text-sm ms-1">23.4.21</span>
       </Rating>
       <div className="flex justify-between">
         <p className="text-15px text-gray-2 pt-2">
