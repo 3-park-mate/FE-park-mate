@@ -38,7 +38,7 @@ export default function SearchResultsList({
             key={index}
             className="cursor-pointer"
             onClick={() =>
-              router.push(
+              router.replace(
                 `/map?lat=${data.position.lat}&lng=${data.position.lng}`
               )
             }
