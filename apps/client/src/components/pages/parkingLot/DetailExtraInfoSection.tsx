@@ -3,8 +3,11 @@ import {
   IconWithText,
   PaddedSection,
 } from '@repo/ui/components/common/CommonLayouts';
+import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import { Car, ChevronRight, MapPin, MessageSquare, Plug } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
+import MapLinkButton from './MapLinkButton';
 
 export default function DetailExtraInfoSection({
   mainAddress,
@@ -33,32 +36,15 @@ export default function DetailExtraInfoSection({
         {extraInfo}
       </IconWithText> */}
       <div>
-        <h2 className="text-lg font-semibold mb-3">개요</h2>
+        <h2 className="text-lg font-semibold mb-2">개요</h2>
         <p className="text-sm text-gray-2">{extraInfo}</p>
       </div>
       <div>
-        <h2 className="text-lg font-semibold mb-3">영업시간</h2>
-        <p className="text-sm text-gray-2">{extraInfo}</p>
+        <h2 className="text-lg font-semibold mb-2">영업시간</h2>
+        <p className="text-sm text-gray-2">월요일 : 09:00 - 24:00</p>
+        <p className="text-sm text-gray-2">화요일(오늘) : 09:00 - 24:00</p>
       </div>
-      <Link
-        href="#"
-        className={`${buttonVariants({ variant: 'default' })} w-full h-auto justify-start gap-5 rounded-2xl !bg-black`}
-      >
-        <div className="rounded-2xl w-16 h-16 bg-gray-1"></div>
-        <div>
-          <p className="text-primary text-15px">지도 바로가기</p>
-          <p className="text-gray-3">{mainAddress}</p>
-        </div>
-        <ChevronRight className="text-primary !w-5 !h-5 ml-auto" />
-      </Link>
-      {/* <Link
-        href="#"
-        className="flex items-center justify-between p-2 w-full rounded-2xl bg-black text-primary"
-      >
-        <div className="rounded-2xl w-16 h-16 bg-gray-1"></div>
-        {mainAddress}
-        <ChevronRight />
-      </Link> */}
+      <MapLinkButton mainAddress={mainAddress} />
     </PaddedSection>
   );
 }

@@ -197,3 +197,20 @@ export function HeadingWithDesc({
     </div>
   );
 }
+
+export function OptionIconWithText({
+  Icon,
+  children,
+  className,
+}: {
+  Icon: React.ElementType;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('flex flex-col gap-2 items-center', className)}>
+      <Icon className="w-9 h-9" />
+      <p className="text-15px">{children}</p>
+    </div>
+  );
+}

@@ -28,7 +28,7 @@ export default function DetailInfoMenuSection({
   // hostUuid => 채팅
   // parkingLotUuid => 즐겨찾기
   return (
-    <PaddedSection className="py-5 space-y-5">
+    <PaddedSection className="py-5 space-y-5 bg-white">
       <nav>
         <ul className="flex justify-between px-4">
           <MenuIconListItem Icon={MessageCircle}>채팅</MenuIconListItem>
