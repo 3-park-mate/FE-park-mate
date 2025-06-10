@@ -6,7 +6,7 @@ import { parkingDetailTabMenus } from '@/data/initialDatas';
 export default function ParkingDetailTabBar() {
   const tabRef = useRef<HTMLUListElement>(null);
   const [isStuck, setIsStuck] = useState(false);
-  const [activeId, setActiveId] = useState<string>('options');
+  const [activeId, setActiveId] = useState<string>('info');
   const activeIdRef = useRef(activeId);
 
   useEffect(() => {
