@@ -6,11 +6,27 @@ import {
 import { Checkbox } from '@repo/ui/components/base/checkbox';
 import { useFormContext, Controller } from 'react-hook-form';
 
-export default function ChargingTypeSelector({ index }: { index: number }) {
+export default function ChargingTypeSelector({
+  index,
+  onRemove,
+}: {
+  index: number;
+  onRemove: () => void;
+}) {
   const { control } = useFormContext<AddParkingLotStoreDataType>();
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 border rounded-xl p-4">
+    <div className="flex flex-wrap justify-center gap-2 border rounded-xl p-4 relative">
+      {index > 0 && (
+        <button
+          type="button"
+          onClick={onRemove}
+          className="absolute top-4 right-4 text-secondary text-sm cursor-pointer"
+          aria-label={`주차면 ${index + 1} 삭제`}
+        >
+          삭제
+        </button>
+      )}
       <p className="w-full text-center text-sm text-gray-2 mb-3">
         주차면 {index + 1}
       </p>
@@ -27,7 +43,7 @@ export default function ChargingTypeSelector({ index }: { index: number }) {
                 if (checked) {
                   onChange([...value, key as EVChargeTypeString]);
                 } else {
-                  onChange(value.filter((v: EVChargeTypeString) => v !== key));
+                  onChange(value.filter((v) => v !== key));
                 }
               };
 
