@@ -12,27 +12,28 @@ export const parkingLotImageSchema = z.object({
   imageUrls: z.array(z.string().min(1, '이미지를 하나 이상 업로드해 주세요.')),
 });
 
+export const chargeableParkingSpotSchema = z.object({
+  parkingSpotType: z.literal('EV'),
+  evChargeTypes: z
+    .array(z.enum(['AC_SINGLE', 'DC_COMBO', 'DC_CHADEMO', 'AC_THREE_PHASE']))
+    .min(1, '최소 하나의 충전 방식을 선택해주세요.')
+    .optional(),
+});
+
+export const nonChargeableParkingSpotSchema = z.object({
+  parkingSpotType: z.union([
+    z.literal('SMALL'),
+    z.literal('STANDARD'),
+    z.literal('LARGE'),
+  ]),
+  count: z.number().int().min(1, '주차면을 1개 이상 설정해 주세요.'),
+});
+
 export const addParkingLotSchema = z.object({
   parkingLot: parkingLotFormSchema,
   parkingLotImage: parkingLotImageSchema,
-  // chargeable: z
-  //   .array(
-  //     z.object({
-  //       parkingSpotType: z.string(),
-  //       evChargeTypes: z.array(z.string()).optional(),
-  //     })
-  //   )
-  //   .optional(),
-  // nonChargeable: z
-  //   .array(
-  //     z.object({
-  //       parkingSpotType: z.union([
-  //         z.literal('SMALL'),
-  //         z.literal('STANDARD'),
-  //         z.literal('LARGE'),
-  //       ]),
-  //       count: z.number().int().min(0, '주차면을 1개 이상 설정해 주세요.'),
-  //     })
-  //   )
-  //   .optional(),
+  parkingSpot: z.object({
+    chargeable: z.array(chargeableParkingSpotSchema).optional(),
+    nonChargeable: z.array(nonChargeableParkingSpotSchema),
+  }),
 });

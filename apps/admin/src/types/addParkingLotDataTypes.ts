@@ -31,10 +31,10 @@ export interface AddParkingLotDataType {
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
   parkingLotImage: { imageUrls: string[] };
-  // parkingSpot: {
-  //   chargeable: ChargeableParkingSpot[];
-  //   nonChargeable: NonChargeableParkingSpot[];
-  // };
+  parkingSpot: {
+    chargeable?: ChargeableParkingSpot[];
+    nonChargeable: NonChargeableParkingSpot[];
+  };
 }
 
 export interface ParkingLotForm {
@@ -49,9 +49,15 @@ export interface ParkingLotForm {
   extraInfo: string;
 }
 
+export type EVChargeTypeString =
+  | 'AC_SINGLE'
+  | 'DC_COMBO'
+  | 'DC_CHADEMO'
+  | 'AC_THREE_PHASE';
+
 export interface ChargeableParkingSpot {
-  parkingSpotType: string;
-  evChargeTypes: string[];
+  parkingSpotType: 'EV';
+  evChargeTypes?: EVChargeTypeString[];
 }
 
 export interface NonChargeableParkingSpot {

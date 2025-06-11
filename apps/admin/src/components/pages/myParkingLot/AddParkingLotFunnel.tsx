@@ -31,6 +31,10 @@ export default function AddParkingLotFunnel() {
       parkingLotImage: {
         imageUrls: [''],
       },
+      parkingSpot: {
+        chargeable: [],
+        nonChargeable: [],
+      },
     },
   });
   const [Funnel, _setStep] = useFunnel<'step1' | 'step2' | 'step3' | 'step4'>(
