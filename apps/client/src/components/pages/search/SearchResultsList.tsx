@@ -2,8 +2,8 @@
 
 import { SearchLocationResultType } from '@/types/filterInfoType';
 import { cn } from '@repo/ui/lib/utils';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import MapRedirectButton from './MapRedirectButton';
 
 export default function SearchResultsList({
   results,
@@ -14,8 +14,6 @@ export default function SearchResultsList({
   keyword: string;
   setIsScrolled: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const router = useRouter();
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -32,23 +30,16 @@ export default function SearchResultsList({
         '{keyword}'
         <span className="px-2 text-[1.2rem] font-medium">검색결과</span>
       </p>
-      <ul className="bg-white rounded-lg">
+      <ul className="bg-white rounded-lg ">
         {results.map((data, index) => (
-          <li
-            key={index}
-            className="cursor-pointer"
-            onClick={() =>
-              router.replace(
-                `/map?lat=${data.position.lat}&lng=${data.position.lng}`
-              )
-            }
-          >
-            <div className="px-6 py-5">
-              <p className="font-medium leading-tight">{data.content}</p>
-              <p className="text-sm text-gray-2 leading-tight">
-                {data.road_address_name}
-              </p>
-            </div>
+          <li key={index}>
+            <MapRedirectButton
+              key={index}
+              type="location"
+              label={data.content}
+              address={data.road_address_name}
+              position={data.position}
+            />
             <hr
               className={cn(
                 'border-t border-gray-200 mx-5',
