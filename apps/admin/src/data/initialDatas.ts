@@ -1,4 +1,8 @@
 import { GnbNavItemDataType } from '@/types/initialDataTypes';
+import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
+import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
+import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
+import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
 import { Home, BarChart2, User, Car, MessageCircle } from 'lucide-react';
 
 export const gnbNavItems: GnbNavItemDataType[] = [
@@ -32,4 +36,11 @@ export const gnbNavItems: GnbNavItemDataType[] = [
 export const myParkingLotSortMenu = [
   { label: '운영중', value: 'active' },
   { label: '운영준비중', value: 'pending' },
+];
+
+export const chargingTypes = [
+  { key: 'acSingle', icon: ACSingleIcon, label: 'AC단상' },
+  { key: 'acThreePhase', icon: ACThreePhaseIcon, label: 'AC3상' },
+  { key: 'dcChademo', icon: DCChademoIcon, label: 'DC차데모' },
+  { key: 'dcCombo', icon: DCComboIcon, label: 'DC콤보' },
 ];

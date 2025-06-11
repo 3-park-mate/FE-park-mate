@@ -9,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addParkingLotSchema } from '@/schemas/addParkingLotSchema';
 import { handleKeyDown } from '@/utils/formUtils';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -32,7 +32,12 @@ export default function AddParkingLotFunnel() {
         imageUrls: [''],
       },
       parkingSpot: {
-        chargeable: [],
+        chargeable: [
+          {
+            parkingSpotType: 'EV',
+            evChargeTypes: [],
+          },
+        ],
         nonChargeable: [],
       },
     },
@@ -61,6 +66,18 @@ export default function AddParkingLotFunnel() {
   const onSubmit = (data: AddParkingLotStoreDataType) => {
     console.log('SignUp Data:', data);
   };
+
+  const { watch } = methods;
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log('💡 변경된 필드:', name);
+      console.log('📋 변경 타입:', type);
+      console.log('📝 현재 값:', value);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <FormProvider {...methods}>
