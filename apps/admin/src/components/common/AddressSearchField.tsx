@@ -1,11 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@repo/ui/components/base/button';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
-import { FieldErrors, UseFormRegister, useFormContext } from 'react-hook-form';
+import {
+  FieldErrors,
+  UseFormRegister,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 
 export default function AddressSearchField({
@@ -15,11 +20,19 @@ export default function AddressSearchField({
   register: UseFormRegister<AddParkingLotStoreDataType>;
   errors: FieldErrors<AddParkingLotStoreDataType>;
 }) {
-  const { setValue } = useFormContext<AddParkingLotStoreDataType>();
-
+  const { setValue, control } = useFormContext<AddParkingLotStoreDataType>();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
-  const [mainAddress, setMainAddress] = useState('');
-  const [zonecode, setZonecode] = useState('');
+
+  const mainAddress = useWatch({
+    control,
+    name: 'parkingLot.mainAddress',
+    defaultValue: '',
+  });
+  const zonecode = useWatch({
+    control,
+    name: 'parkingLot.zoneCode',
+    defaultValue: '',
+  });
 
   const handleComplete = (data: Address) => {
     let fullAddress = data.address;
@@ -36,20 +49,10 @@ export default function AddressSearchField({
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    setMainAddress(fullAddress);
-    setZonecode(data.zonecode);
     setValue('parkingLot.mainAddress', fullAddress, { shouldValidate: true });
     setValue('parkingLot.zoneCode', data.zonecode, { shouldValidate: true });
     setIsPostcodeOpen(false);
   };
-
-  useEffect(() => {
-    setValue('parkingLot.mainAddress', mainAddress);
-  }, [mainAddress, setValue]);
-
-  useEffect(() => {
-    setValue('parkingLot.zoneCode', zonecode);
-  }, [zonecode, setValue]);
 
   return (
     <>
