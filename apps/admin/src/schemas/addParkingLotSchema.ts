@@ -8,19 +8,21 @@ export const parkingLotFormSchema = z.object({
   extraInfo: z.string().min(10, '기타 정보는 최소 10자 이상 입력해야 합니다.'),
 });
 
+export const parkingLotImageSchema = z.object({
+  imageUrls: z.array(z.string().min(1, '이미지를 하나 이상 업로드해 주세요.')),
+});
+
 export const addParkingLotSchema = z.object({
   parkingLot: parkingLotFormSchema,
-  // parkingLotImage: z.object({
-  //   imageUrls: z.array(
-  //     z.string().min(1, '이미지를 하나 이상 업로드해 주세요.')
-  //   ),
-  // }),
-  //  chargeable: z.array(
-  //   z.object({
-  //     parkingSpotType: z.string(),
-  //     evChargeTypes: z.array(z.string()).optional(),
-  //   })
-  // ).optional(),
+  parkingLotImage: parkingLotImageSchema,
+  // chargeable: z
+  //   .array(
+  //     z.object({
+  //       parkingSpotType: z.string(),
+  //       evChargeTypes: z.array(z.string()).optional(),
+  //     })
+  //   )
+  //   .optional(),
   // nonChargeable: z
   //   .array(
   //     z.object({

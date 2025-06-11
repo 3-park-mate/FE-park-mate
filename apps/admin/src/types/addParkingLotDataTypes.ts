@@ -30,11 +30,11 @@ export interface AddParkingLotDataType {
 
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
+  parkingLotImage: { imageUrls: string[] };
   // parkingSpot: {
   //   chargeable: ChargeableParkingSpot[];
   //   nonChargeable: NonChargeableParkingSpot[];
   // };
-  // parkingLotImage: { imageUrls: string[] };
 }
 
 export interface ParkingLotForm {
