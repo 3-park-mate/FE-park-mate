@@ -1,5 +1,7 @@
 'use client';
 import AddressSearchField from '@/components/common/AddressSearchField';
+import { PARKINGLOT_FIELDS } from '@/constants/addParkingFormFields';
+import { useStepValidation } from '@/hooks/useStepValidation';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import {
@@ -7,11 +9,26 @@ import {
   HeadingWithDesc,
 } from '@repo/ui/components/common/CommonLayouts';
 import CommonTextArea from '@repo/ui/components/common/CommonTextArea';
+import { useCallback } from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 
-export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
+export default function ParkingLotInfoStep({
+  onNext,
+}: {
+  onNext?: () => void;
+}) {
   const { register } = useFormContext<AddParkingLotStoreDataType>();
   const { errors } = useFormState<AddParkingLotStoreDataType>();
+
+  const { isStepValid, triggerValidation } =
+    useStepValidation<AddParkingLotStoreDataType>(PARKINGLOT_FIELDS);
+
+  const handleNextClick = useCallback(async () => {
+    const result = await triggerValidation();
+    if (result) {
+      onNext?.();
+    }
+  }, [onNext, triggerValidation]);
 
   return (
     <section className="space-y-5">
@@ -36,7 +53,11 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         maxLength={500}
         {...register('parkingLot.extraInfo')}
       />
-      <CommonButton onClick={onNext} className="mt-10 bg-secondary">
+      <CommonButton
+        onClick={handleNextClick}
+        disabled={!isStepValid}
+        className="mt-10 bg-secondary"
+      >
         다음
       </CommonButton>
     </section>
