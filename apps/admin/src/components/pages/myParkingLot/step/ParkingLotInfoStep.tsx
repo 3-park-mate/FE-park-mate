@@ -62,8 +62,9 @@ export default function ParkingLotInfoStep({
         {...register('parkingLot.extraInfo')}
       />
       <CommonButton
-        onClick={handleNextClick}
-        disabled={!isStepValid}
+        onClick={onNext}
+        // onClick={handleNextClick}
+        // disabled={!isStepValid}
         className="mt-10 bg-secondary"
       >
         다음

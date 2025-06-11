@@ -5,12 +5,7 @@ import { Button } from '@repo/ui/components/base/button';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
-import {
-  UseFormRegister,
-  useFormContext,
-  useFormState,
-  useWatch,
-} from 'react-hook-form';
+import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 
 export default function AddressSearchField() {
