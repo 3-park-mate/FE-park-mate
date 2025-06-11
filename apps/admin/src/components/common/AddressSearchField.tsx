@@ -6,21 +6,17 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
 import {
-  FieldErrors,
   UseFormRegister,
   useFormContext,
+  useFormState,
   useWatch,
 } from 'react-hook-form';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 
-export default function AddressSearchField({
-  register,
-  errors,
-}: {
-  register: UseFormRegister<AddParkingLotStoreDataType>;
-  errors: FieldErrors<AddParkingLotStoreDataType>;
-}) {
-  const { setValue, control } = useFormContext<AddParkingLotStoreDataType>();
+export default function AddressSearchField() {
+  const { register, setValue, control } =
+    useFormContext<AddParkingLotStoreDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
   const mainAddress = useWatch({
@@ -69,7 +65,11 @@ export default function AddressSearchField({
           placeholder="주소"
           value={mainAddress}
           readOnly
-          errorMessage={errors.parkingLot?.mainAddress?.message}
+          errorMessage={
+            touchedFields?.parkingLot?.mainAddress
+              ? errors.parkingLot?.mainAddress?.message
+              : undefined
+          }
           {...register('parkingLot.mainAddress')}
         />
         <Button
@@ -86,7 +86,11 @@ export default function AddressSearchField({
         value={zonecode}
         maxLength={10}
         readOnly
-        errorMessage={errors.parkingLot?.zoneCode?.message}
+        errorMessage={
+          touchedFields?.parkingLot?.zoneCode
+            ? errors.parkingLot?.zoneCode?.message
+            : undefined
+        }
         {...register('parkingLot.zoneCode')}
       />
       <CommonInputWithLabel
@@ -94,7 +98,11 @@ export default function AddressSearchField({
         id="detailAddress"
         placeholder="상세주소를 작성해 주세요. (ex. A동 1층)"
         maxLength={40}
-        errorMessage={errors.parkingLot?.detailAddress?.message}
+        errorMessage={
+          touchedFields?.parkingLot?.detailAddress
+            ? errors.parkingLot?.detailAddress?.message
+            : undefined
+        }
         {...register('parkingLot.detailAddress')}
       />
     </>
