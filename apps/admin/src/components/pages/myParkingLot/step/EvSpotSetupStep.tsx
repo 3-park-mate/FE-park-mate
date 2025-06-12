@@ -17,7 +17,6 @@ export default function EvSpotSetupStep({
   onBack: () => void;
 }) {
   const { getValues } = useFormContext();
-
   const [openAlert, setOpenAlert] = useState(false);
 
   const handleNextClick = () => {

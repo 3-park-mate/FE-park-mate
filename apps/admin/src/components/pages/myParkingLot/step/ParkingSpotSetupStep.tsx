@@ -1,10 +1,7 @@
 'use client';
-import {
-  CommonButton,
-  HeadingWithDesc,
-  TotalSpotCount,
-} from '@repo/ui/components/common/CommonLayouts';
+import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import SpotCountSelectSection from '../SpotCountSelectSection';
+import { StepButtons } from '../StepButtons';
 
 export default function ParkingSpotSetupStep({
   onNext,
@@ -20,19 +17,7 @@ export default function ParkingSpotSetupStep({
         subHeading="각각 주차면의 면적을 확인하시고, 최대로 수용 가능한 차량 종류에 따라 주차면수를 작성해 주세요."
       />
       <SpotCountSelectSection />
-      <hr />
-      <TotalSpotCount label="전체 주차면수" count={22} />
-      <div className="space-y-3 mt-10">
-        <CommonButton
-          onClick={onBack}
-          className="bg-white border border-secondary text-secondary"
-        >
-          이전
-        </CommonButton>
-        <CommonButton onClick={onNext} className="bg-secondary">
-          다음
-        </CommonButton>
-      </div>
+      <StepButtons onBack={onBack} onNext={onNext} />
     </section>
   );
 }

@@ -19,7 +19,7 @@ export interface AddParkingLotDataType {
       evChargeTypes: string[];
     }[];
     nonChargeable: {
-      parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
+      parkingSpotType: 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
       count: number;
     }[];
   };
@@ -61,6 +61,6 @@ export interface ChargeableParkingSpot {
 }
 
 export interface NonChargeableParkingSpot {
-  parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
+  parkingSpotType: 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
   count: number;
 }

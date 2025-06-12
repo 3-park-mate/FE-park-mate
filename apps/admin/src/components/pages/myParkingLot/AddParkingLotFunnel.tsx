@@ -28,9 +28,9 @@ export default function AddParkingLotFunnel() {
         detailAddress: '',
         extraInfo: '',
       },
-      parkingLotImage: {
-        imageUrls: [''],
-      },
+      // parkingLotImage: {
+      //   imageUrls: [''],
+      // },
       parkingSpot: {
         chargeable: [
           {
@@ -38,7 +38,12 @@ export default function AddParkingLotFunnel() {
             evChargeTypes: [],
           },
         ],
-        nonChargeable: [],
+        nonChargeable: [
+          { parkingSpotType: 'SMALL', count: 0 },
+          { parkingSpotType: 'COMPACT', count: 0 },
+          { parkingSpotType: 'STANDARD', count: 0 },
+          { parkingSpotType: 'LARGE', count: 0 },
+        ],
       },
     },
   });

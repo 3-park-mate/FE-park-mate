@@ -23,6 +23,7 @@ export const chargeableParkingSpotSchema = z.object({
 export const nonChargeableParkingSpotSchema = z.object({
   parkingSpotType: z.union([
     z.literal('SMALL'),
+    z.literal('COMPACT'),
     z.literal('STANDARD'),
     z.literal('LARGE'),
   ]),

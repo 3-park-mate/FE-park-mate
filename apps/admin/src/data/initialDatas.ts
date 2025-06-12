@@ -44,3 +44,30 @@ export const chargingTypes = [
   { key: 'DC_CHADEMO', icon: DCChademoIcon, label: 'DC차데모' },
   { key: 'DC_COMBO', icon: DCComboIcon, label: 'DC콤보' },
 ];
+
+export const parkingSpotTypes = [
+  {
+    src: '/img/small-car.webp',
+    alt: 'Small Car',
+    label: '경차',
+    parkingSpotType: 'SMALL',
+  },
+  {
+    src: '/img/compact-car.webp',
+    alt: 'Compact Car',
+    label: '소형차',
+    parkingSpotType: 'COMPACT',
+  },
+  {
+    src: '/img/standard-car.png',
+    alt: 'Standard Car',
+    label: '중형차',
+    parkingSpotType: 'STANDARD',
+  },
+  {
+    src: '/img/large-car.jpg',
+    alt: 'Large Car',
+    label: '대형차',
+    parkingSpotType: 'LARGE',
+  },
+];
