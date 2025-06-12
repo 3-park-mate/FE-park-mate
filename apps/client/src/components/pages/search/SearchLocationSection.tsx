@@ -27,6 +27,7 @@ export default function SearchLocationSection() {
     if (loading) return;
     if (inputValue.trim() === '') {
       setSearchResults([]);
+      setIsScrolled(false);
       return;
     }
     const fetchSearchResults = async () => {
