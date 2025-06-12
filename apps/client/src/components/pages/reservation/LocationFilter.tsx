@@ -69,7 +69,6 @@ export default function LocationFilter() {
     <div className={cn('flex flex-col items-center py-3')}>
       <Input
         value={inputValue}
-        // onBlur={() => setInputValue('')}
         onChange={(e) => setInputValue(e.currentTarget.value)}
         placeholder="위치를 검색하세요"
         className={cn('border-2 focus-visible:border-black/100 transition-all')}
