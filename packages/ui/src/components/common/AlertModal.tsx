@@ -30,7 +30,7 @@ export default function AlertModal({
 }) {
   const confirmBtnClass =
     theme === 'primary'
-      ? 'w-fit py-3 px-6 bg-primary-dark text-white'
+      ? 'w-fit py-3 px-6 bg-primary text-white'
       : 'w-fit py-3 px-6 bg-secondary text-white';
 
   const cancelBtnClass =

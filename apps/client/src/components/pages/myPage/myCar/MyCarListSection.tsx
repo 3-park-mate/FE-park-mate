@@ -20,7 +20,7 @@ export default function MyCarListSection() {
       ))}
       <Link
         href="/my-car/add"
-        className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-primary-dark mt-2`}
+        className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-primary mt-2`}
       >
         <Plus />내 차량 추가
       </Link>

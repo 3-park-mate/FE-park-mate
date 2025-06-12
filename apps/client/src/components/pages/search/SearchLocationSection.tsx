@@ -65,7 +65,7 @@ export default function SearchLocationSection() {
               label="근처"
               subText={`현재 내 주변에서\n주차 가능한 주차장을 찾아보세요.`}
               icon={MousePointer2Icon}
-              IconclassName="rotate-90 fill-none stroke-primary-dark bg-primary/15"
+              IconclassName="rotate-90 fill-none stroke-primary bg-primary/15"
               className="border-0 bg-white/80"
               position={{ lat: undefined, lng: undefined }}
             />

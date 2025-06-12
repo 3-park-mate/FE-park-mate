@@ -71,7 +71,7 @@ export const progressBarStatusMap = [
     threshold: 0,
     label: '이용중',
     remainingText: '1시간 23분 남음',
-    labelColor: 'text-primary-dark',
+    labelColor: 'text-primary',
     progressColor: '[&>div]:bg-primary',
     remainingColor: 'text-gray-dark-2',
   },

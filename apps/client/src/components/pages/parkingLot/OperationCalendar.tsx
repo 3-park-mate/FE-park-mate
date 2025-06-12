@@ -31,7 +31,7 @@ export default function OperationCalendar() {
               <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center font-medium ${
                   item.date === today
-                    ? 'text-white bg-primary-dark'
+                    ? 'text-white bg-primary'
                     : 'text-black bg-transparent'
                 }`}
               >

@@ -66,7 +66,7 @@ export default function ImageCarouselWithDots({
             key={i}
             aria-label={`슬라이드 ${i + 1}`}
             className={`w-[9px] h-[9px] rounded-full transition-colors duration-300 cursor-pointer ${
-              current === i ? 'bg-primary-dark' : 'bg-gray-300'
+              current === i ? 'bg-primary' : 'bg-gray-300'
             }`}
             onClick={() => api?.scrollTo(i)}
           />

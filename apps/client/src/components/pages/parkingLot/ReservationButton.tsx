@@ -22,12 +22,12 @@ export default function ReservationButton({
           side="bottom"
           content={`1시간 ${baseFee.toLocaleString()}원`}
         >
-          <CommonButton className="bg-primary-dark" disabled={!isActive}>
+          <CommonButton className="bg-primary" disabled={!isActive}>
             예약하기 ({availableSpots}/{registeredParkingCount})
           </CommonButton>
         </AlwaysVisibleTooltip>
       ) : (
-        <CommonButton className="bg-primary-dark" disabled>
+        <CommonButton className="bg-primary" disabled>
           운영 준비중
         </CommonButton>
       )}

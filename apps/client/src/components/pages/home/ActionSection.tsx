@@ -7,7 +7,7 @@ export default function ActionSection() {
     <PaddedLayout className="space-y-2.5">
       <ActionButton
         title="즉시예약"
-        className="bg-gradient-to-b from-primary to-primary-dark"
+        className="bg-gradient-to-b from-primary to-primary"
       >
         <p className="leading-5">
           내 근처 주차장을 찾고,
@@ -28,7 +28,7 @@ export default function ActionSection() {
         title="둘러보기"
         className="bg-gradient-to-b from-white to-[#DDF6F6] 
               border-[1.5px] border-primary
-              text-primary-dark"
+              text-primary"
       >
         <p className="leading-5">
           지도를 둘러보며

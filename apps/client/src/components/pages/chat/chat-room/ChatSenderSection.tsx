@@ -64,7 +64,7 @@ export default function ChatSenderSection({
           className={cn(
             'rounded-full size-8.5 p-1 fill-white stroke-gray-1 bg-gray-1 transition-all duration-200',
             defaultMessage &&
-              'bg-primary-dark stroke-primary-dark  hover:stroke-primary hover:bg-primary cursor-pointer'
+              'bg-primary stroke-primary  hover:stroke-primary hover:bg-primary cursor-pointer'
           )}
         />
       </button>
