@@ -42,8 +42,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary: #65e8e8;
-  --color-primary-dark: #5dd3d3;
+  --color-primary-light: #65e8e8;
+  --color-primary: #5dd3d3;
+  /* --color-primary-dark: #5dd3d3; */
   --color-primary-dark-50: #27bfd1;
 
   --color-secondary: #488dff;

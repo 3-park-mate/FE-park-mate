@@ -8,7 +8,7 @@ export default function ParkPointArea() {
         <p className="text-13px text-gray-dark-2 leading-2">파크포인트</p>
         <p className="text-[28px] font-bold">237,500</p>
       </div>
-      <Button className="bg-primary-dark">충전</Button>
+      <Button className="bg-primary">충전</Button>
     </PaddedLayout>
   );
 }

@@ -12,7 +12,7 @@ export function HomeTabMenuBar({ tabContents }: HomeTabBarProps) {
 
   return (
     <>
-      <ul className="fixed top-[64px] w-full max-w-[600px] flex justify-between bg-inner-background-gray z-50">
+      <ul className="fixed w-full max-w-[600px] flex justify-between bg-inner-background-gray z-50">
         <HomeTabMenu
           tabMenuName="예약 주차장"
           selected={tabMenu === 'reservationParking'}
@@ -24,7 +24,7 @@ export function HomeTabMenuBar({ tabContents }: HomeTabBarProps) {
           onClick={() => setTabMenu('currentParking')}
         />
       </ul>
-      <PaddedLayout className="py-7 pt-38">
+      <PaddedLayout className="pt-[84px] pb-7">
         {tabMenu === 'reservationParking'
           ? tabContents.reservationParking
           : tabContents.currentParking}
