@@ -27,7 +27,7 @@ export const nonChargeableParkingSpotSchema = z.object({
     z.literal('STANDARD'),
     z.literal('LARGE'),
   ]),
-  count: z.number().int().min(1, '주차면을 1개 이상 설정해 주세요.'),
+  count: z.number().int(),
 });
 
 export const addParkingLotSchema = z.object({

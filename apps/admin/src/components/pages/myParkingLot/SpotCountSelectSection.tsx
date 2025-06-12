@@ -7,7 +7,6 @@ import SpotInputItem from './SpotInputItem';
 import { parkingSpotTypes } from '@/data/initialDatas';
 
 export default function SpotCountSelectSection() {
-  console.log('render');
   const { control, setValue } = useFormContext();
 
   const nonChargeable = useWatch({
