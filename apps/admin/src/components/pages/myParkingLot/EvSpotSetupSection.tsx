@@ -1,13 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ChargingTypeSelector from './ChargingTypeSelector';
 import { useFormContext, useFieldArray } from 'react-hook-form';
 import {
   CommonButton,
-  TextBadge,
+  TotalSpotCount,
 } from '@repo/ui/components/common/CommonLayouts';
 import { Plus } from 'lucide-react';
-import { chargingTypes } from '@/data/initialDatas';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 
@@ -47,14 +46,6 @@ export default function EvSpotSetupSection() {
         theme="secondary"
       />
       <section className="space-y-5">
-        <div className="flex justify-center gap-3">
-          {chargingTypes.map(({ icon: Icon, label }, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <Icon size={45} />
-              <TextBadge>{label}</TextBadge>
-            </div>
-          ))}
-        </div>
         {fields.map((_, index) => (
           <ChargingTypeSelector
             key={_.id}
@@ -76,12 +67,10 @@ export default function EvSpotSetupSection() {
           <span>주차면 추가하기</span>
         </CommonButton>
         <hr />
-        <p className="text-right px-3">
-          <span className="text-gray-2 text-sm">전체 전기차 충전 주차면수</span>
-          <span className="font-bold text-3xl text-secondary ms-2">
-            {fields.length}
-          </span>
-        </p>
+        <TotalSpotCount
+          count={fields.length}
+          label="전체 전기차 충전 주차면수"
+        />
       </section>
     </>
   );

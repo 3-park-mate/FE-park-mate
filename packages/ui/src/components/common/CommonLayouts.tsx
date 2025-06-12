@@ -224,3 +224,20 @@ export function OptionIconWithText({
     </div>
   );
 }
+
+export function TotalSpotCount({
+  count,
+  label,
+  className,
+}: {
+  count: number;
+  label: string;
+  className?: string;
+}) {
+  return (
+    <div className={cn(`text-right px-3`, className)}>
+      <span className="text-gray-2 text-sm">{label}</span>
+      <span className="font-bold text-3xl text-secondary ms-2">{count}</span>
+    </div>
+  );
+}
