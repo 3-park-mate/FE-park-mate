@@ -1,9 +1,12 @@
 'use client';
-import {
-  CommonButton,
-  HeadingWithDesc,
-} from '@repo/ui/components/common/CommonLayouts';
+import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import SpotCountSelectSection from '../SpotCountSelectSection';
+import { StepButtons } from '../StepButtons';
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { NonChargeableParkingSpot } from '@/types/addParkingLotDataTypes';
+import { nonChargeableParkingSpotSchema } from '@/schemas/addParkingLotSchema';
+import AlertModal from '@repo/ui/components/common/AlertModal';
 
 export default function ParkingSpotSetupStep({
   onNext,
@@ -12,29 +15,51 @@ export default function ParkingSpotSetupStep({
   onNext: () => void;
   onBack: () => void;
 }) {
+  const { getValues } = useFormContext();
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleNextClick = () => {
+    const nonChargeableSpots = getValues('parkingSpot.nonChargeable') || [];
+
+    const hasInvalid = nonChargeableSpots.some(
+      (spot: NonChargeableParkingSpot) => {
+        try {
+          nonChargeableParkingSpotSchema.parse(spot);
+          return false;
+        } catch {
+          return true;
+        }
+      }
+    );
+    const allZero =
+      nonChargeableSpots.length > 0 &&
+      nonChargeableSpots.every(
+        (spot: NonChargeableParkingSpot) => (spot.count ?? 0) === 0
+      );
+    if (hasInvalid || allZero) {
+      setOpenAlert(true);
+      return;
+    }
+    onNext();
+  };
+
   return (
-    <section className="space-y-5">
-      <HeadingWithDesc
-        heading="수용 가능한 차량 종류에 따른 주차면수를 입력해 주세요."
-        subHeading="각각 주차면의 면적을 확인하시고, 최대로 수용 가능한 차량 종류에 따라 주차면수를 작성해 주세요."
+    <>
+      <AlertModal
+        open={openAlert}
+        onOpenChange={setOpenAlert}
+        onConfirm={() => setOpenAlert(false)}
+        errorMessage="최소 하나의 주차면을 설정해주세요."
+        theme="secondary"
       />
-      <SpotCountSelectSection />
-      <hr />
-      <p className="text-right px-3">
-        <span className="text-gray-2 text-sm">전체 주차면수</span>
-        <span className="font-bold text-3xl text-secondary ms-2">22</span>
-      </p>
-      <div className="space-y-3 mt-10">
-        <CommonButton
-          onClick={onBack}
-          className="bg-white border border-secondary text-secondary"
-        >
-          이전
-        </CommonButton>
-        <CommonButton onClick={onNext} className="bg-secondary">
-          다음
-        </CommonButton>
-      </div>
-    </section>
+      <section className="space-y-5">
+        <HeadingWithDesc
+          heading="수용 가능한 차량 종류에 따른 주차면수를 입력해 주세요."
+          subHeading="각각 주차면의 면적을 확인하시고, 최대로 수용 가능한 차량 종류에 따라 주차면수를 작성해 주세요."
+        />
+        <SpotCountSelectSection />
+        <StepButtons onBack={onBack} onNext={handleNextClick} />
+      </section>
+    </>
   );
 }

@@ -8,7 +8,13 @@ import {
   HeadingWithDesc,
 } from '@repo/ui/components/common/CommonLayouts';
 
-export default function IsChargeableSheet({ onNext }: { onNext?: () => void }) {
+export default function IsChargeableSheet({
+  onNext,
+  onJump,
+}: {
+  onNext: () => void;
+  onJump: () => void;
+}) {
   return (
     <SheetContent
       side="bottom"
@@ -28,7 +34,9 @@ export default function IsChargeableSheet({ onNext }: { onNext?: () => void }) {
           >
             예
           </CommonButton>
-          <CommonButton className=" bg-secondary">아니오</CommonButton>
+          <CommonButton onClick={onJump} className=" bg-secondary">
+            아니오
+          </CommonButton>
         </div>
       </section>
     </SheetContent>

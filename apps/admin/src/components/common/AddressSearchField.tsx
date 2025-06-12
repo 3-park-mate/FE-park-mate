@@ -5,12 +5,25 @@ import { Button } from '@repo/ui/components/base/button';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
+import { useFormContext, useFormState, useWatch } from 'react-hook-form';
+import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 
 export default function AddressSearchField() {
+  const { register, setValue, control } =
+    useFormContext<AddParkingLotStoreDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
-  const [mainAddress, setMainAddress] = useState('');
-  const [zonecode, setZonecode] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
+
+  const mainAddress = useWatch({
+    control,
+    name: 'parkingLot.mainAddress',
+    defaultValue: '',
+  });
+  const zonecode = useWatch({
+    control,
+    name: 'parkingLot.zoneCode',
+    defaultValue: '',
+  });
 
   const handleComplete = (data: Address) => {
     let fullAddress = data.address;
@@ -27,8 +40,8 @@ export default function AddressSearchField() {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    setMainAddress(fullAddress);
-    setZonecode(data.zonecode);
+    setValue('parkingLot.mainAddress', fullAddress, { shouldValidate: true });
+    setValue('parkingLot.zoneCode', data.zonecode, { shouldValidate: true });
     setIsPostcodeOpen(false);
   };
 
@@ -47,29 +60,45 @@ export default function AddressSearchField() {
           placeholder="주소"
           value={mainAddress}
           readOnly
+          errorMessage={
+            touchedFields?.parkingLot?.mainAddress
+              ? errors.parkingLot?.mainAddress?.message
+              : undefined
+          }
+          {...register('parkingLot.mainAddress')}
         />
         <Button
           type="button"
-          className="mt-auto h-[44px] rounded-3xl bg-secondary"
+          className="mt-6 h-[44px] rounded-3xl bg-secondary"
           onClick={() => setIsPostcodeOpen(true)}
         >
           주소찾기
         </Button>
       </div>
       <CommonInputWithLabel
-        id="zoncode"
+        id="zoneCode"
         placeholder="우편번호"
         value={zonecode}
         maxLength={10}
         readOnly
+        errorMessage={
+          touchedFields?.parkingLot?.zoneCode
+            ? errors.parkingLot?.zoneCode?.message
+            : undefined
+        }
+        {...register('parkingLot.zoneCode')}
       />
       <CommonInputWithLabel
         label="상세주소"
         id="detailAddress"
         placeholder="상세주소를 작성해 주세요. (ex. A동 1층)"
         maxLength={40}
-        value={detailAddress}
-        onChange={(e) => setDetailAddress(e.target.value)}
+        errorMessage={
+          touchedFields?.parkingLot?.detailAddress
+            ? errors.parkingLot?.detailAddress?.message
+            : undefined
+        }
+        {...register('parkingLot.detailAddress')}
       />
     </>
   );
