@@ -5,7 +5,7 @@ import { searchMenuListData } from '@/data/searchDatas';
 
 export default function SearchHeader() {
   return (
-    <header>
+    <header className="sticky top-0 w-full z-50">
       <TabMenuWithIcon tabMenuList={searchMenuListData} closeButton={true} />
     </header>
   );
