@@ -12,6 +12,9 @@ import { handleKeyDown } from '@/utils/formUtils';
 import { useCallback, useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import ParkingLotOptionStep from './step/ParkingLotOptionStep';
+
+export type AddParkingLotStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5';
 
 export default function AddParkingLotFunnel() {
   const router = useRouter();
@@ -47,11 +50,9 @@ export default function AddParkingLotFunnel() {
       },
     },
   });
-  const [Funnel, _setStep] = useFunnel<'step1' | 'step2' | 'step3' | 'step4'>(
-    'step1'
-  );
+  const [Funnel, _setStep] = useFunnel<AddParkingLotStep>('step1');
   const setStep = useCallback(
-    (step: 'step1' | 'step2' | 'step3' | 'step4', skipEvStep?: boolean) => {
+    (step: AddParkingLotStep, skipEvStep?: boolean) => {
       _setStep(step);
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -92,25 +93,29 @@ export default function AddParkingLotFunnel() {
             <ParkingLotInfoStep onNext={() => setStep('step2')} />
           </Funnel.step>
           <Funnel.step name="step2">
-            <ParkingLotImagesStep setStep={setStep} />
-          </Funnel.step>
-          <Funnel.step name="step3">
-            <EvSpotSetupStep
-              onNext={() => setStep('step4', false)}
-              onBack={() => {
-                setStep('step2', false);
-              }}
+            <ParkingLotOptionStep
+              onNext={() => setStep('step3')}
+              onBack={() => setStep('step1')}
             />
           </Funnel.step>
+          <Funnel.step name="step3">
+            <ParkingLotImagesStep setStep={setStep} />
+          </Funnel.step>
           <Funnel.step name="step4">
+            <EvSpotSetupStep
+              onNext={() => setStep('step5', false)}
+              onBack={() => setStep('step3', false)}
+            />
+          </Funnel.step>
+          <Funnel.step name="step5">
             <ParkingSpotSetupStep
               onNext={handleSubmit(onSubmit)}
               onBack={() => {
                 const skipEv = searchParams.get('skipEvStep');
                 if (skipEv === 'true') {
-                  setStep('step2', true);
+                  setStep('step3', true);
                 } else {
-                  setStep('step3', false);
+                  setStep('step4', false);
                 }
               }}
             />
