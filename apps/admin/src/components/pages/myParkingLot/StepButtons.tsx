@@ -14,6 +14,7 @@ export function StepButtons({
     <div className={cn(`space-y-3 mt-10`, className)}>
       {onBack && (
         <CommonButton
+          type="button"
           onClick={onBack}
           className="bg-white border border-secondary text-secondary"
         >
@@ -21,7 +22,7 @@ export function StepButtons({
         </CommonButton>
       )}
       {onNext && (
-        <CommonButton onClick={onNext} className="bg-secondary">
+        <CommonButton type="button" onClick={onNext} className="bg-secondary">
           다음
         </CommonButton>
       )}

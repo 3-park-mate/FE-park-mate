@@ -39,8 +39,8 @@ export const myParkingLotSortMenu = [
 ];
 
 export const chargingTypes = [
-  { key: 'acSingle', icon: ACSingleIcon, label: 'AC단상' },
-  { key: 'acThreePhase', icon: ACThreePhaseIcon, label: 'AC3상' },
-  { key: 'dcChademo', icon: DCChademoIcon, label: 'DC차데모' },
-  { key: 'dcCombo', icon: DCComboIcon, label: 'DC콤보' },
+  { key: 'AC_SINGLE', icon: ACSingleIcon, label: 'AC단상' },
+  { key: 'AC_THREE_PHASE', icon: ACThreePhaseIcon, label: 'AC3상' },
+  { key: 'DC_CHADEMO', icon: DCChademoIcon, label: 'DC차데모' },
+  { key: 'DC_COMBO', icon: DCComboIcon, label: 'DC콤보' },
 ];
