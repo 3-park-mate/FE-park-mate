@@ -1,36 +1,45 @@
 'use client';
 
 import { cn } from '@repo/ui/lib/utils';
+import { MousePointer2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function MapRedirectButton({
-  type,
+  icon: Icon = MousePointer2Icon,
+  IconclassName,
   className,
   label,
-  address,
-  position,
+  subText,
+  position = { lat: undefined, lng: undefined },
 }: {
-  type: 'location' | 'parkinglot';
+  icon?: React.FC<{ className?: string }>;
+  IconclassName?: string;
   className?: string;
   label: string;
-  address: string;
-  position: { lat: number; lng: number };
+  subText?: string;
+  position?: { lat: number | undefined; lng: number | undefined };
 }) {
   const router = useRouter();
   return (
-    <div
-      className={cn('px-6 py-4', className)}
+    <button
+      type="button"
+      className={cn(
+        'flex w-full items-center gap-3 bg-white border-1 rounded-lg py-4 px-4 cursor-pointer',
+        className
+      )}
       onClick={() =>
-        router.replace(`/map?lat=${position.lat}&lon=${position.lng}`)
+        router.replace(`/map?lat=${position.lat}&lng=${position.lng}`)
       }
     >
-      {/* type==='parkinglot' 추가 필요 */}
-      {type === 'location' && (
-        <>
-          <p>{label}</p>
-          <p className="text-sm text-gray-2">{address}</p>
-        </>
-      )}
-    </div>
+      <Icon
+        className={cn('size-15 flex-shrink-0  rounded-lg p-3.5', IconclassName)}
+      />
+      <p className="flex flex-col flex-1 text-left overflow-hidden">
+        <span className="text-17px font-medium">{label}</span>
+        <span className="text-gray-2 text-15px leading-4 break-words whitespace-pre-line">
+          {subText}
+        </span>
+      </p>
+    </button>
   );
 }

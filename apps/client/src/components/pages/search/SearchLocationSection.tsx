@@ -7,8 +7,9 @@ import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { searchLocationByKeywordUtil } from '@/utils/mapUtils';
 import { MousePointer2Icon } from 'lucide-react';
 import SearchInput from '../search/SearchInput';
-import SimpleMapRedirectButton from '../search/SimpleMapRedirectButton';
+import SimpleMapRedirectButton from './MapRedirectButton';
 import SearchResultsList from './SearchResultsList';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function SearchLocationSection() {
   const [loading, error] = useKakaoLoader({
@@ -37,7 +38,7 @@ export default function SearchLocationSection() {
   }, [inputValue]);
 
   if (loading) {
-    return <div>로딩중</div>;
+    return <DotSpinner className="w-full fill-primary size-15 mt-40" />;
   }
 
   if (error) {
@@ -48,27 +49,34 @@ export default function SearchLocationSection() {
     <>
       <section
         className={cn(
-          'fixed top-20  w-full pl-6 pr-5 max-w-[600px] bg-gray-light-3 z-40 flex items-center gap-3',
+          'sticky top-[84px] w-full bg-gray-light-3 px-3 pt-10 pb-8 max-w-[600px] z-40',
           isScrolled && 'shadow-sm'
         )}
       >
-        <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+        <div className="bg-white w-full py-6 px-5 rounded-2xl">
+          <p className="text-xl font-semibold mb-3 mx-1">위치 검색</p>
+          <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+        </div>
       </section>
-      <section className="px-5.5 pt-55 pb-20">
-        {!inputValue.trim() && (
-          <SimpleMapRedirectButton
-            label="Nearby"
-            icon={MousePointer2Icon}
-            className="rotate-90 fill-primary stroke-primary size-7"
-          />
-        )}
-        {searchResults.length > 0 && (
-          <SearchResultsList
-            results={searchResults}
-            keyword={inputValue}
-            setIsScrolled={setIsScrolled}
-          />
-        )}
+      <section>
+        <ul className="px-3 pt-2 pb-10 rounded-xl">
+          {inputValue.trim() === '' ? (
+            <SimpleMapRedirectButton
+              label="근처"
+              subText={`현재 내 주변에서\n주차 가능한 주차장을 찾아보세요.`}
+              icon={MousePointer2Icon}
+              IconclassName="rotate-90 fill-none stroke-primary-dark bg-primary/15"
+              className="border-0 bg-white/80"
+              position={{ lat: undefined, lng: undefined }}
+            />
+          ) : (
+            <SearchResultsList
+              results={searchResults}
+              keyword={inputValue}
+              setIsScrolled={setIsScrolled}
+            />
+          )}
+        </ul>
       </section>
     </>
   );

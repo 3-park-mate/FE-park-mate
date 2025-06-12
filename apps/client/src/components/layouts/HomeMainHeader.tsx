@@ -36,7 +36,7 @@ export default function HomeMainHeader({
 
   return (
     <HeaderLayout
-      className={cn('p-5 space-x-3 z-50', className)}
+      className={cn('p-5 space-x-6 z-50', className)}
       isShadow={isShadow || isScrolled}
     >
       <div className="w-full flex items-center gap-2">
