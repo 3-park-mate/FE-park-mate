@@ -2,7 +2,7 @@ import {
   CommonButton,
   HeadingWithDesc,
 } from '@repo/ui/components/common/CommonLayouts';
-import ChargeSelectSection from '../ChargeSelectSection';
+import EvSpotSetupSection from '../EvSpotSetupSection';
 
 export default function EvSpotSetupStep({
   onNext,
@@ -17,7 +17,7 @@ export default function EvSpotSetupStep({
         heading="전기차 충전이 가능한 주차면을 설정해 주세요."
         subHeading="각 주차면 충전기의 커넥터 타입을 확인하시고, 가능한 충전 타입을 모두 선택해 주세요."
       />
-      <ChargeSelectSection />
+      <EvSpotSetupSection />
       <div className="space-y-3 mt-10">
         <CommonButton
           onClick={onBack}

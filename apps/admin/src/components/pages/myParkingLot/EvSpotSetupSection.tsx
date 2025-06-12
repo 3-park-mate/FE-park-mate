@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import ChargingTypeSelector from './ChargingTypeSelector';
 import { useFormContext, useFieldArray } from 'react-hook-form';
@@ -10,9 +9,9 @@ import {
 import { Plus } from 'lucide-react';
 import { chargingTypes } from '@/data/initialDatas';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
-import AlertModal from '@repo/ui/components/common/AlertModal'; // 경로는 실제 위치에 맞게 조정하세요
+import AlertModal from '@repo/ui/components/common/AlertModal';
 
-export default function ChargeSelectSection() {
+export default function EvSpotSetupSection() {
   const { control } = useFormContext<AddParkingLotStoreDataType>();
   const { fields, append, remove } = useFieldArray({
     control,
