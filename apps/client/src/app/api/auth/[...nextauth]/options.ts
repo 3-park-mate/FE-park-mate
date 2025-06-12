@@ -1,4 +1,6 @@
-import { NextAuthOptions } from 'next-auth';
+import { SignInResponseDataType } from '@/types/authDataTypes';
+import { CommonResponseType } from '@/types/responseDataTypes';
+import { NextAuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
 
@@ -10,33 +12,34 @@ export const options: NextAuthOptions = {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials): Promise<User | null> {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        const apiUrl = 'sign-in';
-        const signInEmail = credentials.email;
+        console.log('credentials', credentials);
         try {
-          // const response = await fetch(
-          //   `${process.env.BASE_API_URL}/api/v1/auth/${apiUrl}`,
-          //   {
-          //     method: 'POST',
-          //     headers: { 'Content-Type': 'application/json' },
-          //     body: JSON.stringify({
-          //       email: signInEmail,
-          //       password: credentials.password,
-          //     }),
-          //     cache: 'no-cache',
-          //   }
-          // );
-          // const user =
-          //   (await response.json()) as CommonResponseType<signInDataType>;
+          const res = await fetch(
+            `${process.env.BASE_API_URL}/auth-service/api/v1/user/login`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: credentials.email,
+                password: credentials.password,
+              }),
+              cache: 'no-cache',
+            }
+          );
+          // console.log('res', res);
+          const user =
+            (await res.json()) as CommonResponseType<SignInResponseDataType>;
           // console.log('user', user);
-          // if (!user.isSuccess) {
-          //   throw new Error(user.message);
-          // }
-          // return user.result;
+          if (!res.ok || user.code !== 200 || !user.data) {
+            throw new Error(user.message);
+          }
+          return {
+            accessToken: user.data.accessToken,
+          } as User;
         } catch (error) {
           console.error('authorize error:', error);
           throw new Error(
@@ -103,8 +106,12 @@ export const options: NextAuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      session.user = token as any;
+      session.user = {
+        ...session.user,
+        accessToken: token.accessToken,
+        name: token.name,
+        uuid: token.uuid,
+      };
       return session;
     },
     async redirect({ url, baseUrl }) {
