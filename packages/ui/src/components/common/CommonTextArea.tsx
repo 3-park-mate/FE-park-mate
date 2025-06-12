@@ -1,5 +1,4 @@
 import { cn } from '../../lib/utils';
-import React from 'react';
 import { Textarea } from '../base/textarea';
 
 export default function CommonTextArea({
@@ -25,11 +24,8 @@ export default function CommonTextArea({
       <Textarea
         id={id}
         {...props}
-        className={
-          errorMessage
-            ? 'border-red-300 focus-visible:border-red-400'
-            : 'resize-none min-h-[200px]'
-        }
+        className={`resize-none min-h-[200px]
+          ${errorMessage && 'border-red-300 focus-visible:border-red-400'}`}
       />
       {errorMessage && (
         <p className="text-red-500 text-13px ms-1">{errorMessage}</p>

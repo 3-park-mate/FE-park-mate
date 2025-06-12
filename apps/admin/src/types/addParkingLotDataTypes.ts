@@ -11,7 +11,6 @@ export interface AddParkingLotDataType {
     detailAddress: string;
     latitude: number;
     longitude: number;
-    isEvChargingAvailable: boolean;
     extraInfo: string;
   };
   parkingSpot: {
@@ -20,7 +19,7 @@ export interface AddParkingLotDataType {
       evChargeTypes: string[];
     }[];
     nonChargeable: {
-      parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
+      parkingSpotType: 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
       count: number;
     }[];
   };
@@ -31,30 +30,37 @@ export interface AddParkingLotDataType {
 
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
+  parkingLotImage: { imageUrls: string[] };
   parkingSpot: {
-    chargeable: {
-      parkingSpotType: string;
-      evChargeTypes: string[];
-    }[];
-    nonChargeable: {
-      parkingSpotType: 'SMALL' | 'STANDARD' | 'LARGE';
-      count: number;
-    }[];
-  };
-  parkingLotImage: {
-    imageUrls: string[];
+    chargeable?: ChargeableParkingSpot[];
+    nonChargeable: NonChargeableParkingSpot[];
   };
 }
 
 export interface ParkingLotForm {
   name: string;
-  capacity: number;
-  registeredCapacity: number;
+  // capacity: number;
+  // registeredCapacity: number;
   zoneCode: string;
   mainAddress: string;
   detailAddress: string;
-  latitude: number;
-  longitude: number;
-  isEvChargingAvailable: boolean;
+  // latitude: number;
+  // longitude: number;
   extraInfo: string;
+}
+
+export type EVChargeTypeString =
+  | 'AC_SINGLE'
+  | 'DC_COMBO'
+  | 'DC_CHADEMO'
+  | 'AC_THREE_PHASE';
+
+export interface ChargeableParkingSpot {
+  parkingSpotType: 'EV';
+  evChargeTypes?: EVChargeTypeString[];
+}
+
+export interface NonChargeableParkingSpot {
+  parkingSpotType: 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
+  count: number;
 }

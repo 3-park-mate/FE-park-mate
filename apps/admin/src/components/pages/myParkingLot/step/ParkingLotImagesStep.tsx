@@ -7,11 +7,12 @@ import IsChargeableSheet from '../IsChargeableSheet';
 import ImageUploadInput from '../ImageUploadInput';
 
 export default function ParkingLotImagesStep({
-  onNext,
-  onBack,
+  setStep,
 }: {
-  onNext: () => void;
-  onBack: () => void;
+  setStep: (
+    step: 'step1' | 'step2' | 'step3' | 'step4',
+    skipEvStep?: boolean
+  ) => void;
 }) {
   return (
     <section className="space-y-5">
@@ -22,7 +23,7 @@ export default function ParkingLotImagesStep({
       <ImageUploadInput />
       <div className="space-y-3 mt-10">
         <CommonButton
-          onClick={onBack}
+          onClick={() => setStep('step1')}
           className="bg-white border border-secondary text-secondary"
         >
           이전
@@ -31,7 +32,10 @@ export default function ParkingLotImagesStep({
           <SheetTrigger asChild>
             <CommonButton className="bg-secondary">다음</CommonButton>
           </SheetTrigger>
-          <IsChargeableSheet onNext={onNext} />
+          <IsChargeableSheet
+            onNext={() => setStep('step3', false)}
+            onJump={() => setStep('step4', true)}
+          />
         </Sheet>
       </div>
     </section>
