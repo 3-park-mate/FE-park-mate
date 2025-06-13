@@ -1,5 +1,4 @@
 'use server';
-
 import { ParkingLotOptionDataType } from '@/types/parkingDataTypes';
 import { CommonResponseType } from '@/types/responseDataTypes';
 import { redirect } from 'next/navigation';
@@ -17,6 +16,7 @@ export async function getParkingLotOptions() {
       console.error('Data Fetching failed:', errorData);
       redirect('/error');
     }
+
     const data = (await res.json()) as CommonResponseType<{
       options: ParkingLotOptionDataType[];
     }>;
