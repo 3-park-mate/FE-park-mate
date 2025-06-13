@@ -21,20 +21,19 @@ export default function ParkingLotOptionItem({
   return (
     <OptionContainer
       isSelected={isSelected}
-      onClick={onClick}
       className="flex-col items-center gap-2 p-2"
     >
       <OptionIconWithText
         Icon={Icon}
         className={cn(
-          'rounded-xl justify-center text-center',
+          'rounded-xl justify-center text-center transition-all duration-200',
           isSelected ? 'text-black' : 'text-gray-2'
         )}
         IconClassName={cn(isSelected ? 'text-black' : 'text-gray-3')}
       >
         {option.name}
       </OptionIconWithText>
-      <CommonCheckbox checked={isSelected} />
+      <CommonCheckbox checked={isSelected} onCheckedChange={onClick} />
     </OptionContainer>
   );
 }

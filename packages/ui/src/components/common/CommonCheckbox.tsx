@@ -9,7 +9,7 @@ export function CommonCheckbox({
   return (
     <Checkbox
       className={cn(
-        'w-4 h-4 rounded cursor-pointer border transition-all duration-200 text-white pointer-events-none',
+        'w-4 h-4 rounded cursor-pointer border transition-all duration-200 text-white',
         'data-[state=checked]:bg-secondary data-[state=checked]:border-secondary',
         'data-[state=unchecked]:bg-white data-[state=unchecked]:border-gray-300',
         className

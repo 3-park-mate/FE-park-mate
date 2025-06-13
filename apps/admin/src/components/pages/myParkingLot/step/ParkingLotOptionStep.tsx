@@ -7,6 +7,8 @@ import ParkingLotOptionItem from '../ParkingLotOptionItem';
 import { getParkingLotOptions } from '@/actions/parking/parking-service';
 import { ParkingLotOptionDataType } from '@/types/parkingDataTypes';
 import { useFetchData } from '@/hooks/useFetchData';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 
 export default function ParkingLotOptionStep({
   onNext,
@@ -17,6 +19,15 @@ export default function ParkingLotOptionStep({
 }) {
   const { data: options, loading } =
     useFetchData<ParkingLotOptionDataType[]>(getParkingLotOptions);
+  const { control, setValue } = useFormContext<AddParkingLotStoreDataType>();
+  const optionIds = useWatch({ control, name: 'optionIds' }) || [];
+
+  const handleToggle = (id: number) => {
+    const updated = optionIds.includes(id)
+      ? optionIds.filter((optId) => optId !== id)
+      : [...optionIds, id];
+    setValue('optionIds', updated, { shouldDirty: true, shouldValidate: true });
+  };
 
   return (
     <section className="space-y-5">
@@ -30,7 +41,8 @@ export default function ParkingLotOptionStep({
             <ParkingLotOptionItem
               key={option.id}
               option={option}
-              isSelected={index === 1}
+              isSelected={optionIds.includes(option.id)}
+              onClick={() => handleToggle(option.id)}
             />
           ))}
         </ParkingLotOptionGrid>

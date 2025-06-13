@@ -1,9 +1,7 @@
 import { chargingTypes } from '@/data/initialDatas';
 import { EVChargeTypeString } from '@/types/addParkingLotDataTypes';
-import { Checkbox } from '@repo/ui/components/base/checkbox';
 import { CommonCheckbox } from '@repo/ui/components/common/CommonCheckbox';
 import { OptionContainer } from '@repo/ui/components/common/CommonLayouts';
-import { cn } from '@repo/ui/lib/utils';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export default function ChargingTypeOptions({ index }: { index: number }) {

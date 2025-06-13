@@ -32,6 +32,7 @@ export const nonChargeableParkingSpotSchema = z.object({
 
 export const addParkingLotSchema = z.object({
   parkingLot: parkingLotFormSchema,
+  optionIds: z.array(z.number()),
   parkingLotImage: parkingLotImageSchema,
   parkingSpot: z.object({
     chargeable: z.array(chargeableParkingSpotSchema).optional(),

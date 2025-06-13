@@ -31,6 +31,7 @@ export default function AddParkingLotFunnel() {
         detailAddress: '',
         extraInfo: '',
       },
+      optionIds: [],
       // parkingLotImage: {
       //   imageUrls: [''],
       // },
