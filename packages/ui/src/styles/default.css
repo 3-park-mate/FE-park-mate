@@ -108,6 +108,10 @@
   --text-30px: 1.875rem;
 }
 
+@theme {
+  --breakpoint-xs: 500px;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

@@ -212,15 +212,17 @@ export function OptionIconWithText({
   Icon,
   children,
   className,
+  IconClassName,
 }: {
   Icon: React.ElementType;
   children: React.ReactNode;
   className?: string;
+  IconClassName?: string;
 }) {
   return (
     <div className={cn('flex flex-col gap-2 items-center', className)}>
-      <Icon className="w-6 h-6 sm:w-8.5 sm:h-8.5" />
-      <p className="text-13px sm:text-15px">{children}</p>
+      <Icon className={(cn('w-6 h-6'), IconClassName)} />
+      <p className="text-xs xs:text-sm">{children}</p>
     </div>
   );
 }
