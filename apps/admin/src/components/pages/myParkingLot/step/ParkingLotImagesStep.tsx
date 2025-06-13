@@ -5,14 +5,12 @@ import {
 } from '@repo/ui/components/common/CommonLayouts';
 import IsChargeableSheet from '../IsChargeableSheet';
 import ImageUploadInput from '../ImageUploadInput';
+import { AddParkingLotStep } from '../AddParkingLotFunnel';
 
 export default function ParkingLotImagesStep({
   setStep,
 }: {
-  setStep: (
-    step: 'step1' | 'step2' | 'step3' | 'step4',
-    skipEvStep?: boolean
-  ) => void;
+  setStep: (step: AddParkingLotStep, skipEvStep?: boolean) => void;
 }) {
   return (
     <section className="space-y-5">
@@ -23,7 +21,7 @@ export default function ParkingLotImagesStep({
       <ImageUploadInput />
       <div className="space-y-3 mt-10">
         <CommonButton
-          onClick={() => setStep('step1')}
+          onClick={() => setStep('step2')}
           className="bg-white border border-secondary text-secondary"
         >
           이전
@@ -33,8 +31,8 @@ export default function ParkingLotImagesStep({
             <CommonButton className="bg-secondary">다음</CommonButton>
           </SheetTrigger>
           <IsChargeableSheet
-            onNext={() => setStep('step3', false)}
-            onJump={() => setStep('step4', true)}
+            onNext={() => setStep('step4', false)}
+            onJump={() => setStep('step5', true)}
           />
         </Sheet>
       </div>

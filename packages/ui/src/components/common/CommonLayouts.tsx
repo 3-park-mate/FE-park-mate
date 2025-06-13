@@ -212,15 +212,17 @@ export function OptionIconWithText({
   Icon,
   children,
   className,
+  IconClassName,
 }: {
-  Icon: React.ElementType;
+  Icon?: React.ElementType;
   children: React.ReactNode;
   className?: string;
+  IconClassName?: string;
 }) {
   return (
     <div className={cn('flex flex-col gap-2 items-center', className)}>
-      <Icon className="w-6 h-6 sm:w-8.5 sm:h-8.5" />
-      <p className="text-13px sm:text-15px">{children}</p>
+      {Icon && <Icon className={(cn('w-6 h-6 '), IconClassName)} />}
+      <p className="text-xs xs:text-sm">{children}</p>
     </div>
   );
 }
@@ -239,5 +241,53 @@ export function TotalSpotCount({
       <span className="text-gray-2 text-sm">{label}</span>
       <span className="font-bold text-3xl text-secondary ms-2">{count}</span>
     </div>
+  );
+}
+
+export function ParkingLotOptionGrid({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section
+      className={cn(
+        'grid grid-cols-3 xs:grid-cols-5 gap-4 border rounded-xl px-6 py-10 relative',
+        className
+      )}
+    >
+      {children}
+    </section>
+  );
+}
+
+export function OptionContainer({
+  isSelected,
+  onClick,
+  className,
+  children,
+  ...labelProps
+}: {
+  isSelected: boolean;
+  onClick?: React.LabelHTMLAttributes<HTMLLabelElement>['onClick'];
+  className?: string;
+  children: React.ReactNode;
+} & React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return (
+    <label
+      onClick={onClick}
+      className={cn(
+        'flex items-center justify-between cursor-pointer select-none border px-3 py-2 rounded-2xl transition-colors duration-200',
+        isSelected
+          ? 'bg-secondary/10 border-secondary'
+          : 'bg-white border-gray-200 dark:bg-gray-800',
+        className
+      )}
+      {...labelProps}
+    >
+      {children}
+    </label>
   );
 }
