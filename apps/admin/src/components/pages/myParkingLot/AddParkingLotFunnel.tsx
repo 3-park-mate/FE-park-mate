@@ -57,14 +57,20 @@ export default function AddParkingLotFunnel() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       const currentParams = new URLSearchParams(searchParams.toString());
+
       if (skipEvStep !== undefined) {
-        if (skipEvStep) {
-          currentParams.set('skipEvStep', 'true');
-        } else {
-          currentParams.delete('skipEvStep');
+        const currentSkipEvStep = currentParams.get('skipEvStep');
+        const newSkipEvStep = skipEvStep ? 'true' : null;
+
+        if (currentSkipEvStep !== newSkipEvStep) {
+          if (newSkipEvStep) {
+            currentParams.set('skipEvStep', newSkipEvStep);
+          } else {
+            currentParams.delete('skipEvStep');
+          }
+          router.replace(`?${currentParams.toString()}`);
         }
       }
-      router.replace(`?${currentParams.toString()}`);
     },
     [_setStep, router, searchParams]
   );

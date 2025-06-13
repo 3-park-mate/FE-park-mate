@@ -3,6 +3,16 @@ import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
 import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
 import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
 import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
+import CanopyParkingIcon from '@repo/ui/components/icon/options/CanopyParkingIcon';
+import CarKeyIcon from '@repo/ui/components/icon/options/CarKeyIcon';
+import CCTVIcon from '@repo/ui/components/icon/options/CCTVIcon';
+import EVChargingIcon from '@repo/ui/components/icon/options/EVChargingIcon';
+import GateIcon from '@repo/ui/components/icon/options/GateIcon';
+import HandicappedParkingIcon from '@repo/ui/components/icon/options/HandicappedIcon';
+import MotorcycleIcon from '@repo/ui/components/icon/options/MotorcycleIcon';
+import ParkingAttendantIcon from '@repo/ui/components/icon/options/ParkingAttendantIcon';
+import ReceiptIcon from '@repo/ui/components/icon/options/ReceiptIcon';
+import TowerParkingIcon from '@repo/ui/components/icon/options/TowerParkingIcon';
 import { Home, BarChart2, User, Car, MessageCircle } from 'lucide-react';
 
 export const gnbNavItems: GnbNavItemDataType[] = [
@@ -71,3 +81,19 @@ export const parkingSpotTypes = [
     parkingSpotType: 'LARGE',
   },
 ];
+
+export const parkingLotOptionIconMap: Record<
+  string,
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  has_cctv: CCTVIcon,
+  receipt_available: ReceiptIcon,
+  requires_key_deposit: CarKeyIcon,
+  disabled_parking: HandicappedParkingIcon,
+  is_tower_type: TowerParkingIcon,
+  has_ev_charger: EVChargingIcon,
+  motorcycle_parking: MotorcycleIcon,
+  has_attendant: ParkingAttendantIcon,
+  has_canopy: CanopyParkingIcon,
+  has_barrier_gate: GateIcon,
+};
