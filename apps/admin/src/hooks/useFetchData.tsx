@@ -1,10 +1,5 @@
+import { ApiResponse } from '@/types/responseDataTypes';
 import { useState, useEffect, useCallback } from 'react';
-
-interface ApiResponse<T> {
-  success: boolean;
-  data: T | null;
-  message?: string;
-}
 
 interface UseFetchDataResult<T> {
   data: T | null;
