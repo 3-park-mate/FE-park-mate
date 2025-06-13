@@ -2,7 +2,7 @@
 
 import { cn } from '@repo/ui/lib/utils';
 import { MousePointer2Icon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function MapRedirectButton({
   icon: Icon = MousePointer2Icon,
@@ -19,17 +19,13 @@ export default function MapRedirectButton({
   subText?: string;
   position?: { lat: number | undefined; lng: number | undefined };
 }) {
-  const router = useRouter();
   return (
-    <button
-      type="button"
+    <Link
+      href={`/map?lat=${position.lat}&lng=${position.lng}`}
       className={cn(
         'flex w-full items-center gap-3 bg-white border-1 rounded-lg py-4 px-4 cursor-pointer',
         className
       )}
-      onClick={() =>
-        router.replace(`/map?lat=${position.lat}&lng=${position.lng}`)
-      }
     >
       <Icon
         className={cn('size-15 flex-shrink-0  rounded-lg p-3.5', IconclassName)}
@@ -40,6 +36,6 @@ export default function MapRedirectButton({
           {subText}
         </span>
       </p>
-    </button>
+    </Link>
   );
 }

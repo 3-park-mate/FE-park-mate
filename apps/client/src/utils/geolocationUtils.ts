@@ -17,6 +17,7 @@ export const getCurrentCoordsUtil = (): Promise<{
       },
       {
         enableHighAccuracy: true,
+        maximumAge: 0,
       }
     );
   });

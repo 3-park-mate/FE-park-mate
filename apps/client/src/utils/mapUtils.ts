@@ -1,5 +1,4 @@
 import { SearchLocationResultType } from '@/types/filterInfoType';
-import { CoordsToRoadAddressType } from '@/types/mapDataTypes';
 
 export const updateMapState = (
   map: kakao.maps.Map,
@@ -50,16 +49,21 @@ export const searchLocationByKeywordUtil = (
 export const coordtoAddressUtil = (position: {
   lat: number;
   lng: number;
-}): Promise<CoordsToRoadAddressType | null> => {
-  return new Promise((resolve, reject) => {
+}): Promise<string | null> => {
+  return new Promise((resolve) => {
+    console.log(position.lat, position.lng);
     const geocoder = new kakao.maps.services.Geocoder();
     console.log(geocoder);
-    geocoder.coord2Address(position.lng, position.lat, (result, status) => {
-      if (status === kakao.maps.services.Status.OK && result) {
-        const address = result[0]?.road_address || null;
-        resolve(address);
+    geocoder.coord2Address(0, position.lat, (result, status) => {
+      if (
+        status === kakao.maps.services.Status.OK &&
+        result &&
+        result.length > 0
+      ) {
+        const address = result[0]?.address || result[0]?.road_address || null;
+        resolve(address?.address_name || '');
       } else {
-        reject(new Error('주소 변환 실패'));
+        resolve('');
       }
     });
   });

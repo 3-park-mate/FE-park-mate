@@ -24,10 +24,7 @@ export default function LocationContent() {
           lat: latitude,
           lng: longitude,
         });
-        setLocation(
-          `${address?.region_1depth_name} ${address?.region_2depth_name} ${address?.region_3depth_name}` ||
-            ''
-        );
+        setLocation(address || '');
       } catch (err) {
         console.error(err);
       } finally {
@@ -54,8 +51,10 @@ export default function LocationContent() {
     <>
       {isLoading ? (
         <DotSpinner className="fill-primary mx-2" />
-      ) : (
+      ) : location !== '' ? (
         <p className={cn('font-medium text-sm')}>{location}</p>
+      ) : (
+        <p className="font-medium text-sm">주소 불러오기 실패</p>
       )}
     </>
   );

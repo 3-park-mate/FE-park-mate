@@ -9,7 +9,7 @@ import Link from 'next/link';
 import MapPinIcon from '@repo/ui/components/icon/MapPinIcon';
 import LocationContent from './LocationContent';
 
-export default function HomeMainHeader({
+export default function LocationHeader({
   className,
   isShadow = false,
 }: {
@@ -33,7 +33,7 @@ export default function HomeMainHeader({
       className={cn('p-5 space-x-5 z-50', className)}
       isShadow={isShadow || isScrolled}
     >
-      <div className="w-full flex items-center gap-2">
+      <div className="w-full p-1 flex items-center gap-2">
         <MapPinIcon />
         <LocationContent />
       </div>
