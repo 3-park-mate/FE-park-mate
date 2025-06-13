@@ -54,7 +54,7 @@ export const coordtoAddressUtil = (position: {
     console.log(position.lat, position.lng);
     const geocoder = new kakao.maps.services.Geocoder();
     console.log(geocoder);
-    geocoder.coord2Address(0, position.lat, (result, status) => {
+    geocoder.coord2Address(position.lng, position.lat, (result, status) => {
       if (
         status === kakao.maps.services.Status.OK &&
         result &&
