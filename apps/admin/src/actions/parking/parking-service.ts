@@ -7,7 +7,6 @@ import { redirect } from 'next/navigation';
 const API_PREFIX = `${process.env.BASE_API_URL}/parking-service/api/v1`;
 
 export async function getParkingLotOptions() {
-  console.log('load');
   try {
     const res = await fetch(`${API_PREFIX}/parkingLotOptions`, {
       method: 'GET',
