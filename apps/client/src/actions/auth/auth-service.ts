@@ -1,28 +1,32 @@
 'use server';
+import { api } from '@/hooks/serverFetch';
 import { SignUpDataType } from '@/types/authDataTypes';
+import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/user`;
 
-export async function signUpAction(signUpData: Partial<SignUpDataType>) {
+export async function signUpAction(
+  signUpData: Partial<SignUpDataType>
+): Promise<ApiResponse<string>> {
   const payload: Partial<SignUpDataType> = { ...signUpData };
 
   try {
-    console.log('Payload being sent to the API:', payload);
-    const res = await fetch(`${API_PREFIX}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      '/register',
+      payload
+    );
+    console.log(res);
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      return { success: false, message: errorData.message };
-    }
-
-    return await res.json();
+    return {
+      success: true,
+      data: res.message,
+    };
   } catch (error) {
-    console.log('Unexcpected Error:', error);
-    return { success: false, message: '알 수 없는 오류가 발생했습니다.' };
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
 
@@ -30,51 +34,54 @@ export async function sendEmailVerificationAction({
   email,
 }: {
   email: string;
-}) {
+}): Promise<ApiResponse<string>> {
   try {
-    const res = await fetch(
-      `${API_PREFIX}/sendVerificationCode?email=${email}`,
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      `/sendVerificationCode`,
+      undefined,
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        query: { email },
       }
     );
+    console.log(res);
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      return { success: false, message: errorData.message };
-    }
-
-    return await res.json();
+    return {
+      success: true,
+      data: res.message,
+    };
   } catch (error) {
-    console.log('Unexcpected Error:', error);
-    return { success: false, message: '알 수 없는 오류가 발생했습니다.' };
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
 
-export async function checkEmailDuplicateAction({ email }: { email: string }) {
-  const payload = {
-    email,
-  };
+export async function checkEmailDuplicateAction({
+  email,
+}: {
+  email: string;
+}): Promise<ApiResponse<{ duplicate: boolean }>> {
+  const payload = { email };
 
   try {
-    const res = await fetch(`${API_PREFIX}/checkEmail`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const res = await api.post<CommonResponseType<{ duplicate: boolean }>>(
+      API_PREFIX,
+      '/checkEmail',
+      payload
+    );
+    console.log(res);
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('이메일 인증 코드 전송 실패: ', errorData);
-
-      return { success: false, message: errorData.message };
-    }
-
-    return await res.json();
+    return {
+      success: true,
+      data: { duplicate: res.data.duplicate },
+    };
   } catch (error) {
-    console.log('Unexcpected Error:', error);
-    return { success: false, message: '알 수 없는 오류가 발생했습니다.' };
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
 
@@ -84,31 +91,25 @@ export async function verifyEmailCodeAction({
 }: {
   email: string;
   verificationCode: string;
-}) {
-  const payload = {
-    email,
-    verificationCode,
-  };
+}): Promise<ApiResponse<{ valid: boolean }>> {
+  const payload = { email, verificationCode };
 
   try {
-    const res = await fetch(`${API_PREFIX}/verifyCode`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
+    const res = await api.post<CommonResponseType<{ valid: boolean }>>(
+      API_PREFIX,
+      '/verifyCode',
+      payload
+    );
+    console.log(res);
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('이메일 인증 실패: ', errorData);
-
-      return { success: false, message: errorData.message };
-    }
-
-    return await res.json();
+    return {
+      success: true,
+      data: { valid: res.data.valid },
+    };
   } catch (error) {
-    console.log('Unexcpected Error:', error);
-    return { success: false, message: '알 수 없는 오류가 발생했습니다.' };
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
