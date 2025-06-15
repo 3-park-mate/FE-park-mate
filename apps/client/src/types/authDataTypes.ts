@@ -12,6 +12,7 @@ export interface SignUpDataType {
   password: string;
   name: string;
   phoneNumber: string;
+  verifyCode: string;
 }
 
 export interface SignInDataType {

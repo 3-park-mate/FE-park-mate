@@ -1,9 +1,8 @@
+import { useStepValidation } from '@/hooks/useStepValidation';
 import { SignUpStoreDataType } from '@/types/authDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import {
-  CommonButton,
-  FormHeading,
-} from '@repo/ui/components/common/CommonLayouts';
+import { FormHeading } from '@repo/ui/components/common/CommonLayouts';
+import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import React from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 
@@ -15,7 +14,11 @@ export default function UserInfoStep({
   onBack: () => void;
 }) {
   const { register, setValue } = useFormContext<SignUpStoreDataType>();
-  const { errors } = useFormState<SignUpStoreDataType>();
+  const { errors, touchedFields } = useFormState<SignUpStoreDataType>();
+
+  const VERIFY_FIELDS = ['name', 'phoneNumber'] as const;
+
+  const { isStepValid } = useStepValidation<SignUpStoreDataType>(VERIFY_FIELDS);
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^\d]/g, '');
@@ -50,7 +53,7 @@ export default function UserInfoStep({
         label="이름"
         id="name"
         placeholder="홍길동"
-        errorMessage={errors.name?.message}
+        errorMessage={touchedFields?.name ? errors.name?.message : undefined}
         maxLength={10}
         {...register('name')}
       />
@@ -58,13 +61,18 @@ export default function UserInfoStep({
         label="전화번호"
         id="phoneNumber"
         placeholder="010-1234-5678"
-        errorMessage={errors.phoneNumber?.message}
+        errorMessage={
+          touchedFields?.phoneNumber ? errors.phoneNumber?.message : undefined
+        }
         maxLength={13}
         {...register('phoneNumber', { onChange: handlePhoneNumberChange })}
       />
-      <CommonButton onClick={onNext} className="mt-6">
-        다음
-      </CommonButton>
+      <StepButtons
+        onBack={onBack}
+        onNext={onNext}
+        theme="primary"
+        disabledNext={!isStepValid}
+      />
     </section>
   );
 }
