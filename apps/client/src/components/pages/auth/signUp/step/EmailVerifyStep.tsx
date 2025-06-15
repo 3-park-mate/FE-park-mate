@@ -41,6 +41,15 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       return;
     }
 
+    if (duplicateRes.data.duplicate) {
+      setModalMessage(
+        '이미 등록된 이메일입니다. 다른 이메일로 다시 시도해 주세요.'
+      );
+      setAlertModalOpen(true);
+      setLoading(false);
+      return;
+    }
+
     const sendRes = await sendEmailVerificationAction({ email });
     if (!sendRes.success) {
       setModalMessage(sendRes.message);
@@ -69,6 +78,13 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       return;
     }
 
+    if (!res.data.valid) {
+      setModalMessage('인증번호가 틀렸습니다. 다시 시도해 주세요.');
+      setAlertModalOpen(true);
+      setLoading(false);
+      return;
+    }
+
     setIsVerified(true);
     setModalMessage('인증이 완료되었습니다.');
     setAlertModalOpen(true);
@@ -91,6 +107,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           className="flex-1"
           errorMessage={errors.email?.message}
           maxLength={40}
+          readOnly={loading || isCodeSent}
           {...register('email')}
         />
         <Button
@@ -99,7 +116,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           onClick={handleSendVerificationCode}
           disabled={loading || isCodeSent}
         >
-          {loading ? <DotSpinner /> : '인증요청'}
+          {!isCodeSent && loading ? <DotSpinner /> : '인증요청'}
         </Button>
       </div>
       {isCodeSent && (
@@ -117,6 +134,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
               placeholder="인증번호 6자리"
               className="pr-20"
               maxLength={6}
+              readOnly={loading || isVerified}
               {...register('verifyCode')}
             />
             <span className="absolute top-1/2 right-4 -translate-y-1/2 text-sm text-gray-2">
@@ -135,9 +153,8 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
             <li>
               • 인증 번호 메일이 오지 않을 시, 스팸 메일함을 확인해 주세요.
             </li>
-            <li>• 인증 번호 재요청은 3분에 1회씩 가능합니다.</li>
             <li>• 입력 5회 실패 시 인증 번호 메일을 재요청 해주세요.</li>
-            <li className="ml-2">
+            <li className="ml-2.5">
               <button
                 type="button"
                 className="text-secondary text-sm underline cursor-pointer"
@@ -148,7 +165,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           </ul>
         </div>
       )}
-      <CommonButton onClick={onNext} className="mt-6" disabled={!isVerified}>
+      <CommonButton onClick={onNext} className="mt-10" disabled={!isVerified}>
         다음
       </CommonButton>
     </section>

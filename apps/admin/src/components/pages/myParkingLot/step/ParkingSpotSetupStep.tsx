@@ -1,7 +1,7 @@
 'use client';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import SpotCountSelectSection from '../SpotCountSelectSection';
-import { StepButtons } from '../StepButtons';
+import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
 import { NonChargeableParkingSpot } from '@/types/addParkingLotDataTypes';

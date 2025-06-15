@@ -1,5 +1,5 @@
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
-import { cn } from '@repo/ui/lib/utils';
+import { cn } from '../../lib/utils';
 
 export function StepButtons({
   onBack,

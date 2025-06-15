@@ -2,7 +2,7 @@ import {
   HeadingWithDesc,
   ParkingLotOptionGrid,
 } from '@repo/ui/components/common/CommonLayouts';
-import { StepButtons } from '../StepButtons';
+import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import ParkingLotOptionItem from '../ParkingLotOptionItem';
 import { getParkingLotOptions } from '@/actions/parking/parking-service';
 import { ParkingLotOptionDataType } from '@/types/parkingDataTypes';
