@@ -30,6 +30,7 @@ export interface AddParkingLotDataType {
 
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
+  optionIds: number[];
   parkingLotImage: { imageUrls: string[] };
   parkingSpot: {
     chargeable?: ChargeableParkingSpot[];
