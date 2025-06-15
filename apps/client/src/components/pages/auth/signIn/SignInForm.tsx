@@ -13,8 +13,11 @@ import PasswordInputWithLabel from '@repo/ui/components/common/PasswordInputWith
 import OauthLoginButton from './OauthLoginButton';
 import { useState } from 'react';
 import AlertModal from '@repo/ui/components/common/AlertModal';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [modalErrorMessage, setModalErrorMessage] = useState('');
@@ -44,16 +47,18 @@ export default function SignInForm() {
         redirect: false,
       });
       console.log(res);
-      if (!res?.ok) {
-        {
-          const message =
-            res?.error ??
-            '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
-          setModalErrorMessage(message);
-          setErrorModalOpen(true);
-          setIsLoading(false);
-        }
+
+      if (res?.ok) {
+        router.push(res.url ?? '/');
+      } else {
+        const message =
+          res?.error ??
+          '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
+        setModalErrorMessage(message);
+        setErrorModalOpen(true);
+        setIsLoading(false);
       }
+      router.push('/');
     } catch (error) {
       setIsLoading(false);
     }
@@ -76,6 +81,7 @@ export default function SignInForm() {
           id="email"
           placeholder="abc@a.com"
           maxLength={20}
+          readOnly={isLoading}
           {...register('email')}
         />
         <PasswordInputWithLabel
@@ -83,6 +89,7 @@ export default function SignInForm() {
           id="password"
           placeholder="영문, 숫자, 특수문자 포함 8자 이상"
           maxLength={20}
+          readOnly={isLoading}
           {...register('password')}
         />
         <Button
@@ -90,7 +97,7 @@ export default function SignInForm() {
           disabled={!isValid}
           className="w-full h-10 rounded-2xl mt-3"
         >
-          {isLoading ? '로딩중...' : '로그인'}
+          {isLoading ? <DotSpinner /> : '로그인'}
         </Button>
       </form>
       <OauthLoginButton />

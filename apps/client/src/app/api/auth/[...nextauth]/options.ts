@@ -39,6 +39,8 @@ export const options: NextAuthOptions = {
           }
           return {
             accessToken: user.data.accessToken,
+            refreshToken: user.data.refreshToken,
+            uuid: user.data.userUuid,
           } as User;
         } catch (error) {
           console.error('authorize error:', error);
@@ -107,8 +109,8 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       session.user = {
-        ...session.user,
         accessToken: token.accessToken,
+        refreshToken: token.refreshToken,
         name: token.name,
         uuid: token.uuid,
       };

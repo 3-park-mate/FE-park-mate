@@ -14,6 +14,6 @@ declare module 'next-auth' {
     accessToken: string;
     refreshToken: string;
     name?: string;
-    userUuid?: string;
+    uuid?: string;
   }
 }
