@@ -1,7 +1,7 @@
 'use client';
 
 import { useParkingFilterStore } from '@/store/useParkingFilterStore';
-import { getCurrentLocationUtil } from '@/utils/geolocationUtils';
+import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { useEffect, useState } from 'react';
 import {
   Map,
@@ -33,7 +33,7 @@ export default function MainMap() {
 
   const setCurrentLocation = async () => {
     try {
-      const { latitude, longitude } = await getCurrentLocationUtil();
+      const { latitude, longitude } = await getCurrentCoordsUtil();
       setMapCenter(latitude, longitude, null);
     } catch (error) {
       console.log(error);
