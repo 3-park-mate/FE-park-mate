@@ -18,6 +18,7 @@ import {
 } from '@/actions/auth/auth-service';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 
 export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const { register, getValues } = useFormContext<SignUpStoreDataType>();
@@ -25,43 +26,45 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
 
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [alertModalOpen, setAlertModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const {
+    loading,
+    setLoading,
+    alertModalOpen,
+    setAlertModalOpen,
+    modalMessage,
+    handleAlert,
+  } = useAlertWithLoading();
+
+  const checkEmailDuplicate = async (email: string) => {
+    const res = await checkEmailDuplicateAction({ email });
+
+    if (!res.success) {
+      handleAlert(res.message);
+      return false;
+    }
+
+    if (res.data.duplicate) {
+      handleAlert(
+        '이미 등록된 이메일입니다. 다른 이메일로 다시 시도해 주세요.'
+      );
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSendVerificationCode = async () => {
     setLoading(true);
     const email = getValues('email');
 
-    const duplicateRes = await checkEmailDuplicateAction({ email });
-    if (!duplicateRes.success) {
-      setModalMessage(duplicateRes.message);
-      setAlertModalOpen(true);
-      setLoading(false);
-      return;
-    }
-
-    if (duplicateRes.data.duplicate) {
-      setModalMessage(
-        '이미 등록된 이메일입니다. 다른 이메일로 다시 시도해 주세요.'
-      );
-      setAlertModalOpen(true);
-      setLoading(false);
-      return;
-    }
+    const isAvailable = await checkEmailDuplicate(email);
+    if (!isAvailable) return;
 
     const sendRes = await sendEmailVerificationAction({ email });
-    if (!sendRes.success) {
-      setModalMessage(sendRes.message);
-      setAlertModalOpen(true);
-      setLoading(false);
-      return;
-    }
+    if (!sendRes.success) return handleAlert(sendRes.message);
 
-    setModalMessage('인증 코드가 전송되었습니다.');
-    setAlertModalOpen(true);
     setIsCodeSent(true);
-    setLoading(false);
+    handleAlert('인증 코드가 전송되었습니다.');
   };
 
   const handleVerifyCode = async () => {
@@ -71,24 +74,12 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
 
     const res = await verifyEmailCodeAction({ email, verificationCode: code });
 
-    if (!res.success) {
-      setModalMessage(res.message);
-      setAlertModalOpen(true);
-      setLoading(false);
-      return;
-    }
-
-    if (!res.data.valid) {
-      setModalMessage('인증번호가 틀렸습니다. 다시 시도해 주세요.');
-      setAlertModalOpen(true);
-      setLoading(false);
-      return;
-    }
+    if (!res.success) return handleAlert(res.message);
+    if (!res.data.valid)
+      return handleAlert('인증번호가 틀렸습니다. 다시 시도해 주세요.');
 
     setIsVerified(true);
-    setModalMessage('인증이 완료되었습니다.');
-    setAlertModalOpen(true);
-    setLoading(false);
+    handleAlert('인증이 완료되었습니다.');
   };
 
   return (
