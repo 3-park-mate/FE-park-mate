@@ -19,6 +19,7 @@ import {
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
+import { useCountdownTimer } from '@/hooks/useCountdownTimer';
 
 export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const { register, getValues } = useFormContext<SignUpStoreDataType>();
@@ -34,6 +35,10 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
     modalMessage,
     handleAlert,
   } = useAlertWithLoading();
+  const { timeLeft, start: startTimer } = useCountdownTimer(180, () => {
+    setIsCodeSent(false);
+    handleAlert('인증 시간이 만료되었습니다. 인증을 다시 요청해주세요.');
+  });
 
   const checkEmailDuplicate = async (email: string) => {
     const res = await checkEmailDuplicateAction({ email });
@@ -42,7 +47,6 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       handleAlert(res.message);
       return false;
     }
-
     if (res.data.duplicate) {
       handleAlert(
         '이미 등록된 이메일입니다. 다른 이메일로 다시 시도해 주세요.'
@@ -65,6 +69,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
 
     setIsCodeSent(true);
     handleAlert('인증 코드가 전송되었습니다.');
+    startTimer();
   };
 
   const handleVerifyCode = async () => {
@@ -129,7 +134,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
               {...register('verifyCode')}
             />
             <span className="absolute top-1/2 right-4 -translate-y-1/2 text-sm text-gray-2">
-              03:00
+              {`${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}`}
             </span>
           </div>
           <CommonButton
@@ -156,7 +161,11 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           </ul>
         </div>
       )}
-      <CommonButton onClick={onNext} className="mt-10" disabled={!isVerified}>
+      <CommonButton
+        onClick={onNext}
+        className="mt-6"
+        //  disabled={!isVerified}
+      >
         다음
       </CommonButton>
     </section>
