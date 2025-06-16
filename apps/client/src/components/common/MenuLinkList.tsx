@@ -2,6 +2,7 @@ import { MyPageMenuDataType } from '@/types/initialDataTypes';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import LogoutButton from '../pages/myPage/LogOutButton';
 
 export default function MenuLinkList({
   menus,
@@ -20,6 +21,8 @@ export default function MenuLinkList({
           <ChevronRight className="text-gray-3 my-auto" size={18} />
         </Link>
       ))}
+      <hr className="my-3" />
+      <LogoutButton />
     </PaddedLayout>
   );
 }
