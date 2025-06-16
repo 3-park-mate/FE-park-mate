@@ -1,6 +1,6 @@
 import OptionsDropdown from '@/components/common/OptionsDropdown';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
-import HomeMainHeader from '@/components/layouts/HomeMainHeader';
+import SimpleHeader from '@/components/layouts/SimpleHeader';
 import FavoriteListSection from '@/components/pages/favorites/FavoriteListSection';
 import { favoritesSortMenu } from '@/data/initialDatas';
 import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
@@ -9,7 +9,7 @@ import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 export default function page() {
   return (
     <>
-      <HomeMainHeader title="즐겨찾기" type="backButton" />
+      <SimpleHeader title="즐겨찾기" />
       <main className="pb-32">
         <PaddedLayout>
           <OptionsDropdown

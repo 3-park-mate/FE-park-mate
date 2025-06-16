@@ -1,4 +1,4 @@
-export const getCurrentLocationUtil = (): Promise<{
+export const getCurrentCoordsUtil = (): Promise<{
   latitude: number;
   longitude: number;
 }> => {
@@ -17,6 +17,7 @@ export const getCurrentLocationUtil = (): Promise<{
       },
       {
         enableHighAccuracy: true,
+        maximumAge: 0,
       }
     );
   });

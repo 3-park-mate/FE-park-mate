@@ -3,11 +3,11 @@
 import { SearchLocationResultType } from '@/types/filterInfoType';
 import { cn } from '@repo/ui/lib/utils';
 import { useEffect } from 'react';
-import DotSpinner from '../../../../../../packages/ui/src/components/icon/DotSpinner';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { MapPin } from 'lucide-react';
 import MapRedirectButton from './MapRedirectButton';
 
-export default function SearchResultsList({
+export default function SearchResultCardList({
   results,
   keyword,
   setIsScrolled,
@@ -17,6 +17,7 @@ export default function SearchResultsList({
   setIsScrolled: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const resultLength = results.length;
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
