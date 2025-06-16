@@ -18,7 +18,6 @@ export async function getUserInfoData(): Promise<
       redirect('/error');
     }
     const uuid = session.user.uuid;
-    console.log(uuid);
 
     const res = await api.get<CommonResponseType<UserInfoDataType>>(
       API_PREFIX,

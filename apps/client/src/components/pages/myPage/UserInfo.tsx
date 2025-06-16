@@ -1,24 +1,29 @@
-import { getUserInfoData } from '@/actions/user/user-service';
-import { UserInfoDataType } from '@/types/userDataTypes';
+// import { getUserInfoData } from '@/actions/user/user-service';
+// import { UserInfoDataType } from '@/types/userDataTypes';
+import { getUserEmailData } from '@/actions/auth/auth-service';
 import { Button } from '@repo/ui/components/base/button';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default async function UserInfo() {
-  const { data: userData } = (await getUserInfoData()) as {
+  // const { data: userData } = (await getUserInfoData()) as {
+  //   success: true;
+  //   data: UserInfoDataType;
+  // };
+  const { data: email } = (await getUserEmailData()) as {
     success: true;
-    data: UserInfoDataType;
+    data: string;
   };
 
   return (
     <PaddedLayout className="bg-gray-light-1 pt-4 pb-7">
       <p className="text-17px">
-        <b>{userData.name}</b>님, 안녕하세요.
+        <b>홍길동</b>님, 안녕하세요.
       </p>
-      <p className="text-gray-3 text-sm">abc@naver.com</p>
+      <p className="text-gray-3 text-sm">{email}</p>
       <div className="bg-white p-5 mt-5 rounded-t-lg">
         <p className="text-gray-3 text-15px">보유 포인트</p>
         <div className="flex justify-between">
-          <h2 className="text-2xl font-semibold">{userData.point}</h2>
+          <h2 className="text-2xl font-semibold">포인트</h2>
           <Button>충전</Button>
         </div>
       </div>
