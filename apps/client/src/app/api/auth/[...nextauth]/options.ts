@@ -108,7 +108,11 @@ export const options: NextAuthOptions = {
       if (!url || url === '/api/auth/signin') {
         return `${baseUrl}/`;
       }
-      return url.startsWith(baseUrl) ? url : baseUrl;
+
+      if (url.startsWith('http')) {
+        return url.startsWith(baseUrl) ? url : baseUrl;
+      }
+      return baseUrl + url;
     },
   },
   pages: {
