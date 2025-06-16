@@ -1,7 +1,6 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import DetailInfoSection from '@/components/pages/parkingLot/DetailInfoSection';
 import DetailInfoMenuSection from '@/components/pages/parkingLot/DetailInfoMenuSection';
-import { HomeTabMenu } from '@/components/pages/home/HomeTabMenu';
 import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 import {
   parkingDetailDummy,

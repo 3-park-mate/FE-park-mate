@@ -2,7 +2,7 @@
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import EvSpotSetupSection from '../EvSpotSetupSection';
 import ChargingTypeGuide from '../ChargingTypeGuide';
-import { StepButtons } from '../StepButtons';
+import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
 import { chargeableParkingSpotSchema } from '@/schemas/addParkingLotSchema';

@@ -1,33 +1,24 @@
 'use server';
-
+import { api } from '@/hooks/serverFetch';
 import { ParkingLotOptionDataType } from '@/types/parkingDataTypes';
-import { CommonResponseType } from '@/types/responseDataTypes';
+import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import { redirect } from 'next/navigation';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/parking-service/api/v1`;
 
-export async function getParkingLotOptions() {
+export async function getParkingLotOptions(): Promise<
+  ApiResponse<ParkingLotOptionDataType[]>
+> {
   try {
-    const res = await fetch(`${API_PREFIX}/parkingLotOptions`, {
-      method: 'GET',
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('Data Fetching failed:', errorData);
-      redirect('/error');
-    }
-    const data = (await res.json()) as CommonResponseType<{
-      options: ParkingLotOptionDataType[];
-    }>;
+    const res = await api.get<
+      CommonResponseType<{ options: ParkingLotOptionDataType[] }>
+    >(API_PREFIX, '/parkingLotOptions');
 
     return {
       success: true,
-      data: data.data.options,
+      data: res.data.options,
     };
-  } catch (error) {
-    console.log('Unexcpected Error:', error);
-    // return { success: false, data: null };
+  } catch (_error) {
     redirect('/error');
   }
 }

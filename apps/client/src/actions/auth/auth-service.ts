@@ -1,26 +1,115 @@
+'use server';
+import { api } from '@/hooks/serverFetch';
 import { SignUpDataType } from '@/types/authDataTypes';
+import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 
-export async function signUpAction(signUpData: Partial<SignUpDataType>) {
+const API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/user`;
+
+export async function signUpAction(
+  signUpData: Partial<SignUpDataType>
+): Promise<ApiResponse<string>> {
   const payload: Partial<SignUpDataType> = { ...signUpData };
 
   try {
-    console.log('Payload being sent to the API:', payload);
-    const res = await fetch(
-      `${process.env.BASE_API_URL}/auth-service/api/v1/user/register`,
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      '/register',
+      payload
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.message,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function sendEmailVerificationAction({
+  email,
+}: {
+  email: string;
+}): Promise<ApiResponse<string>> {
+  try {
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      `/sendVerificationCode`,
+      undefined,
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        query: { email },
       }
     );
+    console.log(res);
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      return { success: false, message: errorData.message };
-    }
-
-    return await res.json();
+    return {
+      success: true,
+      data: res.message,
+    };
   } catch (error) {
-    return { success: false, message: '알 수 없는 오류가 발생했습니다.' };
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function checkEmailDuplicateAction({
+  email,
+}: {
+  email: string;
+}): Promise<ApiResponse<{ duplicate: boolean }>> {
+  const payload = { email };
+
+  try {
+    const res = await api.post<CommonResponseType<{ duplicate: boolean }>>(
+      API_PREFIX,
+      '/checkEmail',
+      payload
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: { duplicate: res.data.duplicate },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function verifyEmailCodeAction({
+  email,
+  verificationCode,
+}: {
+  email: string;
+  verificationCode: string;
+}): Promise<ApiResponse<{ valid: boolean }>> {
+  const payload = { email, verificationCode };
+
+  try {
+    const res = await api.post<CommonResponseType<{ valid: boolean }>>(
+      API_PREFIX,
+      '/verifyCode',
+      payload
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: { valid: res.data.valid },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
