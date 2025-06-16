@@ -2,7 +2,7 @@
 
 import { TabMenuWithIconType } from '@/types/searchDataTypes';
 import { cn } from '@repo/ui/lib/utils';
-import { CircleIcon, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 

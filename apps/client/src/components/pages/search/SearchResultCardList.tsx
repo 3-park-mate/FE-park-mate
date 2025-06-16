@@ -26,12 +26,12 @@ export default function SearchResultCardList({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [setIsScrolled]);
 
   return (
     <div className="w-full relative">
       <p className="text-xl font-semibold px-5 mb-4">
-        '{keyword}'
+        `{keyword}`
         <span className="px-2 text-[1.2rem] font-medium">검색결과</span>
       </p>
       {resultLength > 0 ? (
