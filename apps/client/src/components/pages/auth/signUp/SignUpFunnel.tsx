@@ -53,8 +53,7 @@ export default function SignUpFunnel() {
     const res = await signUpAction(signUpData);
 
     if (!res.success) return handleAlert(res.message);
-    // handleAlert('회원가입이 완료되었습니다.');
-    router.push('/sign-up/welcome');
+    handleAlert('회원가입이 완료되었습니다. 입력한 정보로 로그인 해주세요.');
   };
 
   return (
@@ -63,6 +62,7 @@ export default function SignUpFunnel() {
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}
         errorMessage={modalMessage}
+        onConfirm={() => router.push('/sign-in')}
       />
       <FormProvider {...methods}>
         <form className="px-5" onKeyDown={handleKeyDown}>
