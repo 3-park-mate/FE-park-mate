@@ -1,6 +1,6 @@
 export interface SignUpStoreDataType {
   email: string;
-  verifyCode: string;
+  verificationCode: string;
   password: string;
   confirmPassword: string;
   name: string;
@@ -12,7 +12,7 @@ export interface SignUpDataType {
   password: string;
   name: string;
   phoneNumber: string;
-  verifyCode: string;
+  verificationCode: string;
 }
 
 export interface SignInDataType {

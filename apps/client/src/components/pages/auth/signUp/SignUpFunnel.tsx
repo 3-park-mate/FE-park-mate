@@ -12,6 +12,7 @@ import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import { signUpAction } from '@/actions/auth/auth-service';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export type SignUpStep = 'step1' | 'step2' | 'step3';
 
@@ -23,7 +24,7 @@ export default function SignUpFunnel() {
     reValidateMode: 'onChange',
     defaultValues: {
       email: '',
-      verifyCode: '',
+      verificationCode: '',
       name: '',
       phoneNumber: '',
       password: '',
@@ -31,28 +32,24 @@ export default function SignUpFunnel() {
     },
   });
   const [Funnel, setStep] = useFunnel<SignUpStep>('step1');
-  const {
-    loading,
-    setLoading,
-    alertModalOpen,
-    setAlertModalOpen,
-    modalMessage,
-    handleAlert,
-  } = useAlertWithLoading();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { alertModalOpen, setAlertModalOpen, modalMessage, handleAlert } =
+    useAlertWithLoading();
   const { handleSubmit } = methods;
   const onSubmit = async (data: SignUpStoreDataType) => {
-    const { email, password, name, phoneNumber, verifyCode } = data;
+    const { email, password, name, phoneNumber, verificationCode } = data;
     const signUpData: SignUpDataType = {
       email,
       password,
       name,
-      phoneNumber,
-      verifyCode,
+      phoneNumber: phoneNumber.replace(/-/g, ''),
+      verificationCode,
     };
     console.log('SignUp Data:', signUpData);
     const res = await signUpAction(signUpData);
 
     if (!res.success) return handleAlert(res.message);
+    setIsSuccess(true);
     handleAlert('회원가입이 완료되었습니다. 입력한 정보로 로그인 해주세요.');
   };
 
@@ -62,7 +59,9 @@ export default function SignUpFunnel() {
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}
         errorMessage={modalMessage}
-        onConfirm={() => router.push('/sign-in')}
+        onConfirm={() => {
+          if (isSuccess) router.push('/sign-in');
+        }}
       />
       <FormProvider {...methods}>
         <form className="px-5" onKeyDown={handleKeyDown}>

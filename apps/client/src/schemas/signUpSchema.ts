@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const signUpSchema = z
   .object({
     email: z.string().email('유효한 이메일을 입력하세요.'),
-    verifyCode: z.string().min(6),
+    verificationCode: z.string().min(6),
     password: z
       .string()
       .min(8, '비밀번호는 8자 이상이어야 합니다.')
