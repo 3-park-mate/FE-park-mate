@@ -30,7 +30,7 @@ export const menuItems: HomeMenuDataType[] = [
 export const myPageMenus: MyPageMenuDataType[] = [
   {
     label: '회원정보 수정',
-    href: '#',
+    href: 'edit-profile',
   },
   {
     label: '내 차량',

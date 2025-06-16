@@ -11,16 +11,23 @@ import { handleKeyDown } from '@/utils/formUtils';
 import { signIn } from 'next-auth/react';
 import PasswordInputWithLabel from '@repo/ui/components/common/PasswordInputWithLabel';
 import OauthLoginButton from './OauthLoginButton';
-import { useState } from 'react';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 
 export default function SignInForm() {
+  const {
+    loading,
+    setLoading,
+    alertModalOpen,
+    setAlertModalOpen,
+    modalMessage,
+    handleAlert,
+  } = useAlertWithLoading();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
-  const [modalErrorMessage, setModalErrorMessage] = useState('');
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/';
 
   const {
     register,
@@ -37,13 +44,13 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: SignInDataType) => {
-    setIsLoading(true);
+    setLoading(true);
     console.log('로그인 데이터:', data);
     try {
       const res = await signIn('credentials', {
         email: data.email,
         password: data.password,
-        // callbackUrl: '/',
+        callbackUrl: callbackUrl,
         redirect: false,
       });
       console.log(res);
@@ -54,22 +61,20 @@ export default function SignInForm() {
         const message =
           res?.error ??
           '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
-        setModalErrorMessage(message);
-        setErrorModalOpen(true);
-        setIsLoading(false);
+        handleAlert(message);
       }
       router.push('/');
-    } catch (error) {
-      setIsLoading(false);
+    } catch (_error) {
+      setLoading(false);
     }
   };
 
   return (
     <PaddedLayout className="w-full">
       <AlertModal
-        open={errorModalOpen}
-        onOpenChange={setErrorModalOpen}
-        errorMessage={modalErrorMessage}
+        open={alertModalOpen}
+        onOpenChange={setAlertModalOpen}
+        errorMessage={modalMessage}
       />
       <form
         className="space-y-5"
@@ -81,7 +86,7 @@ export default function SignInForm() {
           id="email"
           placeholder="abc@a.com"
           maxLength={20}
-          readOnly={isLoading}
+          readOnly={loading}
           {...register('email')}
         />
         <PasswordInputWithLabel
@@ -89,7 +94,7 @@ export default function SignInForm() {
           id="password"
           placeholder="영문, 숫자, 특수문자 포함 8자 이상"
           maxLength={20}
-          readOnly={isLoading}
+          readOnly={loading}
           {...register('password')}
         />
         <Button
@@ -97,7 +102,7 @@ export default function SignInForm() {
           disabled={!isValid}
           className="w-full h-10 rounded-2xl mt-3"
         >
-          {isLoading ? <DotSpinner /> : '로그인'}
+          {loading ? <DotSpinner /> : '로그인'}
         </Button>
       </form>
       <OauthLoginButton />
