@@ -72,7 +72,6 @@ export const options: NextAuthOptions = {
               body: JSON.stringify({
                 email: user.email,
                 name: user.name,
-                phoneNumber: '01012345432',
                 provider: account.provider.toUpperCase(),
               }),
               cache: 'no-cache',
