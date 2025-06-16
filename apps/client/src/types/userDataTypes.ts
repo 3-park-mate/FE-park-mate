@@ -3,3 +3,8 @@ export interface UserInfoDataType {
   phoneNumber: string;
   point: number;
 }
+
+export interface EditProfileDataType {
+  name: string;
+  phoneNumber: string;
+}

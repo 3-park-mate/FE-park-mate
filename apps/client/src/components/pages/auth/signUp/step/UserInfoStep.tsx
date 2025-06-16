@@ -3,7 +3,6 @@ import { SignUpStoreDataType } from '@/types/authDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { FormHeading } from '@repo/ui/components/common/CommonLayouts';
 import { StepButtons } from '@repo/ui/components/common/StepButtons';
-import React from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function UserInfoStep({
