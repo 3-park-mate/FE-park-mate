@@ -23,10 +23,10 @@ export default function ChatViewSection({
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    if (messagesEndRef.current && !isScrolled) {
+    if (messagesEndRef.current) {
       scrollToBottomUtil(messagesEndRef, false);
     }
-  }, [chatMessages, chatSenderHeight]);
+  }, [chatMessages, isScrolled]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,18 +35,11 @@ export default function ChatViewSection({
       });
     };
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return chatMessages.length !== 0 ? (
-    <section
-      style={{
-        paddingBottom: `${chatSenderHeight + 60}px`,
-      }}
-      className="relative"
-    >
+  return chatMessages.length > 0 ? (
+    <section className="relative">
       <ChatLogList
         chatMessages={chatMessages}
         chatRoomInfo={chatRoomInfo}

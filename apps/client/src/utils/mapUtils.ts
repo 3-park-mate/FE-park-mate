@@ -27,17 +27,15 @@ export const searchLocationByKeywordUtil = (
 
     ps.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        let results = [];
-        for (var i = 0; i < data.length; i++) {
-          results.push({
-            position: {
-              lat: parseFloat(data[i]?.y || ''),
-              lng: parseFloat(data[i]?.x || ''),
-            },
-            content: data[i]?.place_name || '',
-            road_address_name: data[i]?.road_address_name || '',
-          });
-        }
+        const results: SearchLocationResultType[] = data.map((item) => ({
+          position: {
+            lat: parseFloat(item.y || ''),
+            lng: parseFloat(item.x || ''),
+          },
+          content: item.place_name || '',
+          road_address_name: item.road_address_name || '',
+        }));
+
         resolve(results);
       } else {
         reject;
