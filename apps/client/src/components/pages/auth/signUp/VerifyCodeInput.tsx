@@ -2,7 +2,7 @@ import { SignUpStoreDataType } from '@/types/authDataTypes';
 import { Input } from '@repo/ui/components/base/input';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useFormState } from 'react-hook-form';
 
 interface EmailVerificationCodeInputProps {
   timeLeft: number;
@@ -20,6 +20,7 @@ export default function VerifyCodeInput({
   onResendCode,
 }: EmailVerificationCodeInputProps) {
   const { register } = useFormContext<SignUpStoreDataType>();
+  const { errors } = useFormState<SignUpStoreDataType>();
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const seconds = String(timeLeft % 60).padStart(2, '0');
@@ -27,7 +28,7 @@ export default function VerifyCodeInput({
   return (
     <div className="grid w-full items-center gap-1.5">
       <label
-        htmlFor="verifyCode"
+        htmlFor="verificationCode"
         className="font-semibold text-13px text-gray-3 ms-1"
       >
         인증번호
@@ -35,12 +36,12 @@ export default function VerifyCodeInput({
       <div className="relative w-full">
         <Input
           type="text"
-          id="verifyCode"
+          id="verificationCode"
           placeholder="인증번호 6자리"
           className="pr-20"
           maxLength={6}
           readOnly={loading || isVerified}
-          {...register('verifyCode')}
+          {...register('verificationCode')}
         />
         <span className="absolute top-1/2 right-4 -translate-y-1/2 text-sm text-gray-2">
           {`${minutes}:${seconds}`}
@@ -49,7 +50,7 @@ export default function VerifyCodeInput({
       <CommonButton
         className="mt-3"
         onClick={onVerifyCode}
-        disabled={loading || isVerified}
+        disabled={loading || isVerified || !!errors.verificationCode}
         type="button"
       >
         {loading ? <DotSpinner /> : '인증번호 확인'}

@@ -34,7 +34,11 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
     modalMessage,
     handleAlert,
   } = useAlertWithLoading();
-  const { timeLeft, start: startTimer } = useCountdownTimer(180, () => {
+  const {
+    timeLeft,
+    start: startTimer,
+    reset: resetTimer,
+  } = useCountdownTimer(180, () => {
     setIsCodeSent(false);
     handleAlert('인증 시간이 만료되었습니다. 인증을 다시 요청해주세요.');
   });
@@ -73,7 +77,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const handleVerifyCode = async () => {
     setLoading(true);
     const email = getValues('email');
-    const code = getValues('verifyCode');
+    const code = getValues('verificationCode');
 
     const res = await verifyEmailCodeAction({ email, verificationCode: code });
 
@@ -82,6 +86,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
       return handleAlert('인증번호가 틀렸습니다. 다시 시도해 주세요.');
 
     setIsVerified(true);
+    resetTimer();
     handleAlert('인증이 완료되었습니다.');
   };
 

@@ -9,7 +9,7 @@ export async function signUpAction(
   signUpData: Partial<SignUpDataType>
 ): Promise<ApiResponse<string>> {
   const payload: Partial<SignUpDataType> = { ...signUpData };
-
+  console.log(payload);
   try {
     const res = await api.post<CommonResponseType<string>>(
       API_PREFIX,
@@ -18,9 +18,15 @@ export async function signUpAction(
     );
     console.log(res);
 
+    if (res.code !== 201) {
+      return {
+        success: false,
+        message: res.message,
+      };
+    }
     return {
       success: true,
-      data: res.message,
+      data: res.data,
     };
   } catch (error) {
     return {
