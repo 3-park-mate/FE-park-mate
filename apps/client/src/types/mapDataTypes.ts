@@ -17,3 +17,17 @@ export interface ParkingLotSimpleInfoType {
   likeCount: number;
   dislikeCount: number;
 }
+
+export interface MapInfo {
+  center?: {
+    lat: number;
+    lng: number;
+  };
+  bounds?: {
+    swLat: number;
+    swLng: number;
+    neLat: number;
+    neLng: number;
+  };
+  level?: number;
+}

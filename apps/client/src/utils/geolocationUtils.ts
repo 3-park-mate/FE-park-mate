@@ -13,7 +13,7 @@ export const getCurrentCoordsUtil = (): Promise<{
         resolve({ latitude, longitude });
       },
       (error) => {
-        reject(error);
+        reject(error.code);
       },
       {
         enableHighAccuracy: true,

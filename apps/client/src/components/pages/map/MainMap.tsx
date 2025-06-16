@@ -1,6 +1,5 @@
 'use client';
 
-import { useParkingFilterStore } from '@/store/useParkingFilterStore';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { useEffect, useState } from 'react';
 import {
@@ -9,58 +8,63 @@ import {
   MarkerClusterer,
   useKakaoLoader,
 } from 'react-kakao-maps-sdk';
-import CurrentLocationButton from './CurrentLocationButton ';
 import { markerDummyData } from '@/data/markerDummyData';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useSearchParams } from 'next/navigation';
-import { updateMapState } from '@/utils/mapUtils';
 
 export default function MainMap() {
-  const [loading, error] = useKakaoLoader({
+  useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
   });
   const searchParams = useSearchParams();
-  const latParam = Number(searchParams.get('lat'));
-  const lngParam = Number(searchParams.get('lng'));
 
-  const { setMapCenter, setMapBounds, mapCenter } = useParkingFilterStore();
-  const { setGnbNavBar } = useGnbNavBarStore();
+  const lat = Number(searchParams.get('lat'));
+  const lng = Number(searchParams.get('lng'));
+
+  const [center, setCenter] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
 
   const [clickMarker, setClickMarker] = useState<string>('');
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const { setGnbNavBar } = useGnbNavBarStore();
 
-  const setCurrentLocation = async () => {
+  const getCurrentLocation = async (): Promise<{
+    lat: number;
+    lng: number;
+  }> => {
     try {
       const { latitude, longitude } = await getCurrentCoordsUtil();
-      setMapCenter(latitude, longitude, null);
+      return { lat: latitude, lng: longitude };
     } catch (error) {
       console.log(error);
+      return { lat: 37.5714, lng: 126.9768 };
+    } finally {
+      console.log('finally');
+    }
+  };
+
+  const initMap = async () => {
+    if (lat && lng) {
+      setCenter({ lat: lat, lng: lng });
+    } else {
+      const { lat, lng } = await getCurrentLocation();
+      setCenter({ lat: lat, lng: lng });
     }
   };
 
   useEffect(() => {
-    if (latParam && lngParam) {
-      setMapCenter(latParam, lngParam, null);
-    } else {
-      setCurrentLocation();
-    }
+    initMap();
   }, []);
-
-  if (loading) return <div>지도 불러오는 중</div>;
-  if (error) return <div>카카오맵 로딩 실패: {error.message}</div>;
 
   return (
     <Map
-      center={{
-        lat: mapCenter?.lat || 37.5727,
-        lng: mapCenter?.lng || 126.9695,
-      }}
+      center={center || { lat: 37.5727, lng: 126.9695 }}
       level={5}
       className="w-full h-screen z-0"
-      onDrag={(map) => updateMapState(map, setMapCenter, setMapBounds)}
-      onZoomChanged={(map) => updateMapState(map, setMapCenter, setMapBounds)}
       onClick={() => {
         setClickMarker('');
         setGnbNavBar(true);
@@ -86,7 +90,7 @@ export default function MainMap() {
         ))}
       </MarkerClusterer>
       {clickMarker && <ParkingLotSimpleInfoModal parkingLotUuid="" />}
-      <CurrentLocationButton onClick={setCurrentLocation} />
+      {/* <CurrentLocationButton onClick={setCurrentLocation} /> */}
     </Map>
   );
 }

@@ -26,7 +26,7 @@ export default function LocationContent() {
         });
         setLocation(address || '');
       } catch (err) {
-        console.error(err);
+        console.log(err);
       } finally {
         setIsLoading(false);
       }
