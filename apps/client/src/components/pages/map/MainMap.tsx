@@ -1,96 +1,51 @@
 'use client';
 
-import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
-import { useEffect, useState } from 'react';
-import {
-  Map,
-  MapMarker,
-  MarkerClusterer,
-  useKakaoLoader,
-} from 'react-kakao-maps-sdk';
-import { markerDummyData } from '@/data/markerDummyData';
-import { MarkerDataType } from '@/types/mapDataTypes';
+import { useState } from 'react';
+import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
+import AlertModal from '@repo/ui/components/common/AlertModal';
+import CurrentLocationButton from './CurrentLocationButton ';
+import MapMarkers from './MapMarkers';
+import useMapCenter from '@/hooks/useMapCenter';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import { useSearchParams } from 'next/navigation';
+import { useLocationAlertStore } from '@/store/useLocationAlertStore';
 
 export default function MainMap() {
   useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
   });
-  const searchParams = useSearchParams();
-
-  const lat = Number(searchParams.get('lat'));
-  const lng = Number(searchParams.get('lng'));
-
-  const [center, setCenter] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
 
   const [clickMarker, setClickMarker] = useState<string>('');
-  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const { openAlert, setOpenAlert } = useLocationAlertStore();
+  const { center, initMap, handleMapChange } = useMapCenter();
   const { setGnbNavBar } = useGnbNavBarStore();
 
-  const getCurrentLocation = async (): Promise<{
-    lat: number;
-    lng: number;
-  }> => {
-    try {
-      const { latitude, longitude } = await getCurrentCoordsUtil();
-      return { lat: latitude, lng: longitude };
-    } catch (error) {
-      console.log(error);
-      return { lat: 37.5714, lng: 126.9768 };
-    } finally {
-      console.log('finally');
-    }
-  };
-
-  const initMap = async () => {
-    if (lat && lng) {
-      setCenter({ lat: lat, lng: lng });
-    } else {
-      const { lat, lng } = await getCurrentLocation();
-      setCenter({ lat: lat, lng: lng });
-    }
-  };
-
-  useEffect(() => {
-    initMap();
-  }, []);
-
   return (
-    <Map
-      center={center || { lat: 37.5727, lng: 126.9695 }}
-      level={5}
-      className="w-full h-screen z-0"
-      onClick={() => {
-        setClickMarker('');
-        setGnbNavBar(true);
-      }}
-      isPanto
-    >
-      <MarkerClusterer
-        gridSize={70}
-        averageCenter={true}
-        minLevel={7}
-        minClusterSize={1}
-        disableClickZoom
+    <>
+      <AlertModal
+        open={openAlert}
+        onOpenChange={setOpenAlert}
+        errorMessage={'위치 접근 권한을 허용해주세요'}
+        theme="primary"
+        showCancelButton
+      />
+      <Map
+        center={center}
+        level={5}
+        className="w-full h-screen z-0"
+        onDragEnd={handleMapChange}
+        onZoomChanged={handleMapChange}
+        onClick={() => {
+          setClickMarker('');
+          setGnbNavBar(true);
+        }}
+        isPanto
       >
-        {markerDummyData.map((data: MarkerDataType) => (
-          <MapMarker
-            key={data.parkingLotUuid}
-            position={{ lat: data.latitude, lng: data.longitude }}
-            onClick={() => {
-              setClickMarker(data.parkingLotUuid);
-              setGnbNavBar(false);
-            }}
-          />
-        ))}
-      </MarkerClusterer>
-      {clickMarker && <ParkingLotSimpleInfoModal parkingLotUuid="" />}
-      {/* <CurrentLocationButton onClick={setCurrentLocation} /> */}
-    </Map>
+        <MapMarkers clickMarker={clickMarker} setClickMarker={setClickMarker} />
+        {clickMarker && <ParkingLotSimpleInfoModal parkingLotUuid="" />}
+        <CurrentLocationButton onClick={initMap} />
+      </Map>
+    </>
   );
 }

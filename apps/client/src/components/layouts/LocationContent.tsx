@@ -1,7 +1,9 @@
 'use client';
 
+import { useLocationAlertStore } from '@/store/useLocationAlertStore';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { coordtoAddressUtil } from '@/utils/mapUtils';
+import AlertModal from '@repo/ui/components/common/AlertModal';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { cn } from '@repo/ui/lib/utils';
 import React, { useEffect, useState } from 'react';
@@ -15,6 +17,7 @@ export default function LocationContent() {
 
   const [location, setLocation] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const { openAlert, setOpenAlert } = useLocationAlertStore();
 
   useEffect(() => {
     const setCurrentLocation = async () => {
@@ -49,6 +52,14 @@ export default function LocationContent() {
 
   return (
     <>
+      {' '}
+      <AlertModal
+        open={openAlert}
+        onOpenChange={setOpenAlert}
+        errorMessage={'위치 접근 권한을 허용해주세요'}
+        theme="primary"
+        showCancelButton
+      />
       {isLoading ? (
         <DotSpinner className="fill-primary mx-2" />
       ) : location !== '' ? (
