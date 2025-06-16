@@ -19,7 +19,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(options);
-  console.log('session', session);
+  // console.log('session', session);
   const isAuth = !!session?.user as boolean;
   console.log('isAuth', isAuth);
   return (

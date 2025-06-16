@@ -19,8 +19,10 @@ export default function VerifyCodeInput({
   onVerifyCode,
   onResendCode,
 }: EmailVerificationCodeInputProps) {
-  const { register } = useFormContext<SignUpStoreDataType>();
+  const { register, getValues } = useFormContext<SignUpStoreDataType>();
   const { errors } = useFormState<SignUpStoreDataType>();
+  const code = getValues('verificationCode') || '';
+  const isVerificationCodeValid = code.length === 6 && !errors.verificationCode;
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const seconds = String(timeLeft % 60).padStart(2, '0');
@@ -50,7 +52,7 @@ export default function VerifyCodeInput({
       <CommonButton
         className="mt-3"
         onClick={onVerifyCode}
-        disabled={loading || isVerified || !!errors.verificationCode}
+        disabled={loading || isVerified || !isVerificationCodeValid}
         type="button"
       >
         {loading ? <DotSpinner /> : '인증번호 확인'}

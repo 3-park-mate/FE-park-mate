@@ -61,45 +61,34 @@ export const options: NextAuthOptions = {
         console.log('account', account);
         console.log('user', user);
         try {
-          // const res = await fetch(
-          //   `${process.env.BASE_API_URL}/api/v1/oauth/sign-in`,
-          //   {
-          //     method: 'POST',
-          //     headers: {
-          //       'Content-Type': 'application/json',
-          //     },
-          //     body: JSON.stringify({
-          //       provider: account.provider,
-          //       accessToken: account.access_token,
-          //     }),
-          //     cache: 'no-cache',
-          //     credentials: 'include',
-          //   }
-          // );
-          // const setCookie = res.headers.get('set-cookie');
-          // console.log(setCookie);
-          // if (setCookie) {
-          //   const match = setCookie.match(/oauth_cookie=([^;]+)/);
-          //   const oauthCookieValue = match ? match[1] : null;
-          //   console.log('OAuth 쿠키 값:', oauthCookieValue);
-          //   (await cookies()).set({
-          //     name: 'oauth_cookie',
-          //     value: oauthCookieValue || '',
-          //     httpOnly: true,
-          //     sameSite: 'none',
-          //     secure: true,
-          //     path: '/',
-          //   });
-          // }
-          // const data = (await res.json()) as CommonResponseType<signInDataType>;
-          // console.log('server data', data);
-          // if (!data.result) return '/auth/sign-in?reason=unregistered';
-          // user.accessToken = data.result.accessToken;
-          // user.refreshToken = data.result.refreshToken;
-          // return true;
+          const res = await fetch(
+            `${process.env.BASE_API_URL}/auth-service/api/v1/user/socialRegister`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Social-Access-Token': account.access_token ?? '',
+              },
+              body: JSON.stringify({
+                email: user.email,
+                name: user.name,
+                phoneNumber: '01012345432',
+                provider: account.provider.toUpperCase(),
+              }),
+              cache: 'no-cache',
+            }
+          );
+          const data =
+            (await res.json()) as CommonResponseType<SignInResponseDataType>;
+          console.log('server data', data);
+          user.accessToken = data.data.accessToken;
+          user.refreshToken = data.data.refreshToken;
+          user.uuid = data.data.userUuid;
+          console.log('ok');
+          return true;
         } catch (error) {
-          console.error('error', error);
-          return `/auth/oauth-sign-up`;
+          console.error('authorize error:', error);
+          return `/error`;
         }
       }
       return true;
@@ -117,6 +106,9 @@ export const options: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
+      if (!url || url === '/api/auth/signin') {
+        return `${baseUrl}/`;
+      }
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
