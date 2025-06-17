@@ -1,4 +1,5 @@
 import { SearchLocationResultType } from '@/types/filterInfoType';
+import { MapInfo } from '@/types/mapDataTypes';
 
 export const updateMapState = (
   map: kakao.maps.Map,
@@ -65,4 +66,30 @@ export const coordtoAddressUtil = (position: {
       }
     });
   });
+};
+
+export const getMapInfo = (
+  map: kakao.maps.Map,
+  info: Array<'center' | 'bounds' | 'level'>
+): MapInfo => {
+  const center = map.getCenter();
+  const bounds = map.getBounds();
+  const level = map.getLevel();
+
+  const infoHandlers = {
+    center: () => ({ center: { lat: center.getLat(), lng: center.getLng() } }),
+    bounds: () => ({
+      bounds: {
+        swLat: bounds.getSouthWest().getLat(),
+        swLng: bounds.getSouthWest().getLng(),
+        neLat: bounds.getNorthEast().getLat(),
+        neLng: bounds.getNorthEast().getLng(),
+      },
+    }),
+    level: () => ({ level }),
+  };
+
+  return info.reduce<MapInfo>((result, key) => {
+    return { ...result, ...infoHandlers[key]() };
+  }, {});
 };

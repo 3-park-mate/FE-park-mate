@@ -1,3 +1,5 @@
+import { useLocationAlertStore } from '@/store/useLocationAlertStore';
+
 export const getCurrentCoordsUtil = (): Promise<{
   latitude: number;
   longitude: number;
@@ -13,7 +15,8 @@ export const getCurrentCoordsUtil = (): Promise<{
         resolve({ latitude, longitude });
       },
       (error) => {
-        reject(error);
+        useLocationAlertStore.getState().setOpenAlert(true);
+        reject(error.message);
       },
       {
         enableHighAccuracy: true,

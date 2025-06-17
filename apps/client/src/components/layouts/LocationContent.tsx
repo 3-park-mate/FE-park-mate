@@ -6,9 +6,10 @@ import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { cn } from '@repo/ui/lib/utils';
 import React, { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
+import LocationPermissionModal from '../common/LocationPermissionModal';
 
 export default function LocationContent() {
-  const [loading, error] = useKakaoLoader({
+  const [loading] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
   });
@@ -26,26 +27,16 @@ export default function LocationContent() {
         });
         setLocation(address || '');
       } catch (err) {
-        console.error(err);
+        console.log(err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (!loading && !error) {
+    if (!loading) {
       setCurrentLocation();
     }
-  }, [loading, error]);
-
-  if (loading) {
-    console.log('로딩중');
-    return;
-  }
-
-  if (error) {
-    console.error('카카오 로딩 에러');
-    return;
-  }
+  }, [loading]);
 
   return (
     <>
@@ -56,6 +47,7 @@ export default function LocationContent() {
       ) : (
         <p className="font-medium text-sm">주소 불러오기 실패</p>
       )}
+      <LocationPermissionModal />
     </>
   );
 }
