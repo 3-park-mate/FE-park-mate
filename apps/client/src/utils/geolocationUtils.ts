@@ -16,7 +16,7 @@ export const getCurrentCoordsUtil = (): Promise<{
       },
       (error) => {
         useLocationAlertStore.getState().setOpenAlert(true);
-        reject(error.code);
+        reject(error.message);
       },
       {
         enableHighAccuracy: true,
