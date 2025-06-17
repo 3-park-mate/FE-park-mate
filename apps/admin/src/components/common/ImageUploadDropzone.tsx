@@ -1,18 +1,19 @@
 'use client';
-import { useCallback, useRef, type Dispatch, type SetStateAction } from 'react';
+
+import { useCallback, useRef } from 'react';
 import { ImagePlus } from 'lucide-react';
 import { Input } from '@repo/ui/components/base/input';
 import { cn } from '@repo/ui/lib/utils';
 
 export default function ImageUploadDropzone({
-  setImages,
+  onFilesSelected,
   isDragging,
   setIsDragging,
   imagesCount,
 }: {
-  setImages: Dispatch<SetStateAction<File[]>>;
+  onFilesSelected: (files: File[]) => void;
   isDragging: boolean;
-  setIsDragging: Dispatch<SetStateAction<boolean>>;
+  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
   imagesCount?: number;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,9 +27,9 @@ export default function ImageUploadDropzone({
       const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
         file.type.startsWith('image/')
       );
-      setImages((prev) => [...prev, ...droppedFiles]);
+      onFilesSelected(droppedFiles);
     },
-    [setImages, setIsDragging]
+    [onFilesSelected, setIsDragging]
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +37,7 @@ export default function ImageUploadDropzone({
     const selectedFiles = Array.from(e.target.files).filter((file) =>
       file.type.startsWith('image/')
     );
-    setImages((prev) => [...prev, ...selectedFiles]);
+    onFilesSelected(selectedFiles);
   };
 
   if (imagesCount && imagesCount >= 5) return null;
