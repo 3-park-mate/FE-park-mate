@@ -7,7 +7,7 @@ import IsChargeableSheet from '../IsChargeableSheet';
 import ImageUploadInput from '../ImageUploadInput';
 import { AddParkingLotStep } from '../AddParkingLotFunnel';
 import { useFormContext, useFormState } from 'react-hook-form';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import { useStepValidation } from '@/hooks/useStepValidation';
 import { PARKINGLOT_IMAGE_FIELDS } from '@/constants/addParkingFormFields';
 
@@ -16,11 +16,11 @@ export default function ParkingLotImagesStep({
 }: {
   setStep: (step: AddParkingLotStep, skipEvStep?: boolean) => void;
 }) {
-  const { register } = useFormContext<AddParkingLotStoreDataType>();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+  const { register } = useFormContext<AddParkingLotDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotDataType>();
 
   const { isStepValid, triggerValidation } =
-    useStepValidation<AddParkingLotStoreDataType>(PARKINGLOT_IMAGE_FIELDS);
+    useStepValidation<AddParkingLotDataType>(PARKINGLOT_IMAGE_FIELDS);
 
   return (
     <section className="space-y-5">

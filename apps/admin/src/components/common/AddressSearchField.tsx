@@ -6,13 +6,13 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import { fetchCoordsFromAddress } from '@/utils/geolocation';
 
 export default function AddressSearchField() {
   const { register, setValue, control } =
-    useFormContext<AddParkingLotStoreDataType>();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+    useFormContext<AddParkingLotDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotDataType>();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
   const mainAddress = useWatch({

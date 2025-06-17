@@ -8,7 +8,7 @@ import { getParkingLotOptions } from '@/actions/parking/parking-service';
 import { ParkingLotOptionDataType } from '@/types/parkingDataTypes';
 import { useFetchData } from '@/hooks/useFetchData';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export default function ParkingLotOptionStep({
 }) {
   const { data: options } =
     useFetchData<ParkingLotOptionDataType[]>(getParkingLotOptions);
-  const { control, setValue } = useFormContext<AddParkingLotStoreDataType>();
+  const { control, setValue } = useFormContext<AddParkingLotDataType>();
   const optionIds = useWatch({ control, name: 'optionIds' }) || [];
 
   const [openAlert, setOpenAlert] = useState(false);

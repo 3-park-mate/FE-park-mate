@@ -4,7 +4,7 @@ import ParkingLotInfoStep from './step/ParkingLotInfoStep';
 import EvSpotSetupStep from './step/EvSpotSetupStep';
 import ParkingLotImagesStep from './step/ParkingLotImagesStep';
 import ParkingSpotSetupStep from './step/ParkingSpotSetupStep';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addParkingLotSchema } from '@/schemas/addParkingLotSchema';
@@ -19,16 +19,16 @@ export type AddParkingLotStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5';
 export default function AddParkingLotFunnel() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const methods = useForm<AddParkingLotStoreDataType>({
+  const methods = useForm<AddParkingLotDataType>({
     resolver: zodResolver(addParkingLotSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
       parkingLot: {
-        hostUuid: '',
+        hostUuid: 'hostuuid-dummy',
         parkingLotType: 'PRIVATE',
         name: '',
-        phoneNumber: '',
+        phoneNumber: '01012344321',
         capacity: 0,
         registeredCapacity: 0,
         mainAddress: '',
@@ -40,15 +40,6 @@ export default function AddParkingLotFunnel() {
         thumbnailUrl: '',
       },
       optionIds: [],
-      // parkingLotImage: {
-      //   imageUrls: [],
-      // },
-      parkingLotImage: {
-        imageUrls: [
-          { imageUrl: 'https://dummyimage.com/155x102' },
-          { imageUrl: 'https://dummyimage.com/155x102' },
-        ],
-      },
       parkingSpot: {
         chargeable: [
           {
@@ -61,6 +52,15 @@ export default function AddParkingLotFunnel() {
           { parkingSpotType: 'COMPACT', count: 0 },
           { parkingSpotType: 'STANDARD', count: 0 },
           { parkingSpotType: 'LARGE', count: 0 },
+        ],
+      },
+      // parkingLotImage: {
+      //   imageUrls: [],
+      // },
+      parkingLotImage: {
+        imageUrls: [
+          { imageUrl: 'https://dummyimage.com/155x102' },
+          { imageUrl: 'https://dummyimage.com/155x102' },
         ],
       },
     },
@@ -90,7 +90,7 @@ export default function AddParkingLotFunnel() {
     [_setStep, router, searchParams]
   );
   const { handleSubmit } = methods;
-  const onSubmit = (data: AddParkingLotStoreDataType) => {
+  const onSubmit = (data: AddParkingLotDataType) => {
     console.log('SignUp Data:', data);
   };
 

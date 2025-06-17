@@ -2,7 +2,7 @@
 import AddressSearchField from '@/components/common/AddressSearchField';
 import { PARKINGLOT_FIELDS } from '@/constants/addParkingFormFields';
 import { useStepValidation } from '@/hooks/useStepValidation';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import {
   CommonButton,
@@ -17,11 +17,11 @@ export default function ParkingLotInfoStep({
 }: {
   onNext?: () => void;
 }) {
-  const { register } = useFormContext<AddParkingLotStoreDataType>();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+  const { register } = useFormContext<AddParkingLotDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotDataType>();
 
   const { isStepValid, triggerValidation } =
-    useStepValidation<AddParkingLotStoreDataType>(PARKINGLOT_FIELDS);
+    useStepValidation<AddParkingLotDataType>(PARKINGLOT_FIELDS);
 
   const handleNextClick = useCallback(async () => {
     const result = await triggerValidation();
