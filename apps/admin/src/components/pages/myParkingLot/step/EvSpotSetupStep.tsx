@@ -4,7 +4,7 @@ import EvSpotSetupSection from '../EvSpotSetupSection';
 import ChargingTypeGuide from '../ChargingTypeGuide';
 import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import { useFormContext } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { chargeableParkingSpotSchema } from '@/schemas/addParkingLotSchema';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import { ChargeableParkingSpot } from '@/types/addParkingLotDataTypes';
@@ -16,7 +16,7 @@ export default function EvSpotSetupStep({
   onNext: () => void;
   onBack: () => void;
 }) {
-  const { getValues } = useFormContext();
+  const { getValues, setValue } = useFormContext();
   const [openAlert, setOpenAlert] = useState(false);
 
   const handleNextClick = () => {
@@ -36,6 +36,15 @@ export default function EvSpotSetupStep({
     }
     onNext();
   };
+
+  useEffect(() => {
+    const chargeable = getValues('parkingSpot.chargeable');
+    if (!chargeable || chargeable.length === 0) {
+      setValue('parkingSpot.chargeable', [
+        { parkingSpotType: 'EV', evChargeTypes: [] },
+      ]);
+    }
+  }, [getValues, setValue]);
 
   return (
     <>

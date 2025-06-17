@@ -13,6 +13,9 @@ import { useCallback, useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import ParkingLotOptionStep from './step/ParkingLotOptionStep';
+import { addParkingLotAction } from '@/actions/parking/parking-service';
+import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
+import AlertModal from '@repo/ui/components/common/AlertModal';
 
 export type AddParkingLotStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5';
 
@@ -37,15 +40,15 @@ export default function AddParkingLotFunnel() {
         longitude: 0,
         isEvChargingAvailable: false,
         extraInfo: '',
-        thumbnailUrl: '',
+        thumbnailUrl: 'https://dummyimage.com/155x102',
       },
       optionIds: [],
       parkingSpot: {
         chargeable: [
-          {
-            parkingSpotType: 'EV',
-            evChargeTypes: [],
-          },
+          // {
+          //   parkingSpotType: 'EV',
+          //   evChargeTypes: [],
+          // },
         ],
         nonChargeable: [
           { parkingSpotType: 'SMALL', count: 0 },
@@ -74,6 +77,8 @@ export default function AddParkingLotFunnel() {
       const currentParams = new URLSearchParams(searchParams.toString());
 
       if (skipEvStep !== undefined) {
+        methods.setValue('parkingLot.isEvChargingAvailable', !skipEvStep);
+
         const currentSkipEvStep = currentParams.get('skipEvStep');
         const newSkipEvStep = skipEvStep ? 'true' : null;
 
@@ -87,62 +92,105 @@ export default function AddParkingLotFunnel() {
         }
       }
     },
-    [_setStep, router, searchParams]
+    [_setStep, router, searchParams, methods]
   );
+  const { alertModalOpen, setAlertModalOpen, modalMessage, handleAlert } =
+    useAlertWithLoading();
   const { handleSubmit } = methods;
-  const onSubmit = (data: AddParkingLotDataType) => {
-    console.log('SignUp Data:', data);
+  const onSubmit = async (data: AddParkingLotDataType) => {
+    const submitData = { ...data };
+
+    if (submitData.parkingSpot.chargeable?.length === 0) {
+      delete submitData.parkingSpot.chargeable;
+    }
+    console.log('addParkingLot Data:', submitData);
+    const res = await addParkingLotAction(submitData);
+
+    if (!res.success) return handleAlert(res.message);
+    handleAlert('주차장 등록이 완료되었습니다.');
   };
 
   const { watch } = methods;
+  // useEffect(() => {
+  //   const subscription = watch((value, { name, type }) => {
+  //     console.log('💡 변경된 필드:', name);
+  //     console.log('📋 변경 타입:', type);
+  //     console.log('📝 현재 값:', value);
+  //   });
+
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
 
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      console.log('💡 변경된 필드:', name);
-      console.log('📋 변경 타입:', type);
-      console.log('📝 현재 값:', value);
+    const subscription = watch((value, { name }) => {
+      const isParkingSpotRelated =
+        name?.startsWith('parkingSpot.chargeable') ||
+        name?.startsWith('parkingSpot.nonChargeable');
+
+      if (!isParkingSpotRelated) return;
+
+      const chargeableCount = value.parkingSpot?.chargeable?.length ?? 0;
+      const nonChargeableCount = (
+        value.parkingSpot?.nonChargeable ?? []
+      ).reduce((sum, spot) => sum + (spot?.count || 0), 0);
+
+      const total = chargeableCount + nonChargeableCount;
+
+      methods.setValue('parkingLot.capacity', total);
+      methods.setValue('parkingLot.registeredCapacity', total);
     });
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, methods]);
 
   return (
-    <FormProvider {...methods}>
-      <form className="px-5" onKeyDown={handleKeyDown}>
-        <Funnel>
-          <Funnel.step name="step1">
-            <ParkingLotInfoStep onNext={() => setStep('step2')} />
-          </Funnel.step>
-          <Funnel.step name="step2">
-            <ParkingLotOptionStep
-              onNext={() => setStep('step3')}
-              onBack={() => setStep('step1')}
-            />
-          </Funnel.step>
-          <Funnel.step name="step3">
-            <ParkingLotImagesStep setStep={setStep} />
-          </Funnel.step>
-          <Funnel.step name="step4">
-            <EvSpotSetupStep
-              onNext={() => setStep('step5', false)}
-              onBack={() => setStep('step3', false)}
-            />
-          </Funnel.step>
-          <Funnel.step name="step5">
-            <ParkingSpotSetupStep
-              onNext={handleSubmit(onSubmit)}
-              onBack={() => {
-                const skipEv = searchParams.get('skipEvStep');
-                if (skipEv === 'true') {
-                  setStep('step3', true);
-                } else {
-                  setStep('step4', false);
-                }
-              }}
-            />
-          </Funnel.step>
-        </Funnel>
-      </form>
-    </FormProvider>
+    <>
+      <AlertModal
+        open={alertModalOpen}
+        onOpenChange={setAlertModalOpen}
+        errorMessage={modalMessage}
+        onConfirm={() => {
+          router.push('/');
+        }}
+        theme="secondary"
+      />
+      <FormProvider {...methods}>
+        <form className="px-5" onKeyDown={handleKeyDown}>
+          <Funnel>
+            <Funnel.step name="step1">
+              <ParkingLotInfoStep onNext={() => setStep('step2')} />
+            </Funnel.step>
+            <Funnel.step name="step2">
+              <ParkingLotOptionStep
+                onNext={() => setStep('step3')}
+                onBack={() => setStep('step1')}
+              />
+            </Funnel.step>
+            <Funnel.step name="step3">
+              <ParkingLotImagesStep setStep={setStep} />
+            </Funnel.step>
+            <Funnel.step name="step4">
+              <EvSpotSetupStep
+                onNext={() => setStep('step5', false)}
+                onBack={() => setStep('step3', false)}
+              />
+            </Funnel.step>
+            <Funnel.step name="step5">
+              <ParkingSpotSetupStep
+                onNext={handleSubmit(onSubmit)}
+                onBack={() => {
+                  const skipEv = searchParams.get('skipEvStep');
+                  if (skipEv === 'true') {
+                    setStep('step3', true);
+                  } else {
+                    setStep('step4', false);
+                  }
+                }}
+              />
+            </Funnel.step>
+          </Funnel>
+        </form>
+      </FormProvider>
+    </>
   );
 }
