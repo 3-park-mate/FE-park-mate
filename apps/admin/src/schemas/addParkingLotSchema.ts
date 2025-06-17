@@ -9,7 +9,13 @@ export const parkingLotFormSchema = z.object({
 });
 
 export const parkingLotImageSchema = z.object({
-  imageUrls: z.array(z.string().min(1, '이미지를 하나 이상 업로드해 주세요.')),
+  imageUrls: z
+    .array(
+      z.object({
+        imageUrl: z.string().min(1, '이미지를 하나 이상 업로드해 주세요.'),
+      })
+    )
+    .min(1, '이미지를 하나 이상 업로드해 주세요.'),
 });
 
 export const chargeableParkingSpotSchema = z.object({

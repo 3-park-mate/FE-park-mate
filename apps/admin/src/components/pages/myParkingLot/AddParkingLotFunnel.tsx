@@ -33,8 +33,14 @@ export default function AddParkingLotFunnel() {
       },
       optionIds: [],
       // parkingLotImage: {
-      //   imageUrls: [''],
+      //   imageUrls: [],
       // },
+      parkingLotImage: {
+        imageUrls: [
+          { imageUrl: 'https://dummyimage.com/155x102' },
+          { imageUrl: 'https://dummyimage.com/155x102' },
+        ],
+      },
       parkingSpot: {
         chargeable: [
           {

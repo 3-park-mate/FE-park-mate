@@ -1,37 +1,39 @@
 export interface AddParkingLotDataType {
   parkingLot: {
     hostUuid: string;
-    parkingLotType: string;
+    parkingLotType: 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
     name: string;
     phoneNumber: string;
     capacity: number;
     registeredCapacity: number;
-    zoneCode: string;
     mainAddress: string;
     detailAddress: string;
     latitude: number;
     longitude: number;
+    isEvChargingAvailable: boolean;
     extraInfo: string;
+    thumbnailUrl: string;
   };
+  optionIds: number[];
   parkingSpot: {
-    chargeable: {
-      parkingSpotType: string;
-      evChargeTypes: string[];
-    }[];
-    nonChargeable: {
-      parkingSpotType: 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
-      count: number;
-    }[];
+    chargeable: ChargeableParkingSpot[];
+    nonChargeable: NonChargeableParkingSpot[];
   };
   parkingLotImage: {
-    imageUrls: string[];
+    imageUrls: {
+      imageUrl: string;
+    }[];
   };
 }
 
 export interface AddParkingLotStoreDataType {
   parkingLot: ParkingLotForm;
   optionIds: number[];
-  parkingLotImage: { imageUrls: string[] };
+  parkingLotImage: {
+    imageUrls: {
+      imageUrl: string;
+    }[];
+  };
   parkingSpot: {
     chargeable?: ChargeableParkingSpot[];
     nonChargeable: NonChargeableParkingSpot[];
