@@ -29,6 +29,8 @@ export default function AddParkingLotFunnel() {
         zoneCode: '',
         mainAddress: '',
         detailAddress: '',
+        latitude: 0,
+        longitude: 0,
         extraInfo: '',
       },
       optionIds: [],

@@ -47,8 +47,8 @@ export interface ParkingLotForm {
   zoneCode: string;
   mainAddress: string;
   detailAddress: string;
-  // latitude: number;
-  // longitude: number;
+  latitude: number;
+  longitude: number;
   extraInfo: string;
 }
 

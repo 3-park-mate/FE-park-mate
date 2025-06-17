@@ -5,6 +5,8 @@ export const parkingLotFormSchema = z.object({
   zoneCode: z.string(),
   mainAddress: z.string().min(1, '주차장 주소를 추가해 주세요.'),
   detailAddress: z.string().min(1, '상세 주소를 입력해 주세요.'),
+  latitude: z.number(),
+  longitude: z.number(),
   extraInfo: z.string().min(10, '기타 정보는 최소 10자 이상 입력해야 합니다.'),
 });
 

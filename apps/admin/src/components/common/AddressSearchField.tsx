@@ -7,6 +7,7 @@ import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { fetchCoordsFromAddress } from '@/utils/geolocation';
 
 export default function AddressSearchField() {
   const { register, setValue, control } =
@@ -25,7 +26,7 @@ export default function AddressSearchField() {
     defaultValue: '',
   });
 
-  const handleComplete = (data: Address) => {
+  const handleComplete = async (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -42,6 +43,14 @@ export default function AddressSearchField() {
 
     setValue('parkingLot.mainAddress', fullAddress, { shouldValidate: true });
     setValue('parkingLot.zoneCode', data.zonecode, { shouldValidate: true });
+
+    const coords = await fetchCoordsFromAddress(fullAddress);
+
+    setValue('parkingLot.latitude', coords.latitude, { shouldValidate: true });
+    setValue('parkingLot.longitude', coords.longitude, {
+      shouldValidate: true,
+    });
+
     setIsPostcodeOpen(false);
   };
 
