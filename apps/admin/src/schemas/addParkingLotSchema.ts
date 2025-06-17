@@ -1,13 +1,19 @@
 import { z } from 'zod';
 
 export const parkingLotFormSchema = z.object({
+  hostUuid: z.string(),
+  parkingLotType: z.enum(['PUBLIC', 'PRIVATE', 'COMMERCIAL']),
   name: z.string().min(1, '주차장명을 입력해 주세요.'),
-  zoneCode: z.string(),
+  phoneNumber: z.string(),
+  capacity: z.number(),
+  registeredCapacity: z.number(),
   mainAddress: z.string().min(1, '주차장 주소를 추가해 주세요.'),
   detailAddress: z.string().min(1, '상세 주소를 입력해 주세요.'),
   latitude: z.number(),
   longitude: z.number(),
+  isEvChargingAvailable: z.boolean(),
   extraInfo: z.string().min(10, '기타 정보는 최소 10자 이상 입력해야 합니다.'),
+  thumbnailUrl: z.string(),
 });
 
 export const parkingLotImageSchema = z.object({

@@ -20,11 +20,6 @@ export default function AddressSearchField() {
     name: 'parkingLot.mainAddress',
     defaultValue: '',
   });
-  const zonecode = useWatch({
-    control,
-    name: 'parkingLot.zoneCode',
-    defaultValue: '',
-  });
 
   const handleComplete = async (data: Address) => {
     let fullAddress = data.address;
@@ -42,7 +37,6 @@ export default function AddressSearchField() {
     }
 
     setValue('parkingLot.mainAddress', fullAddress, { shouldValidate: true });
-    setValue('parkingLot.zoneCode', data.zonecode, { shouldValidate: true });
 
     const coords = await fetchCoordsFromAddress(fullAddress);
 
@@ -84,19 +78,6 @@ export default function AddressSearchField() {
           주소찾기
         </Button>
       </div>
-      <CommonInputWithLabel
-        id="zoneCode"
-        placeholder="우편번호"
-        value={zonecode}
-        maxLength={10}
-        readOnly
-        errorMessage={
-          touchedFields?.parkingLot?.zoneCode
-            ? errors.parkingLot?.zoneCode?.message
-            : undefined
-        }
-        {...register('parkingLot.zoneCode')}
-      />
       <CommonInputWithLabel
         label="상세주소"
         id="detailAddress"

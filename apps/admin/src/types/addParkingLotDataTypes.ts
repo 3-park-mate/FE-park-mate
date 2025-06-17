@@ -1,19 +1,5 @@
 export interface AddParkingLotDataType {
-  parkingLot: {
-    hostUuid: string;
-    parkingLotType: 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
-    name: string;
-    phoneNumber: string;
-    capacity: number;
-    registeredCapacity: number;
-    mainAddress: string;
-    detailAddress: string;
-    latitude: number;
-    longitude: number;
-    isEvChargingAvailable: boolean;
-    extraInfo: string;
-    thumbnailUrl: string;
-  };
+  parkingLot: ParkingLotForm;
   optionIds: number[];
   parkingSpot: {
     chargeable: ChargeableParkingSpot[];
@@ -41,15 +27,19 @@ export interface AddParkingLotStoreDataType {
 }
 
 export interface ParkingLotForm {
+  hostUuid: string;
+  parkingLotType: 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
   name: string;
-  // capacity: number;
-  // registeredCapacity: number;
-  zoneCode: string;
+  phoneNumber: string;
+  capacity: number;
+  registeredCapacity: number;
   mainAddress: string;
   detailAddress: string;
   latitude: number;
   longitude: number;
+  isEvChargingAvailable: boolean;
   extraInfo: string;
+  thumbnailUrl: string;
 }
 
 export type EVChargeTypeString =

@@ -25,13 +25,19 @@ export default function AddParkingLotFunnel() {
     reValidateMode: 'onChange',
     defaultValues: {
       parkingLot: {
+        hostUuid: '',
+        parkingLotType: 'PRIVATE',
         name: '',
-        zoneCode: '',
+        phoneNumber: '',
+        capacity: 0,
+        registeredCapacity: 0,
         mainAddress: '',
         detailAddress: '',
         latitude: 0,
         longitude: 0,
+        isEvChargingAvailable: false,
         extraInfo: '',
+        thumbnailUrl: '',
       },
       optionIds: [],
       // parkingLotImage: {
