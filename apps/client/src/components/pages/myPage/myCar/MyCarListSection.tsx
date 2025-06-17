@@ -1,5 +1,4 @@
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
-import React from 'react';
 import MyCarItem from './MyCarItem';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';

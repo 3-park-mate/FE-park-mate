@@ -1,7 +1,10 @@
 'use server';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
 import { SignUpDataType } from '@/types/authDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/user`;
 
@@ -117,5 +120,63 @@ export async function verifyEmailCodeAction({
       success: false,
       message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
     };
+  }
+}
+
+export async function LogoutAction(): Promise<ApiResponse<null>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      return { success: true, data: null };
+    }
+    const uuid = session.user.uuid;
+    console.log('uuid: ', uuid);
+    const res = await api.post<CommonResponseType<null>>(
+      API_PREFIX,
+      '/logout',
+      {},
+      {
+        headers: {
+          'X-User-UUID': `Bearer ${uuid}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return { success: true, data: null };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function getUserEmailData(): Promise<ApiResponse<string>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+
+    const res = await api.get<CommonResponseType<string>>(
+      API_PREFIX,
+      '/email',
+      {},
+      {
+        headers: {
+          'X-User-UUID': uuid,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
   }
 }
