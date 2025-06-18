@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
-import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import CurrentLocationButton from './CurrentLocationButton ';
 import MapMarkers from './MapMarkers';
 import useMapCenter from '@/hooks/useMapCenter';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import { FilterIcon } from 'lucide-react';
-import { cn } from '@repo/ui/lib/utils';
+import { markerDummyData } from '@/data/markerDummyData';
+import ParkingLotListModal from './ParkingLotListModal';
+import FilterButton from './FilterButton';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -17,10 +17,14 @@ export default function MainMap() {
   });
 
   const [clickMarker, setClickMarker] = useState<string>('');
+  const [isOpenListModal, setIsOpenListModal] = useState<boolean>(true);
   const { center, centerMapToCurrentLocation, handleMapChange } =
     useMapCenter();
+  const markerData = markerDummyData;
   const { setGnbNavBar } = useGnbNavBarStore();
-
+  useEffect(() => {
+    console.log(clickMarker);
+  }, [clickMarker]);
   return (
     <section>
       <Map
@@ -32,21 +36,26 @@ export default function MainMap() {
         onZoomChanged={handleMapChange}
         onClick={() => {
           setClickMarker('');
+          setIsOpenListModal(false);
           setGnbNavBar(true);
         }}
         isPanto
       >
-        <MapMarkers clickMarker={clickMarker} setClickMarker={setClickMarker} />
-        {clickMarker && <ParkingLotSimpleInfoModal parkingLotUuid="" />}
+        <MapMarkers
+          markerData={markerData}
+          clickMarker={clickMarker}
+          setClickMarker={setClickMarker}
+          setIsOpenListModal={setIsOpenListModal}
+        />
       </Map>
+      <FilterButton />
       <CurrentLocationButton onClick={centerMapToCurrentLocation} />
-      <button
-        className={cn(
-          'absolute top-20 right-5 z-50 p-2 bg-gray-100 rounded-full shadow-md'
-        )}
-      >
-        <FilterIcon className="fill-black stroke-black" />
-      </button>
+      <ParkingLotListModal
+        isOpenListModal={isOpenListModal}
+        clickMarker={clickMarker}
+        setIsOpenListModal={setIsOpenListModal}
+        markerData={markerData}
+      />
     </section>
   );
 }

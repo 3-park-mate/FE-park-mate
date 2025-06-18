@@ -126,10 +126,12 @@ export function IconWithText({
 export function HeaderLayout({
   children,
   isShadow,
+  withEmptySpace = true,
   className,
 }: {
   children: React.ReactNode;
   isShadow?: boolean;
+  withEmptySpace?: boolean;
   className?: string;
 }) {
   return (
@@ -144,7 +146,7 @@ export function HeaderLayout({
       >
         {children}
       </header>
-      <div className="h-14" />
+      {withEmptySpace && <div className="h-14" />}
     </>
   );
 }

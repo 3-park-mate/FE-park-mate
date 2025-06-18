@@ -8,7 +8,7 @@ export default function layout({
 }>) {
   return (
     <>
-      <LocationHeader isShadow={false} />
+      <LocationHeader isShadow={false} withEmptySpace={false} />
       {children}
       <GnbNavBar />
     </>

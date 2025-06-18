@@ -1,24 +1,14 @@
-import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import CurrentLocationIcon from '@repo/ui/components/icon/CurrentLocationIcon';
-import { cn } from '@repo/ui/lib/utils';
 
 export default function CurrentLocationButton({
   onClick,
 }: {
   onClick: () => void;
 }) {
-  const navBarActive = useGnbNavBarStore((state) => state.active);
-
   return (
     <>
-      <button
-        onClick={onClick}
-        className={cn(
-          'absolute bottom-25 right-5 z-50 bg-primary p-2.5 rounded-full shadow-md hover:bg-gray-100',
-          !navBarActive && 'bottom-65'
-        )}
-      >
-        <CurrentLocationIcon className="size-6.5 stroke-white" />
+      <button onClick={onClick} className="absolute top-38 right-5 z-40">
+        <CurrentLocationIcon className="size-11 stroke-white bg-primary/90 p-2 rounded-full shadow-md hover:bg-gray-100" />
       </button>
     </>
   );

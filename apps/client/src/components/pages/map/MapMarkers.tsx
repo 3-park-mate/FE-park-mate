@@ -1,14 +1,18 @@
 import { MarkerClusterer, MapMarker } from 'react-kakao-maps-sdk';
-import { markerDummyData } from '@/data/markerDummyData';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
+import { SetStateAction } from 'react';
 
 export default function MapMarkers({
   clickMarker,
+  markerData,
+  setIsOpenListModal,
   setClickMarker,
 }: {
   clickMarker: string;
+  markerData: MarkerDataType[];
+  setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   setClickMarker: (id: string) => void;
 }) {
   const { setGnbNavBar } = useGnbNavBarStore();
@@ -22,13 +26,14 @@ export default function MapMarkers({
         minClusterSize={1}
         disableClickZoom
       >
-        {markerDummyData.map((data: MarkerDataType) => (
+        {markerData.map((data: MarkerDataType) => (
           <MapMarker
             key={data.parkingLotUuid}
             position={{ lat: data.latitude, lng: data.longitude }}
             onClick={() => {
-              setClickMarker(data.parkingLotUuid);
+              setIsOpenListModal(false);
               setGnbNavBar(false);
+              setClickMarker(data.parkingLotUuid);
             }}
           />
         ))}
