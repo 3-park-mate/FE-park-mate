@@ -2,6 +2,7 @@ interface RequestOptions extends RequestInit {
   // RequestInit을 확장하여 추가적인 옵션이 필요하면 여기에 정의
   // 예를 들어, 쿼리 파라미터를 객체로 넘기고 싶을 때
   query?: Record<string, string>;
+  next?: { revalidate?: number; tags?: string[] };
 }
 
 export async function serverFetch<T>(
@@ -30,6 +31,10 @@ export async function serverFetch<T>(
     },
     ...customOptions, // 기타 fetch 옵션 (cache, next 등)
   };
+
+  if (options?.next) {
+    config.next = options.next;
+  }
 
   // POST, PUT 등 body가 필요한 경우 JSON.stringify 처리
   if (body) {

@@ -7,22 +7,32 @@ import {
   parkingOperationDummy,
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
+import { getParkingLotById } from '@/actions/parking/parking-service';
 
 export default async function page({
   params,
 }: {
   params: Promise<{ parkingLotUuid: string }>;
 }) {
+  const fallback = <div>주차장을 찾을 수 없습니다.</div>;
+
   const { parkingLotUuid } = await params;
+  if (!parkingLotUuid) return fallback;
+
+  const res = await getParkingLotById(parkingLotUuid);
+  const parkingLotData = res.success ? res.data : null;
+  if (!parkingLotData) return <div>주차장을 찾을 수 없습니다.</div>;
+
+  console.log(parkingLotData);
 
   return (
     <>
-      <PageHeader title={parkingDetailDummy.name} isShadow={false} />
+      <PageHeader title={parkingLotData.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
         <DetailInfoSection
           thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}
           baseFee={parkingOperationDummy.baseFee}
-          name={parkingDetailDummy.name}
+          name={parkingLotData.name}
           averageRating={reviewSummaryDummy.averageRating}
           totalReviews={reviewSummaryDummy.totalReviews}
           distance={100}
@@ -30,7 +40,7 @@ export default async function page({
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
         <DetailInfoMenuSection
-          hostUuid={parkingDetailDummy.hostUuid}
+          hostUuid={parkingLotData.hostUuid}
           parkingLotUuid={parkingLotUuid}
           isActive={parkingOperationDummy.isActive}
           like={1}

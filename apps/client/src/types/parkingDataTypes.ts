@@ -76,3 +76,28 @@ export interface DetailInfoSectionProps {
   availableSpots: number;
   registeredParkingCount: number;
 }
+
+// api
+
+export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
+
+export type EVChargeTypeString =
+  | 'AC_SINGLE'
+  | 'DC_COMBO'
+  | 'DC_CHADEMO'
+  | 'AC_THREE_PHASE';
+
+export interface ParkingLotRequestDataType {
+  hostUuid: string;
+  parkingLotType: ParkingLotType;
+  name: string;
+  phoneNumber: string;
+  capacity: number;
+  registeredCapacity: number;
+  mainAddress: string;
+  detailAddress: string;
+  latitude: number;
+  longitude: number;
+  isEvChargingAvailable: boolean;
+  extraInfo: string;
+}
