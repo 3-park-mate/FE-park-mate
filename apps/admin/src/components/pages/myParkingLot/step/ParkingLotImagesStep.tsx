@@ -6,12 +6,19 @@ import {
 import IsChargeableSheet from '../IsChargeableSheet';
 import ImageUploadInput from '../ImageUploadInput';
 import { AddParkingLotStep } from '../AddParkingLotFunnel';
+import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { useStepValidation } from '@/hooks/useStepValidation';
+import { PARKINGLOT_IMAGE_FIELDS } from '@/constants/addParkingFormFields';
 
 export default function ParkingLotImagesStep({
   setStep,
 }: {
   setStep: (step: AddParkingLotStep, skipEvStep?: boolean) => void;
 }) {
+  const { isStepValid } = useStepValidation<AddParkingLotStoreDataType>(
+    PARKINGLOT_IMAGE_FIELDS
+  );
+
   return (
     <section className="space-y-5">
       <HeadingWithDesc
@@ -28,7 +35,9 @@ export default function ParkingLotImagesStep({
         </CommonButton>
         <Sheet key="bottom">
           <SheetTrigger asChild>
-            <CommonButton className="bg-secondary">다음</CommonButton>
+            <CommonButton className="bg-secondary" disabled={!isStepValid}>
+              다음
+            </CommonButton>
           </SheetTrigger>
           <IsChargeableSheet
             onNext={() => setStep('step4', false)}

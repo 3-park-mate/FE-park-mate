@@ -6,10 +6,10 @@ import {
   TotalSpotCount,
 } from '@repo/ui/components/common/CommonLayouts';
 import { Plus } from 'lucide-react';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 
 export default function EvSpotSetupSection() {
-  const { control } = useFormContext<AddParkingLotStoreDataType>();
+  const { control } = useFormContext<AddParkingLotDataType>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'parkingSpot.chargeable',
