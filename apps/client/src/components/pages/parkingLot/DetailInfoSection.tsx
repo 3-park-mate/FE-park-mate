@@ -23,7 +23,7 @@ export default function DetailInfoSection({
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
         <Image
-          src={thumbImageUrl}
+          src={thumbImageUrl ?? '/img/no-image.png'}
           alt="주차장 이미지"
           fill
           className="object-cover"

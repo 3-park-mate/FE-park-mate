@@ -30,26 +30,31 @@ export default async function page({
       <PageHeader title={parkingLotData.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
         <DetailInfoSection
-          thumbImageUrl={parkingDetailDummy.imageUrls[0] ?? ''}
+          thumbImageUrl={parkingLotData.thumbnailUrl}
           baseFee={parkingOperationDummy.baseFee}
           name={parkingLotData.name}
           averageRating={reviewSummaryDummy.averageRating}
           totalReviews={reviewSummaryDummy.totalReviews}
           distance={100}
-          availableSpots={10}
+          availableSpots={parkingLotData.capacity}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
         <DetailInfoMenuSection
           hostUuid={parkingLotData.hostUuid}
           parkingLotUuid={parkingLotUuid}
           isActive={parkingOperationDummy.isActive}
-          like={1}
-          dislike={99}
+          like={parkingLotData.likeCount}
+          dislike={parkingLotData.dislikeCount}
           baseFee={parkingOperationDummy.baseFee}
           availableSpots={10}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
-        <ParkingDetailContent />
+        <ParkingDetailContent
+          mainAddress={parkingLotData.address}
+          extraInfo={parkingLotData.extraInfo}
+          imageUrls={parkingLotData.imageUrls}
+          options={parkingLotData.options}
+        />
       </main>
     </>
   );

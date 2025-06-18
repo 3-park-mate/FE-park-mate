@@ -213,16 +213,39 @@ export function OptionIconWithText({
   children,
   className,
   IconClassName,
+  isActive = false,
 }: {
   Icon?: React.ElementType;
   children: React.ReactNode;
   className?: string;
   IconClassName?: string;
+  isActive?: boolean;
 }) {
   return (
-    <div className={cn('flex flex-col gap-2 items-center', className)}>
-      {Icon && <Icon className={(cn('w-6 h-6 '), IconClassName)} />}
-      <p className="text-xs xs:text-sm">{children}</p>
+    <div
+      className={cn(
+        'flex flex-col gap-2 items-center',
+        !isActive && 'opacity-40',
+        className
+      )}
+    >
+      {Icon && (
+        <Icon
+          className={cn(
+            'w-6 h-6',
+            isActive ? 'text-black' : 'text-gray-2',
+            IconClassName
+          )}
+        />
+      )}
+      <p
+        className={cn(
+          'text-xs xs:text-sm',
+          isActive ? 'text-black font-medium' : 'text-gray-2'
+        )}
+      >
+        {children}
+      </p>
     </div>
   );
 }

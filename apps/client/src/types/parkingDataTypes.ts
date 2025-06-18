@@ -67,7 +67,7 @@ export interface ParkingOperationDataType {
 }
 
 export interface DetailInfoSectionProps {
-  thumbImageUrl: string;
+  thumbImageUrl?: string;
   baseFee: number;
   name: string;
   averageRating: number;
@@ -81,23 +81,34 @@ export interface DetailInfoSectionProps {
 
 export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
 
-export type EVChargeTypeString =
+export type ParkingSpotType = 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
+
+export type EVChargeType =
   | 'AC_SINGLE'
   | 'DC_COMBO'
   | 'DC_CHADEMO'
   | 'AC_THREE_PHASE';
 
+export interface ParkingLotOption {
+  name: string;
+  label: string;
+}
+
 export interface ParkingLotRequestDataType {
+  parkingLotUuid: string;
   hostUuid: string;
-  parkingLotType: ParkingLotType;
+  thumbnailUrl?: string;
   name: string;
   phoneNumber: string;
+  address: string;
   capacity: number;
-  registeredCapacity: number;
-  mainAddress: string;
-  detailAddress: string;
-  latitude: number;
-  longitude: number;
+  parkingLotType: ParkingLotType;
+  parkingSpotTypes: ParkingSpotType[];
   isEvChargingAvailable: boolean;
+  evChargeTypes: EVChargeType[];
   extraInfo: string;
+  imageUrls: string[];
+  options: ParkingLotOption[];
+  likeCount: number;
+  dislikeCount: number;
 }
