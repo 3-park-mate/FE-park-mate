@@ -5,6 +5,9 @@ export interface SignUpStoreDataType {
   confirmPassword: string;
   name: string;
   phoneNumber: string;
+  accountNumber: string;
+  businessRegistrationNumber: string;
+  settlementCycle: number;
 }
 
 export interface SignUpDataType {
@@ -15,7 +18,7 @@ export interface SignUpDataType {
   accountNumber: string;
   businessRegistrationNumber: string;
   settlementCycle: number;
-  verificationCode: number;
+  verificationCode: string;
 }
 
 export interface SignInDataType {
