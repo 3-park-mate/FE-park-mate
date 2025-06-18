@@ -13,7 +13,7 @@ export default function SignInBottomNotice() {
           호스트 등록하기
         </Link>
       </div>
-      <ul className="text-13px text-gray-2 list-disc pl-5 mt-7">
+      <ul className="text-13px text-gray-2 list-disc pl-5 mt-8">
         <li>해당 페이지는 관리자 전용 로그인 페이지입니다.</li>
         <li>
           <Link href="#" className="text-secondary font-semibold underline">

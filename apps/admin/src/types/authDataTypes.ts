@@ -9,10 +9,13 @@ export interface SignUpStoreDataType {
 
 export interface SignUpDataType {
   email: string;
-  password: string;
   name: string;
+  password: string;
   phoneNumber: string;
-  verificationCode: string;
+  accountNumber: string;
+  businessRegistrationNumber: string;
+  settlementCycle: number;
+  verificationCode: number;
 }
 
 export interface SignInDataType {
@@ -23,5 +26,5 @@ export interface SignInDataType {
 export interface SignInResponseDataType {
   accessToken: string;
   refreshToken: string;
-  userUuid: string;
+  hostUuid: string;
 }

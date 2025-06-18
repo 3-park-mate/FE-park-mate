@@ -11,6 +11,7 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 import PasswordInputWithLabel from '@repo/ui/components/common/PasswordInputWithLabel';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
@@ -41,31 +42,30 @@ export default function SignInForm() {
     },
   });
 
-  // const onSubmit = async (data: SignInDataType) => {
-  //   setLoading(true);
-  //   console.log('로그인 데이터:', data);
-  //   try {
-  //     const res = await signIn('credentials', {
-  //       email: data.email,
-  //       password: data.password,
-  //       callbackUrl: callbackUrl,
-  //       redirect: false,
-  //     });
-  //     console.log(res);
+  const onSubmit = async (data: SignInDataType) => {
+    setLoading(true);
+    console.log('로그인 데이터:', data);
+    try {
+      const res = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        callbackUrl: callbackUrl,
+        redirect: false,
+      });
+      console.log(res);
 
-  //     if (res?.ok) {
-  //       router.push(res.url ?? '/');
-  //     } else {
-  //       const message =
-  //         res?.error ??
-  //         '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
-  //       handleAlert(message);
-  //     }
-  //     router.push('/');
-  //   } catch (_error) {
-  //     setLoading(false);
-  //   }
-  // };
+      if (res?.ok) {
+        router.push(res.url ?? '/');
+      } else {
+        const message =
+          res?.error ??
+          '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
+        handleAlert(message);
+      }
+    } catch (_error) {
+      setLoading(false);
+    }
+  };
 
   return (
     <PaddedLayout className="w-full">
@@ -73,11 +73,12 @@ export default function SignInForm() {
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}
         errorMessage={modalMessage}
+        theme="secondary"
       />
       <form
         className="space-y-5"
         onKeyDown={handleKeyDown}
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <CommonInputWithLabel
           label="이메일 주소"
