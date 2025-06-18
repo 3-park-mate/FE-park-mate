@@ -1,5 +1,6 @@
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import { cn } from '../../lib/utils';
+import DotSpinner from '../icon/DotSpinner';
 
 export function StepButtons({
   onBack,
@@ -7,12 +8,14 @@ export function StepButtons({
   className,
   theme = 'secondary',
   disabledNext = false,
+  loading,
 }: {
   onBack?: () => void;
   onNext?: () => void;
   className?: string;
   theme?: 'primary' | 'secondary';
   disabledNext?: boolean;
+  loading?: boolean;
 }) {
   const isSecondary = theme === 'secondary';
 
@@ -43,7 +46,7 @@ export function StepButtons({
             disabledNext && 'opacity-50 cursor-not-allowed'
           )}
         >
-          다음
+          {loading ? <DotSpinner /> : '다음'}
         </CommonButton>
       )}
     </div>

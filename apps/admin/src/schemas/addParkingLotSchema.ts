@@ -13,16 +13,11 @@ export const parkingLotFormSchema = z.object({
   longitude: z.number(),
   isEvChargingAvailable: z.boolean(),
   extraInfo: z.string().min(10, '기타 정보는 최소 10자 이상 입력해야 합니다.'),
-  thumbnailUrl: z.string(),
 });
 
 export const parkingLotImageSchema = z.object({
-  imageUrls: z
-    .array(
-      z.object({
-        imageUrl: z.string().min(1, '이미지를 하나 이상 업로드해 주세요.'),
-      })
-    )
+  images: z
+    .array(z.instanceof(File))
     .min(1, '이미지를 하나 이상 업로드해 주세요.'),
 });
 

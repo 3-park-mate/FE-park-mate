@@ -4,7 +4,10 @@ import ParkingLotInfoStep from './step/ParkingLotInfoStep';
 import EvSpotSetupStep from './step/EvSpotSetupStep';
 import ParkingLotImagesStep from './step/ParkingLotImagesStep';
 import ParkingSpotSetupStep from './step/ParkingSpotSetupStep';
-import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
+import {
+  AddParkingLotDataType,
+  AddParkingLotStoreDataType,
+} from '@/types/addParkingLotDataTypes';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addParkingLotSchema } from '@/schemas/addParkingLotSchema';
@@ -16,13 +19,14 @@ import ParkingLotOptionStep from './step/ParkingLotOptionStep';
 import { addParkingLotAction } from '@/actions/parking/parking-service';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import AlertModal from '@repo/ui/components/common/AlertModal';
+import { uploadFileToS3 } from '@/actions/common/s3-service';
 
 export type AddParkingLotStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5';
 
 export default function AddParkingLotFunnel() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const methods = useForm<AddParkingLotDataType>({
+  const methods = useForm<AddParkingLotStoreDataType>({
     resolver: zodResolver(addParkingLotSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -40,16 +44,10 @@ export default function AddParkingLotFunnel() {
         longitude: 0,
         isEvChargingAvailable: false,
         extraInfo: '',
-        thumbnailUrl: 'https://dummyimage.com/155x102',
       },
       optionIds: [],
       parkingSpot: {
-        chargeable: [
-          // {
-          //   parkingSpotType: 'EV',
-          //   evChargeTypes: [],
-          // },
-        ],
+        chargeable: [],
         nonChargeable: [
           { parkingSpotType: 'SMALL', count: 0 },
           { parkingSpotType: 'COMPACT', count: 0 },
@@ -57,14 +55,8 @@ export default function AddParkingLotFunnel() {
           { parkingSpotType: 'LARGE', count: 0 },
         ],
       },
-      // parkingLotImage: {
-      //   imageUrls: [],
-      // },
       parkingLotImage: {
-        imageUrls: [
-          { imageUrl: 'https://dummyimage.com/155x102' },
-          { imageUrl: 'https://dummyimage.com/155x102' },
-        ],
+        images: [],
       },
     },
   });
@@ -94,20 +86,51 @@ export default function AddParkingLotFunnel() {
     },
     [_setStep, router, searchParams, methods]
   );
-  const { alertModalOpen, setAlertModalOpen, modalMessage, handleAlert } =
-    useAlertWithLoading();
+  const {
+    loading,
+    setLoading,
+    alertModalOpen,
+    setAlertModalOpen,
+    modalMessage,
+    handleAlert,
+  } = useAlertWithLoading();
   const { handleSubmit } = methods;
-  const onSubmit = async (data: AddParkingLotDataType) => {
-    const submitData = { ...data };
+  const onSubmit = async (data: AddParkingLotStoreDataType) => {
+    setLoading(true);
+    try {
+      const uploadedUrls: string[] = [];
+      for (const file of data.parkingLotImage.images) {
+        const url = await uploadFileToS3(
+          file,
+          'parkingLot',
+          data.parkingLot.hostUuid
+        );
+        uploadedUrls.push(url);
+      }
+      console.log('uploadedUrls: ', uploadedUrls);
 
-    if (submitData.parkingSpot.chargeable?.length === 0) {
-      delete submitData.parkingSpot.chargeable;
+      const submitData: AddParkingLotDataType = {
+        ...data,
+        parkingLot: {
+          ...data.parkingLot,
+          thumbnailUrl: uploadedUrls[0] ?? '',
+        },
+        parkingLotImage: {
+          imageUrls: uploadedUrls.map((url) => ({ imageUrl: url })),
+        },
+      };
+      console.log('submitData: ', submitData);
+
+      const res = await addParkingLotAction(submitData);
+
+      if (!res.success) return handleAlert(res.message);
+      handleAlert('주차장 등록이 완료되었습니다.');
+    } catch (error) {
+      console.error(error);
+      handleAlert('알 수 없는 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
     }
-    console.log('addParkingLot Data:', submitData);
-    const res = await addParkingLotAction(submitData);
-
-    if (!res.success) return handleAlert(res.message);
-    handleAlert('주차장 등록이 완료되었습니다.');
   };
 
   const { watch } = methods;
@@ -186,6 +209,7 @@ export default function AddParkingLotFunnel() {
                     setStep('step4', false);
                   }
                 }}
+                loading={loading}
               />
             </Funnel.step>
           </Funnel>

@@ -12,9 +12,11 @@ import { useSearchParams } from 'next/navigation';
 export default function ParkingSpotSetupStep({
   onNext,
   onBack,
+  loading,
 }: {
   onNext: () => void;
   onBack: () => void;
+  loading?: boolean;
 }) {
   const { getValues, setValue } = useFormContext();
   const [openAlert, setOpenAlert] = useState(false);
@@ -67,7 +69,11 @@ export default function ParkingSpotSetupStep({
           subHeading="각각 주차면의 면적을 확인하시고, 최대로 수용 가능한 차량 종류에 따라 주차면수를 작성해 주세요."
         />
         <SpotCountSelectSection />
-        <StepButtons onBack={onBack} onNext={handleNextClick} />
+        <StepButtons
+          onBack={onBack}
+          onNext={handleNextClick}
+          loading={loading}
+        />
       </section>
     </>
   );

@@ -1,23 +1,27 @@
 'use client';
-
 import { X } from 'lucide-react';
 import Image from 'next/image';
+import type { Dispatch, SetStateAction } from 'react';
 import ImageViewDialog from './ImageViewDialog';
 
 export default function ImageThumbnailList({
   images,
-  onDelete,
+  setImages,
 }: {
-  images: string[];
-  onDelete: (url: string) => void;
+  images: File[];
+  setImages: Dispatch<SetStateAction<File[]>>;
 }) {
+  const handleRemoveImage = (idx: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== idx));
+  };
+
   if (images.length === 0) return null;
 
   return (
     <ul className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-      {images.map((url, idx) => (
+      {images.map((file, idx) => (
         <li
-          key={url}
+          key={idx}
           className="relative w-full aspect-square rounded-lg overflow-hidden border"
         >
           {idx === 0 && (
@@ -27,16 +31,19 @@ export default function ImageThumbnailList({
           )}
           <button
             type="button"
-            onClick={() => onDelete(url)}
+            onClick={() => handleRemoveImage(idx)}
             className="absolute top-1.5 right-1.5 z-10 
               bg-white/70 hover:bg-white/90 text-gray-dark-2 
               rounded-full p-1 cursor-pointer duration-100 transition-all"
           >
             <X size={14} />
           </button>
-          <ImageViewDialog imgSrc={url} title="이미지 상세보기">
+          <ImageViewDialog
+            imgSrc={URL.createObjectURL(file)}
+            title="이미지 상세보기"
+          >
             <Image
-              src={url}
+              src={URL.createObjectURL(file)}
               alt={`이미지 ${idx + 1}`}
               width={200}
               height={200}

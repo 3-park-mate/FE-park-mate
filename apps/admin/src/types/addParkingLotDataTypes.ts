@@ -1,3 +1,15 @@
+export interface AddParkingLotStoreDataType {
+  parkingLot: ParkingLotStoreForm;
+  optionIds: number[];
+  parkingSpot: {
+    chargeable?: ChargeableParkingSpot[];
+    nonChargeable: NonChargeableParkingSpot[];
+  };
+  parkingLotImage: {
+    images: File[];
+  };
+}
+
 export interface AddParkingLotDataType {
   parkingLot: ParkingLotForm;
   optionIds: number[];
@@ -28,6 +40,21 @@ export interface ParkingLotForm {
   isEvChargingAvailable: boolean;
   extraInfo: string;
   thumbnailUrl: string;
+}
+
+export interface ParkingLotStoreForm {
+  hostUuid: string;
+  parkingLotType: ParkingLotType;
+  name: string;
+  phoneNumber: string;
+  capacity: number;
+  registeredCapacity: number;
+  mainAddress: string;
+  detailAddress: string;
+  latitude: number;
+  longitude: number;
+  isEvChargingAvailable: boolean;
+  extraInfo: string;
 }
 
 export type EVChargeTypeString =

@@ -1,5 +1,6 @@
-async function uploadFileToS3(file: File, folder: string) {
-  const fileName = file.name ?? 'untitled';
+async function uploadFileToS3(file: File, folder: string, id: string) {
+  const originalName = file.name ?? 'untitled';
+  const fileName = `${id}-${originalName}`;
   const fileType = file.type ?? 'application/octet-stream';
 
   const base64File = await new Promise<string>((resolve, reject) => {

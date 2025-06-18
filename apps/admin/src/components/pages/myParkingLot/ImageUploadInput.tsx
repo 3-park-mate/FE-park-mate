@@ -1,62 +1,46 @@
 'use client';
-
-import { deleteFileFromS3, uploadFileToS3 } from '@/actions/common/s3-service';
 import ImageThumbnailList from '@/components/common/ImageThumbnailList';
 import ImageUploadDropzone from '@/components/common/ImageUploadDropzone';
+import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
 import { useEffect, useState } from 'react';
+import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function ImageUploadInput() {
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const { setValue, getValues } = useFormContext();
+  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+  const [images, setImages] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-
-  const handleAddImages = async (files: File[]) => {
-    const uploadedUrls: string[] = [];
-
-    for (const file of files) {
-      try {
-        const url = await uploadFileToS3(file, 'parkingLot');
-        uploadedUrls.push(url);
-      } catch (err) {
-        console.error('Upload error:', err);
-      }
-    }
-
-    setImageUrls((prev) => [...prev, ...uploadedUrls]);
-  };
-
-  const handleDeleteImage = async (url: string) => {
-    try {
-      await deleteFileFromS3(url);
-      setImageUrls((prev) => prev.filter((img) => img !== url));
-    } catch (err) {
-      console.error('Delete error:', err);
-    }
-  };
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (imageUrls.length === 0) return;
+    if (!isInitialized) {
+      const initialImages = getValues('parkingLotImage.images') || [];
+      setImages(initialImages);
+      setIsInitialized(true);
+    }
+  }, [getValues, isInitialized]);
 
-      const body = JSON.stringify({ fileUrls: imageUrls });
-      navigator.sendBeacon('/api/s3/client', body);
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [imageUrls]);
+  useEffect(() => {
+    if (isInitialized) {
+      setValue('parkingLotImage.images', images);
+    }
+  }, [images, isInitialized, setValue]);
 
   return (
-    <section className="space-y-7">
+    <section className="space-y-4">
       <ImageUploadDropzone
-        onFilesSelected={handleAddImages}
+        setImages={setImages}
         isDragging={isDragging}
         setIsDragging={setIsDragging}
-        imagesCount={imageUrls.length}
+        imagesCount={images.length}
       />
-      {imageUrls.length < 5 && <hr />}
-      <ImageThumbnailList images={imageUrls} onDelete={handleDeleteImage} />
+      {errors.parkingLotImage?.images?.message && (
+        <p className="text-sm text-red-500">
+          {errors.parkingLotImage.images.message}
+        </p>
+      )}
+      {images.length < 5 && <hr />}
+      <ImageThumbnailList images={images} setImages={setImages} />
       <p className="text-sm text-gray-3">
         · 첫 번째 이미지는 기본 썸네일 이미지로 사용됩니다.
       </p>
