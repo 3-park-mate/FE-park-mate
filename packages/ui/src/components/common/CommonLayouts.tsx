@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../base/button';
+import { ComponentProps } from 'react';
 
 export function GlobalContainerView({
   children,
@@ -46,8 +47,7 @@ export function CommonButton({
   children,
   className,
   ...props
-}: React.ComponentProps<'button'> &
-  Readonly<{ children: React.ReactNode; className?: string }>) {
+}: ComponentProps<typeof Button>) {
   return (
     <Button className={cn('w-full h-11 rounded-2xl', className)} {...props}>
       {children}

@@ -7,7 +7,7 @@ export interface SignUpStoreDataType {
   phoneNumber: string;
   accountNumber: string;
   businessRegistrationNumber: string;
-  settlementCycle: number;
+  settlementCycle: 15 | 30;
 }
 
 export interface SignUpDataType {
@@ -17,7 +17,7 @@ export interface SignUpDataType {
   phoneNumber: string;
   accountNumber: string;
   businessRegistrationNumber: string;
-  settlementCycle: number;
+  settlementCycle: 15 | 30;
   verificationCode: string;
 }
 

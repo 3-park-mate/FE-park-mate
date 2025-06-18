@@ -1,10 +1,8 @@
 'use client';
 import { useFunnel } from '@/hooks/useFunnel';
 import { useForm, FormProvider } from 'react-hook-form';
-
 import { SignUpDataType, SignUpStoreDataType } from '@/types/authDataTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { handleKeyDown } from '@/utils/formUtils';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import { signUpAction } from '@/actions/auth/auth-service';
@@ -12,8 +10,12 @@ import AlertModal from '@repo/ui/components/common/AlertModal';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { signUpSchema } from '@/schemas/signUpSchema';
+import EmailVerifyStep from './step/EmailVerifyStep';
+import PasswordStep from './step/PasswordStep';
+import UserInfoStep from './step/UserInfoStep';
+import HostInfoStep from './step/HostInfoStep';
 
-export type SignUpStep = 'step1' | 'step2' | 'step3';
+export type SignUpStep = 'step1' | 'step2' | 'step3' | 'step4';
 
 export default function SignUpFunnel() {
   const router = useRouter();
@@ -30,7 +32,7 @@ export default function SignUpFunnel() {
       confirmPassword: '',
       accountNumber: '',
       businessRegistrationNumber: '',
-      settlementCycle: 0,
+      settlementCycle: 15,
     },
   });
   const [Funnel, setStep] = useFunnel<SignUpStep>('step1');
@@ -76,26 +78,31 @@ export default function SignUpFunnel() {
         onConfirm={() => {
           if (isSuccess) router.push('/sign-in');
         }}
+        theme="secondary"
       />
       <FormProvider {...methods}>
         <form className="px-5" onKeyDown={handleKeyDown}>
           <Funnel>
             <Funnel.step name="step1">
-              1{/* <EmailVerifyStep onNext={() => setStep('step2')} /> */}
+              <EmailVerifyStep onNext={() => setStep('step2')} />
             </Funnel.step>
             <Funnel.step name="step2">
-              2
-              {/* <PasswordStep
+              <PasswordStep
                 onNext={() => setStep('step3')}
                 onBack={() => setStep('step1')}
-              /> */}
+              />
             </Funnel.step>
             <Funnel.step name="step3">
-              3
-              {/* <UserInfoStep
-                onNext={handleSubmit(onSubmit)}
+              <UserInfoStep
+                onNext={() => setStep('step4')}
                 onBack={() => setStep('step2')}
-              /> */}
+              />
+            </Funnel.step>
+            <Funnel.step name="step4">
+              <HostInfoStep
+                onNext={handleSubmit(onSubmit)}
+                onBack={() => setStep('step3')}
+              />
             </Funnel.step>
           </Funnel>
         </form>

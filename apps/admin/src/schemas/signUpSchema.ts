@@ -21,10 +21,7 @@ export const signUpSchema = z
     businessRegistrationNumber: z
       .string()
       .length(10, '사업자등록번호를 입력해 주세요.'),
-    settlementCycle: z
-      .number({ invalid_type_error: '정산 주기를 선택하세요.' })
-      .int()
-      .nonnegative(),
+    settlementCycle: z.union([z.literal(15), z.literal(30)]),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다.',

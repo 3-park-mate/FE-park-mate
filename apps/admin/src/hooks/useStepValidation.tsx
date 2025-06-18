@@ -22,7 +22,7 @@ export function useStepValidation<TFormValues extends FieldValues>(
   useEffect(() => {
     triggerValidation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [triggerValidation, ...watchedFields]);
+  }, [...watchedFields]);
 
   return { isStepValid, triggerValidation };
 }
