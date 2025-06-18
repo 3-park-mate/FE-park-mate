@@ -8,7 +8,7 @@ export default function CurrentLocationButton({
   return (
     <>
       <button onClick={onClick} className="absolute top-38 right-5 z-40">
-        <CurrentLocationIcon className="size-11 stroke-white bg-primary/90 p-2 rounded-full shadow-md hover:bg-gray-100" />
+        <CurrentLocationIcon className="size-11 p-2 rounded-full stroke-white bg-primary/90 shadow-md hover:bg-primary-light cursor-pointer" />
       </button>
     </>
   );

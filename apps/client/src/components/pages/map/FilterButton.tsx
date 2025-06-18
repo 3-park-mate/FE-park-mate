@@ -5,7 +5,7 @@ export default function FilterButton({ className }: { className?: string }) {
   return (
     <button
       className={cn(
-        'absolute top-22 right-5 z-50 p-2 bg-gray-100/90 rounded-full shadow-md',
+        'absolute top-22 right-5 p-2 rounded-full bg-gray-100/90 shadow-md z-50 cursor-pointer hover:bg-white',
         className
       )}
     >
