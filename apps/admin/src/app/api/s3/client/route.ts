@@ -4,6 +4,7 @@ import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
+  DeleteObjectsCommand,
 } from '@aws-sdk/client-s3';
 
 const s3Client = new S3Client({
@@ -45,7 +46,29 @@ export async function POST(req: NextRequest) {
 // DELETE 요청을 처리하는 함수
 export async function DELETE(req: NextRequest) {
   try {
-    const { fileUrl } = await req.json();
+    const body = await req.json();
+
+    // 다중 삭제 분기
+    if (Array.isArray(body.fileUrls)) {
+      const keys = body.fileUrls.map((url: string) =>
+        url.replace(`${process.env.AWS_BUCKET_URL}`, '')
+      );
+
+      await s3Client.send(
+        new DeleteObjectsCommand({
+          Bucket: process.env.AWS_BUCKET_NAME!,
+          Delete: {
+            Objects: keys.map((Key: string) => ({ Key })),
+            Quiet: false,
+          },
+        })
+      );
+
+      return NextResponse.json({ message: 'Multiple files deleted' });
+    }
+
+    // 단일 삭제 (기존 로직 유지)
+    const { fileUrl } = body;
     console.log('key', fileUrl);
 
     const params = {
@@ -53,14 +76,13 @@ export async function DELETE(req: NextRequest) {
       Key: fileUrl.replace(`${process.env.AWS_BUCKET_URL}`, ''),
     };
 
-    // S3 객체 삭제
     await s3Client.send(new DeleteObjectCommand(params));
 
     return NextResponse.json({ message: 'Successfully deleted' });
   } catch (error) {
     console.error('Error deleting from S3:', error);
     return NextResponse.json(
-      { error: 'Failed to delete file' },
+      { error: 'Failed to delete file(s)' },
       { status: 500 }
     );
   }

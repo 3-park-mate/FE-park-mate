@@ -3,7 +3,7 @@
 import { deleteFileFromS3, uploadFileToS3 } from '@/actions/common/s3-service';
 import ImageThumbnailList from '@/components/common/ImageThumbnailList';
 import ImageUploadDropzone from '@/components/common/ImageUploadDropzone';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ImageUploadInput() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -32,6 +32,20 @@ export default function ImageUploadInput() {
       console.error('Delete error:', err);
     }
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (imageUrls.length === 0) return;
+
+      const body = JSON.stringify({ fileUrls: imageUrls });
+      navigator.sendBeacon('/api/s3/client', body);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [imageUrls]);
 
   return (
     <section className="space-y-7">
