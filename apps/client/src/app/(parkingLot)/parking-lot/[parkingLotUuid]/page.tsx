@@ -54,6 +54,7 @@ export default async function page({
           extraInfo={parkingLotData.extraInfo}
           imageUrls={parkingLotData.imageUrls}
           options={parkingLotData.options}
+          evChargeTypes={parkingLotData.evChargeTypes}
         />
       </main>
     </>

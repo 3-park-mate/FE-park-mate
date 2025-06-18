@@ -10,11 +10,13 @@ export default function ParkingDetailContent({
   extraInfo,
   imageUrls,
   options,
+  evChargeTypes,
 }: {
   mainAddress: string;
   extraInfo: string;
   imageUrls: string[];
   options: ParkingLotOption[];
+  evChargeTypes: string[];
 }) {
   return (
     <>
@@ -24,7 +26,7 @@ export default function ParkingDetailContent({
           mainAddress={mainAddress}
           extraInfo={extraInfo}
         />
-        <OptionSection options={options} />
+        <OptionSection options={options} evChargeTypes={evChargeTypes} />
         {imageUrls[0] && <ImageCarouselSection imageUrls={imageUrls} />}
         <ReviewSection />
       </section>

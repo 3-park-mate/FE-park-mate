@@ -1,3 +1,8 @@
+import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
+import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
+import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
+import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
+
 export interface ParkingLocationDataType {
   parkingLotUuid: string;
   parkingLotName: string;
@@ -88,6 +93,13 @@ export type EVChargeType =
   | 'DC_COMBO'
   | 'DC_CHADEMO'
   | 'AC_THREE_PHASE';
+
+export const chargingTypes = [
+  { key: 'AC_SINGLE', icon: ACSingleIcon, label: 'AC단상' },
+  { key: 'AC_THREE_PHASE', icon: ACThreePhaseIcon, label: 'AC3상' },
+  { key: 'DC_CHADEMO', icon: DCChademoIcon, label: 'DC차데모' },
+  { key: 'DC_COMBO', icon: DCComboIcon, label: 'DC콤보' },
+];
 
 export interface ParkingLotOption {
   name: string;
