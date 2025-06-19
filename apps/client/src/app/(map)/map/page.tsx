@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 export default function page() {
   return (
-    <main className="relative">
+    <main className="relative h-screen overflow-hidden">
       <Suspense fallback={<CarLoader />}>
         <MainMap />
       </Suspense>

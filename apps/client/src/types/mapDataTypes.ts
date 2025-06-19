@@ -18,6 +18,19 @@ export interface ParkingLotSimpleInfoType {
   dislikeCount: number;
 }
 
+export interface ParkingLotListSimpleInfoType {
+  name: string;
+  address: string;
+  distance: number;
+  thumbnailUrls: string[];
+  baseFee: number;
+  evchargeType: number[];
+  averageRating: number;
+  reviewCount: number;
+  likeCount: number;
+  dislikeCount: number;
+}
+
 export interface MapInfo {
   center?: {
     lat: number;

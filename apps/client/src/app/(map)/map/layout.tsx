@@ -7,10 +7,10 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen overflow-hidden">
-      <LocationHeader />
+    <>
+      <LocationHeader isShadow={false} withEmptySpace={false} />
       {children}
       <GnbNavBar />
-    </div>
+    </>
   );
 }

@@ -1,18 +1,23 @@
-import { MarkerClusterer, MapMarker } from 'react-kakao-maps-sdk';
-import { markerDummyData } from '@/data/markerDummyData';
+import { MarkerClusterer, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
+import React, { SetStateAction } from 'react';
+import BasicMarker from './BasicMarker';
+import SelectedMarker from './SelectedMarker';
 
 export default function MapMarkers({
   clickMarker,
+  markerData,
+  setIsOpenListModal,
   setClickMarker,
 }: {
   clickMarker: string;
+  markerData: MarkerDataType[];
+  setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   setClickMarker: (id: string) => void;
 }) {
   const { setGnbNavBar } = useGnbNavBarStore();
-
   return (
     <>
       <MarkerClusterer
@@ -22,15 +27,30 @@ export default function MapMarkers({
         minClusterSize={1}
         disableClickZoom
       >
-        {markerDummyData.map((data: MarkerDataType) => (
-          <MapMarker
-            key={data.parkingLotUuid}
-            position={{ lat: data.latitude, lng: data.longitude }}
-            onClick={() => {
-              setClickMarker(data.parkingLotUuid);
-              setGnbNavBar(false);
-            }}
-          />
+        {markerData.map((data: MarkerDataType, index) => (
+          <React.Fragment key={index}>
+            <CustomOverlayMap
+              position={{ lat: data.latitude, lng: data.longitude }}
+              xAnchor={0.5}
+              yAnchor={1.4}
+              clickable={true}
+            >
+              <div
+                className="relative"
+                onClick={() => {
+                  setIsOpenListModal(false);
+                  setGnbNavBar(false);
+                  setClickMarker(data.parkingLotUuid);
+                }}
+              >
+                {clickMarker === data.parkingLotUuid ? (
+                  <SelectedMarker />
+                ) : (
+                  <BasicMarker availableSpots={data.availableSpots} />
+                )}
+              </div>
+            </CustomOverlayMap>
+          </React.Fragment>
         ))}
       </MarkerClusterer>
       {clickMarker && (

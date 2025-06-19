@@ -11,9 +11,11 @@ import LocationContent from './LocationContent';
 
 export default function LocationHeader({
   className,
+  withEmptySpace = true,
   isShadow = false,
 }: {
   className?: string;
+  withEmptySpace?: boolean;
   isShadow?: boolean;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +34,7 @@ export default function LocationHeader({
     <HeaderLayout
       className={cn('p-5 space-x-5 z-50', className)}
       isShadow={isShadow || isScrolled}
+      withEmptySpace={withEmptySpace}
     >
       <div className="w-full p-1 flex items-center gap-2">
         <MapPinIcon />
