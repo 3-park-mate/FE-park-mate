@@ -133,7 +133,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         variant="secondary"
         onClick={onNext}
         className="mt-6"
-        // disabled={!isVerified}
+        disabled={!isVerified}
       >
         다음
       </CommonButton>

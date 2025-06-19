@@ -70,7 +70,7 @@ export default function UserInfoStep({
         onBack={onBack}
         onNext={onNext}
         theme="secondary"
-        // disabledNext={!isStepValid}
+        disabledNext={!isStepValid}
       />
     </section>
   );

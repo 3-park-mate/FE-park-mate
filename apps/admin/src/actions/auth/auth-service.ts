@@ -105,7 +105,7 @@ export async function verifyEmailCodeAction({
 
   try {
     const res = await api.post<CommonResponseType<{ valid: boolean }>>(
-      `${process.env.BASE_API_URL}/auth-service/api/v1/user`,
+      API_PREFIX,
       '/verifyCode',
       payload
     );

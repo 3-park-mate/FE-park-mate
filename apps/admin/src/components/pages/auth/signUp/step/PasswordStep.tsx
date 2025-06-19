@@ -48,7 +48,7 @@ export default function PasswordStep({
         onBack={onBack}
         onNext={onNext}
         theme="secondary"
-        // disabledNext={!isStepValid}
+        disabledNext={!isStepValid}
       />
     </section>
   );

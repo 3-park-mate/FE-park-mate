@@ -16,6 +16,7 @@ export interface SignUpDataType {
   name: string;
   password: string;
   phoneNumber: string;
+  bankName: string;
   accountNumber: string;
   businessRegistrationNumber: string;
   settlementCycle: 15 | 30;

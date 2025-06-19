@@ -60,8 +60,8 @@ export default function VerifyCodeInput({
       </CommonButton>
       <ul className="text-gray-2 text-sm mt-4 break-keep">
         <li>• 인증 번호 메일이 오지 않을 시, 스팸 메일함을 확인해 주세요.</li>
-        <li>• 입력 5회 실패 시 인증 번호 메일을 재요청 해주세요.</li>
-        <li className="ml-2.5">
+        <li>• 입력 5회 실패 시 10분 간 인증 시도가 차단됩니다.</li>
+        {/* <li className="ml-2.5">
           <button
             type="button"
             onClick={onResendCode}
@@ -69,7 +69,7 @@ export default function VerifyCodeInput({
           >
             인증번호 다시 요청
           </button>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
