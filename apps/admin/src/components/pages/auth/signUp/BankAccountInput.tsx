@@ -16,7 +16,7 @@ export default function BankAccountInput() {
   return (
     <div className="grid w-full items-center gap-1.5">
       <CommonSelect
-        label="은행"
+        label="계좌번호"
         placeholder="은행을 선택하세요"
         value={selectedBank}
         onChange={(value) => setValue('bankName', value)}
@@ -26,21 +26,15 @@ export default function BankAccountInput() {
       />
       <CommonInputWithLabel
         id="accountNumber"
-        placeholder="계좌번호를 입력하세요. (최대 14자리)"
+        placeholder="계좌번호를 입력하세요. ('-' 포함 최대 18자리)"
         errorMessage={
           touchedFields?.accountNumber
             ? errors.accountNumber?.message
             : undefined
         }
-        maxLength={13}
-        {...register('accountNumber', {
-          onChange: (e) => {
-            e.currentTarget.value = e.currentTarget.value.replace(
-              /[^0-9]/g,
-              ''
-            );
-          },
-        })}
+        maxLength={18}
+        description="정산 금액이 입금될 계좌를 작성해 주세요. ('-' 포함)"
+        {...register('accountNumber')}
       />
     </div>
   );

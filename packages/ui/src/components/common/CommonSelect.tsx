@@ -8,14 +8,17 @@ import {
   SelectItem,
 } from '@repo/ui/components/base/select';
 
+type SelectOption = string | { label?: string; value: string };
+
 interface CommonSelectProps {
   label?: string;
   placeholder?: string;
   value?: string;
   onChange: (value: string) => void;
-  options: string[];
-  error?: boolean; // 에러 여부
-  errorMessage?: string; // 에러 메시지 (필요시)
+  options: SelectOption[];
+  error?: boolean;
+  errorMessage?: string;
+  description?: string; // 부연설명 옵션 추가
 }
 
 export default function CommonSelect({
@@ -26,6 +29,7 @@ export default function CommonSelect({
   options,
   error = false,
   errorMessage,
+  description, // 디스트럭쳐링에 추가
 }: CommonSelectProps) {
   return (
     <div className="grid gap-2">
@@ -47,13 +51,29 @@ export default function CommonSelect({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
-            <SelectItem key={option} value={option} className="text-15px">
-              {option}
-            </SelectItem>
-          ))}
+          {options.map((option) => {
+            if (typeof option === 'string') {
+              return (
+                <SelectItem key={option} value={option} className="text-15px">
+                  {option}
+                </SelectItem>
+              );
+            }
+            return (
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-15px"
+              >
+                {option.label ?? option.value}
+              </SelectItem>
+            );
+          })}
         </SelectContent>
       </Select>
+      {description && (
+        <p className="text-sm text-gray-3 ms-1">· {description}</p>
+      )}
       {errorMessage && (
         <p className="text-red-500 text-12px ms-1">{errorMessage}</p>
       )}
