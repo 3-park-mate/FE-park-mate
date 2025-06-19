@@ -2,10 +2,11 @@ import { parkingLotListDummyData } from '@/data/markerDummyData';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { MarkerDataType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
-import { AlignJustifyIcon, DotIcon } from 'lucide-react';
-import React, { SetStateAction } from 'react';
+import { AlignJustifyIcon, ChevronDown, DotIcon } from 'lucide-react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import RatingOverview from './RatingOverview';
 import Image from 'next/image';
+import { fa } from 'zod/v4/locales';
 
 export default function ParkingLotListModal({
   isOpenListModal,
@@ -18,19 +19,46 @@ export default function ParkingLotListModal({
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   markerData: MarkerDataType[];
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
   const { setGnbNavBar } = useGnbNavBarStore();
   const parkingLotListDummy = parkingLotListDummyData;
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const target = modalRef.current;
+    if (!target) return;
+
+    const handleScroll = () => {
+      setIsScrolled(target.scrollTop > 0);
+    };
+
+    target.addEventListener('scroll', handleScroll);
+    return () => target.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       <section
+        ref={modalRef}
         className={cn(
           'fixed bottom-0 w-full max-w-[600px] max-h-1/2 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-50 cursor-pointer',
           'transform transition-transform duration-300 ease-in-out',
           isOpenListModal ? 'translate-y-0' : 'translate-y-full'
         )}
       >
-        <div className="sticky top-0 w-full bg-white py-2.5">
-          <AlignJustifyIcon className="mx-5 rounded-full shadow-md p-1.5 size-[35px] text-gray-2 " />
+        <div
+          className={cn(
+            'sticky top-0 w-full bg-white py-2.5',
+            isScrolled && 'shadow-sm'
+          )}
+        >
+          <ChevronDown
+            className="mx-auto size-7 text-gray-2"
+            onClick={() => {
+              setIsOpenListModal(false);
+              setGnbNavBar(true);
+            }}
+          />
         </div>
         <ul>
           {parkingLotListDummy.map((data, index) => (

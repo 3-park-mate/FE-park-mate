@@ -25,6 +25,7 @@ export default function MainMap() {
   useEffect(() => {
     console.log(clickMarker);
   }, [clickMarker]);
+
   return (
     <section>
       <Map

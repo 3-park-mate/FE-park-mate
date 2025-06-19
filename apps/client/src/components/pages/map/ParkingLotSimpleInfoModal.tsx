@@ -57,8 +57,8 @@ export default function ParkingLotSimpleInfoModal({
           </AlwaysVisibleTooltip>
         </div>
       </div>
-      <div className="flex mt-3 justify-between items-center gap-0">
-        <CommonButton className="bg-primary text-[20px] text-white">
+      <div className="flex mt-5 justify-between items-center gap-0">
+        <CommonButton className="bg-primary text-[20px] h-12 text-white">
           예약하기<span className="text-17px">(12/20)</span>
         </CommonButton>
       </div>
