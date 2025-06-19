@@ -5,6 +5,7 @@ export interface SignUpStoreDataType {
   confirmPassword: string;
   name: string;
   phoneNumber: string;
+  bankName: string;
   accountNumber: string;
   businessRegistrationNumber: string;
   settlementCycle: 15 | 30;

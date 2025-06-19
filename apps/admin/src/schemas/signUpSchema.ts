@@ -17,6 +17,7 @@ export const signUpSchema = z
     phoneNumber: z
       .string()
       .regex(/^010-\d{4}-\d{4}$/, '유효한 전화번호 형식이 아닙니다.'),
+    bankName: z.string().min(1),
     accountNumber: z.string().min(10, '계좌번호를 입력해 주세요.'),
     businessRegistrationNumber: z
       .string()

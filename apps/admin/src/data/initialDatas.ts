@@ -97,3 +97,22 @@ export const parkingLotOptionIconMap: Record<
   has_canopy: CanopyParkingIcon,
   has_barrier_gate: GateIcon,
 };
+
+export const bankList = [
+  '국민',
+  '신한',
+  '우리',
+  '하나',
+  '기업',
+  '농협',
+  '카카오',
+  '토스',
+  'SC제일',
+  '씨티',
+  '부산',
+  '대구',
+  '광주',
+  '전북',
+  '경남',
+  '제주',
+];

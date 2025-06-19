@@ -30,6 +30,7 @@ export default function SignUpFunnel() {
       phoneNumber: '',
       password: '',
       confirmPassword: '',
+      bankName: '',
       accountNumber: '',
       businessRegistrationNumber: '',
       settlementCycle: 15,
@@ -62,11 +63,11 @@ export default function SignUpFunnel() {
       settlementCycle,
     };
     console.log('SignUp Data:', signUpData);
-    const res = await signUpAction(signUpData);
+    // const res = await signUpAction(signUpData);
 
-    if (!res.success) return handleAlert(res.message);
-    setIsSuccess(true);
-    handleAlert('회원가입이 완료되었습니다. 입력한 정보로 로그인 해주세요.');
+    // if (!res.success) return handleAlert(res.message);
+    // setIsSuccess(true);
+    // handleAlert('회원가입이 완료되었습니다. 입력한 정보로 로그인 해주세요.');
   };
 
   return (
