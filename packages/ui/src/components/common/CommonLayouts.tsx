@@ -172,6 +172,27 @@ export function TextBadge({
   );
 }
 
+export function CommonBadge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className="">
+      <p
+        className={cn(
+          'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
+          className
+        )}
+      >
+        {children}
+      </p>
+    </div>
+  );
+}
+
 export function FormHeading({
   children,
   className,

@@ -37,16 +37,8 @@ export const myPageMenus: MyPageMenuDataType[] = [
     href: 'my-car',
   },
   {
-    label: '주차권',
-    href: '#',
-  },
-  {
-    label: '구매 내역',
-    href: '#',
-  },
-  {
-    label: '호스트 등록',
-    href: '#',
+    label: '예약 내역',
+    href: 'my-reservations',
   },
 ];
 
