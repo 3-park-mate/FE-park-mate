@@ -9,16 +9,16 @@ import {
   CommonButton,
   FormHeading,
 } from '@repo/ui/components/common/CommonLayouts';
-import {
-  checkEmailDuplicateAction,
-  sendEmailVerificationAction,
-  verifyEmailCodeAction,
-} from '@/actions/auth/auth-service';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import { useCountdownTimer } from '@/hooks/useCountdownTimer';
 import VerifyCodeInput from '../VerifyCodeInput';
+import {
+  checkEmailDuplicateAction,
+  sendEmailVerificationAction,
+  verifyEmailCodeAction,
+} from '@/actions/auth/auth-service';
 
 export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const { register, getValues } = useFormContext<SignUpStoreDataType>();
@@ -62,11 +62,10 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
   const handleSendVerificationCode = async () => {
     setLoading(true);
     const email = getValues('email');
-
     const isAvailable = await checkEmailDuplicate(email);
     if (!isAvailable) return;
-
     const sendRes = await sendEmailVerificationAction({ email });
+    console.log('sendRes: ', sendRes);
     if (!sendRes.success) return handleAlert(sendRes.message);
 
     setIsCodeSent(true);
@@ -78,13 +77,10 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
     setLoading(true);
     const email = getValues('email');
     const code = getValues('verificationCode');
-
     const res = await verifyEmailCodeAction({ email, verificationCode: code });
-
     if (!res.success) return handleAlert(res.message);
     if (!res.data.valid)
       return handleAlert('인증번호가 틀렸습니다. 다시 시도해 주세요.');
-
     setIsVerified(true);
     resetTimer();
     handleAlert('인증이 완료되었습니다.');
@@ -96,6 +92,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}
         errorMessage={modalMessage}
+        theme="secondary"
       />
       <FormHeading>이메일 인증을 해주세요.</FormHeading>
       <div className="flex gap-2">
@@ -113,6 +110,7 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
         />
         <Button
           type="button"
+          variant="secondary"
           className="mt-6 h-[44px] rounded-3xl w-[80px]"
           onClick={handleSendVerificationCode}
           disabled={
@@ -131,7 +129,12 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           onResendCode={handleSendVerificationCode}
         />
       )}
-      <CommonButton onClick={onNext} className="mt-6" disabled={!isVerified}>
+      <CommonButton
+        variant="secondary"
+        onClick={onNext}
+        className="mt-6"
+        disabled={!isVerified}
+      >
         다음
       </CommonButton>
     </section>
