@@ -4,10 +4,13 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import CommonSelect from '@repo/ui/components/common/CommonSelect';
 import { useFormContext, useFormState } from 'react-hook-form';
 
-export default function BankAccountInput() {
-  const { register, setValue, watch } = useFormContext<SignUpStoreDataType>();
+export default function BankAccountInput({
+  selectedBank,
+}: {
+  selectedBank: string;
+}) {
+  const { register, setValue } = useFormContext<SignUpStoreDataType>();
   const { errors, touchedFields } = useFormState<SignUpStoreDataType>();
-  const selectedBank = watch('bankName');
 
   const bankErrorMessage = touchedFields?.bankName
     ? errors.bankName?.message

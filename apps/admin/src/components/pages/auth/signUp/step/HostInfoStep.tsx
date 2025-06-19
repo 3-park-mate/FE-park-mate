@@ -3,7 +3,7 @@ import { SignUpStoreDataType } from '@/types/authDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { StepButtons } from '@repo/ui/components/common/StepButtons';
-import { useFormContext, useFormState } from 'react-hook-form';
+import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 import BankAccountInput from '../BankAccountInput';
 import CommonSelect from '@repo/ui/components/common/CommonSelect';
 
@@ -14,7 +14,7 @@ export default function HostInfoStep({
   onNext: () => void;
   onBack: () => void;
 }) {
-  const { register, setValue, watch } = useFormContext<SignUpStoreDataType>();
+  const { register, setValue, control } = useFormContext<SignUpStoreDataType>();
   const { errors, touchedFields } = useFormState<SignUpStoreDataType>();
 
   const VERIFY_FIELDS = [
@@ -25,8 +25,20 @@ export default function HostInfoStep({
   ] as const;
 
   const { isStepValid } = useStepValidation<SignUpStoreDataType>(VERIFY_FIELDS);
+  const selectedBank = useWatch({ control, name: 'bankName' }) ?? '';
 
-  const selectedsettlementCycle = watch('settlementCycle') ?? 15;
+  const selectedSettlementCycle =
+    useWatch({
+      control,
+      name: 'settlementCycle',
+    }) ?? 15;
+
+  const businessRegistrationNumber =
+    useWatch({
+      control,
+      name: 'businessRegistrationNumber',
+    }) ?? '';
+
   const settlementCycleErrorMessage = touchedFields?.settlementCycle
     ? errors.settlementCycle?.message
     : undefined;
@@ -50,18 +62,19 @@ export default function HostInfoStep({
         maxLength={10}
         {...register('businessRegistrationNumber', {
           onChange: (e) => {
-            e.currentTarget.value = e.currentTarget.value.replace(
-              /[^0-9]/g,
-              ''
-            );
+            const filteredValue = e.target.value.replace(/[^0-9]/g, '');
+            setValue('businessRegistrationNumber', filteredValue, {
+              shouldValidate: true,
+            });
           },
         })}
+        value={businessRegistrationNumber}
       />
-      <BankAccountInput />
+      <BankAccountInput selectedBank={selectedBank} />
       <CommonSelect
         label="정산 주기"
         placeholder="정산 주기를 선택하세요"
-        value={String(selectedsettlementCycle)}
+        value={String(selectedSettlementCycle)}
         onChange={(value) =>
           setValue('settlementCycle', Number(value) as 15 | 30)
         }

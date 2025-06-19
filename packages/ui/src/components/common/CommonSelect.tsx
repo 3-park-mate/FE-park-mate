@@ -18,7 +18,7 @@ interface CommonSelectProps {
   options: SelectOption[];
   error?: boolean;
   errorMessage?: string;
-  description?: string; // 부연설명 옵션 추가
+  description?: string;
 }
 
 export default function CommonSelect({
@@ -29,7 +29,7 @@ export default function CommonSelect({
   options,
   error = false,
   errorMessage,
-  description, // 디스트럭쳐링에 추가
+  description,
 }: CommonSelectProps) {
   return (
     <div className="grid gap-2">
