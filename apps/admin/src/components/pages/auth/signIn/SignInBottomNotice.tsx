@@ -14,7 +14,9 @@ export default function SignInBottomNotice() {
         </Link>
       </div>
       <ul className="text-13px text-gray-2 list-disc pl-5 mt-8">
-        <li>해당 페이지는 관리자 전용 로그인 페이지입니다.</li>
+        <li>
+          해당 페이지는 <b>관리자 전용</b> 로그인 페이지입니다.
+        </li>
         <li>
           <Link href="#" className="text-secondary font-semibold underline">
             파크메이트 서비스 바로가기
