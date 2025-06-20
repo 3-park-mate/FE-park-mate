@@ -117,7 +117,7 @@ export function IconWithText({
 }) {
   return (
     <div className={cn('flex gap-1.5 text-sm', className)}>
-      <Icon className="w-4 h-4 shrink-0 mt-[3px]" />
+      <Icon className="w-4 h-4 shrink-0 mt-[2px]" />
       <span>{children}</span>
     </div>
   );

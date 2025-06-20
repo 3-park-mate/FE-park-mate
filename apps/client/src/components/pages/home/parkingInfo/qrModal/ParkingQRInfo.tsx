@@ -32,7 +32,11 @@ export default function ParkingQRInfo({
       <div className="bg-white rounded-lg shadow-md py-6">
         <QRcodeBoxSection />
         <hr className="w-full border-t border-dashed border-gray-1 my-8" />
-        <QRExtraInfoSection timeItems={timeItems} infoItems={infoItems} />
+        <QRExtraInfoSection
+          timeItems={timeItems}
+          infoItems={infoItems}
+          className="px-6"
+        />
       </div>
       <div className="flex justify-center gap-3 items-center w-full">
         <Button className="flex-1 bg-white border border-red-1 text-red-1 h-10">
