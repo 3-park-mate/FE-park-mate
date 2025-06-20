@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: frontend-service
+    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/frontend-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    external: true
