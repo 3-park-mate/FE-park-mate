@@ -12,8 +12,8 @@ services:
     environment:
       - NODE_ENV=production
     networks:
-      - frontend-network
+      - backend
 
 networks:
-  frontend-network:
+  backend:
     external: true
