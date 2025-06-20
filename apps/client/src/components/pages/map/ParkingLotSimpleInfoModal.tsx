@@ -11,9 +11,9 @@ import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleToolti
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 
 export default function ParkingLotSimpleInfoModal({
-  parkingLotUuid,
+  clickMarker,
 }: {
-  parkingLotUuid: string;
+  clickMarker: string;
 }) {
   const parkingLotSimpleInfo = parkingLotSimpleInfoDummyData;
   const ratingOverviewInfo = {
