@@ -314,3 +314,20 @@ export function OptionContainer({
     </label>
   );
 }
+
+export default function InfoRow({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={`text-sm text-gray-3 ${className}`}>
+      {label}
+      <span className="text-gray-800 ps-1.5">{children}</span>
+    </p>
+  );
+}

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import AddressSection from './AddressSection';
 import ReservationActionButtons from '@/components/common/ReservationActionButtons';
+import OrderInfoSection from './OrderInfoSection';
 
 export default function ReservationDetail() {
   const entry = formatDateParts('2025-06-19T14:30:00');
@@ -26,12 +27,8 @@ export default function ReservationDetail() {
       <DetailInfo />
       <AddressSection />
       <ReservationInfoList timeItems={timeItems} infoItems={infoItems} />
-      <section className="space-y-1">
-        <p className="text-gray-2 text-15px">가격</p>
-        <p className="text-15px font-semibold">3000원</p>
-      </section>
       <hr />
-
+      <OrderInfoSection />
       <hr />
       <ReservationActionButtons showQrButton />
     </PaddedSection>
