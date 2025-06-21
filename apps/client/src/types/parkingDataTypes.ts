@@ -113,10 +113,11 @@ export interface ParkingLotRequestDataType {
   name: string;
   phoneNumber: string;
   address: string;
+  latitude: number;
+  longitude: number;
   capacity: number;
   parkingLotType: ParkingLotType;
   parkingSpotTypes: ParkingSpotType[];
-  isEvChargingAvailable: boolean;
   evChargeTypes: EVChargeType[];
   extraInfo: string;
   imageUrls: string[];

@@ -1,6 +1,6 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import DetailInfoSection from '@/components/pages/parkingLot/DetailInfoSection';
-import DetailInfoMenuSection from '@/components/pages/parkingLot/DetailInfoMenuSection';
+import InfoWithThumbnail from '@/components/pages/parkingLot/InfoWithThumbnail';
+import DetailMenuButtons from '@/components/pages/parkingLot/DetailMenuButtons';
 import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 import {
   parkingDetailDummy,
@@ -8,6 +8,7 @@ import {
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
 import { getParkingLotById } from '@/actions/parking/parking-service';
+import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
 
 export default async function page({
   params,
@@ -29,7 +30,7 @@ export default async function page({
     <>
       <PageHeader title={parkingLotData.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
-        <DetailInfoSection
+        <InfoWithThumbnail
           thumbImageUrl={parkingLotData.thumbnailUrl}
           baseFee={parkingOperationDummy.baseFee}
           name={parkingLotData.name}
@@ -39,7 +40,7 @@ export default async function page({
           availableSpots={parkingLotData.capacity}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
-        <DetailInfoMenuSection
+        <DetailMenuButtons
           hostUuid={parkingLotData.hostUuid}
           parkingLotUuid={parkingLotUuid}
           isActive={parkingOperationDummy.isActive}
@@ -49,6 +50,7 @@ export default async function page({
           availableSpots={10}
           registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
+        <ParkingDetailTabBar />
         <ParkingDetailContent
           mainAddress={parkingLotData.address}
           extraInfo={parkingLotData.extraInfo}

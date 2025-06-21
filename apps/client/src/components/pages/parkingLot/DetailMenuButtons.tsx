@@ -3,7 +3,7 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { MessageCircle, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 import ReservationButton from './ReservationButton';
 
-export default function DetailInfoMenuSection({
+export default function DetailMenuButtons({
   hostUuid,
   parkingLotUuid,
   isActive,
