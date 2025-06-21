@@ -18,7 +18,7 @@ export async function getParkingLotById(
         cache: 'force-cache',
       }
     );
-    console.log(res);
+    // console.log(res);
 
     return {
       success: true,

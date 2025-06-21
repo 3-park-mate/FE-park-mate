@@ -1,8 +1,6 @@
 interface RequestOptions extends RequestInit {
   // RequestInit을 확장하여 추가적인 옵션이 필요하면 여기에 정의
-  // 예를 들어, 쿼리 파라미터를 객체로 넘기고 싶을 때
   query?: Record<string, string>;
-  next?: { revalidate?: number; tags?: string[] };
 }
 
 export async function serverFetch<T>(
@@ -32,10 +30,6 @@ export async function serverFetch<T>(
     ...customOptions, // 기타 fetch 옵션 (cache, next 등)
   };
 
-  if (options?.next) {
-    config.next = options.next;
-  }
-
   // POST, PUT 등 body가 필요한 경우 JSON.stringify 처리
   if (body) {
     if (
@@ -54,23 +48,43 @@ export async function serverFetch<T>(
   try {
     const res = await fetch(url, config);
 
-    // HTTP 응답이 실패 상태(4xx, 5xx)일 경우
-    if (!res.ok) {
-      const errorData = await res
-        .json()
-        .catch(() => ({ message: res.statusText || '서버 오류' }));
-      console.error('API 호출 실패: ', url, errorData);
-
-      throw new Error(errorData.message || '알 수 없는 오류가 발생했습니다.');
-    }
-
     // 응답이 없는 경우 (예: 204 No Content) 처리
     if (res.status === 204) {
-      return null as T; // 또는 undefined
+      return null as T;
     }
 
     // 성공적인 응답의 JSON 파싱
-    return await res.json();
+    // 서버가 HTTP 200 OK를 보내더라도 본문에 오류 정보를 담는 경우를 대비하여 항상 파싱합니다.
+    const jsonResponse = await res.json().catch(() => {
+      // JSON 파싱 실패 시 기본 오류 메시지
+      throw new Error(res.statusText || '응답 JSON 파싱 실패');
+    });
+
+    // **여기서 서버 응답 바디의 'code' 필드를 확인하여 에러를 처리합니다.**
+    // 서버가 HTTP 200 OK를 보내더라도 본문 JSON에 오류 코드가 있다면 에러로 간주합니다.
+    if (
+      jsonResponse &&
+      typeof jsonResponse.code === 'number' &&
+      jsonResponse.code >= 400
+    ) {
+      console.error('API 호출 실패 (서버 응답 코드 오류): ', url, jsonResponse);
+      throw new Error(jsonResponse.message || '서버에서 오류를 반환했습니다.');
+    }
+
+    // HTTP 응답이 실패 상태(4xx, 5xx)일 경우 (기존 로직 유지)
+    // 이 부분은 서버가 명시적으로 HTTP 상태 코드 자체를 4xx/5xx로 보내는 경우를 대비합니다.
+    if (!res.ok) {
+      // 위에서 jsonResponse를 이미 파싱했으므로 다시 파싱할 필요가 없습니다.
+      console.error('API 호출 실패 (HTTP 상태 코드 오류): ', url, jsonResponse);
+      throw new Error(
+        jsonResponse.message ||
+          res.statusText ||
+          '알 수 없는 오류가 발생했습니다.'
+      );
+    }
+
+    // 모든 검사를 통과한 경우, 성공적인 응답으로 간주하여 반환합니다.
+    return jsonResponse;
   } catch (error) {
     console.error('Fetch 중 예상치 못한 오류 발생: ', error);
     // 네트워크 오류, JSON 파싱 오류 등 예외 처리

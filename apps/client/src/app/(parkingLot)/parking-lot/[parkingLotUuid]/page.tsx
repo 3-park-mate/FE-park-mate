@@ -21,10 +21,11 @@ export default async function page({
   if (!parkingLotUuid) return fallback;
 
   const res = await getParkingLotById(parkingLotUuid);
-  const parkingLotData = res.success ? res.data : null;
-  if (!parkingLotData) return <div>주차장을 찾을 수 없습니다.</div>;
 
-  console.log(parkingLotData);
+  const parkingLotData = res.success ? res.data : null;
+  if (!parkingLotData) return fallback;
+
+  // console.log(parkingLotData);
 
   return (
     <>

@@ -33,3 +33,40 @@ export async function getUserInfoData(): Promise<
     redirect('/error');
   }
 }
+
+export async function AddFavoriteAction(
+  parkingLotUuid: string
+): Promise<ApiResponse<string>> {
+  const payload = {
+    parkingLotUuid,
+  };
+  console.log('payload: ', payload);
+
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      return { success: false, message: '로그인 해주세요.' };
+    }
+    const uuid = session.user.uuid;
+    console.log('uuid: ', uuid);
+
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      '/favorites',
+      payload,
+      {
+        headers: {
+          'X-User-UUID': `Bearer ${uuid}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return { success: true, data: res.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
