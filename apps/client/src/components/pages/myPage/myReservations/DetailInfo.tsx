@@ -3,8 +3,9 @@ import Image from 'next/image';
 
 export default function DetailInfo() {
   return (
-    <section className="flex justify-between items-center">
-      <div className="flex gap-4 items-center">
+    <section>
+      <p className="text-gray-2 text-xs pb-1">예약번호 : 1234</p>
+      <div className="flex justify-between items-center gap-3">
         <Image
           src="https://dummyimage.com/140x140"
           alt="thumbnail"
@@ -19,14 +20,6 @@ export default function DetailInfo() {
           <CommonBadge className="mt-1">이용 완료</CommonBadge>
         </div>
       </div>
-      {/* <button className="bg-white w-12 h-12 aspect-square rounded-lg drop-shadow-lg flex justify-center items-center cursor-pointer">
-        <Image
-          src="https://dummyimage.com/32x32"
-          alt="qr-image"
-          width={32}
-          height={32}
-        />
-      </button> */}
     </section>
   );
 }

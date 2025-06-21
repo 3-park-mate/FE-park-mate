@@ -10,7 +10,7 @@ export default async function page({
 
   return (
     <>
-      <PageHeader className="bg-inner-background-gray" />
+      <PageHeader className="bg-inner-background-gray" title="예약 상세" />
       <main className="pb-32 ">
         <ReservationDetail />
       </main>

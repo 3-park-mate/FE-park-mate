@@ -1,6 +1,6 @@
 import { cn } from '@repo/ui/lib/utils';
 
-export default function QRExtraInfoSection({
+export default function ReservationInfoList({
   timeItems,
   infoItems,
   className,
