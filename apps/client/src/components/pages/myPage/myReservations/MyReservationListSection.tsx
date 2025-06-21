@@ -2,6 +2,7 @@
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { HomeTabMenu } from '../../home/HomeTabMenu';
 import { useState } from 'react';
+import MyReservationItem from './MyReservationItem';
 
 export default function MyReservationListSection() {
   const [tabMenu, setTabMenu] = useState<
@@ -22,7 +23,13 @@ export default function MyReservationListSection() {
           onClick={() => setTabMenu('currentParking')}
         />
       </ul>
-      <PaddedSection className="pt-[84px]">asd</PaddedSection>
+      <PaddedSection className="pt-[84px] space-y-4">
+        <MyReservationItem />
+        <hr />
+        <MyReservationItem />
+        <hr />
+        <MyReservationItem />
+      </PaddedSection>
     </>
   );
 }

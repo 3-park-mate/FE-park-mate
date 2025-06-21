@@ -1,8 +1,6 @@
 import { formatDateParts } from '@/utils/datetimeUtils';
 import ReservationInfoList from '../../../common/ReservationInfoList';
 import DetailInfo from './DetailInfo';
-import { Button, buttonVariants } from '@repo/ui/components/base/button';
-import Link from 'next/link';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import AddressSection from './AddressSection';
 import ReservationActionButtons from '@/components/common/ReservationActionButtons';
