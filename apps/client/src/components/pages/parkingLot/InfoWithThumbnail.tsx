@@ -7,7 +7,6 @@ import {
   Rating,
 } from '@repo/ui/components/common/CommonLayouts';
 import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
-import { DetailInfoSectionProps } from '@/types/parkingDataTypes';
 
 export default function InfoWithThumbnail({
   thumbImageUrl,
@@ -16,9 +15,16 @@ export default function InfoWithThumbnail({
   averageRating,
   totalReviews,
   distance,
-  availableSpots,
-  registeredParkingCount,
-}: DetailInfoSectionProps) {
+  capacity,
+}: {
+  thumbImageUrl?: string;
+  baseFee: number;
+  name: string;
+  averageRating: number;
+  totalReviews: number;
+  distance: number;
+  capacity: number;
+}) {
   return (
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
@@ -45,9 +51,7 @@ export default function InfoWithThumbnail({
           </Rating>
           <div className="flex items-center gap-4 text-sm">
             <IconWithText Icon={MapPin}>{distance}m</IconWithText>
-            <IconWithText Icon={Car}>
-              {availableSpots}/{registeredParkingCount} 주차면
-            </IconWithText>
+            <IconWithText Icon={Car}>{capacity}면</IconWithText>
           </div>
         </div>
       </div>

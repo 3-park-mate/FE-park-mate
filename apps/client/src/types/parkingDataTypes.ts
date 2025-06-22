@@ -71,17 +71,6 @@ export interface ParkingOperationDataType {
   discountPercent: number;
 }
 
-export interface DetailInfoSectionProps {
-  thumbImageUrl?: string;
-  baseFee: number;
-  name: string;
-  averageRating: number;
-  totalReviews: number;
-  distance: number;
-  availableSpots: number;
-  registeredParkingCount: number;
-}
-
 // api
 
 export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
@@ -106,7 +95,7 @@ export interface ParkingLotOption {
   label: string;
 }
 
-export interface ParkingLotRequestDataType {
+export interface ParkingLotResponseDataType {
   parkingLotUuid: string;
   hostUuid: string;
   thumbnailUrl?: string;
@@ -124,4 +113,11 @@ export interface ParkingLotRequestDataType {
   options: ParkingLotOption[];
   likeCount: number;
   dislikeCount: number;
+}
+
+export interface WeeklyOperationInfo {
+  dayOfWeek: string;
+  dayOfMonth: number;
+  startTime?: string;
+  endTime?: string;
 }

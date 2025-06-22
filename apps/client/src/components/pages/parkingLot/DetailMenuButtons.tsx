@@ -14,8 +14,6 @@ export default function DetailMenuButtons({
   like,
   dislike,
   baseFee,
-  availableSpots,
-  registeredParkingCount,
 }: {
   hostUuid: string;
   parkingLotUuid: string;
@@ -23,8 +21,6 @@ export default function DetailMenuButtons({
   like: number;
   dislike: number;
   baseFee: number;
-  availableSpots: number;
-  registeredParkingCount: number;
 }) {
   // hostUuid => 채팅
   const {
@@ -73,8 +69,6 @@ export default function DetailMenuButtons({
         parkingLotUuid={parkingLotUuid}
         isActive={isActive}
         baseFee={baseFee}
-        availableSpots={availableSpots}
-        registeredParkingCount={registeredParkingCount}
       />
     </PaddedSection>
   );

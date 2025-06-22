@@ -7,7 +7,10 @@ import {
   parkingOperationDummy,
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
-import { getParkingLotById } from '@/actions/parking/parking-service';
+import {
+  getParkingLotById,
+  getWeeklyOperationById,
+} from '@/actions/parking/parking-service';
 import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
 
 export default async function page({
@@ -20,10 +23,14 @@ export default async function page({
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
 
-  const res = await getParkingLotById(parkingLotUuid);
+  const [lotRes, opRes] = await Promise.all([
+    getParkingLotById(parkingLotUuid),
+    getWeeklyOperationById(parkingLotUuid),
+  ]);
 
-  const parkingLotData = res.success ? res.data : null;
-  if (!parkingLotData) return fallback;
+  if (!lotRes.success) return fallback;
+
+  const parkingLotData = lotRes.data;
 
   // console.log(parkingLotData);
 
@@ -38,8 +45,7 @@ export default async function page({
           averageRating={reviewSummaryDummy.averageRating}
           totalReviews={reviewSummaryDummy.totalReviews}
           distance={100}
-          availableSpots={parkingLotData.capacity}
-          registeredParkingCount={parkingDetailDummy.registeredParkingCount}
+          capacity={parkingLotData.capacity}
         />
         <DetailMenuButtons
           hostUuid={parkingLotData.hostUuid}
@@ -48,8 +54,6 @@ export default async function page({
           like={parkingLotData.likeCount}
           dislike={parkingLotData.dislikeCount}
           baseFee={parkingOperationDummy.baseFee}
-          availableSpots={10}
-          registeredParkingCount={parkingDetailDummy.registeredParkingCount}
         />
         <ParkingDetailTabBar />
         <ParkingDetailContent
