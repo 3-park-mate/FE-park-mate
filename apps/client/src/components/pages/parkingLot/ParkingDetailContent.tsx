@@ -2,7 +2,11 @@ import DetailInfoSection from './DetailInfoSection';
 import ImageCarouselSection from './ImageCarouselSection';
 import ReviewSection from './ReviewSection';
 import OptionSection from './OptionSection';
-import { ParkingLotOption } from '@/types/parkingDataTypes';
+import {
+  EVChargeType,
+  ParkingLotOption,
+  ParkingSpotType,
+} from '@/types/parkingDataTypes';
 
 export default function ParkingDetailContent({
   mainAddress,
@@ -11,13 +15,15 @@ export default function ParkingDetailContent({
   imageUrls,
   options,
   evChargeTypes,
+  parkingSpotTypes,
 }: {
   mainAddress: string;
   parkingLotUuid: string;
   extraInfo: string;
   imageUrls: string[];
   options: ParkingLotOption[];
-  evChargeTypes: string[];
+  evChargeTypes: EVChargeType[];
+  parkingSpotTypes: ParkingSpotType[];
 }) {
   return (
     <section className="space-y-3">
@@ -26,7 +32,11 @@ export default function ParkingDetailContent({
         parkingLotUuid={parkingLotUuid}
         extraInfo={extraInfo}
       />
-      <OptionSection options={options} evChargeTypes={evChargeTypes} />
+      <OptionSection
+        options={options}
+        evChargeTypes={evChargeTypes}
+        parkingSpotTypes={parkingSpotTypes}
+      />
       {imageUrls[0] && <ImageCarouselSection imageUrls={imageUrls} />}
       <ReviewSection />
     </section>

@@ -39,6 +39,7 @@ export default async function page({
           totalReviews={reviewSummaryDummy.totalReviews}
           distance={100}
           capacity={parkingLotData.capacity}
+          parkingLotType={parkingLotData.parkingLotType}
         />
         <DetailMenuButtons
           hostUuid={parkingLotData.hostUuid}
@@ -56,6 +57,7 @@ export default async function page({
           imageUrls={parkingLotData.imageUrls}
           options={parkingLotData.options}
           evChargeTypes={parkingLotData.evChargeTypes}
+          parkingSpotTypes={parkingLotData.parkingSpotTypes}
         />
       </main>
     </>
