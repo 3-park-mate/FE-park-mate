@@ -3,14 +3,10 @@ import InfoWithThumbnail from '@/components/pages/parkingLot/InfoWithThumbnail';
 import DetailMenuButtons from '@/components/pages/parkingLot/DetailMenuButtons';
 import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 import {
-  parkingDetailDummy,
   parkingOperationDummy,
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
-import {
-  getParkingLotById,
-  getWeeklyOperationById,
-} from '@/actions/parking/parking-service';
+import { getParkingLotById } from '@/actions/parking/parking-service';
 import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
 
 export default async function page({
@@ -23,14 +19,11 @@ export default async function page({
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
 
-  const [lotRes, opRes] = await Promise.all([
-    getParkingLotById(parkingLotUuid),
-    getWeeklyOperationById(parkingLotUuid),
-  ]);
+  const res = await getParkingLotById(parkingLotUuid);
 
-  if (!lotRes.success) return fallback;
+  if (!res.success) return fallback;
 
-  const parkingLotData = lotRes.data;
+  const parkingLotData = res.data;
 
   // console.log(parkingLotData);
 
@@ -58,6 +51,7 @@ export default async function page({
         <ParkingDetailTabBar />
         <ParkingDetailContent
           mainAddress={parkingLotData.address}
+          parkingLotUuid={parkingLotUuid}
           extraInfo={parkingLotData.extraInfo}
           imageUrls={parkingLotData.imageUrls}
           options={parkingLotData.options}

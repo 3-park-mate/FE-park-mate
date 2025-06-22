@@ -35,7 +35,7 @@ export async function getParkingLotById(
 
 export async function getWeeklyOperationById(
   parkingLotUuid: string
-): Promise<ApiResponse<WeeklyOperationInfo>> {
+): Promise<ApiResponse<WeeklyOperationInfo[]>> {
   const now = new Date();
   const yyyy = now.getFullYear();
   const mm = String(now.getMonth() + 1).padStart(2, '0');
@@ -43,7 +43,7 @@ export async function getWeeklyOperationById(
   const isoDate = `${yyyy}-${mm}-${dd}T00:00:00`;
 
   try {
-    const res = await api.get<CommonResponseType<WeeklyOperationInfo>>(
+    const res = await api.get<CommonResponseType<WeeklyOperationInfo[]>>(
       PARKING_API_PREFIX,
       `/${parkingLotUuid}/operations/weekly?date=${encodeURIComponent(isoDate)}`,
       undefined,
@@ -51,7 +51,7 @@ export async function getWeeklyOperationById(
         cache: 'no-cache',
       }
     );
-    console.log(res);
+    // console.log(res);
 
     return {
       success: true,

@@ -4,9 +4,11 @@ import OperationCalendar from './OperationCalendar';
 
 export default function DetailInfoSection({
   mainAddress,
+  parkingLotUuid,
   extraInfo,
 }: {
   mainAddress: string;
+  parkingLotUuid: string;
   extraInfo: string;
 }) {
   return (
@@ -17,7 +19,7 @@ export default function DetailInfoSection({
       </div>
       <div>
         <h2 className="text-lg font-semibold mb-3">영업시간</h2>
-        <OperationCalendar />
+        <OperationCalendar parkingLotUuid={parkingLotUuid} />
       </div>
       <MapLinkButton mainAddress={mainAddress} />
     </PaddedSection>
