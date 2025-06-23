@@ -1,15 +1,14 @@
-export default function OperationCalendar() {
-  const today = 9;
+import { getWeeklyOperationById } from '@/actions/parking/parking-service';
 
-  const weekData = [
-    { day: '일', date: 8 },
-    { day: '월', date: 9 },
-    { day: '화', date: 10 },
-    { day: '수', date: 11 },
-    { day: '목', date: 12 },
-    { day: '금', date: 13 },
-    { day: '토', date: 14 },
-  ];
+export default async function OperationCalendar({
+  parkingLotUuid,
+}: {
+  parkingLotUuid: string;
+}) {
+  const today = new Date().getDate();
+
+  const operationResult = await getWeeklyOperationById(parkingLotUuid);
+  const weekData = operationResult.success ? operationResult.data : [];
 
   const getDayColor = (day: string) => {
     if (day === '일') return 'text-red-400';
@@ -23,23 +22,29 @@ export default function OperationCalendar() {
         {weekData.map((item, index) => (
           <div key={index}>
             <p
-              className={`text-sm font-medium mb-1 ps-3 pe-4 py-2 bg-inner-background-gray ${getDayColor(item.day)}`}
+              className={`text-sm font-medium mb-1 ps-3 pe-4 py-2 bg-inner-background-gray ${getDayColor(item.dayOfWeek)}`}
             >
-              {item.day}
+              {item.dayOfWeek}
             </p>
             <div className="relative flex flex-col p-1">
               <div
                 className={`w-7 h-7 rounded-full flex items-center justify-center font-medium ${
-                  item.date === today
+                  item.dayOfMonth === today
                     ? 'text-white bg-primary'
                     : 'text-black bg-transparent'
                 }`}
               >
-                {item.date}
+                {item.dayOfMonth}
               </div>
-              {item.date === today && (
-                <div className="mt-2 text-11px sm:text-xs text-gray-2 space-y-1 ps-1 pb-2">
-                  <p>06:00 - 24:00</p>
+              {item.dayOfMonth === today && (
+                <div className="mt-2 text-11px sm:text-xs text-gray-2 space-y-1 ps-1 pb-2 min-h-[1.5rem]">
+                  {item.startTime && item.endTime ? (
+                    <p>
+                      {item.startTime} - {item.endTime}
+                    </p>
+                  ) : (
+                    <p className="text-gray-300">-</p>
+                  )}
                 </div>
               )}
             </div>
