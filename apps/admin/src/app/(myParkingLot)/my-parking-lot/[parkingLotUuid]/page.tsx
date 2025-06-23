@@ -3,11 +3,10 @@ import NotFoundLayout from '@/components/common/NotFoundLayout';
 import PageHeader from '@/components/layouts/PageHeader';
 import InfoWithThumbnail from '@/components/pages/myParkingLot/settings/InfoWithThumbnail';
 import ParkingInfoEditForm from '@/components/pages/myParkingLot/settings/ParkingInfoEditForm';
-import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import {
-  CommonButton,
-  PaddedSection,
-} from '@repo/ui/components/common/CommonLayouts';
+import { buttonVariants } from '@repo/ui/components/base/button';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
+import { CarFront } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function page({
   params,
@@ -47,9 +46,13 @@ export default async function page({
           address={parkingLotData.address}
         />
         <PaddedSection className="my-4 space-y-3">
-          <CommonButton variant="secondary">
-            주차장 상세 페이지 바로가기
-          </CommonButton>
+          <Link
+            href="#"
+            className={`${buttonVariants({ variant: 'secondary' })} w-full h-11`}
+          >
+            <CarFront className="text-white fill-white" />
+            파크메이트 서비스 페이지 바로가기
+          </Link>
           <ParkingInfoEditForm
             name={parkingLotData.name}
             extraInfo={parkingLotData.extraInfo}
