@@ -26,7 +26,7 @@ export default function ParkingInfoEditForm({
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <PaddedSection className="bg-white rounded-xl py-6">
+    <PaddedSection className="bg-white rounded-xl py-6" id="info">
       <AlertModal
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}

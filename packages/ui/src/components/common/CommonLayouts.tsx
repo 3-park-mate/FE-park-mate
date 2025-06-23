@@ -248,7 +248,7 @@ export function OptionIconWithText({
     <div
       className={cn(
         'flex flex-col gap-2 items-center',
-        !isActive && 'opacity-40',
+        isActive ? 'opacity-100' : 'opacity-40',
         className
       )}
     >

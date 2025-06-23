@@ -48,6 +48,12 @@ export const myParkingLotSortMenu = [
   { label: '운영준비중', value: 'pending' },
 ];
 
+export const parkingSettingsTabMenus = [
+  { label: '운영 정보', id: 'operation' },
+  { label: '주차장 정보', id: 'info' },
+  { label: '주차면 정보', id: 'spot' },
+];
+
 export const chargingTypes = [
   { key: 'AC_SINGLE', icon: ACSingleIcon, label: 'AC단상' },
   { key: 'AC_THREE_PHASE', icon: ACThreePhaseIcon, label: 'AC3상' },
