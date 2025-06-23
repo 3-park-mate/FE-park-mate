@@ -20,12 +20,10 @@ export default async function page({
   if (!parkingLotUuid) return fallback;
 
   const res = await getParkingLotById(parkingLotUuid);
-
   if (!res.success) return fallback;
 
   const parkingLotData = res.data;
-
-  // console.log(parkingLotData);
+  if (!parkingLotData) return fallback;
 
   return (
     <>
@@ -58,6 +56,8 @@ export default async function page({
           options={parkingLotData.options}
           evChargeTypes={parkingLotData.evChargeTypes}
           parkingSpotTypes={parkingLotData.parkingSpotTypes}
+          latitude={parkingLotData.latitude}
+          longitude={parkingLotData.longitude}
         />
       </main>
     </>

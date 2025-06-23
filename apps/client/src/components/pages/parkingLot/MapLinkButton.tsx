@@ -3,16 +3,21 @@ import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 export default function MapLinkButton({
   mainAddress,
+  parkingLotUuid,
+  latitude,
+  longitude,
 }: {
   mainAddress: string;
+  parkingLotUuid: string;
+  latitude: number;
+  longitude: number;
 }) {
   return (
     <Link
-      href="#"
+      href={`/map?lat=${latitude}&lng=${longitude}&uuid=${parkingLotUuid}`}
       className={`${buttonVariants({
         variant: 'default',
       })} w-full h-auto justify-start items-center gap-5 rounded-2xl !bg-black`}

@@ -16,6 +16,8 @@ export default function ParkingDetailContent({
   options,
   evChargeTypes,
   parkingSpotTypes,
+  latitude,
+  longitude,
 }: {
   mainAddress: string;
   parkingLotUuid: string;
@@ -24,6 +26,8 @@ export default function ParkingDetailContent({
   options: ParkingLotOption[];
   evChargeTypes: EVChargeType[];
   parkingSpotTypes: ParkingSpotType[];
+  latitude: number;
+  longitude: number;
 }) {
   return (
     <section className="space-y-3">
@@ -31,6 +35,8 @@ export default function ParkingDetailContent({
         mainAddress={mainAddress}
         parkingLotUuid={parkingLotUuid}
         extraInfo={extraInfo}
+        latitude={latitude}
+        longitude={longitude}
       />
       <OptionSection
         options={options}

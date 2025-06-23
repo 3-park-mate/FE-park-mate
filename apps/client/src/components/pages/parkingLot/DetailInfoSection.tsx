@@ -6,10 +6,14 @@ export default function DetailInfoSection({
   mainAddress,
   parkingLotUuid,
   extraInfo,
+  latitude,
+  longitude,
 }: {
   mainAddress: string;
   parkingLotUuid: string;
   extraInfo: string;
+  latitude: number;
+  longitude: number;
 }) {
   return (
     <PaddedSection className="py-7 space-y-10 bg-white" id="info">
@@ -21,7 +25,12 @@ export default function DetailInfoSection({
         <h2 className="text-lg font-semibold mb-3">영업시간</h2>
         <OperationCalendar parkingLotUuid={parkingLotUuid} />
       </div>
-      <MapLinkButton mainAddress={mainAddress} />
+      <MapLinkButton
+        mainAddress={mainAddress}
+        parkingLotUuid={parkingLotUuid}
+        latitude={latitude}
+        longitude={longitude}
+      />
     </PaddedSection>
   );
 }

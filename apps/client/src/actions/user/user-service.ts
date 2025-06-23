@@ -48,7 +48,7 @@ export async function AddFavoriteAction(
       return { success: false, message: '로그인 해주세요.' };
     }
     const uuid = session.user.uuid;
-    console.log('uuid: ', uuid);
+    const accessToken = session.user.accessToken;
 
     const res = await api.post<CommonResponseType<string>>(
       API_PREFIX,
@@ -57,6 +57,7 @@ export async function AddFavoriteAction(
       {
         headers: {
           'X-User-UUID': `Bearer ${uuid}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       }
     );
