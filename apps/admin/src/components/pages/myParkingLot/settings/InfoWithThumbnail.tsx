@@ -1,32 +1,24 @@
 import Image from 'next/image';
 import { Car, MapPin } from 'lucide-react';
-import {
-  CommonPriceBadge,
-  IconWithText,
-  Rating,
-} from '@repo/ui/components/common/CommonLayouts';
-import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
-import { ParkingLotType } from '@/types/parkingDataTypes';
+import { IconWithText, Rating } from '@repo/ui/components/common/CommonLayouts';
+import { cn } from '@repo/ui/lib/utils';
 
 export default function InfoWithThumbnail({
   thumbImageUrl,
-  baseFee,
   name,
   averageRating,
   totalReviews,
-  distance,
   capacity,
-  parkingLotType,
+  address,
 }: {
   thumbImageUrl?: string;
-  baseFee: number;
   name: string;
   averageRating: number;
   totalReviews: number;
-  distance: number;
   capacity: number;
-  parkingLotType: ParkingLotType;
+  address: string;
 }) {
+  const isOperating = true;
   return (
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
@@ -39,22 +31,21 @@ export default function InfoWithThumbnail({
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
           <div className="flex justify-between items-start mb-2">
-            {parkingLotType === 'COMMERCIAL' && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm">파크메이트 주차장</span>
-                <BadgeCheckIcon size={14} />
-              </div>
-            )}
-            <CommonPriceBadge className="text-black">
-              {baseFee.toLocaleString()}원
-            </CommonPriceBadge>
+            <div
+              className={cn(
+                'text-xs text-white px-2 py-1 rounded-lg',
+                isOperating ? 'bg-secondary' : 'bg-gray-400'
+              )}
+            >
+              {isOperating ? '운영중' : '운영준비중'}
+            </div>
           </div>
           <h1 className="text-2xl font-bold mb-2">{name}</h1>
           <Rating className="mb-3">
             {averageRating} ({totalReviews})
           </Rating>
-          <div className="flex items-center gap-4 text-sm">
-            <IconWithText Icon={MapPin}>{distance}m</IconWithText>
+          <div className="flex flex-col gap-1 text-sm">
+            <IconWithText Icon={MapPin}>{address}</IconWithText>
             <IconWithText Icon={Car}>{capacity}면</IconWithText>
           </div>
         </div>
