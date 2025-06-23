@@ -1,8 +1,4 @@
-import {
-  MarkerDataType,
-  ParkingLotListSimpleInfoType,
-  ParkingLotSimpleInfoType,
-} from '@/types/mapDataTypes';
+import { MarkerDataType, ParkingLotModalInfoType } from '@/types/mapDataTypes';
 
 const rawPositions = [
   { lat: 35.14538871, lng: 129.19709887 },
@@ -312,7 +308,7 @@ export const markerDummyData: MarkerDataType[] = rawPositions.map((pos) => ({
   longitude: pos.lng,
 }));
 
-export const parkingLotSimpleInfoDummyData: ParkingLotSimpleInfoType = {
+export const parkingLotSimpleInfoDummyData: ParkingLotModalInfoType = {
   name: '부산갈매기의 주차장',
   address: '부산광역시 갈매기 3로 12',
   distance: 350,
@@ -324,77 +320,3 @@ export const parkingLotSimpleInfoDummyData: ParkingLotSimpleInfoType = {
   likeCount: 1000,
   dislikeCount: 4,
 };
-
-export const parkingLotListDummyData: ParkingLotListSimpleInfoType[] = [
-  {
-    name: '부산갈매기의 주차장',
-    address: '부산광역시 갈매기 3로 12',
-    distance: 350,
-    thumbnailUrls: [
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-    ],
-    baseFee: 2000,
-    evchargeType: [1, 2],
-    averageRating: 4.5,
-    reviewCount: 12497,
-    likeCount: 1000,
-    dislikeCount: 4,
-  },
-  {
-    name: '부산갈매기의 주차장',
-    address: '부산광역시 갈매기 3로 12',
-    distance: 350,
-    thumbnailUrls: [
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-    ],
-    baseFee: 2000,
-    evchargeType: [1, 2],
-    averageRating: 4.5,
-    reviewCount: 12497,
-    likeCount: 1000,
-    dislikeCount: 4,
-  },
-  {
-    name: '부산갈매기의 주차장',
-    address: '부산광역시 갈매기 3로 12',
-    distance: 350,
-    thumbnailUrls: [
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-    ],
-    baseFee: 2000,
-    evchargeType: [1, 2],
-    averageRating: 4.5,
-    reviewCount: 12497,
-    likeCount: 1000,
-    dislikeCount: 4,
-  },
-  {
-    name: '부산갈매기의 주차장',
-    address: '부산광역시 갈매기 3로 12',
-    distance: 350,
-    thumbnailUrls: [
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-      'https://dummyimage.com/90x90',
-    ],
-    baseFee: 2000,
-    evchargeType: [1, 2],
-    averageRating: 4.5,
-    reviewCount: 12497,
-    likeCount: 1000,
-    dislikeCount: 4,
-  },
-];

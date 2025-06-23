@@ -5,7 +5,7 @@ export interface MarkerDataType {
   longitude: number;
 }
 
-export interface ParkingLotSimpleInfoType {
+export interface ParkingLotModalInfoType {
   name: string;
   address: string;
   distance: number;
@@ -43,4 +43,21 @@ export interface MapInfo {
     neLng: number;
   };
   level?: number;
+}
+export interface ParkingLotsInBoxResponseType {
+  parkingLots: ParkingLotSimpleInfoType[];
+}
+
+export interface ParkingLotSimpleInfoType {
+  parkingLotUuid: string;
+  name: string;
+  address?: string;
+  thumbnailUrl: string | null;
+  imageUrls: {
+    imageUrl: string;
+  }[];
+  latitude: number;
+  longitude: number;
+  distance: number;
+  availableSpotCount: number;
 }

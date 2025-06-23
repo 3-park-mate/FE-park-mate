@@ -1,5 +1,5 @@
 import { MarkerClusterer, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import { MarkerDataType } from '@/types/mapDataTypes';
+import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import React, { SetStateAction } from 'react';
@@ -13,7 +13,7 @@ export default function MapMarkers({
   setClickMarker,
 }: {
   clickMarker: string;
-  markerData: MarkerDataType[];
+  markerData: ParkingLotsInBoxResponseType;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   setClickMarker: (id: string) => void;
 }) {
@@ -27,13 +27,14 @@ export default function MapMarkers({
         minClusterSize={1}
         disableClickZoom
       >
-        {markerData.map((data: MarkerDataType, index) => (
+        {markerData.parkingLots.map((data, index) => (
           <React.Fragment key={index}>
             <CustomOverlayMap
               position={{ lat: data.latitude, lng: data.longitude }}
               xAnchor={0.5}
               yAnchor={1.4}
               clickable={true}
+              zIndex={clickMarker === data.parkingLotUuid ? 50 : 40}
             >
               <div
                 className="relative"
@@ -46,16 +47,14 @@ export default function MapMarkers({
                 {clickMarker === data.parkingLotUuid ? (
                   <SelectedMarker />
                 ) : (
-                  <BasicMarker availableSpots={data.availableSpots} />
+                  <BasicMarker availableSpots={data.availableSpotCount} />
                 )}
               </div>
             </CustomOverlayMap>
           </React.Fragment>
         ))}
       </MarkerClusterer>
-      {clickMarker && (
-        <ParkingLotSimpleInfoModal parkingLotUuid={clickMarker} />
-      )}
+      {clickMarker && <ParkingLotSimpleInfoModal clickMarker={clickMarker} />}
     </>
   );
 }
