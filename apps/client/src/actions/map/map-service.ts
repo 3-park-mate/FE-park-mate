@@ -42,18 +42,3 @@ export async function getParkingLotsInBox(
     throw error;
   }
 }
-
-// export async function getParkingLotsInBox(
-//   filter: getParkingLotsInBoxRequestType
-// ) {
-//   console.log('filter', filter);
-//   const query = {
-//     swLat: filter.swLat.toString(),
-//     swLng: filter.swLng.toString(),
-//     neLat: filter.neLat.toString(),
-//     neLng: filter.neLng.toString(),
-//     // isEvChargingAvailable: data.isEvChargingAvailable.toString(),
-//     //   ...(data.startDateTime && { startDateTime: data.startDateTime }),
-//     //   ...(data.endDateTime && { endDateTime: data.endDateTime }),
-//   };
-// }
