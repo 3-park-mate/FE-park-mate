@@ -5,9 +5,17 @@ import { useState } from 'react';
 import { OperationDataType } from '@/types/parkingDataTypes';
 
 export default function OperationCalendar() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
   const [selectedOperation, setSelectedOperation] =
-    useState<OperationDataType | null>(null);
+    useState<OperationDataType | null>(() => {
+      return (
+        operationsDummy.find(
+          (op) =>
+            new Date(op.operationDate).toDateString() === today.toDateString()
+        ) ?? null
+      );
+    });
 
   const operationDates = operationsDummy.map(
     (op) => new Date(op.operationDate)
@@ -23,19 +31,21 @@ export default function OperationCalendar() {
   };
 
   return (
-    <div>
+    <div className="py-4">
       <Calendar
         mode="single"
         selected={selectedDate}
         onSelect={handleSelect}
+        captionLayout="dropdown"
         modifiers={{
           hasData: operationDates,
         }}
         modifiersClassNames={{
-          hasData: 'text-secondary font-semibold',
+          hasData: 'text-secondary',
         }}
+        className="w-full max-w-[400px] mx-auto"
       />
-      <div className="mt-4 p-4 border rounded-md bg-gray-50">
+      <div className="mt-4 p-4 border bg-gray-50">
         {selectedOperation ? (
           <div className="flex flex-col gap-2">
             <div>
