@@ -56,11 +56,11 @@ export default async function page({
           </Link>
         </PaddedSection>
         <section className="my-4 space-y-3">
+          <ParkingOperationEditForm />
           <ParkingInfoEditForm
             name={parkingLotData.name}
             extraInfo={parkingLotData.extraInfo}
           />
-          <ParkingOperationEditForm />
         </section>
       </main>
     </>

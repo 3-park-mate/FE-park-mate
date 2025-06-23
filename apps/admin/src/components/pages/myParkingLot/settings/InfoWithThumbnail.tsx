@@ -40,7 +40,7 @@ export default function InfoWithThumbnail({
               {isOperating ? '운영중' : '운영준비중'}
             </div>
           </div>
-          <h1 className="text-2xl font-bold mb-2">{name}</h1>
+          <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
             {averageRating} ({totalReviews})
           </Rating>

@@ -49,7 +49,7 @@ export default function InfoWithThumbnail({
               {baseFee.toLocaleString()}원
             </CommonPriceBadge>
           </div>
-          <h1 className="text-2xl font-bold mb-2">{name}</h1>
+          <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
             {averageRating} ({totalReviews})
           </Rating>
