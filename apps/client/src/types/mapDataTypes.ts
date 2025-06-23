@@ -18,20 +18,6 @@ export interface ParkingLotModalInfoType {
   dislikeCount: number;
 }
 
-export interface ParkingLotListSimpleInfoType {
-  parkingLotUuid: string;
-  name?: string;
-  address?: string;
-  thumbnailUrl?: string;
-  imageUrls?: {
-    imageUrl: string;
-  }[];
-  latitude: number;
-  longitude: number;
-  distance?: number;
-  availableSpotCount?: number;
-}
-
 export interface MapInfo {
   center?: {
     lat: number;
