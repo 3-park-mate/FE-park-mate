@@ -6,12 +6,13 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import { Address } from 'react-daum-postcode';
 import DaumPostcodeModal from './DaumPostcodeModal';
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
+import { fetchCoordsFromAddress } from '@/utils/geolocation';
 
 export default function AddressSearchField() {
   const { register, setValue, control } =
-    useFormContext<AddParkingLotStoreDataType>();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+    useFormContext<AddParkingLotDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotDataType>();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
   const mainAddress = useWatch({
@@ -19,13 +20,8 @@ export default function AddressSearchField() {
     name: 'parkingLot.mainAddress',
     defaultValue: '',
   });
-  const zonecode = useWatch({
-    control,
-    name: 'parkingLot.zoneCode',
-    defaultValue: '',
-  });
 
-  const handleComplete = (data: Address) => {
+  const handleComplete = async (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -41,7 +37,14 @@ export default function AddressSearchField() {
     }
 
     setValue('parkingLot.mainAddress', fullAddress, { shouldValidate: true });
-    setValue('parkingLot.zoneCode', data.zonecode, { shouldValidate: true });
+
+    const coords = await fetchCoordsFromAddress(fullAddress);
+
+    setValue('parkingLot.latitude', coords.latitude, { shouldValidate: true });
+    setValue('parkingLot.longitude', coords.longitude, {
+      shouldValidate: true,
+    });
+
     setIsPostcodeOpen(false);
   };
 
@@ -75,19 +78,6 @@ export default function AddressSearchField() {
           주소찾기
         </Button>
       </div>
-      <CommonInputWithLabel
-        id="zoneCode"
-        placeholder="우편번호"
-        value={zonecode}
-        maxLength={10}
-        readOnly
-        errorMessage={
-          touchedFields?.parkingLot?.zoneCode
-            ? errors.parkingLot?.zoneCode?.message
-            : undefined
-        }
-        {...register('parkingLot.zoneCode')}
-      />
       <CommonInputWithLabel
         label="상세주소"
         id="detailAddress"

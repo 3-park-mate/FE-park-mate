@@ -85,7 +85,7 @@ export default function SignInForm() {
           label="이메일 주소"
           id="email"
           placeholder="abc@a.com"
-          maxLength={20}
+          maxLength={40}
           readOnly={loading}
           {...register('email')}
         />

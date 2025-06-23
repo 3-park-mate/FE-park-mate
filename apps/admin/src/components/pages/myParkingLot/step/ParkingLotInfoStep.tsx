@@ -2,14 +2,13 @@
 import AddressSearchField from '@/components/common/AddressSearchField';
 import { PARKINGLOT_FIELDS } from '@/constants/addParkingFormFields';
 import { useStepValidation } from '@/hooks/useStepValidation';
-import { AddParkingLotStoreDataType } from '@/types/addParkingLotDataTypes';
+import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import {
   CommonButton,
   HeadingWithDesc,
 } from '@repo/ui/components/common/CommonLayouts';
 import CommonTextArea from '@repo/ui/components/common/CommonTextArea';
-import { useCallback } from 'react';
 import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function ParkingLotInfoStep({
@@ -17,18 +16,18 @@ export default function ParkingLotInfoStep({
 }: {
   onNext?: () => void;
 }) {
-  const { register } = useFormContext<AddParkingLotStoreDataType>();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+  const { register } = useFormContext<AddParkingLotDataType>();
+  const { errors, touchedFields } = useFormState<AddParkingLotDataType>();
 
-  const { isStepValid, triggerValidation } =
-    useStepValidation<AddParkingLotStoreDataType>(PARKINGLOT_FIELDS);
+  const { isStepValid } =
+    useStepValidation<AddParkingLotDataType>(PARKINGLOT_FIELDS);
 
-  const handleNextClick = useCallback(async () => {
-    const result = await triggerValidation();
-    if (result) {
-      onNext?.();
-    }
-  }, [onNext, triggerValidation]);
+  // const handleNextClick = useCallback(async () => {
+  //   const result = await triggerValidation();
+  //   if (result) {
+  //     onNext?.();
+  //   }
+  // }, [onNext, triggerValidation]);
 
   return (
     <section className="space-y-5">
@@ -64,7 +63,7 @@ export default function ParkingLotInfoStep({
       <CommonButton
         onClick={onNext}
         // onClick={handleNextClick}
-        // disabled={!isStepValid}
+        disabled={!isStepValid}
         className="mt-10 bg-secondary"
       >
         다음

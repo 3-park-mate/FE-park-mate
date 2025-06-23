@@ -6,7 +6,18 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["KAKAO_CLIENT_ID", "KAKAO_CLIENT_SECRET", "BASE_API_URL"]
+      "env": [
+        "NEXTAUTH_SECRET",
+        "BASE_API_URL",
+        "KAKAO_CLIENT_ID",
+        "KAKAO_CLIENT_SECRET",
+        "AWS_REGION",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_BUCKET_NAME",
+        "AWS_BUCKET_URL",
+        "AWS_CLOUDFRONT_DOMAIN"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]

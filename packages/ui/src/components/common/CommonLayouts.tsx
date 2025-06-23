@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../base/button';
+import { ComponentProps } from 'react';
 
 export function GlobalContainerView({
   children,
@@ -46,8 +47,7 @@ export function CommonButton({
   children,
   className,
   ...props
-}: React.ComponentProps<'button'> &
-  Readonly<{ children: React.ReactNode; className?: string }>) {
+}: ComponentProps<typeof Button>) {
   return (
     <Button className={cn('w-full h-11 rounded-2xl', className)} {...props}>
       {children}
@@ -117,7 +117,7 @@ export function IconWithText({
 }) {
   return (
     <div className={cn('flex gap-1.5 text-sm', className)}>
-      <Icon className="w-4 h-4 shrink-0 mt-[3px]" />
+      <Icon className="w-4 h-4 shrink-0 mt-[2px]" />
       <span>{children}</span>
     </div>
   );
@@ -160,6 +160,27 @@ export function TextBadge({
 }) {
   return (
     <div className="flex justify-center py-5">
+      <p
+        className={cn(
+          'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
+          className
+        )}
+      >
+        {children}
+      </p>
+    </div>
+  );
+}
+
+export function CommonBadge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className="">
       <p
         className={cn(
           'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
@@ -291,5 +312,22 @@ export function OptionContainer({
     >
       {children}
     </label>
+  );
+}
+
+export default function InfoRow({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={`text-sm text-gray-3 ${className}`}>
+      {label}
+      <span className="text-gray-800 ps-1.5">{children}</span>
+    </p>
   );
 }

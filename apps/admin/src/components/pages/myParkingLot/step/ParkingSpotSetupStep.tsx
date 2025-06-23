@@ -3,20 +3,24 @@ import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import SpotCountSelectSection from '../SpotCountSelectSection';
 import { StepButtons } from '@repo/ui/components/common/StepButtons';
 import { useFormContext } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NonChargeableParkingSpot } from '@/types/addParkingLotDataTypes';
 import { nonChargeableParkingSpotSchema } from '@/schemas/addParkingLotSchema';
 import AlertModal from '@repo/ui/components/common/AlertModal';
+import { useSearchParams } from 'next/navigation';
 
 export default function ParkingSpotSetupStep({
   onNext,
   onBack,
+  loading,
 }: {
   onNext: () => void;
   onBack: () => void;
+  loading?: boolean;
 }) {
-  const { getValues } = useFormContext();
+  const { getValues, setValue } = useFormContext();
   const [openAlert, setOpenAlert] = useState(false);
+  const searchParams = useSearchParams();
 
   const handleNextClick = () => {
     const nonChargeableSpots = getValues('parkingSpot.nonChargeable') || [];
@@ -43,6 +47,13 @@ export default function ParkingSpotSetupStep({
     onNext();
   };
 
+  useEffect(() => {
+    const skipEvStep = searchParams.get('skipEvStep');
+    if (skipEvStep === 'true') {
+      setValue('parkingSpot.chargeable', []);
+    }
+  }, [searchParams, setValue]);
+
   return (
     <>
       <AlertModal
@@ -58,7 +69,11 @@ export default function ParkingSpotSetupStep({
           subHeading="각각 주차면의 면적을 확인하시고, 최대로 수용 가능한 차량 종류에 따라 주차면수를 작성해 주세요."
         />
         <SpotCountSelectSection />
-        <StepButtons onBack={onBack} onNext={handleNextClick} />
+        <StepButtons
+          onBack={onBack}
+          onNext={handleNextClick}
+          loading={loading}
+        />
       </section>
     </>
   );

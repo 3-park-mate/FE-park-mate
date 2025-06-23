@@ -115,7 +115,9 @@ export default function EmailVerifyStep({ onNext }: { onNext?: () => void }) {
           type="button"
           className="mt-6 h-[44px] rounded-3xl w-[80px]"
           onClick={handleSendVerificationCode}
-          disabled={loading || isCodeSent}
+          disabled={
+            loading || isCodeSent || !getValues('email') || !!errors.email
+          }
         >
           {!isCodeSent && loading ? <DotSpinner /> : '인증요청'}
         </Button>
