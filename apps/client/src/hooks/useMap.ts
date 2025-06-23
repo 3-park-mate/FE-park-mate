@@ -42,6 +42,7 @@ export default function useMap() {
     const lng = map.getCenter().getLng();
     const swLatLng = map.getBounds().getSouthWest();
     const neLatLng = map.getBounds().getNorthEast();
+    // console.log(swLatLng, 'sw', neLatLng, 'ne');
     setCenter({ lat, lng });
     const fetchData = async () => {
       const data = await getParkingLotsInBox({

@@ -1,9 +1,4 @@
-import {
-  MarkerDataType,
-  ParkingLotListSimpleInfoType,
-  ParkingLotModalInfoType,
-  ParkingLotsInBoxResponseType,
-} from '@/types/mapDataTypes';
+import { MarkerDataType, ParkingLotModalInfoType } from '@/types/mapDataTypes';
 
 const rawPositions = [
   { lat: 35.14538871, lng: 129.19709887 },
