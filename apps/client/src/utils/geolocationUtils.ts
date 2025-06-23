@@ -1,8 +1,8 @@
 import { useLocationAlertStore } from '@/store/useLocationAlertStore';
 
 export const getCurrentCoordsUtil = (): Promise<{
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 }> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
@@ -12,7 +12,7 @@ export const getCurrentCoordsUtil = (): Promise<{
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        resolve({ latitude, longitude });
+        resolve({ lat: latitude, lng: longitude });
       },
       (error) => {
         useLocationAlertStore.getState().setOpenAlert(true);

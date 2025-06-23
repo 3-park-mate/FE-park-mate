@@ -62,7 +62,7 @@ export const coordtoAddressUtil = (position: {
         const address = result[0]?.address || result[0]?.road_address || null;
         resolve(address?.address_name || '');
       } else {
-        resolve('');
+        resolve('현재 위치 정보를 확인할 수 없습니다.');
       }
     });
   });

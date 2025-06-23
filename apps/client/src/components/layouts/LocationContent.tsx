@@ -20,10 +20,10 @@ export default function LocationContent() {
   useEffect(() => {
     const setCurrentLocation = async () => {
       try {
-        const { latitude, longitude } = await getCurrentCoordsUtil();
+        const { lat, lng } = await getCurrentCoordsUtil();
         const address = await coordtoAddressUtil({
-          lat: latitude,
-          lng: longitude,
+          lat: lat,
+          lng: lng,
         });
         setLocation(address || '');
       } catch (err) {

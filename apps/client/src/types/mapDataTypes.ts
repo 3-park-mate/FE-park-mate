@@ -61,3 +61,28 @@ export interface ParkingLotSimpleInfoType {
   distance: number;
   availableSpotCount: number;
 }
+
+export interface ParkingLotInfoType {
+  parkingLotUuid: string;
+  hostUuid: string;
+  thumbnailUrl: string;
+  name: string;
+  phoneNumber: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  capacity: number;
+  parkingLotType: string;
+  parkingSpotTypes: string[];
+  evChargeTypes: string[];
+  extraInfo: string;
+  imageUrls: {
+    imageUrl: string;
+  }[];
+  options: {
+    name: string;
+    label: string;
+  }[];
+  likeCount: 0;
+  dislikeCount: 0;
+}

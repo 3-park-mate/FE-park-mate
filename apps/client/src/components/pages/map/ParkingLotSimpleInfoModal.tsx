@@ -1,6 +1,5 @@
 'use client';
 
-import { parkingLotSimpleInfoDummyData } from '@/data/markerDummyData';
 import React, { useEffect, useState } from 'react';
 import HeadingWithSubtext from '../../common/HeadingWithSubtext';
 import RatingOverview from './RatingOverview';
@@ -9,18 +8,38 @@ import { Circle } from 'lucide-react';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import { getParkingLotInfoById } from '@/actions/map/map-service';
+import { ParkingLotInfoType } from '@/types/mapDataTypes';
 
 export default function ParkingLotSimpleInfoModal({
   clickMarker,
 }: {
   clickMarker: string;
 }) {
-  const parkingLotSimpleInfo = parkingLotSimpleInfoDummyData;
+  const [parkingLotSimpleInfo, setParkingLotSimpleInfo] =
+    useState<ParkingLotInfoType>();
+  console.log(clickMarker, '주차장 uuid');
+
+  useEffect(() => {
+    if (!clickMarker) return;
+
+    const fetchData = async () => {
+      try {
+        const data = await getParkingLotInfoById(clickMarker);
+        setParkingLotSimpleInfo(data);
+      } catch (error) {
+        console.error('주차장 정보 로드 실패:', error);
+      }
+    };
+
+    fetchData();
+  }, [clickMarker]);
+
   const ratingOverviewInfo = {
-    averageRating: parkingLotSimpleInfo.averageRating,
-    reviewCount: parkingLotSimpleInfo.reviewCount,
-    likeCount: parkingLotSimpleInfo.likeCount,
-    dislikeCount: parkingLotSimpleInfo.dislikeCount,
+    averageRating: 4.5,
+    reviewCount: 1200,
+    likeCount: parkingLotSimpleInfo?.likeCount || 0,
+    dislikeCount: parkingLotSimpleInfo?.dislikeCount || 0,
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -39,21 +58,23 @@ export default function ParkingLotSimpleInfoModal({
       <div className={cn('rounded-2xl px-[24px] py-[18px] bg-white shadow-xl')}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col space-y-1">
-            <HeadingWithSubtext heading={parkingLotSimpleInfo.name}>
-              {parkingLotSimpleInfo.address}
+            <HeadingWithSubtext heading={parkingLotSimpleInfo?.name || ''}>
+              {parkingLotSimpleInfo?.address}
             </HeadingWithSubtext>
             {/* 충전타입 배지 추가 */}
             <Circle className="fill-black" />
             <RatingOverview {...ratingOverviewInfo} />
           </div>
           <AlwaysVisibleTooltip side="top" content="1시간 5,000원">
-            <Image
-              src={parkingLotSimpleInfo.thumbnailUrl}
-              alt={parkingLotSimpleInfo.name}
-              width={90}
-              height={90}
-              className="rounded-lg"
-            />
+            {parkingLotSimpleInfo?.thumbnailUrl && (
+              <Image
+                src={parkingLotSimpleInfo.thumbnailUrl}
+                alt={parkingLotSimpleInfo.name}
+                width={90}
+                height={90}
+                className="rounded-lg"
+              />
+            )}
           </AlwaysVisibleTooltip>
         </div>
       </div>
