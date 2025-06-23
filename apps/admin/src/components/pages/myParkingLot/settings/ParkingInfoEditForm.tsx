@@ -1,11 +1,11 @@
 'use client';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
-import { Button } from '@repo/ui/components/base/button';
+import { handleKeyDown } from '@/utils/formUtils';
+import AlertModal from '@repo/ui/components/common/AlertModal';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import CommonTextArea from '@repo/ui/components/common/CommonTextArea';
 import EditFormButtons from '@repo/ui/components/common/EditFormButtons';
-import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useState } from 'react';
 
 export default function ParkingInfoEditForm({
@@ -26,9 +26,17 @@ export default function ParkingInfoEditForm({
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <section className="bg-white rounded-xl px-4 pt-5 pb-7">
-      <h2 className="text-lg font-semibold mb-3">정보</h2>
-      <form className="space-y-5">
+    <PaddedSection className="bg-white rounded-xl py-6">
+      <AlertModal
+        open={alertModalOpen}
+        onOpenChange={setAlertModalOpen}
+        errorMessage={modalMessage}
+      />
+      <h2 className="text-lg font-semibold">주차장 정보</h2>
+      <p className="mb-4 text-gray-2 text-sm break-keep">
+        사용자에게 보여지는 주차장 기본 정보입니다.
+      </p>
+      <form className="space-y-5" onKeyDown={handleKeyDown}>
         <CommonInputWithLabel
           label="주차장명"
           id="name"
@@ -60,6 +68,6 @@ export default function ParkingInfoEditForm({
           theme="secondary"
         />
       </form>
-    </section>
+    </PaddedSection>
   );
 }
