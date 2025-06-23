@@ -13,7 +13,6 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
   const isEvChargingAvailable = Boolean(searchParams.get('ev'));
   const startDateTime = searchParams.get('start') || '';
   const endDateTime = searchParams.get('end') || '';
-
   const [center, setCenter] = useState({
     lat: latParam || 37.5714,
     lng: lngParam || 126.9768,

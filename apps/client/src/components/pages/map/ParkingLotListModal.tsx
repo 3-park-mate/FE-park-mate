@@ -1,9 +1,10 @@
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
-import { AlignJustifyIcon, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
+import ShowListModalButton from './ShowListModalButton';
 
 export default function ParkingLotListModal({
   isOpenListModal,
@@ -37,7 +38,7 @@ export default function ParkingLotListModal({
       <section
         ref={modalRef}
         className={cn(
-          'fixed bottom-0 w-full max-w-[600px] max-h-1/2 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-50 cursor-pointer',
+          'fixed bottom-0 w-full max-w-[600px] max-h-1/2 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-30 cursor-pointer',
           'transform transition-transform duration-300 ease-in-out h-1/2',
           isOpenListModal ? 'translate-y-0' : 'translate-y-full'
         )}
@@ -68,18 +69,7 @@ export default function ParkingLotListModal({
         </ul>
       </section>
       {!isOpenListModal && !clickMarker && (
-        <button
-          className={cn(
-            'fixed left-1/2 -translate-x-1/2 bottom-25 flex items-center shadow-md bg-white px-4 py-2 rounded-full gap-1 hover:bg-gray-100'
-          )}
-          onClick={() => {
-            setIsOpenListModal(true);
-            setGnbNavBar(false);
-          }}
-        >
-          <AlignJustifyIcon className="size-4" />
-          <p className="text-sm">목록보기</p>
-        </button>
+        <ShowListModalButton setIsOpenListModal={setIsOpenListModal} />
       )}
     </>
   );

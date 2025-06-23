@@ -11,9 +11,7 @@ export default function BasicMarker({
 }) {
   return (
     <>
-      <MapPin
-        className={cn('absolute top-0 size-14 fill-primary-light stroke-0')}
-      />
+      <MapPin className={cn('absolute top-0 size-14 fill-gray-3 stroke-0')} />
 
       <p
         className={cn(
