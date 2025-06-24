@@ -14,14 +14,12 @@ const API_PREFIX = `${process.env.BASE_API_URL}/reservation-service/api/v1/reser
 
 export async function getReservationsData({
   size,
-  cursor,
 }: {
-  size: string;
-  cursor: string;
+  size: number;
+  cursor?: number;
 }): Promise<ApiResponse<ReservationListResponse>> {
   const payload = {
-    size,
-    cursor,
+    size: size.toString(),
   };
   try {
     const session = await getServerSession(options);
@@ -33,11 +31,11 @@ export async function getReservationsData({
 
     const res = await api.get<CommonResponseType<ReservationListResponse>>(
       API_PREFIX,
-      `/`,
+      '',
       payload,
       {
         headers: {
-          'X-User-UUID': `Bearer ${uuid}`,
+          'X-User-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
       }

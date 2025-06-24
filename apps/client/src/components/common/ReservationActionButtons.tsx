@@ -9,10 +9,7 @@ export default function ReservationActionButtons({
   return (
     <div className="space-y-4">
       {showQrButton && (
-        <Button
-          variant={'outline'}
-          className="w-full text-primary-dark-50 h-10 border-primary"
-        >
+        <Button className="w-full bg-white text-primary-dark-50 h-10 border border-primary">
           입출차 QR코드 확인
         </Button>
       )}

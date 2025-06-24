@@ -3,8 +3,13 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { HomeTabMenu } from '../../home/HomeTabMenu';
 import { useState } from 'react';
 import MyReservationItem from './MyReservationItem';
+import { ReservationItemDataType } from '@/types/reservationDataTypes';
 
-export default function MyReservationListSection() {
+export default function MyReservationListSection({
+  reservations,
+}: {
+  reservations: ReservationItemDataType[];
+}) {
   const [tabMenu, setTabMenu] = useState<
     'reservationParking' | 'currentParking'
   >('reservationParking');
@@ -23,12 +28,13 @@ export default function MyReservationListSection() {
           onClick={() => setTabMenu('currentParking')}
         />
       </ul>
-      <PaddedSection className="pt-[84px] space-y-4">
-        <MyReservationItem />
-        <hr />
-        <MyReservationItem />
-        <hr />
-        <MyReservationItem />
+      <PaddedSection className="pt-[84px]">
+        {reservations.map((item, index) => (
+          <div key={item.reservationCode} className="pb-4">
+            <MyReservationItem data={item} />
+            {index !== reservations.length - 1 && <hr className="mt-4" />}
+          </div>
+        ))}
       </PaddedSection>
     </>
   );
