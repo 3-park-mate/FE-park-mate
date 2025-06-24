@@ -5,6 +5,7 @@ import { ChevronDown } from 'lucide-react';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
 import ShowListModalButton from './ShowListModalButton';
+import Link from 'next/link';
 
 export default function ParkingLotListModal({
   isOpenListModal,
@@ -59,11 +60,13 @@ export default function ParkingLotListModal({
         </div>
         <ul>
           {parkingLotList.parkingLots.map((data, index) => (
-            <li key={index} className="py-3 px-6">
-              <ParkingLotListCard parkingLot={data} />
-              {index !== parkingLotList.parkingLots.length - 1 && (
-                <hr className=" mt-5" />
-              )}
+            <li key={data.parkingLotUuid} className="py-3 px-6">
+              <Link href={`parking-lot/${data.parkingLotUuid}`}>
+                <ParkingLotListCard parkingLot={data} />
+                {index !== parkingLotList.parkingLots.length - 1 && (
+                  <hr className=" mt-5" />
+                )}
+              </Link>
             </li>
           ))}
         </ul>

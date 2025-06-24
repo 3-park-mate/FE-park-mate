@@ -10,6 +10,7 @@ import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleToolti
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import { getParkingLotInfoById } from '@/actions/map/map-service';
 import { ParkingLotInfoType } from '@/types/mapDataTypes';
+import Link from 'next/link';
 
 export default function ParkingLotSimpleInfoModal({
   clickMarker,
@@ -55,29 +56,33 @@ export default function ParkingLotSimpleInfoModal({
         isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       )}
     >
-      <div className={cn('rounded-2xl px-[24px] py-[18px] bg-white shadow-xl')}>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col space-y-1">
-            <HeadingWithSubtext heading={parkingLotSimpleInfo?.name || ''}>
-              {parkingLotSimpleInfo?.address}
-            </HeadingWithSubtext>
-            {/* 충전타입 배지 추가 */}
-            <Circle className="fill-black" />
-            <RatingOverview {...ratingOverviewInfo} />
+      <Link href={`parking-lot/${clickMarker}`}>
+        <div
+          className={cn('rounded-2xl px-[24px] py-[18px] bg-white shadow-xl')}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col space-y-1">
+              <HeadingWithSubtext heading={parkingLotSimpleInfo?.name || ''}>
+                {parkingLotSimpleInfo?.address}
+              </HeadingWithSubtext>
+              {/* 충전타입 배지 추가 */}
+              <Circle className="fill-black" />
+              <RatingOverview {...ratingOverviewInfo} />
+            </div>
+            <AlwaysVisibleTooltip side="top" content="1시간 5,000원">
+              {parkingLotSimpleInfo?.thumbnailUrl && (
+                <Image
+                  src={parkingLotSimpleInfo.thumbnailUrl}
+                  alt={parkingLotSimpleInfo.name}
+                  width={90}
+                  height={90}
+                  className="rounded-lg"
+                />
+              )}
+            </AlwaysVisibleTooltip>
           </div>
-          <AlwaysVisibleTooltip side="top" content="1시간 5,000원">
-            {parkingLotSimpleInfo?.thumbnailUrl && (
-              <Image
-                src={parkingLotSimpleInfo.thumbnailUrl}
-                alt={parkingLotSimpleInfo.name}
-                width={90}
-                height={90}
-                className="rounded-lg"
-              />
-            )}
-          </AlwaysVisibleTooltip>
         </div>
-      </div>
+      </Link>
       <div className="flex mt-5 justify-between items-center gap-0">
         <CommonButton className="bg-primary text-[20px] h-12 text-white">
           예약하기<span className="text-17px">(12/20)</span>

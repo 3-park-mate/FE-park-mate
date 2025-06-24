@@ -44,8 +44,10 @@ export async function getParkingLotsInBox(
     const res = await api.get<CommonResponseType<ParkingLotsInBoxResponseType>>(
       API_PREFIX,
       '/box',
-      query
+      query,
+      { cache: 'no-cache' }
     );
+    console.log(query);
     console.log(res.data);
 
     return res.data;

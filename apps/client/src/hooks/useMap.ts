@@ -10,9 +10,7 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
   const searchParams = useSearchParams();
   const latParam = Number(searchParams.get('lat'));
   const lngParam = Number(searchParams.get('lng'));
-  const isEvChargingAvailable = Boolean(searchParams.get('ev'));
-  const startDateTime = searchParams.get('start') || '';
-  const endDateTime = searchParams.get('end') || '';
+
   const [center, setCenter] = useState({
     lat: latParam || 37.5714,
     lng: lngParam || 126.9768,
@@ -45,24 +43,28 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
     const sw = map.getBounds().getSouthWest();
     const ne = map.getBounds().getNorthEast();
 
+    const evParam = searchParams.get('ev') === 'true';
+    const start = searchParams.get('start') || '';
+    const end = searchParams.get('end') || '';
+
     const data = await getParkingLotsInBox({
       swLat: sw.getLat(),
       swLng: sw.getLng(),
       neLat: ne.getLat(),
       neLng: ne.getLng(),
-      isEvChargingAvailable,
-      startDateTime,
-      endDateTime,
+      isEvChargingAvailable: evParam,
+      startDateTime: start,
+      endDateTime: end,
     });
-
+    console.log(data, evParam);
     setParkingLotList(data);
-  }, [mapRef, isEvChargingAvailable, startDateTime, endDateTime]);
+  }, [mapRef, searchParams]);
 
   const handleMapChange = () => {
     const map = mapRef.current;
     if (!map) return;
 
-    if (map.getLevel() < 6) {
+    if (map.getLevel() < 7) {
       fetchData();
     }
   };
@@ -70,6 +72,10 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
   useEffect(() => {
     initMap();
   }, [initMap]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return {
     center,
