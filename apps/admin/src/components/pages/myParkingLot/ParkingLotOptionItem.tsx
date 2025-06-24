@@ -25,9 +25,10 @@ export default function ParkingLotOptionItem({
     >
       <OptionIconWithText
         Icon={Icon}
+        isActive={isSelected}
         className={cn(
           'rounded-xl justify-center text-center transition-all duration-200',
-          isSelected ? 'text-black' : 'text-gray-2'
+          isSelected ? '!text-black' : '!text-gray-2'
         )}
         IconClassName={cn(isSelected ? 'text-black' : 'text-gray-3')}
       >

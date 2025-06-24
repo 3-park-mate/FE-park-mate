@@ -1,12 +1,12 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { HomeTabMenu } from '../home/HomeTabMenu';
-import { parkingDetailTabMenus } from '@/data/initialDatas';
+import { parkingSettingsTabMenus } from '@/data/initialDatas';
+import { ParkingSettingsTabMenu } from './ParkingSettingsTabMenu';
 
-export default function ParkingDetailTabBar() {
+export default function ParkingSettingsTabBar() {
   const tabRef = useRef<HTMLUListElement>(null);
   const [isStuck, setIsStuck] = useState(false);
-  const [activeId, setActiveId] = useState<string>('info');
+  const [activeId, setActiveId] = useState<string>('operation');
   const activeIdRef = useRef(activeId);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function ParkingDetailTabBar() {
       const { top } = tabRef.current.getBoundingClientRect();
       setIsStuck(top <= 56);
 
-      const offsets = parkingDetailTabMenus.map(({ id }) => {
+      const offsets = parkingSettingsTabMenus.map(({ id }) => {
         const section = document.getElementById(id);
         if (!section) return { id, top: Infinity };
         const rect = section.getBoundingClientRect();
@@ -48,7 +48,7 @@ export default function ParkingDetailTabBar() {
     const section = document.getElementById(id);
     if (section) {
       window.scrollTo({
-        top: section.offsetTop - 110,
+        top: section.offsetTop - 100,
         behavior: 'smooth',
       });
     }
@@ -57,12 +57,12 @@ export default function ParkingDetailTabBar() {
   return (
     <ul
       ref={tabRef}
-      className={`sticky top-[55px] z-10 flex justify-between bg-inner-background-gray ${
+      className={`mx-4 px-1.5 rounded-2xl sticky top-[70px] z-10 flex justify-center bg-inner-background-gray ${
         isStuck ? 'shadow-md' : ''
       }`}
     >
-      {parkingDetailTabMenus.map((menu) => (
-        <HomeTabMenu
+      {parkingSettingsTabMenus.map((menu) => (
+        <ParkingSettingsTabMenu
           key={menu.id}
           tabMenuName={menu.label}
           selected={menu.id === activeId}
