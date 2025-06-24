@@ -14,12 +14,14 @@ const API_PREFIX = `${process.env.BASE_API_URL}/reservation-service/api/v1/reser
 
 export async function getReservationsData({
   size,
+  cursor,
 }: {
   size: number;
   cursor?: number;
 }): Promise<ApiResponse<ReservationListResponse>> {
   const payload = {
     size: size.toString(),
+    cursor: cursor ? cursor.toString() : size.toString(),
   };
   try {
     const session = await getServerSession(options);
@@ -28,6 +30,7 @@ export async function getReservationsData({
     }
     const uuid = session.user.uuid;
     const accessToken = session.user.accessToken;
+    console.log(uuid);
 
     const res = await api.get<CommonResponseType<ReservationListResponse>>(
       API_PREFIX,
@@ -40,7 +43,7 @@ export async function getReservationsData({
         },
       }
     );
-    console.log(res);
+    // console.log(res);
 
     return {
       success: true,
