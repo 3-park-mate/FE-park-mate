@@ -1,4 +1,5 @@
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
+import NotFoundLayout from '@/components/common/NotFoundLayout';
 import PageHeader from '@/components/layouts/PageHeader';
 import ReservationDetail from '@/components/pages/myPage/myReservations/ReservationDetail';
 
@@ -7,11 +8,16 @@ export default async function page({
 }: {
   params: Promise<{ reservationCode: string }>;
 }) {
-  const fallback = <div>예약 정보를 찾을 수 없습니다.</div>;
+  const fallback = (
+    <NotFoundLayout
+      heading="예약 정보가 존재하지 않습니다."
+      subheading="잘못된 url 접근이 아닌지 확인해 주세요."
+      buttonHref="/"
+    />
+  );
 
   const { reservationCode } = await params;
   if (!reservationCode) return fallback;
-  console.log('reservationCode:', reservationCode);
 
   const res = await getReservationDetailData(reservationCode);
   if (!res.success) return fallback;
@@ -23,7 +29,7 @@ export default async function page({
     <>
       <PageHeader className="bg-inner-background-gray" title="예약 상세" />
       <main className="pb-32 ">
-        <ReservationDetail />
+        <ReservationDetail reservationData={reservationData} />
       </main>
     </>
   );
