@@ -13,7 +13,7 @@ export default function SelectedMarker({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'absolute -top-3 transition-all duration-200',
+        'absolute -top-14 -left-7.5 transition-all duration-200',
         show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
         className
       )}

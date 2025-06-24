@@ -4,12 +4,14 @@ import {
   MarkerClusterer,
   CustomOverlayMap,
   MapMarker,
-  ZoomControl,
 } from 'react-kakao-maps-sdk';
-import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
+import {
+  ParkingLotSimpleInfoType,
+  ParkingLotsInBoxResponseType,
+} from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import React, { SetStateAction, useEffect } from 'react';
+import React, { SetStateAction } from 'react';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
 
@@ -21,15 +23,11 @@ export default function MapMarkers({
   setClickMarker,
 }: {
   mapLevel: number;
-  clickMarker: string;
+  clickMarker: ParkingLotSimpleInfoType | null;
   markerData: ParkingLotsInBoxResponseType;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
-  setClickMarker: (id: string) => void;
+  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
 }) {
-  useEffect(() => {
-    console.log(markerData.parkingLots);
-  }, [markerData]);
-  console.log(mapLevel);
   const { setGnbNavBar } = useGnbNavBarStore();
   return (
     <>
@@ -47,7 +45,7 @@ export default function MapMarkers({
             onClick={() => {
               setIsOpenListModal(false);
               setGnbNavBar(false);
-              setClickMarker(data.parkingLotUuid);
+              setClickMarker(data);
             }}
           />
         ))}
@@ -59,17 +57,19 @@ export default function MapMarkers({
             key={`overlay-${data.parkingLotUuid}`}
             position={{ lat: data.latitude, lng: data.longitude }}
             clickable={true}
-            zIndex={clickMarker === data.parkingLotUuid ? 50 : 40}
+            zIndex={
+              clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
+            }
           >
             <div
               className="relative"
               onClick={() => {
                 setIsOpenListModal(false);
                 setGnbNavBar(false);
-                setClickMarker(data.parkingLotUuid);
+                setClickMarker(data);
               }}
             >
-              {clickMarker === data.parkingLotUuid ? (
+              {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
                 <SelectedMarker />
               ) : (
                 <BasicMarker availableSpots={data.availableSpotCount} />

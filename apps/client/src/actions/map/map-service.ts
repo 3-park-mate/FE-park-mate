@@ -56,19 +56,3 @@ export async function getParkingLotsInBox(
     throw error;
   }
 }
-
-export async function getParkingLotInfoById(uuid: string) {
-  console.log(uuid, 'uuid');
-  try {
-    const res = await api.get<CommonResponseType<ParkingLotInfoType>>(
-      API_PREFIX,
-      `/${uuid}`
-    );
-    console.log(res.data);
-
-    return res.data;
-  } catch (error) {
-    console.error('getParkingLotsInBox 에러:', error);
-    throw error;
-  }
-}

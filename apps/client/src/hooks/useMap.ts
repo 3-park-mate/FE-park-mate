@@ -24,7 +24,7 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
       const { lat, lng } = await getCurrentCoordsUtil();
       setCenter({ lat, lng });
     } catch (err) {
-      console.error('현재 위치를 가져오는데 실패했습니다:', err);
+      console.log('현재 위치를 가져오는데 실패했습니다:', err);
     }
   }, []);
 
@@ -56,7 +56,6 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
       startDateTime: start,
       endDateTime: end,
     });
-    console.log(data, evParam);
     setParkingLotList(data);
   }, [mapRef, searchParams]);
 

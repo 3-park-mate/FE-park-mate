@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import CurrentLocationButton from './CurrentLocationButton ';
 import MapMarkers from './MapMarkers';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import ParkingLotListModal from './ParkingLotListModal';
 import useMap from '@/hooks/useMap';
-import FilterSection from './FilterSection';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import FilterButtonSection from './FilterButtonSection';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -17,7 +18,8 @@ export default function MainMap() {
 
   const mapRef = useRef<kakao.maps.Map | null>(null);
   const hasFetchedRef = useRef(false);
-  const [clickMarker, setClickMarker] = useState<string>();
+  const [clickMarker, setClickMarker] =
+    useState<ParkingLotSimpleInfoType | null>();
   const [mapLevel, setMapLevel] = useState(5);
   const [isOpenListModal, setIsOpenListModal] = useState<boolean>(true);
   const {
@@ -27,15 +29,12 @@ export default function MainMap() {
     parkingLotList,
     fetchData,
   } = useMap(mapRef);
-  useEffect(() => {
-    console.log(parkingLotList.parkingLots.length, '주차장개수');
-  }, [parkingLotList]);
 
   const { setGnbNavBar } = useGnbNavBarStore();
 
   return (
-    <section>
-      <FilterSection />
+    <>
+      <FilterButtonSection />
       <Map
         center={center}
         level={5}
@@ -46,7 +45,7 @@ export default function MainMap() {
           setMapLevel(map.getLevel());
         }}
         onClick={() => {
-          setClickMarker('');
+          setClickMarker(null);
           setIsOpenListModal(false);
           setGnbNavBar(true);
         }}
@@ -63,20 +62,19 @@ export default function MainMap() {
           <MapMarkers
             mapLevel={mapLevel}
             markerData={parkingLotList}
-            clickMarker={clickMarker || ''}
+            clickMarker={clickMarker || null}
             setClickMarker={setClickMarker}
             setIsOpenListModal={setIsOpenListModal}
           />
         )}
       </Map>
-      {/* <FilterButton /> */}
       <CurrentLocationButton onClick={centerMapToCurrentLocation} />
       <ParkingLotListModal
         isOpenListModal={isOpenListModal}
-        clickMarker={clickMarker || ''}
+        clickMarker={clickMarker || null}
         setIsOpenListModal={setIsOpenListModal}
         parkingLotList={parkingLotList}
       />
-    </section>
+    </>
   );
 }

@@ -1,15 +1,15 @@
 import { Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 
 export default function RatingOverview({
-  averageRating,
-  reviewCount,
-  likeCount,
-  dislikeCount,
+  averageRating = 0,
+  reviewCount = 0,
+  likeCount = 0,
+  dislikeCount = 0,
 }: {
-  averageRating: number;
-  reviewCount: number;
-  likeCount: number;
-  dislikeCount: number;
+  averageRating?: number;
+  reviewCount?: number;
+  likeCount?: number;
+  dislikeCount?: number;
 }) {
   return (
     <div className="flex space-x-2 text-13px">

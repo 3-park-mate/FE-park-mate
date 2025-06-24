@@ -1,5 +1,8 @@
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
+import {
+  ParkingLotSimpleInfoType,
+  ParkingLotsInBoxResponseType,
+} from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react';
@@ -14,7 +17,7 @@ export default function ParkingLotListModal({
   parkingLotList,
 }: {
   isOpenListModal: boolean;
-  clickMarker: string;
+  clickMarker: ParkingLotSimpleInfoType | null;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   parkingLotList: ParkingLotsInBoxResponseType;
 }) {
@@ -36,7 +39,7 @@ export default function ParkingLotListModal({
 
   return (
     <>
-      <section
+      <div
         ref={modalRef}
         className={cn(
           'fixed bottom-0 w-full max-w-[600px] max-h-1/2 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-30 cursor-pointer',
@@ -70,7 +73,7 @@ export default function ParkingLotListModal({
             </li>
           ))}
         </ul>
-      </section>
+      </div>
       {!isOpenListModal && !clickMarker && (
         <ShowListModalButton setIsOpenListModal={setIsOpenListModal} />
       )}

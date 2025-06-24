@@ -1,49 +1,48 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import HeadingWithSubtext from '../../common/HeadingWithSubtext';
 import RatingOverview from './RatingOverview';
 import Image from 'next/image';
-import { Circle } from 'lucide-react';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
-import { getParkingLotInfoById } from '@/actions/map/map-service';
-import { ParkingLotInfoType } from '@/types/mapDataTypes';
 import Link from 'next/link';
+import { getParkingLotById } from '@/actions/parking/parking-service';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import Evchargetypebadges from './EvChargeTypeBadges';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function ParkingLotSimpleInfoModal({
   clickMarker,
 }: {
-  clickMarker: string;
+  clickMarker: ParkingLotSimpleInfoType;
 }) {
-  const [parkingLotSimpleInfo, setParkingLotSimpleInfo] =
-    useState<ParkingLotInfoType>();
-  console.log(clickMarker, '주차장 uuid');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [parkingLotData, setParkingLotData] =
+    useState<ParkingLotResponseDataType>();
 
   useEffect(() => {
     if (!clickMarker) return;
 
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const data = await getParkingLotInfoById(clickMarker);
-        setParkingLotSimpleInfo(data);
+        const data = await getParkingLotById(clickMarker.parkingLotUuid);
+        if (data.success) {
+          setParkingLotData(data.data);
+        }
       } catch (error) {
-        console.error('주차장 정보 로드 실패:', error);
+        console.log('주차장 정보 로드 실패:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [clickMarker]);
-
-  const ratingOverviewInfo = {
-    averageRating: 4.5,
-    reviewCount: 1200,
-    likeCount: parkingLotSimpleInfo?.likeCount || 0,
-    dislikeCount: parkingLotSimpleInfo?.dislikeCount || 0,
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setIsOpen(true);
@@ -56,36 +55,58 @@ export default function ParkingLotSimpleInfoModal({
         isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       )}
     >
-      <Link href={`parking-lot/${clickMarker}`}>
+      {isLoading ? (
         <div
-          className={cn('rounded-2xl px-[24px] py-[18px] bg-white shadow-xl')}
+          className={cn(
+            'rounded-2xl px-[24px] py-[18px] bg-white shadow-xl flex justify-center items-center min-h-[130px]'
+          )}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col space-y-1">
-              <HeadingWithSubtext heading={parkingLotSimpleInfo?.name || ''}>
-                {parkingLotSimpleInfo?.address}
-              </HeadingWithSubtext>
-              {/* 충전타입 배지 추가 */}
-              <Circle className="fill-black" />
-              <RatingOverview {...ratingOverviewInfo} />
-            </div>
-            <AlwaysVisibleTooltip side="top" content="1시간 5,000원">
-              {parkingLotSimpleInfo?.thumbnailUrl && (
-                <Image
-                  src={parkingLotSimpleInfo.thumbnailUrl}
-                  alt={parkingLotSimpleInfo.name}
-                  width={90}
-                  height={90}
-                  className="rounded-lg"
-                />
-              )}
-            </AlwaysVisibleTooltip>
-          </div>
+          <DotSpinner className="fill-primary size-8" />
         </div>
-      </Link>
+      ) : (
+        <Link href={`parking-lot/${clickMarker.parkingLotUuid}`}>
+          <div className={cn('rounded-2xl px-4.5 py-4 bg-white shadow-xl')}>
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col space-y-1">
+                <HeadingWithSubtext
+                  heading={parkingLotData?.name || ''}
+                  className="leading-7"
+                  tight
+                >
+                  {parkingLotData?.address}
+                </HeadingWithSubtext>
+                {parkingLotData?.evChargeTypes && (
+                  <Evchargetypebadges
+                    evChargeTypes={parkingLotData?.evChargeTypes}
+                  />
+                )}
+                <RatingOverview
+                  likeCount={parkingLotData?.likeCount}
+                  dislikeCount={parkingLotData?.dislikeCount}
+                />
+              </div>
+              <AlwaysVisibleTooltip side="top" content="3,000원/30분">
+                {parkingLotData?.thumbnailUrl && (
+                  <Image
+                    src={parkingLotData.thumbnailUrl}
+                    alt={parkingLotData.name}
+                    width={90}
+                    height={90}
+                    className="rounded-lg ml-1 aspect-square object-cover"
+                  />
+                )}
+              </AlwaysVisibleTooltip>
+            </div>
+          </div>
+        </Link>
+      )}
+
       <div className="flex mt-5 justify-between items-center gap-0">
         <CommonButton className="bg-primary text-[20px] h-12 text-white">
-          예약하기<span className="text-17px">(12/20)</span>
+          예약하기
+          <span className="text-17px tracking-tighter">
+            ( {clickMarker.availableSpotCount} / {parkingLotData?.capacity} )
+          </span>
         </CommonButton>
       </div>
     </div>
