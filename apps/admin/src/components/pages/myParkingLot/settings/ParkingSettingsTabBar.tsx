@@ -48,10 +48,9 @@ export default function ParkingSettingsTabBar() {
     const section = document.getElementById(id);
     if (section) {
       window.scrollTo({
-        top: section.offsetTop - 110,
+        top: section.offsetTop - 100,
         behavior: 'smooth',
       });
-      setActiveId(id);
     }
   };
 

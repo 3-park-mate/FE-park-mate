@@ -51,7 +51,6 @@ export default function ParkingDetailTabBar() {
         top: section.offsetTop - 110,
         behavior: 'smooth',
       });
-      setActiveId(id);
     }
   };
 

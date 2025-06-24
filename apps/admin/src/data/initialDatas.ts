@@ -51,7 +51,7 @@ export const myParkingLotSortMenu = [
 export const parkingSettingsTabMenus = [
   { label: '운영 정보', id: 'operation' },
   { label: '주차장 정보', id: 'info' },
-  { label: '주차면 정보', id: 'spot' },
+  // { label: '주차면 정보', id: 'spot' },
 ];
 
 export const chargingTypes = [
