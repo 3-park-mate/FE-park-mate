@@ -24,8 +24,11 @@ export default function CommonTextArea({
       <Textarea
         id={id}
         {...props}
-        className={`resize-none min-h-[200px]
-          ${errorMessage && 'border-red-300 focus-visible:border-red-400'}`}
+        className={cn(
+          'resize-none min-h-[200px] bg-white',
+          errorMessage && 'border-red-300 focus-visible:border-red-400',
+          props.readOnly && 'bg-gray-light-1 text-gray-3'
+        )}
       />
       {errorMessage && (
         <p className="text-red-500 text-13px ms-1">{errorMessage}</p>

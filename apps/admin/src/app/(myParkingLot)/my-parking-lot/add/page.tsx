@@ -6,7 +6,7 @@ export default function page() {
   return (
     <>
       <PageHeader title="주차장 등록" type="form" />
-      <main>
+      <main className="pb-32">
         <Suspense fallback={<div></div>}>
           <AddParkingLotFunnel />
         </Suspense>

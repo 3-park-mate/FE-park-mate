@@ -109,7 +109,7 @@ export interface ParkingLotResponseDataType {
   parkingSpotTypes: ParkingSpotType[];
   evChargeTypes: EVChargeType[];
   extraInfo: string;
-  imageUrls: string[];
+  imageUrls: { imageUrl: string }[];
   options: ParkingLotOption[];
   likeCount: number;
   dislikeCount: number;

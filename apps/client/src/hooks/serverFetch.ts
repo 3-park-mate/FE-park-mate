@@ -47,7 +47,7 @@ export async function serverFetch<T>(
   }
 
   try {
-    console.log('config: ', config);
+    // console.log('config: ', config);
     const res = await fetch(url, config);
 
     // HTTP 응답이 실패 상태(4xx, 5xx)일 경우
