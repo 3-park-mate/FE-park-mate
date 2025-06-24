@@ -22,7 +22,7 @@ export default function ParkingDetailContent({
   mainAddress: string;
   parkingLotUuid: string;
   extraInfo: string;
-  imageUrls: string[];
+  imageUrls: { imageUrl: string }[];
   options: ParkingLotOption[];
   evChargeTypes: EVChargeType[];
   parkingSpotTypes: ParkingSpotType[];
@@ -43,7 +43,11 @@ export default function ParkingDetailContent({
         evChargeTypes={evChargeTypes}
         parkingSpotTypes={parkingSpotTypes}
       />
-      {imageUrls[0] && <ImageCarouselSection imageUrls={imageUrls} />}
+      {imageUrls[0] && (
+        <ImageCarouselSection
+          imageUrls={imageUrls.map((img) => img.imageUrl)}
+        />
+      )}
       <ReviewSection />
     </section>
   );

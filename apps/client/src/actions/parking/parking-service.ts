@@ -19,7 +19,7 @@ export async function getParkingLotById(
       `/${parkingLotUuid}`,
       undefined,
       {
-        cache: 'force-cache',
+        cache: 'no-cache',
       }
     );
     // console.log(res);

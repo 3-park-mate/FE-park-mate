@@ -48,6 +48,16 @@ export interface OperationDataType {
   discountRate: number;
 }
 
+export interface OperationStoreDataType {
+  validStartTime: string;
+  validEndTime: string;
+  baseIntervalMinutes: string;
+  baseFee: number;
+  extraIntervalMinutes: string;
+  extraFee: number;
+  discountRate: number;
+}
+
 // api
 
 export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';

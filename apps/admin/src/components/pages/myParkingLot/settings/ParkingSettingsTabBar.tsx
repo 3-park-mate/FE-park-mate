@@ -57,7 +57,7 @@ export default function ParkingSettingsTabBar() {
   return (
     <ul
       ref={tabRef}
-      className={`mx-4 px-1.5 rounded-xl sticky top-[70px] z-10 flex justify-center bg-inner-background-gray ${
+      className={`mx-4 px-1.5 rounded-2xl sticky top-[70px] z-10 flex justify-center bg-inner-background-gray ${
         isStuck ? 'shadow-md' : ''
       }`}
     >
