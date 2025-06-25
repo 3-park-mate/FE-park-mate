@@ -1,21 +1,30 @@
-import { MarkerClusterer, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
+'use client';
+
+import {
+  MarkerClusterer,
+  CustomOverlayMap,
+  MapMarker,
+} from 'react-kakao-maps-sdk';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import React, { SetStateAction } from 'react';
+import { SetStateAction } from 'react';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function MapMarkers({
+  mapLevel,
   clickMarker,
   markerData,
   setIsOpenListModal,
   setClickMarker,
 }: {
-  clickMarker: string;
+  mapLevel: number;
+  clickMarker: ParkingLotSimpleInfoType | null;
   markerData: ParkingLotsInBoxResponseType;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
-  setClickMarker: (id: string) => void;
+  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
 }) {
   const { setGnbNavBar } = useGnbNavBarStore();
   return (
@@ -23,37 +32,50 @@ export default function MapMarkers({
       <MarkerClusterer
         gridSize={70}
         averageCenter
-        minLevel={7}
+        minLevel={6}
         minClusterSize={1}
-        disableClickZoom
       >
-        {markerData.parkingLots.map((data, index) => (
-          <React.Fragment key={index}>
-            <CustomOverlayMap
-              position={{ lat: data.latitude, lng: data.longitude }}
-              xAnchor={0.5}
-              yAnchor={1.4}
-              clickable={true}
-              zIndex={clickMarker === data.parkingLotUuid ? 50 : 40}
-            >
-              <div
-                className="relative"
-                onClick={() => {
-                  setIsOpenListModal(false);
-                  setGnbNavBar(false);
-                  setClickMarker(data.parkingLotUuid);
-                }}
-              >
-                {clickMarker === data.parkingLotUuid ? (
-                  <SelectedMarker />
-                ) : (
-                  <BasicMarker availableSpots={data.availableSpotCount} />
-                )}
-              </div>
-            </CustomOverlayMap>
-          </React.Fragment>
+        {markerData.parkingLots.map((data) => (
+          <MapMarker
+            key={`marker-${data.parkingLotUuid}`}
+            position={{ lat: data.latitude, lng: data.longitude }}
+            clickable={true}
+            onClick={() => {
+              setIsOpenListModal(false);
+              setGnbNavBar(false);
+              setClickMarker(data);
+            }}
+          />
         ))}
       </MarkerClusterer>
+
+      {mapLevel <= 5 &&
+        markerData.parkingLots.map((data) => (
+          <CustomOverlayMap
+            key={`overlay-${data.parkingLotUuid}`}
+            position={{ lat: data.latitude, lng: data.longitude }}
+            clickable={true}
+            zIndex={
+              clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
+            }
+          >
+            <div
+              className="relative"
+              onClick={() => {
+                setIsOpenListModal(false);
+                setGnbNavBar(false);
+                setClickMarker(data);
+              }}
+            >
+              {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
+                <SelectedMarker />
+              ) : (
+                <BasicMarker availableSpots={data.availableSpotCount} />
+              )}
+            </div>
+          </CustomOverlayMap>
+        ))}
+
       {clickMarker && <ParkingLotSimpleInfoModal clickMarker={clickMarker} />}
     </>
   );

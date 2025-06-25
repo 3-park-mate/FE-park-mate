@@ -2,6 +2,7 @@ import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
 import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
 import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
 import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
+import { ParkingLotSimpleInfoType } from './mapDataTypes';
 
 export interface ParkingLocationDataType {
   parkingLotUuid: string;
@@ -120,4 +121,18 @@ export interface WeeklyOperationInfo {
   dayOfMonth: number;
   startTime?: string;
   endTime?: string;
+}
+
+export interface GetParkingLotsInBoxRequestType {
+  swLat: number;
+  swLng: number;
+  neLat: number;
+  neLng: number;
+  isEvChargingAvailable: boolean;
+  startDateTime?: string;
+  endDateTime?: string;
+}
+
+export interface ParkingLotsInBoxResponseType {
+  parkingLots: ParkingLotSimpleInfoType[];
 }

@@ -1,71 +1,86 @@
-import { useCallback, useEffect, useState } from 'react';
+'use client';
+
+import { RefObject, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
-import { getParkingLotsInBox } from '@/actions/map/map-service';
-import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
+import { getParkingLotsInBox } from '@/actions/parking/parking-service';
 
-export default function useMap() {
+export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
   const searchParams = useSearchParams();
+  const latParam = Number(searchParams.get('lat'));
+  const lngParam = Number(searchParams.get('lng'));
 
-  const [center, setCenter] = useState({ lat: 37.5714, lng: 126.9768 });
+  const [center, setCenter] = useState({
+    lat: latParam || 37.5714,
+    lng: lngParam || 126.9768,
+  });
+
   const [parkingLotList, setParkingLotList] =
-    useState<ParkingLotsInBoxResponseType>({
-      parkingLots: [],
-    });
-
-  const initMap = useCallback(async () => {
-    const latParam = Number(searchParams.get('lat'));
-    const lngParam = Number(searchParams.get('lng'));
-    if (latParam && lngParam) {
-      setCenter({ lat: latParam, lng: lngParam });
-    } else {
-      try {
-        const { latitude, longitude } = await getCurrentCoordsUtil();
-        setCenter({ lat: latitude, lng: longitude });
-      } catch (err) {
-        console.log('지도 중심 설정 실패:', err);
-      }
-    }
-  }, [searchParams]);
+    useState<ParkingLotsInBoxResponseType>({ parkingLots: [] });
 
   const centerMapToCurrentLocation = useCallback(async () => {
     try {
-      const { latitude, longitude } = await getCurrentCoordsUtil();
-      setCenter({ lat: latitude, lng: longitude });
+      const { lat, lng } = await getCurrentCoordsUtil();
+      setCenter({ lat, lng });
     } catch (err) {
-      console.log('지도 중심 설정 실패:', err);
+      console.log('현재 위치를 가져오는데 실패했습니다:', err);
     }
   }, []);
 
-  const handleMapChange = (map: kakao.maps.Map) => {
-    const lat = map.getCenter().getLat();
-    const lng = map.getCenter().getLng();
-    const swLatLng = map.getBounds().getSouthWest();
-    const neLatLng = map.getBounds().getNorthEast();
-    // console.log(swLatLng, 'sw', neLatLng, 'ne');
-    setCenter({ lat, lng });
-    const fetchData = async () => {
-      const data = await getParkingLotsInBox({
-        swLat: swLatLng.getLat(),
-        swLng: swLatLng.getLng(),
-        neLat: neLatLng.getLat(),
-        neLng: neLatLng.getLng(),
-        isEvChargingAvailable: true,
-      });
-      setParkingLotList(data);
-    };
-    if (map.getLevel() < 6) fetchData();
+  const initMap = useCallback(async () => {
+    if (latParam && lngParam) {
+      setCenter({ lat: latParam, lng: lngParam });
+    } else {
+      await centerMapToCurrentLocation();
+    }
+  }, [latParam, lngParam, centerMapToCurrentLocation]);
+
+  const fetchData = useCallback(async () => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const sw = map.getBounds().getSouthWest();
+    const ne = map.getBounds().getNorthEast();
+
+    const evParam = searchParams.get('ev') === 'true';
+    const start = searchParams.get('start') || '';
+    const end = searchParams.get('end') || '';
+
+    const data = await getParkingLotsInBox({
+      swLat: sw.getLat(),
+      swLng: sw.getLng(),
+      neLat: ne.getLat(),
+      neLng: ne.getLng(),
+      isEvChargingAvailable: evParam,
+      startDateTime: start,
+      endDateTime: end,
+    });
+    setParkingLotList(data);
+  }, [mapRef, searchParams]);
+
+  const handleMapChange = () => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    if (map.getLevel() < 7) {
+      fetchData();
+    }
   };
 
   useEffect(() => {
     initMap();
   }, [initMap]);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   return {
     center,
-    initMap,
     centerMapToCurrentLocation,
     handleMapChange,
     parkingLotList,
+    fetchData,
   };
 }
