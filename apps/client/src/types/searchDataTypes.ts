@@ -4,3 +4,12 @@ export interface TabMenuWithIconType {
   href?: string;
   icon?: React.FC<{ className?: string; onClick?: () => void }>;
 }
+
+export interface SearchLocationResultType {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  content: string;
+  road_address_name: string;
+}

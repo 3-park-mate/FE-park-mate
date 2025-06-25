@@ -1,5 +1,5 @@
-import { SearchLocationResultType } from '@/types/filterInfoType';
 import { MapInfo } from '@/types/mapDataTypes';
+import { SearchLocationResultType } from '@/types/searchDataTypes';
 
 export const updateMapState = (
   map: kakao.maps.Map,

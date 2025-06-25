@@ -1,4 +1,4 @@
-import { SearchLocationResultType } from '@/types/filterInfoType';
+import { SearchLocationResultType } from '@/types/searchDataTypes';
 import MapRedirectButton from './MapRedirectButton';
 import SearchResultCardList from './SearchResultCardList';
 
