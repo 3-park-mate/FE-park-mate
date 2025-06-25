@@ -11,7 +11,7 @@ export default async function page() {
   return (
     <>
       <PageHeader title="예약 내역" />
-      <main>
+      <main className="">
         <MyReservationListSection />
       </main>
     </>

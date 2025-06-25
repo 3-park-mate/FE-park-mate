@@ -7,11 +7,13 @@ interface UseInfiniteScrollProps<T, CursorType> {
     hasNext: boolean;
   }>;
   initialCursor?: CursorType;
+  filterDuplicateItems?: (existingItems: T[], newItems: T[]) => T[];
 }
 
 export function useInfiniteScroll<T, CursorType>({
   fetchData,
   initialCursor,
+  filterDuplicateItems = (existing, newItems) => newItems,
 }: UseInfiniteScrollProps<T, CursorType>) {
   const [items, setItems] = useState<T[]>([]);
   const [cursor, setCursor] = useState<CursorType | undefined>(initialCursor);
@@ -25,7 +27,7 @@ export function useInfiniteScroll<T, CursorType>({
     setIsLoading(true);
     try {
       const { content, nextCursor, hasNext } = await fetchData(cursor);
-      setItems((prev) => [...prev, ...content]);
+      setItems((prev) => [...prev, ...filterDuplicateItems(prev, content)]);
       setCursor(nextCursor);
       setHasMore(hasNext);
     } catch (error) {
@@ -33,11 +35,10 @@ export function useInfiniteScroll<T, CursorType>({
     } finally {
       setIsLoading(false);
     }
-  }, [cursor, isLoading, hasMore, fetchData]);
+  }, [cursor, isLoading, hasMore, fetchData, filterDuplicateItems]);
 
   useEffect(() => {
     loadMoreItems();
-    // 마운트 시 한번만 실행되는 로드
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

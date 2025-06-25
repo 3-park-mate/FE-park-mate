@@ -5,8 +5,8 @@ import MyReservationItem from './MyReservationItem';
 import { getReservationsData } from '@/actions/reservation/reservation-service';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { HomeTabMenu } from '../../home/HomeTabMenu';
 import { useState } from 'react';
+import { HomeTabMenu } from '../../home/HomeTabMenu';
 
 const PAGE_SIZE = 10;
 
@@ -31,6 +31,14 @@ export default function MyReservationListSection() {
         };
       }
       throw new Error('Failed to fetch reservation data');
+    },
+    filterDuplicateItems: (existing, newItems) => {
+      const existingCodes = new Set(
+        existing.map((item) => item.reservationCode)
+      );
+      return newItems.filter(
+        (item) => !existingCodes.has(item.reservationCode)
+      );
     },
   });
 
@@ -57,9 +65,6 @@ export default function MyReservationListSection() {
         ))}
         <div ref={loaderRef} className="h-10 pt-10 w-full flex justify-center">
           {isLoading && <DotSpinner />}
-          {!hasMore && reservations.length > 0 && (
-            <p className="text-gray-500">더 이상 예약 내역이 없습니다.</p>
-          )}
         </div>
         {reservations.length === 0 && !isLoading && !hasMore && (
           <p className="text-center text-gray-500">예약 내역이 없습니다.</p>
