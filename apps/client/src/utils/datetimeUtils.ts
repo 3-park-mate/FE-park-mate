@@ -70,3 +70,26 @@ export const formatFullDatePartsUtils = (dateString: string) => {
   const fullDate = formatted.replace(timeRegex, '');
   return { time, fullDate };
 };
+
+/**
+ * 두 ISO 날짜 문자열의 차이를 "X시간 Y분" 형식으로 반환합니다.
+ * 분이 0이면 "X시간"만, 시간이 0이면 "Y분"만 반환합니다.
+ */
+export const formatDuration = (startIso: string, endIso: string) => {
+  const start = new Date(startIso);
+  const end = new Date(endIso);
+  const diffMs = end.getTime() - start.getTime();
+  if (diffMs <= 0) return '0분';
+
+  const totalMinutes = Math.floor(diffMs / 1000 / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours > 0 && minutes > 0) {
+    return `${hours}시간 ${minutes}분`;
+  }
+  if (hours > 0) {
+    return `${hours}시간`;
+  }
+  return `${minutes}분`;
+};

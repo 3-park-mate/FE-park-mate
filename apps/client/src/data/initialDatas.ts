@@ -3,6 +3,7 @@ import {
   MyPageMenuDataType,
   ParkingDatailTabMenuType,
 } from '@/types/initialDataTypes';
+import { ReservationStatus } from '@/types/reservationDataTypes';
 import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
 import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
 import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
@@ -118,4 +119,27 @@ export const parkingLotOptionIconMap: Record<
   has_attendant: ParkingAttendantIcon,
   has_canopy: CanopyParkingIcon,
   has_barrier_gate: GateIcon,
+};
+
+export const statusBadgeMap: Record<
+  ReservationStatus,
+  { label: string; className: string }
+> = {
+  WAITING: {
+    label: '예약 대기',
+    className:
+      'bg-white border border-primary text-primary-dark-50 font-medium',
+  },
+  CONFIRMED: {
+    label: '예약 확정',
+    className: 'bg-primary text-white font-medium',
+  },
+  CANCELLED: {
+    label: '예약 취소',
+    className: 'bg-white border border-red-1 text-red-1 font-medium',
+  },
+  EXPIRED: {
+    label: '예약 만료',
+    className: 'bg-gray-1 text-black font-medium',
+  },
 };

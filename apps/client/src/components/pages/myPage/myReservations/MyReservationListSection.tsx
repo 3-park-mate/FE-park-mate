@@ -1,8 +1,8 @@
 'use client';
-import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
-import { HomeTabMenu } from '../../home/HomeTabMenu';
 import { useState } from 'react';
-import MyReservationItem from './MyReservationItem';
+import { HomeTabMenu } from '../../home/HomeTabMenu';
+import ActiveReservations from './ActiveReservations';
+import CompletedReservations from './CompletedReservations';
 
 export default function MyReservationListSection() {
   const [tabMenu, setTabMenu] = useState<
@@ -23,13 +23,8 @@ export default function MyReservationListSection() {
           onClick={() => setTabMenu('currentParking')}
         />
       </ul>
-      <PaddedSection className="pt-[84px] space-y-4">
-        <MyReservationItem />
-        <hr />
-        <MyReservationItem />
-        <hr />
-        <MyReservationItem />
-      </PaddedSection>
+      {tabMenu === 'reservationParking' && <ActiveReservations />}
+      {tabMenu === 'currentParking' && <CompletedReservations />}
     </>
   );
 }
