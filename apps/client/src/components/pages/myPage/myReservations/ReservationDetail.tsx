@@ -47,10 +47,11 @@ export default function ReservationDetail({
       <OrderInfoSection />
       <hr />
       <ReservationActionButtons
-        showQrButton
+        showQrButton={canCancel}
         showCancelButton={canCancel}
         parkingLotUuid={reservationData.parkingLotUuid}
         parkingLotName={reservationData.parkingLotName}
+        reservationCode={reservationData.reservationCode}
       />
     </PaddedSection>
   );

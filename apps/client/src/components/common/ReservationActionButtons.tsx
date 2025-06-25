@@ -7,12 +7,14 @@ export default function ReservationActionButtons({
   showQrButton = false,
   showCancelButton = false,
   parkingLotUuid,
-  parkingLotName,
+  parkingLotName = '더미이름',
+  reservationCode = 'dummyCode',
 }: {
   showQrButton?: boolean;
   showCancelButton?: boolean;
   parkingLotUuid: string;
-  parkingLotName: string;
+  parkingLotName?: string;
+  reservationCode?: string;
 }) {
   return (
     <div className="space-y-4">
@@ -23,7 +25,10 @@ export default function ReservationActionButtons({
       )}
       <div className="flex justify-center gap-3 items-center w-full">
         {showCancelButton && (
-          <ReservationCancelDialog parkingLotName={parkingLotName} />
+          <ReservationCancelDialog
+            parkingLotName={parkingLotName}
+            reservationCode={reservationCode}
+          />
         )}
         <Link
           href={`/parking-lot/${parkingLotUuid}`}

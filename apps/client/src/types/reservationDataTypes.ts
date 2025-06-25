@@ -67,3 +67,8 @@ export interface ReservationListResponse {
   hasNext: boolean;
   nextCursor: number;
 }
+
+export interface ReservationCancelDataType {
+  reservationCode: string;
+  cancelReason: string;
+}
