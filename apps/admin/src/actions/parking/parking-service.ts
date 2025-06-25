@@ -143,7 +143,7 @@ export async function AddParkingOperationAction(
     operationDate,
   };
   try {
-    const res = await api.put<CommonResponseType<string>>(
+    const res = await api.post<CommonResponseType<string>>(
       API_PREFIX,
       `/parkingLots/${parkingLotUuid}/operations`,
       payload

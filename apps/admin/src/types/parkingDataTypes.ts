@@ -51,9 +51,9 @@ export interface OperationDataType {
 export interface OperationStoreDataType {
   validStartTime: string;
   validEndTime: string;
-  baseIntervalMinutes: string;
+  baseIntervalMinutes: number;
   baseFee: number;
-  extraIntervalMinutes: string;
+  extraIntervalMinutes: number;
   extraFee: number;
   discountRate: number;
 }
