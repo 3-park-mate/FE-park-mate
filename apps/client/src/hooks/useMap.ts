@@ -3,8 +3,8 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
-import { getParkingLotsInBox } from '@/actions/map/map-service';
-import { ParkingLotsInBoxResponseType } from '@/types/mapDataTypes';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
+import { getParkingLotsInBox } from '@/actions/parking/parking-service';
 
 export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
   const searchParams = useSearchParams();

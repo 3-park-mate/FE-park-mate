@@ -5,15 +5,13 @@ import {
   CustomOverlayMap,
   MapMarker,
 } from 'react-kakao-maps-sdk';
-import {
-  ParkingLotSimpleInfoType,
-  ParkingLotsInBoxResponseType,
-} from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import React, { SetStateAction } from 'react';
+import { SetStateAction } from 'react';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function MapMarkers({
   mapLevel,

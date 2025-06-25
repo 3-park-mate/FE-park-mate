@@ -1,14 +1,12 @@
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import {
-  ParkingLotSimpleInfoType,
-  ParkingLotsInBoxResponseType,
-} from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
 import ShowListModalButton from './ShowListModalButton';
 import Link from 'next/link';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function ParkingLotListModal({
   isOpenListModal,

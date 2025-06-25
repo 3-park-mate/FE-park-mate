@@ -1,7 +1,9 @@
 'use server';
 import { api } from '@/hooks/serverFetch';
 import {
+  GetParkingLotsInBoxRequestType,
   ParkingLotResponseDataType,
+  ParkingLotsInBoxResponseType,
   WeeklyOperationInfo,
 } from '@/types/parkingDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
@@ -59,5 +61,42 @@ export async function getWeeklyOperationById(
     };
   } catch (_error) {
     redirect('/error');
+  }
+}
+
+export async function getParkingLotsInBox(
+  data: GetParkingLotsInBoxRequestType
+) {
+  console.log(data);
+  try {
+    const query: Record<string, string> = {
+      swLat: data.swLat.toString(),
+      swLng: data.swLng.toString(),
+      neLat: data.neLat.toString(),
+      neLng: data.neLng.toString(),
+      isEvChargingAvailable: data.isEvChargingAvailable.toString(),
+    };
+
+    if (data.startDateTime) {
+      query.startDateTime = data.startDateTime;
+    }
+
+    if (data.endDateTime) {
+      query.endDateTime = data.endDateTime;
+    }
+
+    const res = await api.get<CommonResponseType<ParkingLotsInBoxResponseType>>(
+      READ_API_PREFIX,
+      '/box',
+      query,
+      { cache: 'no-cache' }
+    );
+    console.log(query);
+    console.log(res.data);
+
+    return res.data;
+  } catch (error) {
+    console.error('getParkingLotsInBox 에러:', error);
+    throw error;
   }
 }

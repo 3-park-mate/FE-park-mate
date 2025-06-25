@@ -5,32 +5,6 @@ export interface MarkerDataType {
   longitude: number;
 }
 
-export interface ParkingLotModalInfoType {
-  name: string;
-  address: string;
-  distance: number;
-  thumbnailUrl: string;
-  baseFee: number;
-  evchargeType: number[];
-  averageRating: number;
-  reviewCount: number;
-  likeCount: number;
-  dislikeCount: number;
-}
-
-export interface ParkingLotListSimpleInfoType {
-  name: string;
-  address: string;
-  distance: number;
-  thumbnailUrls: string[];
-  baseFee: number;
-  evchargeType: number[];
-  averageRating: number;
-  reviewCount: number;
-  likeCount: number;
-  dislikeCount: number;
-}
-
 export interface MapInfo {
   center?: {
     lat: number;
@@ -43,9 +17,6 @@ export interface MapInfo {
     neLng: number;
   };
   level?: number;
-}
-export interface ParkingLotsInBoxResponseType {
-  parkingLots: ParkingLotSimpleInfoType[];
 }
 
 export interface ParkingLotSimpleInfoType {
@@ -60,29 +31,4 @@ export interface ParkingLotSimpleInfoType {
   longitude: number;
   distance: number;
   availableSpotCount: number;
-}
-
-export interface ParkingLotInfoType {
-  parkingLotUuid: string;
-  hostUuid: string;
-  thumbnailUrl: string;
-  name: string;
-  phoneNumber: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  capacity: number;
-  parkingLotType: string;
-  parkingSpotTypes: string[];
-  evChargeTypes: string[];
-  extraInfo: string;
-  imageUrls: {
-    imageUrl: string;
-  }[];
-  options: {
-    name: string;
-    label: string;
-  }[];
-  likeCount: 0;
-  dislikeCount: 0;
 }

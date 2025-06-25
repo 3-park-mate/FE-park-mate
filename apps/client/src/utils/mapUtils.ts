@@ -23,7 +23,7 @@ export const updateMapState = (
 export const searchLocationByKeywordUtil = (
   keyword: string
 ): Promise<SearchLocationResultType[]> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const ps = new kakao.maps.services.Places();
 
     ps.keywordSearch(keyword, (data, status) => {
@@ -39,7 +39,7 @@ export const searchLocationByKeywordUtil = (
 
         resolve(results);
       } else {
-        reject;
+        resolve([]);
       }
     });
   });

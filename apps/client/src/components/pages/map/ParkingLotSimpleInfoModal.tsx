@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import HeadingWithSubtext from '../../common/HeadingWithSubtext';
 import RatingOverview from './RatingOverview';
 import Image from 'next/image';
@@ -13,36 +13,22 @@ import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import Evchargetypebadges from './EvChargeTypeBadges';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useFetchData } from '@/hooks/useFetchData';
 
 export default function ParkingLotSimpleInfoModal({
   clickMarker,
 }: {
   clickMarker: ParkingLotSimpleInfoType;
 }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [parkingLotData, setParkingLotData] =
-    useState<ParkingLotResponseDataType>();
 
-  useEffect(() => {
-    if (!clickMarker) return;
+  const fetcher = useCallback(
+    () => getParkingLotById(clickMarker.parkingLotUuid),
+    [clickMarker.parkingLotUuid]
+  );
 
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getParkingLotById(clickMarker.parkingLotUuid);
-        if (data.success) {
-          setParkingLotData(data.data);
-        }
-      } catch (error) {
-        console.log('주차장 정보 로드 실패:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [clickMarker]);
+  const { data: parkingLotData, loading } =
+    useFetchData<ParkingLotResponseDataType>(fetcher);
 
   useEffect(() => {
     setIsOpen(true);
@@ -55,7 +41,7 @@ export default function ParkingLotSimpleInfoModal({
         isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       )}
     >
-      {isLoading ? (
+      {loading ? (
         <div
           className={cn(
             'rounded-2xl px-[24px] py-[18px] bg-white shadow-xl flex justify-center items-center min-h-[130px]'
@@ -81,6 +67,8 @@ export default function ParkingLotSimpleInfoModal({
                   />
                 )}
                 <RatingOverview
+                  reviewCount={1}
+                  averageRating={4.5}
                   likeCount={parkingLotData?.likeCount}
                   dislikeCount={parkingLotData?.dislikeCount}
                 />
