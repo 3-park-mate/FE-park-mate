@@ -19,9 +19,9 @@ export async function getReservationsData({
   size: number;
   cursor?: number;
 }): Promise<ApiResponse<ReservationListResponse>> {
-  const payload = {
+  const payload: Record<string, string> = {
     size: size.toString(),
-    cursor: cursor ? cursor.toString() : size.toString(),
+    ...(cursor !== undefined && { cursor: cursor.toString() }),
   };
   try {
     const session = await getServerSession(options);

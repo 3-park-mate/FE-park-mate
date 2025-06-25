@@ -1,66 +1,70 @@
 'use client';
-
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
-import { useEffect, useRef, useState } from 'react';
-import MyReservationItem from './MyReservationItem';
 import { ReservationItemDataType } from '@/types/reservationDataTypes';
+import MyReservationItem from './MyReservationItem';
 import { getReservationsData } from '@/actions/reservation/reservation-service';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { HomeTabMenu } from '../../home/HomeTabMenu';
+import { useState } from 'react';
 
-export default function MyReservationListSection({
-  reservations: initialReservations,
-}: {
-  reservations: ReservationItemDataType[];
-}) {
-  const [reservations, setReservations] = useState(initialReservations);
-  const [cursor, setCursor] = useState<number | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+const PAGE_SIZE = 10;
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting && !isLoading && hasMore) {
-          fetchMoreReservations();
-        }
-      },
-      { threshold: 1 }
-    );
+export default function MyReservationListSection() {
+  const [tabMenu, setTabMenu] = useState<
+    'reservationParking' | 'currentParking'
+  >('reservationParking');
 
-    const current = loaderRef.current;
-    if (current) observer.observe(current);
-
-    return () => {
-      if (current) observer.unobserve(current);
-    };
-  }, [isLoading, hasMore, cursor]);
-
-  const fetchMoreReservations = async () => {
-    setIsLoading(true);
-    const res = await getReservationsData({ size: 10, cursor });
-
-    if (res.success) {
-      setReservations((prev) => [...prev, ...res.data.content]);
-      setCursor(res.data.nextCursor);
-      setHasMore(res.data.hasNext);
-    }
-
-    setIsLoading(false);
-  };
+  const {
+    items: reservations,
+    isLoading,
+    hasMore,
+    loaderRef,
+  } = useInfiniteScroll<ReservationItemDataType, number>({
+    fetchData: async (cursor) => {
+      const res = await getReservationsData({ size: PAGE_SIZE, cursor });
+      if (res.success) {
+        return {
+          content: res.data.content,
+          nextCursor: res.data.nextCursor,
+          hasNext: res.data.hasNext,
+        };
+      }
+      throw new Error('Failed to fetch reservation data');
+    },
+  });
 
   return (
-    <PaddedSection className="pt-[84px]">
-      {reservations.map((item, index) => (
-        <div key={item.reservationCode} className="pb-4">
-          <MyReservationItem data={item} />
-          {index !== reservations.length - 1 && <hr className="mt-4" />}
+    <>
+      <ul className="fixed w-full max-w-[600px] flex justify-between bg-inner-background-gray z-50">
+        <HomeTabMenu
+          tabMenuName="이용 예정 및 진행 중"
+          selected={tabMenu === 'reservationParking'}
+          onClick={() => setTabMenu('reservationParking')}
+        />
+        <HomeTabMenu
+          tabMenuName="이용 완료"
+          selected={tabMenu === 'currentParking'}
+          onClick={() => setTabMenu('currentParking')}
+        />
+      </ul>
+      <PaddedSection className="pt-[84px]">
+        {reservations.map((item, index) => (
+          <div key={item.reservationCode} className="pb-4">
+            <MyReservationItem data={item} />
+            {index !== reservations.length - 1 && <hr className="mt-4" />}
+          </div>
+        ))}
+        <div ref={loaderRef} className="h-10 pt-10 w-full flex justify-center">
+          {isLoading && <DotSpinner />}
+          {!hasMore && reservations.length > 0 && (
+            <p className="text-gray-500">더 이상 예약 내역이 없습니다.</p>
+          )}
         </div>
-      ))}
-      <div ref={loaderRef} className="h-10 pt-10 w-full flex justify-center">
-        {isLoading && <DotSpinner />}
-      </div>
-    </PaddedSection>
+        {reservations.length === 0 && !isLoading && !hasMore && (
+          <p className="text-center text-gray-500">예약 내역이 없습니다.</p>
+        )}
+      </PaddedSection>
+    </>
   );
 }
