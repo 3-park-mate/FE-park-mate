@@ -1,11 +1,11 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import MyReservationListSection from '@/components/pages/myPage/myReservations/MyReservationListSection';
 
-export default function page() {
+export default async function page() {
   return (
     <>
       <PageHeader title="예약 내역" />
-      <main>
+      <main className="">
         <MyReservationListSection />
       </main>
     </>

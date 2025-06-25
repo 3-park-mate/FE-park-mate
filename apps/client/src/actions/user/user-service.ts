@@ -56,7 +56,7 @@ export async function AddFavoriteAction(
       payload,
       {
         headers: {
-          'X-User-UUID': `Bearer ${uuid}`,
+          'X-User-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
       }

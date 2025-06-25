@@ -57,7 +57,11 @@ export async function serverFetch<T>(
         .catch(() => ({ message: res.statusText || '서버 오류' }));
       console.error('API 호출 실패: ', url, errorData);
 
-      throw new Error(errorData.message || '알 수 없는 오류가 발생했습니다.');
+      throw new Error(
+        errorData.error ||
+          errorData.message ||
+          '알 수 없는 오류가 발생했습니다.'
+      );
     }
 
     // 응답이 없는 경우 (예: 204 No Content) 처리
@@ -89,6 +93,7 @@ export const api = {
   post: <T>(
     baseApiUrl: string,
     endpoint: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body?: any,
     options?: Omit<RequestOptions, 'method' | 'body'>
   ) =>
@@ -97,6 +102,7 @@ export const api = {
   put: <T>(
     baseApiUrl: string,
     endpoint: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body?: any,
     options?: Omit<RequestOptions, 'method' | 'body'>
   ) =>
