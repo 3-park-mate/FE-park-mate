@@ -3,6 +3,7 @@ import { api } from '@/hooks/serverFetch';
 import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import {
   OperationDataType,
+  OperationStoreDataType,
   ParkingLotOptionDataType,
   ParkingLotResponseDataType,
 } from '@/types/parkingDataTypes';
@@ -66,7 +67,7 @@ export async function getParkingLotById(
         cache: 'no-cache',
       }
     );
-    console.log(res);
+    // console.log(res);
 
     return {
       success: true,
@@ -95,7 +96,7 @@ export async function getMonthlyOperationById(
       `/parkingLots/${parkingLotUuid}/operations`,
       query
     );
-    console.log(res);
+    // console.log(res);
 
     return {
       success: true,
@@ -103,5 +104,83 @@ export async function getMonthlyOperationById(
     };
   } catch (_error) {
     redirect('/error');
+  }
+}
+
+export async function UpdateParkingOperationAction(
+  parkingLotUuid: string,
+  operationUuid: string,
+  OperationData: Partial<OperationStoreDataType>
+): Promise<ApiResponse<string>> {
+  const payload: Partial<OperationStoreDataType> = { ...OperationData };
+  try {
+    const res = await api.put<CommonResponseType<string>>(
+      API_PREFIX,
+      `/parkingLots/${parkingLotUuid}/operations/${operationUuid}`,
+      payload
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function AddParkingOperationAction(
+  parkingLotUuid: string,
+  operationDate: string,
+  OperationData: Partial<OperationStoreDataType>
+): Promise<ApiResponse<string>> {
+  const payload: Partial<OperationStoreDataType> & { operationDate: string } = {
+    ...OperationData,
+    operationDate,
+  };
+  try {
+    const res = await api.put<CommonResponseType<string>>(
+      API_PREFIX,
+      `/parkingLots/${parkingLotUuid}/operations`,
+      payload
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function DeleteParkingOperationAction(
+  parkingLotUuid: string,
+  operationUuid: string
+): Promise<ApiResponse<string>> {
+  try {
+    const res = await api.del<CommonResponseType<string>>(
+      API_PREFIX,
+      `/parkingLots/${parkingLotUuid}/operations/${operationUuid}`
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }

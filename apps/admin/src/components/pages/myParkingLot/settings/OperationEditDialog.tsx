@@ -15,9 +15,23 @@ import { Button } from '@repo/ui/components/base/button';
 import { useForm } from 'react-hook-form';
 import { handleKeyDown } from '@/utils/formUtils';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { formatDate, formatDateParts } from '@/utils/datetimeUtils';
 import CommonSelect from '@repo/ui/components/common/CommonSelect';
 import { useEffect } from 'react';
+import { useParams } from 'next/navigation';
+
+function getInitialFormValues(
+  operation?: OperationDataType
+): OperationStoreDataType {
+  return {
+    validStartTime: operation?.validStartTime ?? '',
+    validEndTime: operation?.validEndTime ?? '',
+    baseIntervalMinutes: String(operation?.baseIntervalMinutes ?? 30),
+    baseFee: operation?.baseFee ?? 0,
+    extraIntervalMinutes: String(operation?.extraIntervalMinutes ?? 10),
+    extraFee: operation?.extraFee ?? 0,
+    discountRate: operation?.discountRate ?? 0,
+  };
+}
 
 export default function OperationEditDialog({
   operation,
@@ -26,40 +40,17 @@ export default function OperationEditDialog({
   operation?: OperationDataType;
   onSubmit: (data: OperationDataType) => void;
 }) {
+  const params = useParams();
+  const parkingLotUuid = operation?.parkingLotUuid ?? params.parkingLotUuid;
+
   const { register, handleSubmit, setValue, getValues, reset } =
     useForm<OperationStoreDataType>({
-      defaultValues: {
-        validStartTime: operation?.validStartTime
-          ? formatDateParts(operation.validStartTime).time
-          : '',
-        validEndTime: operation?.validEndTime
-          ? formatDateParts(operation.validEndTime).time
-          : '',
-        baseIntervalMinutes: String(operation?.baseIntervalMinutes ?? 30),
-        baseFee: operation?.baseFee ?? 0,
-        extraIntervalMinutes: String(operation?.extraIntervalMinutes ?? 10),
-        extraFee: operation?.extraFee ?? 0,
-        discountRate: operation?.discountRate ?? 0,
-      },
+      defaultValues: getInitialFormValues(operation),
     });
 
   useEffect(() => {
-    reset({
-      validStartTime: operation?.validStartTime
-        ? formatDateParts(operation.validStartTime).time
-        : '',
-      validEndTime: operation?.validEndTime
-        ? formatDateParts(operation.validEndTime).time
-        : '',
-      baseIntervalMinutes: String(operation?.baseIntervalMinutes ?? 30),
-      baseFee: operation?.baseFee ?? 0,
-      extraIntervalMinutes: String(operation?.extraIntervalMinutes ?? 10),
-      extraFee: operation?.extraFee ?? 0,
-      discountRate: operation?.discountRate ?? 0,
-    });
+    reset(getInitialFormValues(operation));
   }, [operation, reset]);
-
-  // 폼 제출 시 직접 onSubmit prop으로 데이터 전달
 
   return (
     <Dialog>
@@ -72,9 +63,7 @@ export default function OperationEditDialog({
         <DialogHeader>
           <DialogTitle>운영 정보 {operation ? '수정' : '등록'}</DialogTitle>
           {operation?.operationDate && (
-            <p className="text-15px text-gray-2">
-              {formatDate(operation.operationDate)}
-            </p>
+            <p className="text-15px text-gray-2">{operation.operationDate}</p>
           )}
         </DialogHeader>
         <form

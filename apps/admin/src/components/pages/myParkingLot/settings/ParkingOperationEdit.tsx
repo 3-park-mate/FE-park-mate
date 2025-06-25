@@ -21,7 +21,7 @@ export default async function ParkingOperationEdit({
         란입니다.
       </p>
       <OperationEditGuide />
-      <OperationCalendar />
+      <OperationCalendar OperationDatas={OperationDatas} />
     </PaddedSection>
   );
 }
