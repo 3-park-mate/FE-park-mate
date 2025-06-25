@@ -1,8 +1,6 @@
 import { ParkingQRDataType } from '@/types/parkingDataTypes';
 import { formatDateParts } from '@/utils/datetimeUtils';
-import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
-import Link from 'next/link';
 import ReservationInfoList from '../../../../common/ReservationInfoList';
 import QRcodeBoxSection from './QRcodeBoxSection';
 import ReservationActionButtons from '@/components/common/ReservationActionButtons';
@@ -39,7 +37,10 @@ export default function ParkingQRInfo({
           className="px-6"
         />
       </div>
-      <ReservationActionButtons />
+      <ReservationActionButtons
+        showCancelButton
+        parkingLotUuid={parkingLotUuid}
+      />
     </PaddedLayout>
   );
 }
