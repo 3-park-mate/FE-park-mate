@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { OperationDataType } from '@/types/parkingDataTypes';
 import OperationInfo from './OperationInfo';
 
-export default function OperationCalendar({
+export default function OperationCalendarWithInfo({
   OperationDatas,
 }: {
   OperationDatas: OperationDataType[];

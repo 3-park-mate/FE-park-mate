@@ -1,5 +1,5 @@
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
-import OperationCalendar from './OperationCalendar';
+import OperationCalendarWithInfo from './OperationCalendarWithInfo';
 import OperationEditGuide from './OperationEditGuide';
 import { getMonthlyOperationById } from '@/actions/parking/parking-service';
 
@@ -21,7 +21,7 @@ export default async function ParkingOperationEdit({
         란입니다.
       </p>
       <OperationEditGuide />
-      <OperationCalendar OperationDatas={OperationDatas} />
+      <OperationCalendarWithInfo OperationDatas={OperationDatas} />
     </PaddedSection>
   );
 }

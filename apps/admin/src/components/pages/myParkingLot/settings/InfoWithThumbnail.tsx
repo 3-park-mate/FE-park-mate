@@ -24,8 +24,10 @@ export default function InfoWithThumbnail({
       <div className="aspect-[155/102] flex items-center justify-center relative">
         <Image
           src={thumbImageUrl ?? '/img/no-image.png'}
+          priority
           alt="주차장 이미지"
           fill
+          sizes="(max-width: 600px) 100vw 600px"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />

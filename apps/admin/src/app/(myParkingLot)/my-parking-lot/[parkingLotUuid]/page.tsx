@@ -31,10 +31,7 @@ export default async function page({
 
   return (
     <>
-      <PageHeader
-        title="주차장 관리 페이지"
-        //   isShadow={false}
-      />
+      <PageHeader title="주차장 관리 페이지" />
       <main className="pb-32 bg-inner-background-gray">
         <InfoWithThumbnail
           thumbImageUrl={parkingLotData.thumbnailUrl}
