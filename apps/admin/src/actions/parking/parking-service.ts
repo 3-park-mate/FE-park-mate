@@ -2,6 +2,7 @@
 import { api } from '@/hooks/serverFetch';
 import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import {
+  OperationDataType,
   ParkingLotOptionDataType,
   ParkingLotResponseDataType,
 } from '@/types/parkingDataTypes';
@@ -64,6 +65,35 @@ export async function getParkingLotById(
       {
         cache: 'no-cache',
       }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getMonthlyOperationById(
+  parkingLotUuid: string
+): Promise<ApiResponse<OperationDataType[]>> {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1);
+
+  const query: Record<string, string> = {
+    year: year.toString(),
+    month: month.toString(),
+  };
+
+  try {
+    const res = await api.get<CommonResponseType<OperationDataType[]>>(
+      API_PREFIX,
+      `/parkingLots/${parkingLotUuid}/operations`,
+      query
     );
     console.log(res);
 

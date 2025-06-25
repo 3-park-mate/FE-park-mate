@@ -18,7 +18,8 @@ export default function ParkingSettingsTabBar() {
       if (!tabRef.current) return;
 
       const { top } = tabRef.current.getBoundingClientRect();
-      setIsStuck(top <= 56);
+      setIsStuck(top <= 74);
+      console.log('top: ', top);
 
       const offsets = parkingSettingsTabMenus.map(({ id }) => {
         const section = document.getElementById(id);

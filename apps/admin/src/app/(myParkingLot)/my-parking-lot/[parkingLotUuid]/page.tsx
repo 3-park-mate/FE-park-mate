@@ -47,7 +47,7 @@ export default async function page({
         <ParkmateLinkButton />
         <ParkingSettingsTabBar />
         <section className="my-4 space-y-3">
-          <ParkingOperationEdit />
+          <ParkingOperationEdit parkingLotUuid={parkingLotUuid} />
           <ParkingInfoEditForm
             name={parkingLotData.name}
             extraInfo={parkingLotData.extraInfo}
