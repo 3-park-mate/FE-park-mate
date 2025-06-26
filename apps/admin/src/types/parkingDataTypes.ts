@@ -108,3 +108,11 @@ export interface WeeklyOperationInfo {
   startTime?: string;
   endTime?: string;
 }
+
+export interface ParkingLotItem {
+  parkingLotUuid: string;
+  name: string;
+  mainAddress: string;
+  detailAddress: string;
+  thumbnailUrl: string;
+}

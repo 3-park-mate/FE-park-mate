@@ -15,7 +15,7 @@ export default function MyParkingLotSection() {
           </p>
         </Link>
       </div>
-      <ParkingCarousel carouselDatas={parkingCarouselItemsDummy} />
+      {/* <ParkingCarousel carouselDatas={parkingCarouselItemsDummy} /> */}
     </section>
   );
 }

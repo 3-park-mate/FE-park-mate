@@ -23,7 +23,11 @@ import { uploadFileToS3 } from '@/actions/common/s3-service';
 
 export type AddParkingLotStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5';
 
-export default function AddParkingLotFunnel() {
+export default function AddParkingLotFunnel({
+  hostUuid,
+}: {
+  hostUuid: string;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const methods = useForm<AddParkingLotStoreDataType>({
@@ -32,7 +36,7 @@ export default function AddParkingLotFunnel() {
     reValidateMode: 'onChange',
     defaultValues: {
       parkingLot: {
-        hostUuid: 'hostuuid-dummy',
+        hostUuid: hostUuid,
         parkingLotType: 'PRIVATE',
         name: '',
         phoneNumber: '01012344321',

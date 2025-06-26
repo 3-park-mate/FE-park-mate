@@ -1,4 +1,4 @@
-import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
 import ParkingCardItem from '../../common/ParkingCardItem';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
@@ -7,7 +7,7 @@ import { Plus } from 'lucide-react';
 export default function MyParkingLotListSection({
   parkingLotDatas,
 }: {
-  parkingLotDatas: ParkingCarouselItemDataType[];
+  parkingLotDatas: ParkingLotItem[];
 }) {
   return (
     <>

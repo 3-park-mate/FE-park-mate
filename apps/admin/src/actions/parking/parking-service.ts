@@ -1,13 +1,16 @@
 'use server';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
 import { AddParkingLotDataType } from '@/types/addParkingLotDataTypes';
 import {
   OperationDataType,
   OperationStoreDataType,
+  ParkingLotItem,
   ParkingLotOptionDataType,
   ParkingLotResponseDataType,
 } from '@/types/parkingDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/parking-service/api/v1`;
@@ -182,5 +185,35 @@ export async function DeleteParkingOperationAction(
       success: false,
       message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
     };
+  }
+}
+
+export async function getMyParkingLots(): Promise<
+  ApiResponse<ParkingLotItem[]>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<
+      CommonResponseType<{ parkingLots: ParkingLotItem[] }>
+    >(API_PREFIX, '/parkingLots', undefined, {
+      headers: {
+        'X-Host-UUID': uuid,
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data.parkingLots,
+    };
+  } catch (_error) {
+    redirect('/error');
   }
 }

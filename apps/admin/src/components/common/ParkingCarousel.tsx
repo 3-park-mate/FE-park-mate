@@ -6,12 +6,12 @@ import {
 import { ChevronRightCircle } from 'lucide-react';
 import Link from 'next/link';
 import ParkingCardItem from './ParkingCardItem';
-import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
 
 export default function ParkingCarousel({
   carouselDatas,
 }: {
-  carouselDatas: ParkingCarouselItemDataType[];
+  carouselDatas: ParkingLotItem[];
 }) {
   return (
     <Carousel
