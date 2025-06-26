@@ -3,6 +3,7 @@ import ParkingCardItem from '../../common/ParkingCardItem';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
 import { Plus } from 'lucide-react';
+import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default function MyParkingLotListSection({
   parkingLotDatas,
@@ -10,7 +11,7 @@ export default function MyParkingLotListSection({
   parkingLotDatas: ParkingLotItem[];
 }) {
   return (
-    <>
+    <PaddedLayout className="py-6">
       <section className="grid grid-cols-2 gap-4">
         {parkingLotDatas.map((item, index) => (
           <ParkingCardItem key={index} {...item} />
@@ -23,6 +24,6 @@ export default function MyParkingLotListSection({
         <Plus />
         주차장 등록하기
       </Link>
-    </>
+    </PaddedLayout>
   );
 }

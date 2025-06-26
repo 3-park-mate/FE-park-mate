@@ -44,7 +44,6 @@ export default function ParkingCardItem({
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
         {mainAddress}
       </p>
-      {/* {averageRating && <Rating>{averageRating}</Rating>} */}
     </div>
   );
 }
