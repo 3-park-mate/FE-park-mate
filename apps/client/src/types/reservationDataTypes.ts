@@ -58,7 +58,7 @@ export interface ReservationItemDataType {
   entryTime: string;
   exitTime: string;
   amount: number;
-  reservationStatus: ReservationStatus;
+  status: ReservationStatus;
   paymentType: PaymentType;
 }
 
