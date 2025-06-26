@@ -1,9 +1,15 @@
+import { getMyParkingLots } from '@/actions/parking/parking-service';
 import ParkingCarousel from '@/components/common/ParkingCarousel';
-import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-export default function MyParkingLotSection() {
+export default async function MyParkingLotSection() {
+  const { data: parkingLots } = (await getMyParkingLots()) as {
+    success: true;
+    data: ParkingLotItem[];
+  };
+
   return (
     <section className="pl-6">
       <div className="flex items-center justify-between">
@@ -15,7 +21,7 @@ export default function MyParkingLotSection() {
           </p>
         </Link>
       </div>
-      {/* <ParkingCarousel carouselDatas={parkingCarouselItemsDummy} /> */}
+      <ParkingCarousel carouselDatas={parkingLots} />
     </section>
   );
 }

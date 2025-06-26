@@ -207,7 +207,6 @@ export async function getMyParkingLots(): Promise<
         'Authorization': `Bearer ${accessToken}`,
       },
     });
-    console.log(res);
 
     return {
       success: true,
