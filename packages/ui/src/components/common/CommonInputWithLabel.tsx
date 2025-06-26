@@ -31,6 +31,7 @@ export default function CommonInputWithLabel({
       <Input
         type={type}
         id={id}
+        step={type === 'time' && props.step === undefined ? 1800 : props.step}
         {...props}
         className={cn(
           'bg-white',
