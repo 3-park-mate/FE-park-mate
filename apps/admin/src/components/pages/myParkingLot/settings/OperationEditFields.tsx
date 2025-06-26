@@ -1,12 +1,15 @@
 'use client';
 import { OperationStoreDataType } from '@/types/parkingDataTypes';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import CommonSelect from '@repo/ui/components/common/CommonSelect';
 
 export default function OperationEditFields() {
   const { register, setValue, control } =
     useFormContext<OperationStoreDataType>();
+
+  const { errors } = useFormState<OperationStoreDataType>();
+  console.log('erros: ', errors);
 
   const selectedBaseIntervalMinutes =
     useWatch({
@@ -26,7 +29,6 @@ export default function OperationEditFields() {
         <CommonInputWithLabel
           label="시작 시간"
           type="time"
-          placeholder="예: 08:00"
           {...register('validStartTime')}
         />
         <CommonInputWithLabel
@@ -35,6 +37,14 @@ export default function OperationEditFields() {
           placeholder="예: 22:00"
           {...register('validEndTime')}
         />
+      </div>
+      <div>
+        <p className="text-red-500 text-13px ms-1">
+          {errors.validStartTime?.message}
+        </p>
+        <p className="text-red-500 text-13px ms-1">
+          {errors.validEndTime?.message}
+        </p>
       </div>
       <hr />
       <div className="flex gap-3">
@@ -52,10 +62,16 @@ export default function OperationEditFields() {
           label="단위 시간당 요금 (원)"
           type="number"
           placeholder="단위 시간당 요금 (원)"
-          min={0}
+          min={100}
           maxLength={6}
           {...register('baseFee', { valueAsNumber: true })}
         />
+      </div>
+      <div>
+        <p className="text-red-500 text-13px ms-1">
+          {errors.baseIntervalMinutes?.message}
+        </p>
+        <p className="text-red-500 text-13px ms-1">{errors.baseFee?.message}</p>
       </div>
       <div className="flex gap-3">
         <CommonSelect
@@ -73,18 +89,29 @@ export default function OperationEditFields() {
           type="number"
           placeholder="추가 시간당 요금 (원)"
           min={0}
+          maxLength={6}
           {...register('extraFee', { valueAsNumber: true })}
         />
+      </div>
+      <div>
+        <p className="text-red-500 text-13px ms-1">
+          {errors.extraIntervalMinutes?.message}
+        </p>
+        <p className="text-red-500 text-13px ms-1">
+          {errors.extraFee?.message}
+        </p>
       </div>
       <hr />
       <CommonInputWithLabel
         label="할인율 (%)"
-        type="number"
+        type="text"
         placeholder="할인율 (%)"
-        min={0}
-        max={100}
+        maxLength={3}
         {...register('discountRate', { valueAsNumber: true })}
       />
+      <p className="text-red-500 text-13px ms-1">
+        {errors.discountRate?.message}
+      </p>
     </>
   );
 }

@@ -23,6 +23,9 @@ import {
   UpdateParkingOperationAction,
 } from '@/actions/parking/parking-service';
 import AlertModal from '@repo/ui/components/common/AlertModal';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { operationEditSchema } from '@/schemas/operationEditSchema';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 function getInitialFormValues(
   operation?: OperationDataType
@@ -61,10 +64,17 @@ export default function OperationEditDialog({
   } = useAlertWithLoading();
 
   const methods = useForm<OperationStoreDataType>({
+    resolver: zodResolver(operationEditSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: getInitialFormValues(operation),
   });
 
-  const { handleSubmit, reset } = methods;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isValid },
+  } = methods;
 
   useEffect(() => {
     reset(getInitialFormValues(operation));
@@ -135,8 +145,12 @@ export default function OperationEditDialog({
             >
               <OperationEditFields />
               <DialogFooter className="mt-7">
-                <Button type="submit" variant="secondary">
-                  저장
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  disabled={loading || !isValid}
+                >
+                  {loading ? <DotSpinner /> : '저장'}
                 </Button>
               </DialogFooter>
             </form>

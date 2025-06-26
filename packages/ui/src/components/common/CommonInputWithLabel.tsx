@@ -8,12 +8,14 @@ export default function CommonInputWithLabel({
   type = 'text',
   errorMessage,
   description,
+  reserveErrorMessageSpace = false,
   ...props
 }: {
   label?: string;
   className?: string;
   errorMessage?: string;
   description?: string;
+  reserveErrorMessageSpace?: boolean;
 } & React.ComponentProps<'input'>) {
   return (
     <div className={cn('grid w-full items-center gap-1.5', className)}>
@@ -41,8 +43,14 @@ export default function CommonInputWithLabel({
       {description && (
         <p className="text-13px text-gray-3 ms-1 break-keep">· {description}</p>
       )}
-      {errorMessage && (
-        <p className="text-red-500 text-13px ms-1">{errorMessage}</p>
+      {reserveErrorMessageSpace ? (
+        <div className="min-h-[1.25rem] text-red-500 text-13px ms-1">
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
+      ) : (
+        errorMessage && (
+          <p className="text-red-500 text-13px ms-1">{errorMessage}</p>
+        )
       )}
     </div>
   );
