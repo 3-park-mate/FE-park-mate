@@ -17,7 +17,7 @@ services:
     ports:
       - "3001:3001"
     restart: always
-    command: pnpm --filter=client start
+    command: pnpm --filter=admin start
     networks:
       - backend
 
