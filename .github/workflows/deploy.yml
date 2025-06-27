@@ -95,6 +95,6 @@ jobs:
             echo "FE_AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" > ~/env/.env.front
             echo "FE_AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" > ~/env/.env.front
             
-            docker compose -f docker-compose-front.yml down
-            docker compose -f docker-compose-front.yml up -d
+            docker compose -f docker-compose-frontend.yml down
+            docker compose -f docker-compose-frontend.yml up -d
             docker image prune -f
