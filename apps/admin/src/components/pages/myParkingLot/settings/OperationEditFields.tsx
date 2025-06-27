@@ -23,6 +23,44 @@ export default function OperationEditFields() {
       name: 'extraIntervalMinutes',
     }) ?? 15;
 
+  const createNumberInputHandlers = (
+    fieldName: keyof OperationStoreDataType
+  ) => {
+    const {
+      ref,
+      onBlur: rhfOnBlur,
+      ...rest
+    } = register(fieldName, { valueAsNumber: true });
+
+    return {
+      ...rest,
+      ref,
+      type: 'text',
+      onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+        if (e.target.value === '0') {
+          e.target.value = '';
+        }
+      },
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
+        if (value === '') {
+          setValue(fieldName, 0 as any);
+        } else {
+          const numericValue = value.replace(/[^0-9]/g, '');
+          setValue(fieldName, Number(numericValue) as any);
+        }
+      },
+      onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+        if (e.target.value === '') {
+          setValue(fieldName, 0 as any);
+        }
+        if (rhfOnBlur) {
+          rhfOnBlur(e);
+        }
+      },
+    };
+  };
+
   return (
     <>
       <div className="flex gap-3">
@@ -60,11 +98,10 @@ export default function OperationEditFields() {
         />
         <CommonInputWithLabel
           label="단위 시간당 요금 (원)"
-          type="number"
           placeholder="단위 시간당 요금 (원)"
           min={100}
           maxLength={6}
-          {...register('baseFee', { valueAsNumber: true })}
+          {...createNumberInputHandlers('baseFee')}
         />
       </div>
       <div>
@@ -86,11 +123,10 @@ export default function OperationEditFields() {
         />
         <CommonInputWithLabel
           label="추가 시간당 요금 (원)"
-          type="number"
           placeholder="추가 시간당 요금 (원)"
           min={0}
           maxLength={6}
-          {...register('extraFee', { valueAsNumber: true })}
+          {...createNumberInputHandlers('extraFee')}
         />
       </div>
       <div>
@@ -104,10 +140,9 @@ export default function OperationEditFields() {
       <hr />
       <CommonInputWithLabel
         label="할인율 (%)"
-        type="text"
         placeholder="할인율 (%)"
         maxLength={3}
-        {...register('discountRate', { valueAsNumber: true })}
+        {...createNumberInputHandlers('discountRate')}
       />
       <p className="text-red-500 text-13px ms-1">
         {errors.discountRate?.message}

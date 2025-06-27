@@ -10,7 +10,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/host`;
-const HOST_API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/hosts`;
+const HOST_API_PREFIX = `${process.env.BASE_API_URL}/host-service/api/v1/hosts`;
 
 export async function signUpAction(
   signUpData: Partial<SignUpDataType>
@@ -165,6 +165,7 @@ export async function getUserInfoData(): Promise<
       redirect('/error');
     }
     const uuid = session.user.uuid;
+    console.log('uuid: ', uuid);
     const accessToken = session.user.accessToken;
 
     const res = await api.get<CommonResponseType<UserInfoResponseDataType>>(
@@ -173,12 +174,11 @@ export async function getUserInfoData(): Promise<
       undefined,
       {
         headers: {
-          'X-User-UUID': uuid,
+          'X-Host-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
       }
     );
-    console.log(res);
 
     return {
       success: true,
