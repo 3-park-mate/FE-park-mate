@@ -142,4 +142,12 @@ export const statusBadgeMap: Record<
     label: '예약 만료',
     className: 'bg-gray-1 text-black font-medium',
   },
+  IN_USE: {
+    label: '사용 중',
+    className: 'bg-blue-500 text-white font-medium',
+  },
+  COMPLETED: {
+    label: '사용 완료',
+    className: 'bg-green-500 text-white font-medium',
+  },
 };
