@@ -11,16 +11,18 @@ export default function MenuIconListItem({
   className?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <li>
+    <li className="flex-1">
       <button
         className={cn(
-          'flex flex-col items-center gap-1 cursor-pointer',
+          'flex flex-col items-center gap-1 cursor-pointer w-full',
           className
         )}
         {...buttonProps}
       >
         <Icon fill="currentColor" className="text-gray-1" />
-        <span className="text-gray-2 text-sm">{children}</span>
+        <span className="text-gray-2 text-sm text-center break-keep">
+          {children}
+        </span>
       </button>
     </li>
   );

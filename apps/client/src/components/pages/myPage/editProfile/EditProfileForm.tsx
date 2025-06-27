@@ -4,14 +4,10 @@ import { editProfileSchema } from '@/schemas/editProfileSchema';
 import { EditProfileDataType } from '@/types/userDataTypes';
 import { handleKeyDown } from '@/utils/formUtils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@repo/ui/components/base/button';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import {
-  CommonButton,
-  PaddedSection,
-} from '@repo/ui/components/common/CommonLayouts';
-import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
+import EditFormButtons from '@repo/ui/components/common/EditFormButtons';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -97,29 +93,12 @@ export default function EditProfileForm() {
           readOnly={loading || !isEditing}
           {...register('phoneNumber')}
         />
-        {isEditing ? (
-          <div className="space-y-3">
-            <CommonButton
-              type="submit"
-              disabled={!isValid}
-              className="mt-3
-            bg-white border border-primary text-primary"
-            >
-              {loading ? <DotSpinner /> : '입력 정보 저장하기'}
-            </CommonButton>
-            <CommonButton onClick={() => setIsEditing(false)}>
-              취소
-            </CommonButton>
-          </div>
-        ) : (
-          <Button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            className="w-full h-11 rounded-2xl mt-3"
-          >
-            정보 수정하기
-          </Button>
-        )}
+        <EditFormButtons
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          loading={loading}
+          isValid={isValid}
+        />
       </form>
     </PaddedSection>
   );

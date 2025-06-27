@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import LocationPermissionModal from '../common/LocationPermissionModal';
 
-export default function LocationContent() {
+export default function LocationContent({ className }: { className?: string }) {
   const [loading] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
@@ -20,10 +20,10 @@ export default function LocationContent() {
   useEffect(() => {
     const setCurrentLocation = async () => {
       try {
-        const { latitude, longitude } = await getCurrentCoordsUtil();
+        const { lat, lng } = await getCurrentCoordsUtil();
         const address = await coordtoAddressUtil({
-          lat: latitude,
-          lng: longitude,
+          lat: lat,
+          lng: lng,
         });
         setLocation(address || '');
       } catch (err) {
@@ -43,9 +43,11 @@ export default function LocationContent() {
       {isLoading ? (
         <DotSpinner className="fill-primary mx-2" />
       ) : location !== '' ? (
-        <p className={cn('font-medium text-sm')}>{location}</p>
+        <p className={cn('font-medium text-sm', className)}>{location}</p>
       ) : (
-        <p className="font-medium text-sm">주소 불러오기 실패</p>
+        <p className={cn('font-medium text-sm', className)}>
+          주소 불러오기 실패
+        </p>
       )}
       <LocationPermissionModal />
     </>

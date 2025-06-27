@@ -3,19 +3,26 @@ import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 export default function MapLinkButton({
   mainAddress,
+  parkingLotUuid,
+  latitude,
+  longitude,
 }: {
   mainAddress: string;
+  parkingLotUuid: string;
+  latitude: number;
+  longitude: number;
 }) {
   return (
     <Link
-      href="#"
-      className={`${buttonVariants({ variant: 'default' })} w-full h-auto justify-start gap-5 rounded-2xl !bg-black`}
+      href={`/map?lat=${latitude}&lng=${longitude}&uuid=${parkingLotUuid}`}
+      className={`${buttonVariants({
+        variant: 'default',
+      })} w-full h-auto justify-start items-center gap-5 rounded-2xl !bg-black`}
     >
-      <div className="relative">
+      <div className="relative flex-shrink-0 w-[64px] h-[64px]">
         <MarkerIcon
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
           !w-6 !h-6"
@@ -27,11 +34,11 @@ export default function MapLinkButton({
           height={64}
         />
       </div>
-      <div>
+      <div className="min-w-0 flex-1">
         <p className="text-primary text-15px">지도 바로가기</p>
-        <p className="text-gray-3">{mainAddress}</p>
+        <p className="text-gray-3 whitespace-pre-wrap">{mainAddress}</p>
       </div>
-      <ChevronRight className="text-primary !w-5 !h-5 ml-auto" />
+      <ChevronRight className="text-primary !w-5 !h-5 flex-shrink-0" />
     </Link>
   );
 }

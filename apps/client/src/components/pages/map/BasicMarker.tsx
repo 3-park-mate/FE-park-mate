@@ -12,12 +12,12 @@ export default function BasicMarker({
   return (
     <>
       <MapPin
-        className={cn('absolute top-0 size-14 fill-primary-light stroke-0')}
+        className={cn('absolute -top-12 -left-7 size-14 fill-gray-3 stroke-0')}
       />
 
       <p
         className={cn(
-          'absolute top-2.5 left-3.5  h-7 w-7 inline-flex items-center justify-center rounded-full font-semibold text-sm bg-white shadow-lg',
+          'absolute -top-9.5 -left-3.5  h-7 w-7 inline-flex items-center justify-center rounded-full font-semibold text-sm bg-white shadow-lg',
           className
         )}
       >

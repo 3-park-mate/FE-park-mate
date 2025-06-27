@@ -19,6 +19,7 @@ interface CommonSelectProps {
   error?: boolean;
   errorMessage?: string;
   description?: string;
+  className?: string;
 }
 
 export default function CommonSelect({
@@ -30,9 +31,10 @@ export default function CommonSelect({
   error = false,
   errorMessage,
   description,
+  className,
 }: CommonSelectProps) {
   return (
-    <div className="grid gap-2">
+    <div className="grid gap-2 w-full">
       {label && (
         <label
           className={`font-semibold text-13px ms-1 ${
@@ -46,7 +48,7 @@ export default function CommonSelect({
         <SelectTrigger
           className={`border-2 px-4 py-5 text-15px ${
             error ? 'border-red-500 focus-visible:ring-red-400' : ''
-          }`}
+          } ${className}`}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

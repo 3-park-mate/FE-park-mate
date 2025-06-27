@@ -3,6 +3,21 @@ import {
   MyPageMenuDataType,
   ParkingDatailTabMenuType,
 } from '@/types/initialDataTypes';
+import { ReservationStatus } from '@/types/reservationDataTypes';
+import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
+import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
+import DCChademoIcon from '@repo/ui/components/icon/DCChademoIcon';
+import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
+import CanopyParkingIcon from '@repo/ui/components/icon/options/CanopyParkingIcon';
+import CarKeyIcon from '@repo/ui/components/icon/options/CarKeyIcon';
+import CCTVIcon from '@repo/ui/components/icon/options/CCTVIcon';
+import EVChargingIcon from '@repo/ui/components/icon/options/EVChargingIcon';
+import GateIcon from '@repo/ui/components/icon/options/GateIcon';
+import HandicappedParkingIcon from '@repo/ui/components/icon/options/HandicappedIcon';
+import MotorcycleIcon from '@repo/ui/components/icon/options/MotorcycleIcon';
+import ParkingAttendantIcon from '@repo/ui/components/icon/options/ParkingAttendantIcon';
+import ReceiptIcon from '@repo/ui/components/icon/options/ReceiptIcon';
+import TowerParkingIcon from '@repo/ui/components/icon/options/TowerParkingIcon';
 
 export const menuItems: HomeMenuDataType[] = [
   {
@@ -37,16 +52,8 @@ export const myPageMenus: MyPageMenuDataType[] = [
     href: 'my-car',
   },
   {
-    label: '주차권',
-    href: '#',
-  },
-  {
-    label: '구매 내역',
-    href: '#',
-  },
-  {
-    label: '호스트 등록',
-    href: '#',
+    label: '예약 내역',
+    href: 'my-reservations',
   },
 ];
 
@@ -90,3 +97,49 @@ export const parkingDetailTabMenus: ParkingDatailTabMenuType[] = [
   { label: '주차장 사진', id: 'images' },
   { label: '방문자 리뷰', id: 'reviews' },
 ];
+
+export const chargingTypes = [
+  { key: 'AC_SINGLE', icon: ACSingleIcon, label: 'AC단상' },
+  { key: 'AC_THREE_PHASE', icon: ACThreePhaseIcon, label: 'AC3상' },
+  { key: 'DC_CHADEMO', icon: DCChademoIcon, label: 'DC차데모' },
+  { key: 'DC_COMBO', icon: DCComboIcon, label: 'DC콤보' },
+];
+
+export const parkingLotOptionIconMap: Record<
+  string,
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  has_cctv: CCTVIcon,
+  receipt_available: ReceiptIcon,
+  requires_key_deposit: CarKeyIcon,
+  disabled_parking: HandicappedParkingIcon,
+  is_tower_type: TowerParkingIcon,
+  has_ev_charger: EVChargingIcon,
+  motorcycle_parking: MotorcycleIcon,
+  has_attendant: ParkingAttendantIcon,
+  has_canopy: CanopyParkingIcon,
+  has_barrier_gate: GateIcon,
+};
+
+export const statusBadgeMap: Record<
+  ReservationStatus,
+  { label: string; className: string }
+> = {
+  WAITING: {
+    label: '예약 대기',
+    className:
+      'bg-white border border-primary text-primary-dark-50 font-medium',
+  },
+  CONFIRMED: {
+    label: '예약 확정',
+    className: 'bg-primary text-white font-medium',
+  },
+  CANCELLED: {
+    label: '예약 취소',
+    className: 'bg-white border border-red-1 text-red-1 font-medium',
+  },
+  EXPIRED: {
+    label: '예약 만료',
+    className: 'bg-gray-1 text-black font-medium',
+  },
+};

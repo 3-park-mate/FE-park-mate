@@ -1,56 +1,36 @@
-import Image from 'next/image';
-
-import { Car, MapPin } from 'lucide-react';
-import {
-  CommonPriceBadge,
-  IconWithText,
-  Rating,
-} from '@repo/ui/components/common/CommonLayouts';
-import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
-import { DetailInfoSectionProps } from '@/types/parkingDataTypes';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
+import MapLinkButton from './MapLinkButton';
+import OperationCalendar from './OperationCalendar';
 
 export default function DetailInfoSection({
-  thumbImageUrl,
-  baseFee,
-  name,
-  averageRating,
-  totalReviews,
-  distance,
-  availableSpots,
-  registeredParkingCount,
-}: DetailInfoSectionProps) {
+  mainAddress,
+  parkingLotUuid,
+  extraInfo,
+  latitude,
+  longitude,
+}: {
+  mainAddress: string;
+  parkingLotUuid: string;
+  extraInfo: string;
+  latitude: number;
+  longitude: number;
+}) {
   return (
-    <section className="relative">
-      <div className="aspect-[155/102] flex items-center justify-center relative">
-        <Image
-          src={thumbImageUrl}
-          alt="주차장 이미지"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-sm">파크메이트 주차장</span>
-              <BadgeCheckIcon size={14} />
-            </div>
-            <CommonPriceBadge className="text-black">
-              {baseFee.toLocaleString()}원
-            </CommonPriceBadge>
-          </div>
-          <h1 className="text-2xl font-bold mb-2">{name}</h1>
-          <Rating className="mb-3">
-            {averageRating} ({totalReviews})
-          </Rating>
-          <div className="flex items-center gap-4 text-sm">
-            <IconWithText Icon={MapPin}>{distance}m</IconWithText>
-            <IconWithText Icon={Car}>
-              {availableSpots}/{registeredParkingCount} 주차면
-            </IconWithText>
-          </div>
-        </div>
+    <PaddedSection className="py-7 space-y-10 bg-white" id="info">
+      <div>
+        <h2 className="text-lg font-semibold mb-3">정보</h2>
+        <p className="text-sm text-gray-2">{extraInfo}</p>
       </div>
-    </section>
+      <div>
+        <h2 className="text-lg font-semibold mb-3">영업시간</h2>
+        <OperationCalendar parkingLotUuid={parkingLotUuid} />
+      </div>
+      <MapLinkButton
+        mainAddress={mainAddress}
+        parkingLotUuid={parkingLotUuid}
+        latitude={latitude}
+        longitude={longitude}
+      />
+    </PaddedSection>
   );
 }

@@ -15,7 +15,7 @@ export default function ParkingCardItem({
 }: ParkingCarouselItemDataType) {
   return (
     <div>
-      <Link href={`/parking-lot/${parkingLotUuid}`}>
+      <Link href={`/my-parking-lot/${parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 
         bg-gray-1 flex aspect-[3/2] mb-1.5"

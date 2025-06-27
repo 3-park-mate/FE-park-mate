@@ -6,14 +6,10 @@ export default function ReservationButton({
   parkingLotUuid,
   isActive,
   baseFee,
-  availableSpots,
-  registeredParkingCount,
 }: {
   parkingLotUuid: string;
   isActive: boolean;
   baseFee: number;
-  availableSpots: number;
-  registeredParkingCount: number;
 }) {
   return (
     <>
@@ -23,7 +19,7 @@ export default function ReservationButton({
           content={`1시간 ${baseFee.toLocaleString()}원`}
         >
           <CommonButton className="bg-primary" disabled={!isActive}>
-            예약하기 ({availableSpots}/{registeredParkingCount})
+            예약하기
           </CommonButton>
         </AlwaysVisibleTooltip>
       ) : (

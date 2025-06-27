@@ -11,7 +11,7 @@ export default function page() {
   return (
     <>
       <HostMainHeader title="내 주차장" />
-      <main>
+      <main className="pb-32">
         <PaddedLayout className="py-3">
           <Suspense fallback={<div></div>}>
             <OptionsDropdown

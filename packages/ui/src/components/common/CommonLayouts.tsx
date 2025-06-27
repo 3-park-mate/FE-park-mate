@@ -117,7 +117,7 @@ export function IconWithText({
 }) {
   return (
     <div className={cn('flex gap-1.5 text-sm', className)}>
-      <Icon className="w-4 h-4 shrink-0 mt-[3px]" />
+      <Icon className="w-4 h-4 shrink-0 mt-[2px]" />
       <span>{children}</span>
     </div>
   );
@@ -160,6 +160,27 @@ export function TextBadge({
 }) {
   return (
     <div className="flex justify-center py-5">
+      <p
+        className={cn(
+          'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
+          className
+        )}
+      >
+        {children}
+      </p>
+    </div>
+  );
+}
+
+export function CommonBadge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className="">
       <p
         className={cn(
           'bg-gray-2/60 text-xs text-white inline-flex py-1 px-3 rounded-2xl font-light',
@@ -215,16 +236,39 @@ export function OptionIconWithText({
   children,
   className,
   IconClassName,
+  isActive = false,
 }: {
   Icon?: React.ElementType;
   children: React.ReactNode;
   className?: string;
   IconClassName?: string;
+  isActive?: boolean;
 }) {
   return (
-    <div className={cn('flex flex-col gap-2 items-center', className)}>
-      {Icon && <Icon className={(cn('w-6 h-6 '), IconClassName)} />}
-      <p className="text-xs xs:text-sm">{children}</p>
+    <div
+      className={cn(
+        'flex flex-col gap-2 items-center',
+        isActive ? 'opacity-100' : 'opacity-40',
+        className
+      )}
+    >
+      {Icon && (
+        <Icon
+          className={cn(
+            'w-6 h-6',
+            isActive ? 'text-black' : 'text-gray-2',
+            IconClassName
+          )}
+        />
+      )}
+      <p
+        className={cn(
+          'text-xs xs:text-sm',
+          isActive ? 'text-black font-medium' : 'text-gray-2'
+        )}
+      >
+        {children}
+      </p>
     </div>
   );
 }
@@ -291,5 +335,39 @@ export function OptionContainer({
     >
       {children}
     </label>
+  );
+}
+
+export default function InfoRow({
+  label,
+  children,
+  className,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={`text-sm text-gray-3 ${className}`}>
+      {label}
+      <span className="text-gray-800 ps-1.5">{children}</span>
+    </p>
+  );
+}
+
+export function PaddedSectionWithTitle({
+  title,
+  className,
+  children,
+}: {
+  title?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className={cn('p-6 bg-white', className)}>
+      {title && <h2 className="text-lg font-semibold mb-3">{title}</h2>}
+      {children}
+    </section>
   );
 }

@@ -5,7 +5,8 @@ export default function MyCarItem({
   vehicleNumber,
   isDefault,
   nickname,
-}: VehicleDataType) {
+  showDeleteButton = true,
+}: VehicleDataType & { showDeleteButton?: boolean }) {
   return (
     <div className="outline outline-gray-1 rounded-lg px-4 py-3">
       <div className="flex gap-1 items-center">
@@ -20,9 +21,11 @@ export default function MyCarItem({
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
         <p className="text-gray-dark-2 text-sm">{vehicleNumber}</p>
       </div>
-      <button className="pt-2 text-sm text-gray-2 cursor-pointer hover:text-gray-700">
-        삭제
-      </button>
+      {showDeleteButton && (
+        <button className="pt-2 text-sm text-gray-2 cursor-pointer hover:text-gray-700">
+          삭제
+        </button>
+      )}
     </div>
   );
 }

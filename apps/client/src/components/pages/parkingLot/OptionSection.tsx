@@ -1,20 +1,33 @@
 import {
-  OptionIconWithText,
-  PaddedSection,
-} from '@repo/ui/components/common/CommonLayouts';
-import EVChargingIcon from '@repo/ui/components/icon/options/EVChargingIcon';
+  EVChargeType,
+  ParkingLotOption,
+  ParkingSpotType,
+} from '@/types/parkingDataTypes';
+import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
+import EvChargeTypeSection from './EvChargeTypeSection';
+import ParkingLotOptionSection from './ParkingLotOptionSection';
+import ParkingSpotTypeSection from './ParkingSpotTypeSection';
 
-export default function OptionSection() {
+export default function OptionSection({
+  options,
+  evChargeTypes,
+  parkingSpotTypes,
+}: {
+  options: ParkingLotOption[];
+  evChargeTypes: EVChargeType[];
+  parkingSpotTypes: ParkingSpotType[];
+}) {
   return (
     <PaddedSection className="bg-white py-7 mb-3" id="options">
-      <h2 className="text-lg font-semibold pb-5">주차장 옵션</h2>
-      <div className="grid grid-cols-5 gap-x-3 gap-y-8 p-1 py-4">
-        {[...Array(10)].map((_, index) => (
-          <OptionIconWithText key={index} Icon={EVChargingIcon}>
-            전기차충전
-          </OptionIconWithText>
-        ))}
-      </div>
+      <ParkingLotOptionSection options={options} />
+      <hr className="my-6" />
+      {evChargeTypes?.length > 0 && (
+        <EvChargeTypeSection evChargeTypes={evChargeTypes} />
+      )}
+      <hr className="my-6" />
+      {parkingSpotTypes?.length > 0 && (
+        <ParkingSpotTypeSection parkingSpotTypes={parkingSpotTypes} />
+      )}
     </PaddedSection>
   );
 }

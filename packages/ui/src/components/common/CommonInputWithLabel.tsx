@@ -33,6 +33,7 @@ export default function CommonInputWithLabel({
         id={id}
         {...props}
         className={cn(
+          'bg-white',
           errorMessage ? 'border-red-300 focus-visible:border-red-400' : '',
           props.readOnly && 'bg-gray-light-1 text-gray-3'
         )}
