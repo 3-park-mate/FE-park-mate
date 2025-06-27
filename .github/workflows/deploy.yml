@@ -32,31 +32,31 @@ jobs:
 
       - name: Generate .env.production for ParkMate Turbo Repo
         run: |
-          mkdir -p apps/parkmate/client apps/parkmate/admin
+          mkdir -p apps/client apps/admin
           
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps//client/.env.production
-          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps//client/.env.production
-          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps//client/.env.production
-          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps//client/.env.production
-          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps//client/.env.production
-          echo "FE_AWS_REGION=${{ secrets.FE_AWS_REGION }}" > apps//client/.env.production
-          echo "FE_AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" > apps//client/.env.production
-          echo "FE_AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" > apps//client/.env.production
-          echo "FE_AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" > apps//client/.env.production
-          echo "FE_AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" > apps//client/.env.production
-          echo "FE_AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" > apps//client/.env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/client/.env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/client/.env.production
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/client/.env.production
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps/client/.env.production
+          echo "FE_AWS_REGION=${{ secrets.FE_AWS_REGION }}" > apps/client/.env.production
+          echo "FE_AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" > apps/client/.env.production
+          echo "FE_AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" > apps/client/.env.production
+          echo "FE_AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" > apps/client/.env.production
+          echo "FE_AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" > apps/client/.env.production
+          echo "FE_AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" > apps/client/.env.production
           
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_ADMIN_URL }}" > apps//admin/.env.production
-          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps//admin/.env.production
-          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps//admin/.env.production
-          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps//admin/.env.production
-          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps//admin/.env.production
-          echo "FE_AWS_REGION=${{ secrets.FE_AWS_REGION }}" > apps//admin/.env.production
-          echo "FE_AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" > apps//admin/.env.production
-          echo "FE_AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" > apps//admin/.env.production
-          echo "FE_AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" > apps//admin/.env.production
-          echo "FE_AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" > apps//admin/.env.production
-          echo "FE_AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" > apps//admin/.env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_ADMIN_URL }}" > apps/admin/.env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/admin/.env.production
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/admin/.env.production
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/admin/.env.production
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps/admin/.env.production
+          echo "FE_AWS_REGION=${{ secrets.FE_AWS_REGION }}" > apps/admin/.env.production
+          echo "FE_AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" > apps/admin/.env.production
+          echo "FE_AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" > apps/admin/.env.production
+          echo "FE_AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" > apps/admin/.env.production
+          echo "FE_AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" > apps/admin/.env.production
+          echo "FE_AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" > apps/admin/.env.production
 
       - name: Build and Push Multi-App
         run: |
