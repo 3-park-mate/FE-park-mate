@@ -1,30 +1,28 @@
-# 1단계: 빌드 스테이지
-FROM node:22-alpine AS builder
-
-RUN corepack enable && corepack prepare pnpm@9.15.5 --activate
+# 1. 빌드 단계
+FROM node:18 AS builder
 
 WORKDIR /app
-
-COPY turbo.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm install
-
 COPY . .
 
-WORKDIR /app/apps/admin
-RUN pnpm install && pnpm build
 
-# 2단계: 런타임
-FROM node:22-alpine AS runner
+RUN npm install -g pnpm turbo
+RUN pnpm install
+
+# 앱들 빌드
+RUN turbo run build --filter=client --filter=admin
+
+# 2. 실행 단계
+FROM node:22-slim
 
 WORKDIR /app
+COPY --from=builder /app .
 
-# 빌드된 산출물 복사
-COPY --from=builder /app/apps/admin/.next .next
-COPY --from=builder /app/apps/admin/public ./public
-COPY --from=builder /app/apps/admin/package.json ./
-COPY --from=builder /app/node_modules ./node_modules
+RUN npm install -g pnpm concurrently
 
-ENV NODE_ENV=production
-EXPOSE 3000
+# 필요한 환경변수는 .env 파일로 EC2에 mount 또는 --env로 넘겨야 함
 
-CMD ["pnpm", "start"]
+EXPOSE 3000 3001
+
+CMD ["concurrently", "--kill-others", "--names", "client,admin", \
+     "pnpm --filter client run start", \
+     "pnpm --filter admin run start"]

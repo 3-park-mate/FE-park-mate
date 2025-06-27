@@ -1,4 +1,4 @@
-name: Deploy Frontend to EC2
+name: Frontend Deploy to ECR and EC2
 
 on:
   push:
@@ -11,8 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -23,40 +28,71 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Docker Image
-        run: docker build -t frontend-service:latest .
+      - name: Generate .env.production for ParkMate Turbo Repo
+        run: |
+          mkdir -p apps/parkmate/client apps/parkmate/admin
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > apps/parkmate/client
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/parkmate/client
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/parkmate/client
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/parkmate/client
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps/parkmate/client
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" > apps/parkmate/client
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" > apps/parkmate/client
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" > apps/parkmate/client
+          echo "AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}" > apps/parkmate/client
+          echo "AWS_BUCKET_URL=${{ secrets.AWS_BUCKET_URL }}" > apps/parkmate/client
+          echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.AWS_CLOUDFRONT_DOMAIN }}" > apps/parkmate/client
+          
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > apps/parkmate/admin
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/parkmate/admin
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/parkmate/admin
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/parkmate/admin
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > apps/parkmate/admin
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" > apps/parkmate/admin
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" > apps/parkmate/admin
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" > apps/parkmate/admin
+          echo "AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}" > apps/parkmate/admin
+          echo "AWS_BUCKET_URL=${{ secrets.AWS_BUCKET_URL }}" > apps/parkmate/admin
+          echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.AWS_CLOUDFRONT_DOMAIN }}" > apps/parkmate/admin
 
-      - name: Tag Docker Image
-        run: docker tag frontend-service:latest ${{ steps.login-ecr.outputs.registry }}/frontend-service:latest
-
-      - name: Push Docker Image to ECR
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/frontend-service:latest
-
-      - name: Copy docker-compose-frontend.yml to EC2
+      - name: Build and Push Multi-App
+        run: |
+          docker build -t turbo-multi-app:latest .
+          docker tag turbo-multi-app:latest ${{ steps.login-ecr.outputs.registry }}/parkmate/turbo-multi-app:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/parkmate/turbo-multi-app:latest
+      - name: Copy docker-compose and .env to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: "docker-compose-frontend.yml"
+          source: |
+            docker-compose-front.yml
           target: "~/"
 
       - name: Deploy on EC2 via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            # .env 파일을 컨테이너가 접근 가능한 위치에 생성
-            mkdir -p ~/config/frontend
-            cat > ~/config/frontend/.env << 'EOL'
-            ${{ secrets.ENV }}
-            EOL
-  
-            docker pull ${{ steps.login-ecr.outputs.registry }}/frontend-service:latest
-            docker-compose -f docker-compose-frontend.yml down
-            docker-compose -f docker-compose-frontend.yml up -d
+            mkdir -p ~/env
+            
+            echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > ~/env/.env.front
+            echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > ~/env/.env.front
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > ~/env/.env.front
+            echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" > ~/env/.env.front
+            echo "AWS_REGION=${{ secrets.AWS_REGION }}" > ~/env/.env.front
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" > ~/env/.env.front
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" > ~/env/.env.front
+            echo "AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}" > ~/env/.env.front
+            echo "AWS_BUCKET_URL=${{ secrets.AWS_BUCKET_URL }}" > ~/env/.env.front
+            echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.AWS_CLOUDFRONT_DOMAIN }}" > ~/env/.env.front
+            
+            docker-compose -f docker-compose-front.yml down
+            docker-compose -f docker-compose-front.yml up -d
             docker image prune -f

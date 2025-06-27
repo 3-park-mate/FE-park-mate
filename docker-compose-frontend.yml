@@ -1,14 +1,27 @@
 version: "3.8"
 
 services:
-  frontend:
-    container_name: frontend-service
-    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/frontend-service
+  frontend-client:
+    container_name: frontend-client-service
+    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/turbo-multi-app
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - backend
+
+  frontend-admin:
+    container_name: frontend-admin-service
+    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/turbo-multi-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
     environment:
       - NODE_ENV=production
     networks:
