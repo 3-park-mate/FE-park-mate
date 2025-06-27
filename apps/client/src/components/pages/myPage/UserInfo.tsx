@@ -1,8 +1,9 @@
 // import { getUserInfoData } from '@/actions/user/user-service';
 // import { UserInfoDataType } from '@/types/userDataTypes';
 import { getUserEmailData } from '@/actions/auth/auth-service';
-import { Button } from '@repo/ui/components/base/button';
+import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
+import Link from 'next/link';
 
 export default async function UserInfo() {
   // const { data: userData } = (await getUserInfoData()) as {
@@ -24,7 +25,12 @@ export default async function UserInfo() {
         <p className="text-gray-3 text-15px">보유 포인트</p>
         <div className="flex justify-between">
           <h2 className="text-2xl font-semibold">포인트</h2>
-          <Button>충전</Button>
+          <Link
+            href="/payment/point"
+            className={`${buttonVariants({ variant: 'default' })}`}
+          >
+            충전
+          </Link>
         </div>
       </div>
       <button className="w-full bg-white text-center rounded-b-lg border-t p-2 cursor-pointer">

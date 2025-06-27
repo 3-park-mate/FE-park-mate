@@ -354,3 +354,20 @@ export default function InfoRow({
     </p>
   );
 }
+
+export function PaddedSectionWithTitle({
+  title,
+  className,
+  children,
+}: {
+  title?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className={cn('p-6 bg-white', className)}>
+      {title && <h2 className="text-lg font-semibold mb-3">{title}</h2>}
+      {children}
+    </section>
+  );
+}

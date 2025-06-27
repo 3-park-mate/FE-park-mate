@@ -1,12 +1,16 @@
 'use server';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
-import { SignUpDataType } from '@/types/authDataTypes';
+import {
+  SignUpDataType,
+  UserInfoResponseDataType,
+} from '@/types/authDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/auth-service/api/v1/host`;
+const HOST_API_PREFIX = `${process.env.BASE_API_URL}/host-service/api/v1/hosts`;
 
 export async function signUpAction(
   signUpData: Partial<SignUpDataType>
@@ -137,7 +141,7 @@ export async function LogoutAction(): Promise<ApiResponse<null>> {
       {},
       {
         headers: {
-          'X-Host-UUID': `Bearer ${uuid}`,
+          'X-Host-UUID': uuid,
         },
       }
     );
@@ -149,5 +153,38 @@ export async function LogoutAction(): Promise<ApiResponse<null>> {
       success: false,
       message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
     };
+  }
+}
+
+export async function getUserInfoData(): Promise<
+  ApiResponse<UserInfoResponseDataType>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    console.log('uuid: ', uuid);
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<UserInfoResponseDataType>>(
+      HOST_API_PREFIX,
+      '/profile',
+      undefined,
+      {
+        headers: {
+          'X-Host-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
   }
 }
