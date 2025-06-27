@@ -4,7 +4,7 @@ import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { coordtoAddressUtil } from '@/utils/mapUtils';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { cn } from '@repo/ui/lib/utils';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import LocationPermissionModal from '../common/LocationPermissionModal';
 
