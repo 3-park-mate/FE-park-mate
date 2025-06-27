@@ -70,3 +70,24 @@ export const formatFullDatePartsUtils = (dateString: string) => {
   const fullDate = formatted.replace(timeRegex, '');
   return { time, fullDate };
 };
+
+/**
+ * @param dateString
+ * @returns yyyy-MM-dd
+ */
+export const formatDateToYMD = (dateString: string | Date) => {
+  const date = new Date(dateString);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+  const dd = String(date.getDate()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+export const toISOStringWithDate = (
+  dateStr: string,
+  timeStr: string
+): string => {
+  const isoString = new Date(`${dateStr}T${timeStr}:00`).toISOString();
+  return isoString;
+};

@@ -1,7 +1,5 @@
 'use client';
-
 import { OperationDataType } from '@/types/parkingDataTypes';
-import { formatTimeENUtils } from '@/utils/datetimeUtils';
 import { cn } from '@repo/ui/lib/utils';
 
 const InfoItem = ({
@@ -38,7 +36,7 @@ export default function OperationInfoDetail({
     <dl className="grid grid-cols-4 gap-y-2 text-sm">
       <InfoItem
         label="운영 시간"
-        value={`${formatTimeENUtils(operation.validStartTime)} ~ ${formatTimeENUtils(operation.validEndTime)}`}
+        value={`${operation.validStartTime} ~ ${operation.validEndTime}`}
       />
       <InfoItem label="할인율" value={`${operation.discountRate}%`} />
       <InfoItem

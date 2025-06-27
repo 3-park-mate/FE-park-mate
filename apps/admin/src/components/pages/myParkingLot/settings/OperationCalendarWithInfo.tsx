@@ -1,31 +1,32 @@
 'use client';
 import { Calendar } from '@repo/ui/components/base/calendar';
-import { operationsDummy } from '@/data/parkingDummyDatas';
 import { useState } from 'react';
 import { OperationDataType } from '@/types/parkingDataTypes';
 import OperationInfo from './OperationInfo';
 
-export default function OperationCalendar() {
+export default function OperationCalendarWithInfo({
+  OperationDatas,
+}: {
+  OperationDatas: OperationDataType[];
+}) {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<Date>(today);
   const [selectedOperation, setSelectedOperation] =
     useState<OperationDataType | null>(() => {
       return (
-        operationsDummy.find(
+        OperationDatas.find(
           (op) =>
             new Date(op.operationDate).toDateString() === today.toDateString()
         ) ?? null
       );
     });
 
-  const operationDates = operationsDummy.map(
-    (op) => new Date(op.operationDate)
-  );
+  const operationDates = OperationDatas.map((op) => new Date(op.operationDate));
 
   const handleSelect = (day?: Date) => {
     if (!day) return;
     setSelectedDate(day);
-    const matched = operationsDummy.find(
+    const matched = OperationDatas.find(
       (op) => new Date(op.operationDate).toDateString() === day.toDateString()
     );
     setSelectedOperation(matched ?? null);

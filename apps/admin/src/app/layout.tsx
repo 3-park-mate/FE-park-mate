@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { GlobalContainerView } from '@repo/ui/components/common/CommonLayouts';
+import AuthContextProvider from '@/provider/AuthContextProvider';
+import { getServerSession } from 'next-auth';
+import { options } from './api/auth/[...nextauth]/options';
 
 export const metadata: Metadata = {
   title: {
@@ -10,15 +13,22 @@ export const metadata: Metadata = {
   description: '실시간 주차 공유 플랫폼 파크메이트 호스트 전용 앱',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(options);
+  // console.log('session', session);
+  const isAuth = !!session?.user as boolean;
+  console.log('isAuth', isAuth);
+
   return (
     <html lang="ko">
       <body>
-        <GlobalContainerView>{children}</GlobalContainerView>
+        <AuthContextProvider isAuth={isAuth}>
+          <GlobalContainerView>{children}</GlobalContainerView>
+        </AuthContextProvider>
       </body>
     </html>
   );

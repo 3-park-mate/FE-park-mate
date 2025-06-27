@@ -1,6 +1,5 @@
 'use client';
-import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
-import { Rating } from '@repo/ui/components/common/CommonLayouts';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import { cn } from '@repo/ui/lib/utils';
 import Image from 'next/image';
@@ -9,10 +8,10 @@ import Link from 'next/link';
 export default function ParkingCardItem({
   parkingLotUuid,
   name,
+  address,
   thumbnailUrl,
-  averageRating,
-  isOperating,
-}: ParkingCarouselItemDataType) {
+  isOpen,
+}: ParkingLotItem) {
   return (
     <div>
       <Link href={`/my-parking-lot/${parkingLotUuid}`}>
@@ -21,7 +20,7 @@ export default function ParkingCardItem({
         bg-gray-1 flex aspect-[3/2] mb-1.5"
         >
           <Image
-            src={thumbnailUrl}
+            src={thumbnailUrl || `/img/no-image.png`}
             alt="주차장 이미지"
             fill
             className="object-cover"
@@ -29,10 +28,10 @@ export default function ParkingCardItem({
           <div
             className={cn(
               'absolute bottom-2 right-2 text-xs text-white px-2 py-1 rounded-lg',
-              isOperating ? 'bg-secondary' : 'bg-gray-400'
+              isOpen ? 'bg-secondary' : 'bg-gray-400'
             )}
           >
-            {isOperating ? '운영중' : '운영준비중'}
+            {isOpen ? '운영중' : '운영준비중'}
           </div>
         </div>
       </Link>
@@ -41,9 +40,8 @@ export default function ParkingCardItem({
       </Link>
       <p className="flex gap-1 text-gray-3 text-13px">
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
-        부산광역시 해운대구 APEC로 17 (우동, 센텀리더스마크)
+        {address}
       </p>
-      <Rating>{averageRating}</Rating>
     </div>
   );
 }

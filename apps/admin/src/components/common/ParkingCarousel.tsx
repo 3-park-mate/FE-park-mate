@@ -6,12 +6,13 @@ import {
 import { ChevronRightCircle } from 'lucide-react';
 import Link from 'next/link';
 import ParkingCardItem from './ParkingCardItem';
-import { ParkingCarouselItemDataType } from '@/types/parkingDataTypes';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
+import ParkingCardItemSkeleton from './ParkingCardItemSkeleton';
 
 export default function ParkingCarousel({
   carouselDatas,
 }: {
-  carouselDatas: ParkingCarouselItemDataType[];
+  carouselDatas: ParkingLotItem[];
 }) {
   return (
     <Carousel
@@ -29,20 +30,23 @@ export default function ParkingCarousel({
             <ParkingCardItem {...item} />
           </CarouselItem>
         ))}
-        <CarouselItem
-          key="view-all"
-          className="flex flex-col flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]
+        {carouselDatas.length > 3 && (
+          <CarouselItem
+            key="view-all"
+            className="flex flex-col flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]
             justify-center items-center pb-6 pr-6"
-        >
-          <Link href="/my-parking-lot">
-            <ChevronRightCircle
-              className="text-gray-dark-1"
-              size={45}
-              strokeWidth={1}
-            />
-            <p className="text-sm pt-1 text-gray-dark-2">전체보기</p>
-          </Link>
-        </CarouselItem>
+          >
+            <Link href="/my-parking-lot">
+              <ChevronRightCircle
+                className="text-gray-dark-1"
+                size={45}
+                strokeWidth={1}
+              />
+              <p className="text-sm pt-1 text-gray-dark-2">전체보기</p>
+            </Link>
+          </CarouselItem>
+        )}
+        <ParkingCardItemSkeleton />
       </CarouselContent>
     </Carousel>
   );

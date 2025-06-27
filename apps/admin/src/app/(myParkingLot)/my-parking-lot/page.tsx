@@ -1,30 +1,23 @@
-import OptionsDropdown from '@/components/common/OptionsDropdown';
+import { getMyParkingLots } from '@/actions/parking/parking-service';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
 import HostMainHeader from '@/components/layouts/HostMainHeader';
 import MyParkingLotListSection from '@/components/pages/myParkingLot/MyParkingLotListSection';
-import { myParkingLotSortMenu } from '@/data/initialDatas';
-import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
-import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
+import { ParkingLotItem } from '@/types/parkingDataTypes';
 import { Suspense } from 'react';
 
-export default function page() {
+export default async function page() {
+  const { data: parkingLots } = (await getMyParkingLots()) as {
+    success: true;
+    data: ParkingLotItem[];
+  };
+
   return (
     <>
       <HostMainHeader title="내 주차장" />
       <main className="pb-32">
-        <PaddedLayout className="py-3">
-          <Suspense fallback={<div></div>}>
-            <OptionsDropdown
-              className="pt-1 pb-3"
-              paramKey="filter"
-              defaultLabel="필터"
-              options={myParkingLotSortMenu}
-            />
-          </Suspense>
-          <MyParkingLotListSection
-            parkingLotDatas={parkingCarouselItemsDummy}
-          />
-        </PaddedLayout>
+        <Suspense fallback={<div></div>}>
+          <MyParkingLotListSection parkingLotDatas={parkingLots} />
+        </Suspense>
       </main>
       <GnbNavBar />
     </>
