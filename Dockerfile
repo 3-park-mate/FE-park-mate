@@ -1,6 +1,5 @@
 # 1. 빌드 단계
-FROM node:18 AS builder
-
+FROM node:22-alpine AS runner
 WORKDIR /app
 COPY . .
 

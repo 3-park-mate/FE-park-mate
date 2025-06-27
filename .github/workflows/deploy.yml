@@ -33,7 +33,8 @@ jobs:
       - name: Generate .env.production for ParkMate Turbo Repo
         run: |
           mkdir -p apps/parkmate/client apps/parkmate/admin
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > apps/parkmate/client
+          
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/parkmate/client
           echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/parkmate/client
           echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/parkmate/client
           echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/parkmate/client
@@ -45,7 +46,7 @@ jobs:
           echo "AWS_BUCKET_URL=${{ secrets.AWS_BUCKET_URL }}" > apps/parkmate/client
           echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.AWS_CLOUDFRONT_DOMAIN }}" > apps/parkmate/client
           
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > apps/parkmate/admin
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_ADMIN_URL }}" > apps/parkmate/admin
           echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" > apps/parkmate/admin
           echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" > apps/parkmate/admin
           echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" > apps/parkmate/admin
