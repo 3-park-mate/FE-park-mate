@@ -6,6 +6,7 @@ import {
   ReservationCancelDataType,
   ReservationItemDataType,
   ReservationListResponse,
+  ReservationStatus,
 } from '@/types/reservationDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import { getServerSession } from 'next-auth';
@@ -16,14 +17,19 @@ const API_PREFIX = `${process.env.BASE_API_URL}/reservation-service/api/v1/reser
 export async function getReservationsData({
   size,
   cursor,
+  status,
 }: {
   size: number;
   cursor?: number;
+  status?: ReservationStatus[];
 }): Promise<ApiResponse<ReservationListResponse>> {
-  const payload: Record<string, string> = {
+  const query: Record<string, string> = {
     size: size.toString(),
     ...(cursor !== undefined && { cursor: cursor.toString() }),
   };
+  if (status && status.length > 0) {
+    query.status = status.join(',');
+  }
   try {
     const session = await getServerSession(options);
     if (!session) {
@@ -36,7 +42,7 @@ export async function getReservationsData({
     const res = await api.get<CommonResponseType<ReservationListResponse>>(
       API_PREFIX,
       '',
-      payload,
+      query,
       {
         headers: {
           'X-User-UUID': uuid,
@@ -44,7 +50,7 @@ export async function getReservationsData({
         },
       }
     );
-    // console.log(res);
+    console.log(res);
 
     return {
       success: true,

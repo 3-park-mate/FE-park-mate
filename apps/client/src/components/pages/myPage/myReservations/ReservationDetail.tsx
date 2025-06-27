@@ -19,8 +19,8 @@ export default function ReservationDetail({
     reservationData.exitTime
   );
   const canCancel =
-    reservationData.reservationStatus === 'WAITING' ||
-    reservationData.reservationStatus === 'CONFIRMED';
+    reservationData.status === 'WAITING' ||
+    reservationData.status === 'CONFIRMED';
 
   const timeItems = [
     { label: '입차시간', time: entry.time, date: entry.date },
@@ -39,7 +39,7 @@ export default function ReservationDetail({
         reservationCode={reservationData.reservationCode}
         parkingLotThumbnailUrl={reservationData.parkingLotThumbnailUrl}
         parkingLotName={reservationData.parkingLotName}
-        reservationStatus={reservationData.reservationStatus}
+        status={reservationData.status}
       />
       <AddressSection />
       <ReservationInfoList timeItems={timeItems} infoItems={infoItems} />
