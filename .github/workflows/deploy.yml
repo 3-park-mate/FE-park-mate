@@ -63,6 +63,7 @@ jobs:
           docker build -t turbo-multi-app:latest .
           docker tag turbo-multi-app:latest ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
+
       - name: Copy docker-compose and .env to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -70,7 +71,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: |
-            docker-compose-front.yml
+            docker-compose-frontend.yml
           target: "~/"
 
       - name: Deploy on EC2 via SSH
