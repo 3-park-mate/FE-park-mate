@@ -17,7 +17,7 @@ export default function UsingStatusSection() {
       const res = await getReservationsData({
         size: PAGE_SIZE,
         cursor,
-        status: ['IN_USE', 'CONFIRMED'],
+        status: ['IN_USE'],
       });
       if (res.success) {
         return {
@@ -56,7 +56,9 @@ export default function UsingStatusSection() {
         {isLoading && <DotSpinner className="mx-auto" />}
       </div>
       {reservations.length === 0 && !isLoading && !hasMore && (
-        <p className="text-center text-gray-500 pb-10">이용 내역이 없습니다.</p>
+        <p className="text-center text-gray-500 pb-10">
+          이용중인 내역이 없습니다.
+        </p>
       )}
     </div>
   );
