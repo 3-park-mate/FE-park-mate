@@ -19,6 +19,7 @@ export default function CompletedReservations() {
       const res = await getReservationsData({
         size: PAGE_SIZE,
         cursor,
+        status: ['CANCELLED', 'EXPIRED', 'COMPLETED'],
       });
       if (res.success) {
         return {

@@ -42,7 +42,9 @@ export type ReservationStatus =
   | 'WAITING'
   | 'CONFIRMED'
   | 'CANCELLED'
-  | 'EXPIRED';
+  | 'EXPIRED'
+  | 'IN_USE'
+  | 'COMPLETED';
 
 export type PaymentType = 'PG' | 'POINT';
 

@@ -19,6 +19,7 @@ export default function ActiveReservations() {
       const res = await getReservationsData({
         size: PAGE_SIZE,
         cursor,
+        status: ['WAITING', 'CONFIRMED', 'IN_USE'],
       });
       if (res.success) {
         return {
