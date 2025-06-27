@@ -28,46 +28,43 @@
 ##     "pnpm --filter admin run start"]
 #CMD ["sh", "-c", "concurrently --kill-others --names client,admin \"pnpm --filter client run start\" \"pnpm --filter admin run start\""]
 
-# 1단계: 빌드용 스테이지
-FROM node:22-alpine AS builder
+# 1단계: Build Stage
+FROM node:22 AS builder
 
-# corepack 사용 → pnpm 안정적으로 활성화
-RUN corepack enable && corepack prepare pnpm@9.15.5 --activate
-
-# 작업 디렉토리 설정
 WORKDIR /app
 
-# 소스 복사
+# 코드 복사
 COPY . .
 
-# turbo, pnpm 등 설치
-RUN pnpm install -g turbo
+# corepack 기반 pnpm 활성화
+RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+
+# 전역 turbo 설치
+RUN npm install -g turbo --unsafe-perm
 
 # 의존성 설치
 RUN pnpm install
 
-# 앱 빌드 (client, admin)
+# 빌드 실행
 RUN turbo run build --filter=client --filter=admin
 
-# 2단계: 실행용 스테이지
+# 2단계: Run Stage
 FROM node:22-alpine AS runner
 
-# corepack 및 pnpm 활성화
-RUN corepack enable && corepack prepare pnpm@9.15.5 --activate
-
-# 앱 실행 디렉토리
 WORKDIR /app
 
-# 빌드 결과 복사
+# ps, curl 설치
+RUN apk add --no-cache procps curl
+
+# corepack 기반 pnpm 재설정
+RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+
+# 코드 복사
 COPY --from=builder /app .
 
-# concurrently 실행을 위한 설치
-RUN pnpm add -g concurrently
-
-# 포트 오픈
 EXPOSE 3000 3001
 
-# 환경변수는 .env 또는 --env 옵션으로 전달
-
-# 앱 동시 실행
-CMD ["concurrently", "--kill-others", "--names", "client,admin", "pnpm --filter client run start", "pnpm --filter admin run start"]
+# 서버 실행
+CMD ["sh", "-c", "npx concurrently --kill-others --names 'client,admin' \
+  'pnpm --filter=client start' \
+  'pnpm --filter=admin start'"]--filter=admin start'"]
