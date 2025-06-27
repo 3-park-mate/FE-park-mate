@@ -137,7 +137,7 @@ export async function LogoutAction(): Promise<ApiResponse<null>> {
       {},
       {
         headers: {
-          'X-User-UUID': `Bearer ${uuid}`,
+          'X-User-UUID': uuid,
         },
       }
     );

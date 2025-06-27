@@ -33,3 +33,12 @@ export interface SignInResponseDataType {
   refreshToken: string;
   hostUuid: string;
 }
+
+export interface UserInfoResponseDataType {
+  name: string;
+  phoneNumber: string;
+  bankName: string;
+  accountNumber: string;
+  businessRegistrationNumber: string;
+  settlementCycle: string;
+}

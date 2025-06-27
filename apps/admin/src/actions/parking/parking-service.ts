@@ -198,6 +198,7 @@ export async function getMyParkingLots(): Promise<
     }
     const uuid = session.user.uuid;
     const accessToken = session.user.accessToken;
+    console.log('uuid:', uuid);
 
     const res = await api.get<
       CommonResponseType<{ parkingLots: ParkingLotItem[] }>

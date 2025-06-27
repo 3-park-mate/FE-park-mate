@@ -32,7 +32,7 @@ export default function InfoWithThumbnail({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <div className="flex justify-between items-start mb-2">
+          {/* <div className="flex justify-between items-start mb-2">
             <div
               className={cn(
                 'text-xs text-white px-2 py-1 rounded-lg',
@@ -41,7 +41,7 @@ export default function InfoWithThumbnail({
             >
               {isOperating ? '운영중' : '운영준비중'}
             </div>
-          </div>
+          </div> */}
           <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
             {averageRating} ({totalReviews})

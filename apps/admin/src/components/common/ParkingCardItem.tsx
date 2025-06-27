@@ -8,12 +8,10 @@ import Link from 'next/link';
 export default function ParkingCardItem({
   parkingLotUuid,
   name,
-  mainAddress,
-  detailAddress,
+  address,
   thumbnailUrl,
+  isOpen,
 }: ParkingLotItem) {
-  const isOperating = true;
-
   return (
     <div>
       <Link href={`/my-parking-lot/${parkingLotUuid}`}>
@@ -30,10 +28,10 @@ export default function ParkingCardItem({
           <div
             className={cn(
               'absolute bottom-2 right-2 text-xs text-white px-2 py-1 rounded-lg',
-              isOperating ? 'bg-secondary' : 'bg-gray-400'
+              isOpen ? 'bg-secondary' : 'bg-gray-400'
             )}
           >
-            {isOperating ? '운영중' : '운영준비중'}
+            {isOpen ? '운영중' : '운영준비중'}
           </div>
         </div>
       </Link>
@@ -42,7 +40,7 @@ export default function ParkingCardItem({
       </Link>
       <p className="flex gap-1 text-gray-3 text-13px">
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
-        {mainAddress}
+        {address}
       </p>
     </div>
   );

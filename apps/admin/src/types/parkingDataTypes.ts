@@ -112,7 +112,7 @@ export interface WeeklyOperationInfo {
 export interface ParkingLotItem {
   parkingLotUuid: string;
   name: string;
-  mainAddress: string;
-  detailAddress: string;
+  address: string;
   thumbnailUrl: string;
+  isOpen: boolean;
 }
