@@ -5,8 +5,7 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import MyReservationItem from './MyReservationItem';
 import MyReservationItemSkeleton from './MyReservationItemSkeleton';
 import { ReservationItemDataType } from '@/types/reservationDataTypes';
-
-const PAGE_SIZE = 10;
+import { PAGE_SIZE } from '@/constants/constants';
 
 export default function CompletedReservations() {
   const {
