@@ -67,4 +67,4 @@ EXPOSE 3000 3001
 # 서버 실행
 CMD ["sh", "-c", "npx concurrently --kill-others --names 'client,admin' \
   'pnpm --filter=client start' \
-  'pnpm --filter=admin start'"]--filter=admin start'"]
+  'pnpm --filter=admin start'"]
