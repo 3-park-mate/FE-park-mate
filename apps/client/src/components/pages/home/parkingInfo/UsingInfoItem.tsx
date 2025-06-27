@@ -1,27 +1,30 @@
 'use client';
-
 import { useState } from 'react';
 import ParkingLocation from './ParkingLocation';
 import ParkingTime from './ParkingTime';
 import ParkingProgress from './ParkingProgress';
 import InfoToggleButton from './InfoToggleButton';
-import {
-  parkingLocationDummy,
-  parkingTimeDummy,
-} from '@/data/parkingDummyDatas';
 import ParkingQRModal from './qrModal/ParkingQRModal';
 
-export default function UsingInfoItem() {
+export default function UsingInfoItem({
+  parkingLotUuid,
+  parkingLotName,
+  parkingLotDistance,
+  parkingSpotName,
+  vehicleNumber,
+  entryTime,
+  exitTime,
+}: {
+  parkingLotUuid: string;
+  parkingLotName: string;
+  parkingLotDistance: number;
+  parkingSpotName: string;
+  vehicleNumber: string;
+  entryTime: string;
+  exitTime: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isQRModalOpen, setQRModalOpen] = useState(false);
-  const {
-    parkingLotUuid,
-    parkingLotName,
-    parkingLotDistance,
-    parkingSpotName,
-    vehicleNumber,
-  } = parkingLocationDummy;
-  const { exitTime, entryTime } = parkingTimeDummy;
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function UsingInfoItem() {
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}
-        parkingLotDistance={100}
+        parkingLotDistance={parkingLotDistance}
         onQRClick={() => setQRModalOpen(true)}
       />
       <div>
@@ -51,7 +54,7 @@ export default function UsingInfoItem() {
           <hr />
           <ParkingTime entryTime={entryTime} exitTime={exitTime} />
           <hr />
-          <ParkingProgress />
+          <ParkingProgress entryTime={entryTime} exitTime={exitTime} />
         </div>
         <InfoToggleButton isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>

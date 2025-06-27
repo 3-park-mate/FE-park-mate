@@ -7,14 +7,14 @@ export default function DetailInfo({
   reservationCode,
   parkingLotThumbnailUrl,
   parkingLotName,
-  reservationStatus,
+  status,
 }: {
   reservationCode: string;
   parkingLotThumbnailUrl: string;
   parkingLotName: string;
-  reservationStatus: ReservationStatus;
+  status: ReservationStatus;
 }) {
-  const badge = statusBadgeMap[reservationStatus];
+  const badge = statusBadgeMap[status];
   return (
     <section>
       <p className="text-gray-2 text-xs pb-1">예약코드 : {reservationCode}</p>
