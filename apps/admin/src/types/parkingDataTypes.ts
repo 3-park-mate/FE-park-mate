@@ -51,9 +51,9 @@ export interface OperationDataType {
 export interface OperationStoreDataType {
   validStartTime: string;
   validEndTime: string;
-  baseIntervalMinutes: string;
+  baseIntervalMinutes: number;
   baseFee: number;
-  extraIntervalMinutes: string;
+  extraIntervalMinutes: number;
   extraFee: number;
   discountRate: number;
 }
@@ -107,4 +107,12 @@ export interface WeeklyOperationInfo {
   dayOfMonth: number;
   startTime?: string;
   endTime?: string;
+}
+
+export interface ParkingLotItem {
+  parkingLotUuid: string;
+  name: string;
+  address: string;
+  thumbnailUrl: string;
+  isOpen: boolean;
 }

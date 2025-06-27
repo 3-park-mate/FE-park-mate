@@ -6,6 +6,8 @@ import ParkingInfoEditForm from '@/components/pages/myParkingLot/settings/Parkin
 import ParkingOperationEdit from '@/components/pages/myParkingLot/settings/ParkingOperationEdit';
 import ParkmateLinkButton from '@/components/pages/myParkingLot/settings/ParkmateLinkButton';
 import ParkingSettingsTabBar from '@/components/pages/myParkingLot/settings/ParkingSettingsTabBar';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 
 export default async function page({
   params,
@@ -29,12 +31,12 @@ export default async function page({
   const parkingLotData = res.data;
   if (!parkingLotData) return fallback;
 
+  const session = await getServerSession(options);
+  if (session?.user.uuid != parkingLotData.hostUuid) return fallback;
+
   return (
     <>
-      <PageHeader
-        title="주차장 관리 페이지"
-        //   isShadow={false}
-      />
+      <PageHeader title="주차장 관리 페이지" />
       <main className="pb-32 bg-inner-background-gray">
         <InfoWithThumbnail
           thumbImageUrl={parkingLotData.thumbnailUrl}
@@ -47,7 +49,7 @@ export default async function page({
         <ParkmateLinkButton />
         <ParkingSettingsTabBar />
         <section className="my-4 space-y-3">
-          <ParkingOperationEdit />
+          <ParkingOperationEdit parkingLotUuid={parkingLotUuid} />
           <ParkingInfoEditForm
             name={parkingLotData.name}
             extraInfo={parkingLotData.extraInfo}
