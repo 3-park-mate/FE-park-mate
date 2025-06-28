@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <Sheet>
         <SheetTrigger>일정 선택</SheetTrigger>
-        <FilterScheduleSheet />
+        <FilterScheduleSheet parkingLotUuid="d1c94454-8ee2-4797-ad12-d3fdeb03385d" />
       </Sheet>
       <Sheet>
         <SheetTrigger>잔여 주차면</SheetTrigger>

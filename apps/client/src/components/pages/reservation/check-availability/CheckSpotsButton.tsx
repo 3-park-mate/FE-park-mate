@@ -3,28 +3,35 @@ import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
 
 export default function CheckSpotsButton({
-  selectedDay,
-  selectedTime,
+  selectedDateTime,
 }: {
-  selectedDay: { from: Date | undefined; to?: Date | undefined };
-  selectedTime: { entryTime: string; exitTime: string };
+  selectedDateTime: {
+    entryDateTime: Date | null;
+    exitDateTime: Date | null;
+  };
 }) {
+  const isButtonActive =
+    selectedDateTime.entryDateTime && selectedDateTime.exitDateTime;
+
   return (
-    <ButtonWrapper className="flex items-center justify-between border-t-1 pt-3">
-      <p className="font-semibold">
-        3,000원
-        <span className="ml-1 text-gray-2 text-sm">/30분</span>
-      </p>
+    <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4">
+      <div>
+        {selectedDateTime.entryDateTime && selectedDateTime.exitDateTime && (
+          <p className="leading-tight">
+            결제금액: <span className="text-xl">9,000원</span>
+          </p>
+        )}
+        <p className="font-semibold leading-0">
+          3,000원
+          <span className="ml-1 text-gray-2 text-sm">/30분</span>
+        </p>
+      </div>
       <Button
         className={cn(
           'h-12 text-md',
-          selectedDay && selectedTime.entryTime && selectedTime.exitTime
-            ? 'bg-primary'
-            : 'bg-gray-1'
+          isButtonActive ? 'bg-primary' : 'bg-gray-1'
         )}
-        disabled={
-          !(selectedDay && selectedTime.entryTime && selectedTime.exitTime)
-        }
+        disabled={!isButtonActive}
       >
         예약 가능 주차면 확인
       </Button>

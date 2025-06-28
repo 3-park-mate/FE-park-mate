@@ -122,7 +122,7 @@ export default function AvailableSpotsSheet({
           }
         )}
       </RadioGroup>
-      <ButtonWrapper className="flex items-center justify-between border-t-1 py-4">
+      <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4">
         <p className="font-semibold text-xl">
           <span className="text-sm">총 결제금액:</span> 18,000원
         </p>

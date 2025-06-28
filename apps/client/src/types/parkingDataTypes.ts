@@ -136,3 +136,16 @@ export interface GetParkingLotsInBoxRequestType {
 export interface ParkingLotsInBoxResponseType {
   parkingLots: ParkingLotSimpleInfoType[];
 }
+
+export interface OperationsInfo {
+  parkingOperationUuid: string;
+  parkingLotUuid: string;
+  operationDate: string;
+  validStartTime: string;
+  validEndTime: string;
+  baseIntervalMinutes: number;
+  baseFee: number;
+  extraIntervalMinutes: number;
+  extraFee: number;
+  discountRate: number;
+}

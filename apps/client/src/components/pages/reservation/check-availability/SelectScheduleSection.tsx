@@ -1,97 +1,90 @@
 'use client';
 
-import { getAvailableDayDummy } from '@/data/reservationDummyDatas';
-import { formatDateParts } from '@/utils/datetimeUtils';
-import { Calendar } from '@repo/ui/components/base/calendar';
-import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
-import { eachDayOfInterval, format } from 'date-fns';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { DateRange } from 'react-day-picker';
+import TimeInputs from './TimeInputs';
+import { eachDayOfInterval, format } from 'date-fns';
 import CheckSpotsButton from './CheckSpotsButton';
+import { combineDateAndTime } from '@/utils/datetimeUtils';
+import SelectDays from './SelectDays';
+import { OperationsInfo } from '@/types/parkingDataTypes';
 
 export default function SelectScheduleSection({
-  availableDay,
+  operations,
 }: {
-  availableDay?: string[];
+  operations?: OperationsInfo[];
 }) {
-  const [selectedDay, setSelectedDay] = useState<DateRange | undefined>();
-  const [selectedTime, setselectedTime] = useState({
-    entryTime: '',
-    exitTime: '',
-  });
-  const availableSet = new Set(getAvailableDayDummy.day);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [selectedDateTime, setSelectedDateTime] = useState<{
+    entryDateTime: Date | null;
+    exitDateTime: Date | null;
+  }>({ entryDateTime: null, exitDateTime: null });
 
-  const isAvailable = (date: Date) =>
-    availableSet.has(format(date, 'yyyy-MM-dd'));
+  const availableDays = useMemo(() => {
+    if (!operations) return [];
+    return operations.map((op) => op.operationDate);
+  }, [operations]);
 
-  const handleSelect = (range: DateRange | undefined) => {
+  const handleDateChange = (range: DateRange | undefined) => {
     if (!range?.from || !range?.to) {
-      setSelectedDay(range);
+      setDateRange(range);
+      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
       return;
     }
 
-    // 선택된 날짜 범위 내부의 모든 날짜 구하기
     const days = eachDayOfInterval({ start: range.from, end: range.to });
-    console.log(days, ' 선택된 범위 내부');
-
-    // 모든 날짜가 availableSet에 포함되어야 함
-    const allAvailable = days.every(isAvailable);
+    const allAvailable = days.every((date) =>
+      availableDays.includes(format(date, 'yyyy-MM-dd'))
+    );
 
     if (allAvailable) {
-      setSelectedDay(range);
+      setDateRange(range);
+      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
     } else {
-      //   alert('선택한 날짜 범위에 예약 불가 날짜가 포함되어 있습니다.');
-      setSelectedDay(undefined); // 선택 취소
+      setDateRange(undefined);
+      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
     }
   };
+
+  const handleTimeChange = (type: 'entry' | 'exit', value: string) => {
+    if (!dateRange?.from || !dateRange?.to) return;
+
+    const date = type === 'entry' ? dateRange.from : dateRange.to;
+    const dateTime = combineDateAndTime(date, value);
+
+    setSelectedDateTime((prev) => ({
+      ...prev,
+      [type === 'entry' ? 'entryDateTime' : 'exitDateTime']: dateTime,
+    }));
+  };
+
   return (
     <section className="flex flex-col gap-3 justify-center">
       <p
         className="text-xs text-right px-3 leading-0"
-        onClick={() => setSelectedDay(undefined)}
+        onClick={() => {
+          setDateRange(undefined);
+          setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
+        }}
       >
         초기화
       </p>
-      <Calendar
-        mode="range"
-        selected={selectedDay}
-        onSelect={handleSelect}
-        disabled={(date) => !isAvailable(date)}
-        className="w-full px-1 pt-0 pb-4"
+
+      <SelectDays
+        availableDays={availableDays}
+        selected={dateRange}
+        onSelect={handleDateChange}
       />
 
-      {selectedDay && (
-        <div className="flex gap-5">
-          <CommonInputWithLabel
-            id="entryTime"
-            label={`입차시간 ${selectedDay.from ? formatDateParts(selectedDay.from.toString()).date : ''}`}
-            type="time"
-            value={selectedTime.entryTime}
-            onChange={(e) =>
-              setselectedTime((prev) => ({
-                ...prev,
-                entryTime: e.target.value,
-              }))
-            }
-          />
-          <CommonInputWithLabel
-            id="exitTime"
-            label={`출차시간 ${selectedDay.to ? formatDateParts(selectedDay.to.toString()).date : ''}`}
-            type="time"
-            value={selectedTime.exitTime}
-            onChange={(e) =>
-              setselectedTime((prev) => ({
-                ...prev,
-                exitTime: e.target.value,
-              }))
-            }
-          />
-        </div>
+      {dateRange?.from && dateRange.to && (
+        <TimeInputs
+          from={dateRange.from}
+          to={dateRange.to}
+          onChange={handleTimeChange}
+        />
       )}
-      <CheckSpotsButton
-        selectedDay={{ from: selectedDay?.from, to: selectedDay?.to }}
-        selectedTime={selectedTime}
-      />
+
+      <CheckSpotsButton selectedDateTime={selectedDateTime} />
     </section>
   );
 }

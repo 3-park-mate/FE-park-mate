@@ -2,6 +2,7 @@
 import { api } from '@/hooks/serverFetch';
 import {
   GetParkingLotsInBoxRequestType,
+  OperationsInfo,
   ParkingLotResponseDataType,
   ParkingLotsInBoxResponseType,
   WeeklyOperationInfo,
@@ -98,5 +99,36 @@ export async function getParkingLotsInBox(
   } catch (error) {
     console.error('getParkingLotsInBox 에러:', error);
     throw error;
+  }
+}
+
+export async function getOperationsById(
+  parkingLotUuid: string,
+  year: number,
+  month: number
+): Promise<ApiResponse<OperationsInfo[]>> {
+  try {
+    const query: Record<string, string> = {
+      year: year.toString(),
+      month: month.toString(),
+    };
+
+    const res = await api.get<CommonResponseType<OperationsInfo[]>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}/operations`,
+      query,
+      {
+        cache: 'no-cache',
+      }
+    );
+    console.log(query);
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
   }
 }
