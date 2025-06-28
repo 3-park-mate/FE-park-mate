@@ -44,6 +44,7 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> apps/client/.env.production
           echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> apps/client/.env.production
           echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> apps/client/.env.production
+          echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> apps/client/.env.production
           echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/client/.env.production
           
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_ADMIN_URL }}" > apps/admin/.env.production
@@ -56,6 +57,7 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> apps/admin/.env.production
           echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> apps/admin/.env.production
           echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> apps/admin/.env.production
+          echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> apps/admin/.env.production
           echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/admin/.env.production
 
       - name: Build and Push Multi-App
@@ -93,6 +95,7 @@ jobs:
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> ~/env/.env.front
             echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> ~/env/.env.front
             echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> ~/env/.env.front
+            echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> ~/env/.env.front
             echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> ~/env/.env.front
             
             docker pull ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
