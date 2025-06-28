@@ -1,10 +1,13 @@
+import { options } from '@/app/api/auth/[...nextauth]/options';
 import NearestParking from '@/components/pages/home/NearestParking';
 import ParkPointArea from '@/components/pages/home/ParkPointArea';
+import { getServerSession } from 'next-auth';
 
-export default function page() {
+export default async function page() {
+  const session = await getServerSession(options);
   return (
     <>
-      <ParkPointArea />
+      {session && <ParkPointArea />}
       <NearestParking />
     </>
   );

@@ -10,7 +10,7 @@ export default function MyReservationItem({
 }: {
   data: ReservationItemDataType;
 }) {
-  const badge = statusBadgeMap[data.reservationStatus];
+  const badge = statusBadgeMap[data.status];
   return (
     <Link
       href={`my-reservations/${data.reservationCode}`}

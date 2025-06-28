@@ -5,8 +5,7 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import MyReservationItem from './MyReservationItem';
 import MyReservationItemSkeleton from './MyReservationItemSkeleton';
 import { ReservationItemDataType } from '@/types/reservationDataTypes';
-
-const PAGE_SIZE = 10;
+import { PAGE_SIZE } from '@/constants/constants';
 
 export default function ActiveReservations() {
   const {
@@ -19,6 +18,7 @@ export default function ActiveReservations() {
       const res = await getReservationsData({
         size: PAGE_SIZE,
         cursor,
+        status: ['WAITING', 'CONFIRMED', 'IN_USE'],
       });
       if (res.success) {
         return {
