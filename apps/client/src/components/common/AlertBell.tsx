@@ -1,5 +1,6 @@
 import { cn } from '@repo/ui/lib/utils';
 import { BellIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AlertBell({
   count,
@@ -9,7 +10,7 @@ export default function AlertBell({
   className?: string;
 }) {
   return (
-    <div className="relative">
+    <Link href="/notifications" className="relative">
       <BellIcon className="size-[24px]" />
       {count > 0 && (
         <span className="absolute -top-2 -right-1 w-[18px] h-[18px]">
@@ -24,6 +25,6 @@ export default function AlertBell({
           </span>
         </span>
       )}
-    </div>
+    </Link>
   );
 }
