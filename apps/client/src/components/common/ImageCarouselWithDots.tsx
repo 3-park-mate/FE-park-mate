@@ -12,8 +12,10 @@ import ImageViewDialog from './ImageViewDialog';
 
 export default function ImageCarouselWithDots({
   images,
+  showDots = true,
 }: {
   images: string[];
+  showDots?: boolean;
 }) {
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
@@ -60,18 +62,20 @@ export default function ImageCarouselWithDots({
         <CarouselNext className="right-1 top-1/2 -translate-y-1/2 transition-opacity duration-300 disabled:opacity-0 disabled:pointer-events-none" />
       </Carousel>
 
-      <div className="flex justify-center space-x-2 mt-4">
-        {Array.from({ length: count }).map((_, i) => (
-          <button
-            key={i}
-            aria-label={`슬라이드 ${i + 1}`}
-            className={`w-[9px] h-[9px] rounded-full transition-colors duration-300 cursor-pointer ${
-              current === i ? 'bg-primary' : 'bg-gray-300'
-            }`}
-            onClick={() => api?.scrollTo(i)}
-          />
-        ))}
-      </div>
+      {showDots && (
+        <div className="flex justify-center space-x-2 mt-4">
+          {Array.from({ length: count }).map((_, i) => (
+            <button
+              key={i}
+              aria-label={`슬라이드 ${i + 1}`}
+              className={`w-[9px] h-[9px] rounded-full transition-colors duration-300 cursor-pointer ${
+                current === i ? 'bg-primary' : 'bg-gray-300'
+              }`}
+              onClick={() => api?.scrollTo(i)}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }

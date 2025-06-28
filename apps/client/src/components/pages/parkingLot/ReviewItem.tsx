@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function ReviewItem() {
   return (
     <div className="py-3">
-      <p className="">홍*동</p>
+      <p>홍*동</p>
       <Rating className="!text-sm">
         <span className="">4.5</span>
         <span className="text-gray-3 text-sm ms-1">23.4.21</span>
