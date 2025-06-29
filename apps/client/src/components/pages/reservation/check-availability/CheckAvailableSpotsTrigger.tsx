@@ -14,13 +14,18 @@ export default function CheckAvailableSpotsTrigger({
 }: {
   parkingLotUuid: string;
   selectedDateTime: {
-    entryDateTime: Date;
-    exitDateTime: Date;
+    entryDateTime: Date | null;
+    exitDateTime: Date | null;
   };
   onFetch: (data: AvailableSpotsResponseType) => void;
 }) {
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
+    if (
+      selectedDateTime.entryDateTime === null ||
+      selectedDateTime.exitDateTime === null
+    )
+      return;
     setLoading(true);
     try {
       const res = await getAvailableSpots(

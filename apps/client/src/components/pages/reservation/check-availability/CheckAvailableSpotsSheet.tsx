@@ -22,12 +22,6 @@ export default function CheckAvailableSpotsSheet({
   const [availableSpots, setAvailableSpots] =
     useState<AvailableSpotsResponseType | null>(null);
 
-  if (
-    selectedDateTime.entryDateTime === null ||
-    selectedDateTime.exitDateTime === null
-  )
-    return null;
-
   return (
     <Sheet key="bottom">
       <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4 bg-white">
