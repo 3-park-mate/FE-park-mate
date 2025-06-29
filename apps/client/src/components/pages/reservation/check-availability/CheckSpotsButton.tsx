@@ -14,13 +14,8 @@ export default function CheckSpotsButton({
     selectedDateTime.entryDateTime && selectedDateTime.exitDateTime;
 
   return (
-    <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4">
+    <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4 bg-white">
       <div>
-        {selectedDateTime.entryDateTime && selectedDateTime.exitDateTime && (
-          <p className="leading-tight">
-            결제금액: <span className="text-xl">9,000원</span>
-          </p>
-        )}
         <p className="font-semibold leading-0">
           3,000원
           <span className="ml-1 text-gray-2 text-sm">/30분</span>

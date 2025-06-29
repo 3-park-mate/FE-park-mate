@@ -1,72 +1,62 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { DateRange } from 'react-day-picker';
-import TimeInputs from './TimeInputs';
-import { eachDayOfInterval, format } from 'date-fns';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CheckSpotsButton from './CheckSpotsButton';
-import { combineDateAndTime } from '@/utils/datetimeUtils';
 import SelectDays from './SelectDays';
+import { getOperationsById } from '@/actions/parking/parking-service';
 import { OperationsInfo } from '@/types/parkingDataTypes';
+import { Sheet, SheetTrigger } from '@repo/ui/components/base/sheet';
+import AvailableSpotsSheet from './AvailableSpotsSheet';
+import { useSchedulePicker } from '@/hooks/useSchedulePicker';
+import SelectTimes from './SelectTimes';
 
 export default function SelectScheduleSection({
-  operations,
+  parkingLotUuid,
 }: {
-  operations?: OperationsInfo[];
+  parkingLotUuid?: string;
 }) {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const [selectedDateTime, setSelectedDateTime] = useState<{
-    entryDateTime: Date | null;
-    exitDateTime: Date | null;
-  }>({ entryDateTime: null, exitDateTime: null });
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const now = new Date();
+    return { year: now.getFullYear(), month: now.getMonth() + 1 };
+  });
+
+  const [operations, setOperations] = useState<OperationsInfo[] | null>(null);
+  const endRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!parkingLotUuid) return;
+    getOperationsById(
+      parkingLotUuid,
+      currentMonth.year,
+      currentMonth.month
+    ).then((res) => {
+      setOperations(res.success ? res.data : []);
+    });
+  }, [parkingLotUuid, currentMonth]);
 
   const availableDays = useMemo(() => {
-    if (!operations) return [];
-    return operations.map((op) => op.operationDate);
+    return operations?.map((op) => op.operationDate) ?? [];
   }, [operations]);
 
-  const handleDateChange = (range: DateRange | undefined) => {
-    if (!range?.from || !range?.to) {
-      setDateRange(range);
-      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
-      return;
-    }
+  const {
+    dateRange,
+    selectedDateTime,
+    handleDateChange,
+    handleTimeChange,
+    reset,
+  } = useSchedulePicker(availableDays);
 
-    const days = eachDayOfInterval({ start: range.from, end: range.to });
-    const allAvailable = days.every((date) =>
-      availableDays.includes(format(date, 'yyyy-MM-dd'))
-    );
-
-    if (allAvailable) {
-      setDateRange(range);
-      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
-    } else {
-      setDateRange(undefined);
-      setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
-    }
+  const handleMonthChange = (date: Date) => {
+    setCurrentMonth({ year: date.getFullYear(), month: date.getMonth() + 1 });
   };
-
-  const handleTimeChange = (type: 'entry' | 'exit', value: string) => {
-    if (!dateRange?.from || !dateRange?.to) return;
-
-    const date = type === 'entry' ? dateRange.from : dateRange.to;
-    const dateTime = combineDateAndTime(date, value);
-
-    setSelectedDateTime((prev) => ({
-      ...prev,
-      [type === 'entry' ? 'entryDateTime' : 'exitDateTime']: dateTime,
-    }));
-  };
-
+  useEffect(() => {
+    if (dateRange?.from && dateRange.to) {
+      endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [dateRange]);
   return (
-    <section className="flex flex-col gap-3 justify-center">
-      <p
-        className="text-xs text-right px-3 leading-0"
-        onClick={() => {
-          setDateRange(undefined);
-          setSelectedDateTime({ entryDateTime: null, exitDateTime: null });
-        }}
-      >
+    <section className="flex flex-col gap-3 justify-center pb-28">
+      <p className="text-xs text-right px-3 cursor-pointer" onClick={reset}>
         초기화
       </p>
 
@@ -74,17 +64,23 @@ export default function SelectScheduleSection({
         availableDays={availableDays}
         selected={dateRange}
         onSelect={handleDateChange}
+        onMonthChange={handleMonthChange}
       />
 
       {dateRange?.from && dateRange.to && (
-        <TimeInputs
+        <SelectTimes
           from={dateRange.from}
           to={dateRange.to}
           onChange={handleTimeChange}
         />
       )}
-
-      <CheckSpotsButton selectedDateTime={selectedDateTime} />
+      <div ref={endRef} />
+      <Sheet>
+        <SheetTrigger asChild>
+          <CheckSpotsButton selectedDateTime={selectedDateTime} />
+        </SheetTrigger>
+        <AvailableSpotsSheet />
+      </Sheet>
     </section>
   );
 }
