@@ -9,7 +9,7 @@ interface Props {
   onChange: (type: 'entry' | 'exit', value: string) => void;
 }
 
-export default function TimeInputs({ from, to, onChange }: Props) {
+export default function SelectTimes({ from, to, onChange }: Props) {
   return (
     <div className="flex gap-5">
       <CommonInputWithLabel

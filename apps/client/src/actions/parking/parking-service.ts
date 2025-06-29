@@ -1,4 +1,5 @@
 'use server';
+import { AvailableSpotsResponseType } from '@/components/pages/reservation/check-availability/CheckAvailableSpotsContent';
 import { api } from '@/hooks/serverFetch';
 import {
   GetParkingLotsInBoxRequestType,
@@ -116,6 +117,36 @@ export async function getOperationsById(
     const res = await api.get<CommonResponseType<OperationsInfo[]>>(
       PARKING_API_PREFIX,
       `/${parkingLotUuid}/operations`,
+      query,
+      {
+        cache: 'no-cache',
+      }
+    );
+    console.log(query);
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getAvailableSpots(
+  parkingLotUuid: string,
+  entryTime: string,
+  exitTime: string
+): Promise<ApiResponse<AvailableSpotsResponseType>> {
+  try {
+    const query: Record<string, string> = {
+      entryTime: entryTime.toString(),
+      exitTime: exitTime.toString(),
+    };
+    const res = await api.get<CommonResponseType<AvailableSpotsResponseType>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}/spots/available`,
       query,
       {
         cache: 'no-cache',

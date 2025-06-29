@@ -1,14 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import CheckSpotsButton from './CheckSpotsButton';
 import SelectDays from './SelectDays';
 import { getOperationsById } from '@/actions/parking/parking-service';
 import { OperationsInfo } from '@/types/parkingDataTypes';
-import { Sheet, SheetTrigger } from '@repo/ui/components/base/sheet';
-import AvailableSpotsSheet from './AvailableSpotsSheet';
 import { useSchedulePicker } from '@/hooks/useSchedulePicker';
 import SelectTimes from './SelectTimes';
+import CheckAvailableSpotsSheet from './CheckAvailableSpotsSheet';
 
 export default function SelectScheduleSection({
   parkingLotUuid,
@@ -49,24 +47,24 @@ export default function SelectScheduleSection({
   const handleMonthChange = (date: Date) => {
     setCurrentMonth({ year: date.getFullYear(), month: date.getMonth() + 1 });
   };
+
   useEffect(() => {
     if (dateRange?.from && dateRange.to) {
       endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [dateRange]);
+
   return (
     <section className="flex flex-col gap-3 justify-center pb-28">
       <p className="text-xs text-right px-3 cursor-pointer" onClick={reset}>
         초기화
       </p>
-
       <SelectDays
         availableDays={availableDays}
         selected={dateRange}
         onSelect={handleDateChange}
         onMonthChange={handleMonthChange}
       />
-
       {dateRange?.from && dateRange.to && (
         <SelectTimes
           from={dateRange.from}
@@ -75,12 +73,10 @@ export default function SelectScheduleSection({
         />
       )}
       <div ref={endRef} />
-      <Sheet>
-        <SheetTrigger asChild>
-          <CheckSpotsButton selectedDateTime={selectedDateTime} />
-        </SheetTrigger>
-        <AvailableSpotsSheet />
-      </Sheet>
+      <CheckAvailableSpotsSheet
+        parkingLotUuid={parkingLotUuid || ''}
+        selectedDateTime={selectedDateTime}
+      />
     </section>
   );
 }

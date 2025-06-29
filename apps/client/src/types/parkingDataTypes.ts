@@ -78,6 +78,13 @@ export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
 
 export type ParkingSpotType = 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
 
+export type ParkingSpotTypeWithEV =
+  | 'EV'
+  | 'SMALL'
+  | 'COMPACT'
+  | 'STANDARD'
+  | 'LARGE';
+
 export type EVChargeType =
   | 'AC_SINGLE'
   | 'DC_COMBO'
