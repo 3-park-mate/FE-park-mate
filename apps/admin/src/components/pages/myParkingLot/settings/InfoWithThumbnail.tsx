@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { Car, MapPin } from 'lucide-react';
 import { IconWithText, Rating } from '@repo/ui/components/common/CommonLayouts';
-import { cn } from '@repo/ui/lib/utils';
 
 export default function InfoWithThumbnail({
   thumbImageUrl,

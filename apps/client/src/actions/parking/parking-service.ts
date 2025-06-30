@@ -134,6 +134,29 @@ export async function getOperationsById(
   }
 }
 
+export async function getDailyOperationById(
+  parkingLotUuid: string
+): Promise<ApiResponse<OperationsInfo>> {
+  try {
+    const res = await api.get<CommonResponseType<OperationsInfo>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}/operations/daily`,
+      undefined,
+      {
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
 export async function getAvailableSpots(
   parkingLotUuid: string,
   entryTime: string,

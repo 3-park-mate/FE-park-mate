@@ -17,6 +17,7 @@ export default function InfoWithThumbnail({
   distance,
   capacity,
   parkingLotType,
+  baseIntervalMinutes,
 }: {
   thumbImageUrl?: string;
   baseFee: number;
@@ -26,6 +27,7 @@ export default function InfoWithThumbnail({
   distance: number;
   capacity: number;
   parkingLotType: ParkingLotType;
+  baseIntervalMinutes: number;
 }) {
   return (
     <section className="relative">
@@ -35,6 +37,8 @@ export default function InfoWithThumbnail({
           alt="주차장 이미지"
           fill
           className="object-cover"
+          priority
+          sizes="(max-width: 600px) 100vw 600px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
@@ -45,7 +49,10 @@ export default function InfoWithThumbnail({
                 <BadgeCheckIcon size={14} />
               </div>
             )}
-            <CommonPriceBadge className="text-black">
+            <CommonPriceBadge
+              className="text-black"
+              IntervalMinutes={baseIntervalMinutes}
+            >
               {baseFee.toLocaleString()}원
             </CommonPriceBadge>
           </div>
