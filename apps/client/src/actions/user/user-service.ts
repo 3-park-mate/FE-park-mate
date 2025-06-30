@@ -3,7 +3,7 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
-import { UserInfoDataType } from '@/types/userDataTypes';
+import { EditProfileDataType, UserInfoDataType } from '@/types/userDataTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
@@ -19,6 +19,7 @@ export async function getUserInfoData(): Promise<
     }
     const uuid = session.user.uuid;
     const accessToken = session.user.accessToken;
+    console.log(uuid);
 
     const res = await api.get<CommonResponseType<UserInfoDataType>>(
       API_PREFIX,
@@ -72,6 +73,43 @@ export async function AddFavoriteAction(
     console.log(res);
 
     return { success: true, data: res.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function EditUserInfoData(
+  userInfoData: Partial<EditProfileDataType>
+): Promise<ApiResponse<string>> {
+  const payload: Partial<EditProfileDataType> = { ...userInfoData };
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      return { success: false, message: '로그인 해주세요.' };
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.put<CommonResponseType<string>>(
+      API_PREFIX,
+      ``,
+      payload,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
   } catch (error) {
     return {
       success: false,
