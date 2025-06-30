@@ -11,13 +11,20 @@ import {
   getParkingLotById,
 } from '@/actions/parking/parking-service';
 import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
+import NotFoundLayout from '@/components/common/NotFoundLayout';
 
 export default async function page({
   params,
 }: {
   params: Promise<{ parkingLotUuid: string }>;
 }) {
-  const fallback = <div>주차장을 찾을 수 없습니다.</div>;
+  const fallback = (
+    <NotFoundLayout
+      heading="주차장이 존재하지 않습니다."
+      subheading="잘못된 url 접근이 아닌지 확인해 주세요."
+      buttonHref="/"
+    />
+  );
 
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
