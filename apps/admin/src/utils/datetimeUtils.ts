@@ -91,3 +91,19 @@ export const toISOStringWithDate = (
   const isoString = new Date(`${dateStr}T${timeStr}:00`).toISOString();
   return isoString;
 };
+
+/**
+ * 주어진 Date 객체를 로컬 시간 기준 ISO 8601 형식(YYYY-MM-DDTHH:mm:ss) 문자열로 변환합니다.
+ * UTC 변환 없이 사용자의 로컬 시간대를 그대로 반영합니다.
+ *
+ * @param date - 변환할 Date 객체
+ * @returns 로컬 시간 기준 ISO 문자열
+ */
+export const toLocalISOString = (date: Date): string => {
+  const pad = (n: number) => String(n).padStart(2, '0');
+
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+  );
+};
