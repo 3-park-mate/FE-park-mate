@@ -24,7 +24,20 @@ export function SelectSchedule({ onClose }: { onClose: () => void }) {
 
   const handleClick = () => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('schedule', selectedTime.entryTime);
+
+    // 날짜와 시간을 결합하여 start와 end 파라미터 설정
+    if (selectedDay?.from && selectedTime.entryTime) {
+      const startDate = selectedDay.from.toISOString().split('T')[0];
+      const startDateTime = `${startDate}T${selectedTime.entryTime}`;
+      params.set('start', startDateTime);
+    }
+
+    if (selectedDay?.to && selectedTime.exitTime) {
+      const endDate = selectedDay.to.toISOString().split('T')[0];
+      const endDateTime = `${endDate}T${selectedTime.exitTime}`;
+      params.set('end', endDateTime);
+    }
+
     router.push(`${pathname}?${params.toString()}`);
 
     setSelectedDay(undefined);
