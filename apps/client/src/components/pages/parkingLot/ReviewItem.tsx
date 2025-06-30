@@ -1,5 +1,5 @@
+import VoteButtons from '@/components/common/VoteButtons';
 import { Rating } from '@repo/ui/components/common/CommonLayouts';
-import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ReviewItem() {
@@ -24,16 +24,7 @@ export default function ReviewItem() {
           />
         </div>
       </div>
-      <div className="flex gap-3 mt-2.5">
-        <button className="flex gap-1 text-sm text-gray-3 cursor-pointer">
-          <ThumbsUp size={16} fill="currentColor" className="text-gray-1" />
-          <span>11</span>
-        </button>
-        <button className="flex gap-1 text-sm text-gray-3 cursor-pointer">
-          <ThumbsDown size={16} fill="currentColor" className="text-gray-1" />
-          <span>9</span>
-        </button>
-      </div>
+      <VoteButtons upCount={1} downCount={2} className="mt-2.5" />
     </div>
   );
 }

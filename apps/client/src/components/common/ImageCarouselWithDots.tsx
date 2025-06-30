@@ -43,7 +43,10 @@ export default function ImageCarouselWithDots({
       <Carousel opts={{ align: 'center' }} className="w-full" setApi={setApi}>
         <CarouselContent className="select-none">
           {images.map((img, index) => (
-            <CarouselItem key={index} className="basis-5/6">
+            <CarouselItem
+              key={index}
+              className={images.length === 1 ? 'w-full' : 'basis-5/6'}
+            >
               <ImageViewDialog imgSrc={img} title="이미지 상세보기">
                 <div className="relative rounded-md overflow-hidden bg-gray-1 flex aspect-[3/2]">
                   <Image
