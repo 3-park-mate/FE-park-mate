@@ -1,4 +1,4 @@
-import { MapInfo } from '@/types/mapDataTypes';
+import { initMapProps, MapInfo } from '@/types/mapDataTypes';
 import { SearchLocationResultType } from '@/types/searchDataTypes';
 
 export const updateMapState = (
@@ -93,3 +93,24 @@ export const getMapInfo = (
     return { ...result, ...infoHandlers[key]() };
   }, {});
 };
+
+export function parseInitMapParams(
+  searchParams: URLSearchParams
+): Partial<initMapProps> {
+  const lat = Number(searchParams.get('lat'));
+  const lng = Number(searchParams.get('lng'));
+
+  const latValid = !isNaN(lat);
+  const lngValid = !isNaN(lng);
+
+  return {
+    parkingLotUuid: searchParams.get('parkingLotUuid') || '',
+    lat: latValid ? lat : undefined,
+    lng: lngValid ? lng : undefined,
+    ev: searchParams.get('ev') === 'true',
+    entry: searchParams.get('entry')
+      ? new Date(searchParams.get('entry')!)
+      : null,
+    exit: searchParams.get('exit') ? new Date(searchParams.get('exit')!) : null,
+  };
+}

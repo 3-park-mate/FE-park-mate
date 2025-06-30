@@ -94,7 +94,7 @@ export async function getParkingLotsInBox(
       query,
       { cache: 'no-cache' }
     );
-    console.log(query);
+    console.log(query, '요청 테스트');
     console.log(res.data);
 
     return res.data;

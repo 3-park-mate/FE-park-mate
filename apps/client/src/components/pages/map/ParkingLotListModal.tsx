@@ -10,13 +10,13 @@ import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function ParkingLotListModal({
   isOpenListModal,
-  clickMarker,
+  setClickMarker,
   setIsOpenListModal,
   parkingLotList,
   isLoading,
 }: {
   isOpenListModal: boolean;
-  clickMarker: ParkingLotSimpleInfoType | null;
+  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   parkingLotList: ParkingLotsInBoxResponseType;
   isLoading: boolean;
@@ -62,13 +62,18 @@ export default function ParkingLotListModal({
             <DotSpinner className="mx-auto my-10 size-12 fill-primary text-xl" />
           ) : parkingLotList.parkingLots.length > 0 ? (
             parkingLotList.parkingLots.map((data, index) => (
-              <li key={data.parkingLotUuid} className="py-3 px-6">
-                <Link href={`parking-lot/${data.parkingLotUuid}`}>
-                  <ParkingLotListCard parkingLot={data} />
-                  {index !== parkingLotList.parkingLots.length - 1 && (
-                    <hr className=" mt-5" />
-                  )}
-                </Link>
+              <li
+                key={data.parkingLotUuid}
+                className="py-3 px-6"
+                onClick={() => {
+                  setClickMarker(data);
+                  setIsOpenListModal(false);
+                }}
+              >
+                <ParkingLotListCard parkingLot={data} />
+                {index !== parkingLotList.parkingLots.length - 1 && (
+                  <hr className=" mt-5" />
+                )}
               </li>
             ))
           ) : (
@@ -78,9 +83,6 @@ export default function ParkingLotListModal({
           )}
         </ul>
       </div>
-      {!isOpenListModal && !clickMarker && (
-        <ShowListModalButton setIsOpenListModal={setIsOpenListModal} />
-      )}
     </>
   );
 }
