@@ -10,6 +10,7 @@ export default function OperationCalendarWithInfo({
   OperationDatas: OperationDataType[];
 }) {
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const [selectedDate, setSelectedDate] = useState<Date>(today);
   const [selectedOperation, setSelectedOperation] =
     useState<OperationDataType | null>(() => {
@@ -38,9 +39,10 @@ export default function OperationCalendarWithInfo({
         mode="single"
         selected={selectedDate}
         onSelect={handleSelect}
-        captionLayout="dropdown"
+        captionLayout="dropdown-months"
         modifiers={{
           hasData: operationDates,
+          disabled: { before: today },
         }}
         modifiersClassNames={{
           hasData: 'text-secondary',
