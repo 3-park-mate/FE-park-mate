@@ -55,7 +55,8 @@ export default async function page({
           isActive={parkingOperationDummy.isActive}
           like={parkingLotData.likeCount}
           dislike={parkingLotData.dislikeCount}
-          baseFee={parkingOperationDummy.baseFee}
+          baseFee={operationData.baseFee}
+          baseIntervalMinutes={operationData.baseIntervalMinutes}
         />
         <ParkingDetailTabBar />
         <ParkingDetailContent

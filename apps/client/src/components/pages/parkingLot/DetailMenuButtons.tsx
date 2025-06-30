@@ -14,6 +14,7 @@ export default function DetailMenuButtons({
   like,
   dislike,
   baseFee,
+  baseIntervalMinutes,
 }: {
   hostUuid: string;
   parkingLotUuid: string;
@@ -21,6 +22,7 @@ export default function DetailMenuButtons({
   like: number;
   dislike: number;
   baseFee: number;
+  baseIntervalMinutes: number;
 }) {
   // hostUuid => 채팅
   const {
@@ -69,6 +71,7 @@ export default function DetailMenuButtons({
         parkingLotUuid={parkingLotUuid}
         isActive={isActive}
         baseFee={baseFee}
+        baseIntervalMinutes={baseIntervalMinutes}
       />
     </PaddedSection>
   );

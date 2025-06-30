@@ -6,17 +6,22 @@ export default function ReservationButton({
   parkingLotUuid,
   isActive,
   baseFee,
+  baseIntervalMinutes,
 }: {
   parkingLotUuid: string;
   isActive: boolean;
   baseFee: number;
+  baseIntervalMinutes: number;
 }) {
+  const intervalText =
+    baseIntervalMinutes === 60 ? '1시간' : `${baseIntervalMinutes}분`;
+
   return (
     <>
       {isActive ? (
         <AlwaysVisibleTooltip
           side="bottom"
-          content={`1시간 ${baseFee.toLocaleString()}원`}
+          content={`${intervalText} ${baseFee.toLocaleString()}원`}
         >
           <CommonButton className="bg-primary" disabled={!isActive}>
             예약하기

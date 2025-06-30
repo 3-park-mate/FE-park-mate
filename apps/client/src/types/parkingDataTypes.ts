@@ -156,3 +156,9 @@ export interface OperationsInfo {
   extraFee: number;
   discountRate: number;
 }
+
+export interface ParkingLotOptionDataType {
+  id: number;
+  name: string;
+  label: string;
+}

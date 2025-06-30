@@ -36,17 +36,15 @@ export default async function OperationCalendar({
               >
                 {item.dayOfMonth}
               </div>
-              {item.dayOfMonth === today && (
-                <div className="mt-2 text-11px sm:text-xs text-gray-2 space-y-1 ps-1 pb-2 min-h-[1.5rem]">
-                  {item.startTime && item.endTime ? (
-                    <p>
-                      {item.startTime} - {item.endTime}
-                    </p>
-                  ) : (
-                    <p className="text-gray-300">-</p>
-                  )}
-                </div>
-              )}
+              <div className="mt-2 text-11px sm:text-xs text-gray-2 space-y-1 ps-1 pb-2 min-h-[1.5rem]">
+                {item.startTime && item.endTime ? (
+                  <p>
+                    {item.startTime} - {item.endTime}
+                  </p>
+                ) : (
+                  <p className="text-gray-300">-</p>
+                )}
+              </div>
             </div>
           </div>
         ))}
