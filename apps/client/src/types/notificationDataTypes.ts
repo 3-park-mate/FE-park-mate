@@ -1,8 +1,9 @@
-export interface NotificationDataType {
-  id: string;
-  title: string;
-  content: string;
-  time: string;
-  type: 'success' | 'info' | 'chat';
-  icon?: string;
-}
+// Re-export shared types for backward compatibility
+export type {
+  NotificationDataType,
+  NotificationType,
+  CreateNotificationRequest,
+  NotificationListResponse,
+  NotificationSettingsDataType,
+  NotificationFilterParams,
+} from '@repo/shared-types';

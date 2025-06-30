@@ -1,3 +1,10 @@
+// Re-export shared types for backward compatibility
+export type {
+  SignInResponseDataType,
+  SignUpRequestDataType,
+  SignInRequestDataType,
+} from '@repo/shared-types';
+
 export interface SignUpStoreDataType {
   email: string;
   verificationCode: string;
@@ -26,12 +33,6 @@ export interface SignUpDataType {
 export interface SignInDataType {
   email: string;
   password: string;
-}
-
-export interface SignInResponseDataType {
-  accessToken: string;
-  refreshToken: string;
-  hostUuid: string;
 }
 
 export interface UserInfoResponseDataType {

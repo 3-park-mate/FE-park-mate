@@ -6,6 +6,7 @@ import CurrentLocationButton from './CurrentLocationButton ';
 import MapMarkers from './MapMarkers';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import ParkingLotListModal from './ParkingLotListModal';
+import MapSkeleton from './MapSkeleton';
 import useMap from '@/hooks/useMap';
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import FilterButtonSection from './FilterButtonSection';
@@ -17,7 +18,7 @@ export default function MainMap() {
   });
 
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const hasFetchedRef = useRef(false);
+  const hasInitializedRef = useRef(false);
   const [clickMarker, setClickMarker] =
     useState<ParkingLotSimpleInfoType | null>();
   const [mapLevel, setMapLevel] = useState(5);
@@ -28,6 +29,7 @@ export default function MainMap() {
     handleMapChange,
     parkingLotList,
     fetchData,
+    isLoading,
   } = useMap(mapRef);
 
   const { setGnbNavBar } = useGnbNavBarStore();
@@ -35,13 +37,16 @@ export default function MainMap() {
   return (
     <>
       <FilterButtonSection />
+      {isLoading && !mapRef.current && <MapSkeleton />}
       <Map
         center={center}
         level={5}
         className="absolute w-full h-full z-0"
         onDragEnd={handleMapChange}
         onZoomChanged={(map) => {
-          handleMapChange();
+          if (hasInitializedRef.current) {
+            handleMapChange();
+          }
           setMapLevel(map.getLevel());
         }}
         onClick={() => {
@@ -51,10 +56,10 @@ export default function MainMap() {
         }}
         onCreate={(map) => {
           mapRef.current = map;
-          if (!hasFetchedRef.current) {
+          setTimeout(() => {
             fetchData();
-            hasFetchedRef.current = true;
-          }
+            hasInitializedRef.current = true;
+          }, 200);
         }}
         isPanto
       >
@@ -74,6 +79,7 @@ export default function MainMap() {
         clickMarker={clickMarker || null}
         setIsOpenListModal={setIsOpenListModal}
         parkingLotList={parkingLotList}
+        isLoading={isLoading}
       />
     </>
   );

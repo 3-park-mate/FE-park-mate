@@ -1,3 +1,14 @@
+// Re-export shared types for backward compatibility
+export type {
+  MapBounds,
+  MapCenter,
+  ParkingLotSimpleInfoType,
+  MapFilterData,
+  MapMarkerData,
+  MapSearchParams,
+  MapRouteData,
+} from '@repo/shared-types';
+
 export interface MarkerDataType {
   parkingLotUuid: string;
   availableSpots: number;
@@ -17,18 +28,4 @@ export interface MapInfo {
     neLng: number;
   };
   level?: number;
-}
-
-export interface ParkingLotSimpleInfoType {
-  parkingLotUuid: string;
-  name: string;
-  address?: string;
-  thumbnailUrl: string | null;
-  imageUrls: {
-    imageUrl: string;
-  }[];
-  latitude: number;
-  longitude: number;
-  distance: number;
-  availableSpotCount: number;
 }

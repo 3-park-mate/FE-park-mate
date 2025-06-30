@@ -1,16 +1,2 @@
-export interface CommonResponseType<T> {
-  code: number;
-  status: string;
-  message: string;
-  data: T;
-}
-
-export type ApiResponse<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      message: string;
-    };
+// Re-export shared types for backward compatibility
+export type { CommonResponseType, ApiResponse } from '@repo/shared-types';

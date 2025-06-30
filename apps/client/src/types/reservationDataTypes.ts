@@ -1,10 +1,15 @@
-export type ReservationStatus =
-  | 'WAITING'
-  | 'CONFIRMED'
-  | 'CANCELLED'
-  | 'EXPIRED'
-  | 'IN_USE'
-  | 'COMPLETED';
+// Re-export shared types for backward compatibility
+export type {
+  ReservationStatus,
+  ReservationDataType,
+  ReservationRequestDataType,
+  ReservationResponseDataType,
+  ReservationHistoryItem,
+  ReservationStatusBadge,
+  ReservationFilterParams,
+  ReservationPaymentData,
+  ReservationQRData,
+} from '@repo/shared-types';
 
 export type PaymentType = 'PG' | 'POINT';
 

@@ -1,3 +1,10 @@
+import {
+  ApiResponse,
+  ErrorContext,
+  ErrorCodes,
+  ErrorFactory,
+} from '@repo/shared-types';
+
 interface RequestOptions extends RequestInit {
   // RequestInit을 확장하여 추가적인 옵션이 필요하면 여기에 정의
   // 예를 들어, 쿼리 파라미터를 객체로 넘기고 싶을 때
@@ -46,6 +53,14 @@ export async function serverFetch<T>(
     }
   }
 
+  const context: ErrorContext = {
+    timestamp: new Date().toISOString(),
+    environment:
+      (process.env.NODE_ENV as 'development' | 'staging' | 'production') ||
+      'development',
+    requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+  };
+
   try {
     // console.log('config: ', config);
     const res = await fetch(url, config);
@@ -55,13 +70,17 @@ export async function serverFetch<T>(
       const errorData = await res
         .json()
         .catch(() => ({ message: res.statusText || '서버 오류' }));
-      console.error('API 호출 실패: ', url, errorData);
 
-      throw new Error(
+      const apiError = ErrorFactory.createApiError(
+        ErrorCodes.API_SERVER_ERROR,
+        res.status,
+        endpoint,
+        method,
         errorData.error ||
           errorData.message ||
           '알 수 없는 오류가 발생했습니다.'
       );
+      throw apiError;
     }
 
     // 응답이 없는 경우 (예: 204 No Content) 처리
@@ -73,10 +92,21 @@ export async function serverFetch<T>(
     return await res.json();
   } catch (error) {
     console.error('Fetch 중 예상치 못한 오류 발생: ', error);
+
+    // 이미 ApiError인 경우 그대로 throw
+    if (error && typeof error === 'object' && 'statusCode' in error) {
+      throw error;
+    }
+
     // 네트워크 오류, JSON 파싱 오류 등 예외 처리
-    throw new Error(
+    const networkError = ErrorFactory.createApiError(
+      ErrorCodes.API_SERVER_ERROR,
+      500,
+      endpoint,
+      method,
       (error as Error).message || '네트워크 오류가 발생했습니다.'
     );
+    throw networkError;
   }
 }
 

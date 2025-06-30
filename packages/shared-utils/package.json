@@ -1,0 +1,37 @@
+{
+  "name": "@repo/shared-utils",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@repo/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./error-handlers": {
+      "types": "./dist/error-handlers.d.ts",
+      "import": "./dist/error-handlers.js"
+    },
+    "./api-client": {
+      "types": "./dist/api-client.d.ts",
+      "import": "./dist/api-client.js"
+    },
+    "./validation": {
+      "types": "./dist/validation.d.ts",
+      "import": "./dist/validation.js"
+    }
+  }
+}

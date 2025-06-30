@@ -116,3 +116,18 @@ export interface ParkingLotItem {
   thumbnailUrl: string;
   isOpen: boolean;
 }
+
+// Re-export shared types for backward compatibility
+export type {
+  ParkingLotResponseDataType,
+  ParkingLotItem,
+  OperationDataType,
+  OperationStoreDataType,
+  ParkingLotOptionDataType,
+} from '@repo/shared-types';
+
+// Legacy type aliases for backward compatibility
+export interface ParkingLotOption {
+  name: string;
+  label: string;
+}

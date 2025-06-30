@@ -1,0 +1,66 @@
+{
+  "name": "@repo/shared-types",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
+    },
+    "./parking": {
+      "types": "./dist/parking.d.ts",
+      "import": "./dist/parking.js"
+    },
+    "./common": {
+      "types": "./dist/common.d.ts",
+      "import": "./dist/common.js"
+    },
+    "./reservation": {
+      "types": "./dist/reservation.d.ts",
+      "import": "./dist/reservation.js"
+    },
+    "./user": {
+      "types": "./dist/user.d.ts",
+      "import": "./dist/user.js"
+    },
+    "./chat": {
+      "types": "./dist/chat.d.ts",
+      "import": "./dist/chat.js"
+    },
+    "./review": {
+      "types": "./dist/review.d.ts",
+      "import": "./dist/review.js"
+    },
+    "./notification": {
+      "types": "./dist/notification.d.ts",
+      "import": "./dist/notification.js"
+    },
+    "./search": {
+      "types": "./dist/search.d.ts",
+      "import": "./dist/search.js"
+    },
+    "./map": {
+      "types": "./dist/map.d.ts",
+      "import": "./dist/map.js"
+    },
+    "./mypage": {
+      "types": "./dist/mypage.d.ts",
+      "import": "./dist/mypage.js"
+    }
+  }
+}

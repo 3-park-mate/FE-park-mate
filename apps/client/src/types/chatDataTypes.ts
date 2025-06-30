@@ -1,3 +1,16 @@
+// Re-export shared types for backward compatibility
+export type {
+  ChatRoomDataType,
+  ChatMessageDataType,
+  ChatRoomListResponse,
+  ChatMessageListResponse,
+  CreateChatRoomRequest,
+  SendMessageRequest,
+  ChatNotificationData,
+  ChatRoomStatus,
+  MessageStatus,
+} from '@repo/shared-types';
+
 export interface ChatPreviewItemType {
   chatRoomId: string;
   chatRoomName: string;

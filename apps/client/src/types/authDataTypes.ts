@@ -1,27 +1,29 @@
+// Re-export shared types for backward compatibility
+export type {
+  SignInResponseDataType,
+  SignUpRequestDataType,
+  SignInRequestDataType,
+} from '@repo/shared-types';
+
+// Legacy type aliases for backward compatibility
 export interface SignUpStoreDataType {
   email: string;
-  verificationCode: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirm: string;
   name: string;
   phoneNumber: string;
+  agreeToTerms: boolean;
+  agreeToMarketing: boolean;
 }
 
-export interface SignUpDataType {
-  email: string;
-  password: string;
-  name: string;
-  phoneNumber: string;
-  verificationCode: string;
-}
-
-export interface SignInDataType {
+export interface SignInStoreDataType {
   email: string;
   password: string;
 }
 
-export interface SignInResponseDataType {
-  accessToken: string;
-  refreshToken: string;
+export interface UserInfoResponseDataType {
   userUuid: string;
+  email: string;
+  name: string;
+  phoneNumber: string;
 }

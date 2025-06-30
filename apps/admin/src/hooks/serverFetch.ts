@@ -1,3 +1,10 @@
+import {
+  ApiResponse,
+  ErrorContext,
+  ErrorCodes,
+  ErrorFactory,
+} from '@repo/shared-types';
+
 interface RequestOptions extends RequestInit {
   // RequestInit을 확장하여 추가적인 옵션이 필요하면 여기에 정의
   query?: Record<string, string>;
@@ -45,6 +52,14 @@ export async function serverFetch<T>(
     }
   }
 
+  const context: ErrorContext = {
+    timestamp: new Date().toISOString(),
+    environment:
+      (process.env.NODE_ENV as 'development' | 'staging' | 'production') ||
+      'development',
+    requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+  };
+
   try {
     const res = await fetch(url, config);
 
@@ -54,43 +69,68 @@ export async function serverFetch<T>(
     }
 
     // 성공적인 응답의 JSON 파싱
-    // 서버가 HTTP 200 OK를 보내더라도 본문에 오류 정보를 담는 경우를 대비하여 항상 파싱합니다.
     const jsonResponse = await res.json().catch(() => {
       // JSON 파싱 실패 시 기본 오류 메시지
-      throw new Error(res.statusText || '응답 JSON 파싱 실패');
+      const parseError = ErrorFactory.createApiError(
+        ErrorCodes.API_SERVER_ERROR,
+        res.status,
+        endpoint,
+        method,
+        '응답 JSON 파싱 실패'
+      );
+      throw parseError;
     });
 
-    // **여기서 서버 응답 바디의 'code' 필드를 확인하여 에러를 처리합니다.**
-    // 서버가 HTTP 200 OK를 보내더라도 본문 JSON에 오류 코드가 있다면 에러로 간주합니다.
+    // 서버 응답 바디의 'code' 필드를 확인하여 에러를 처리
     if (
       jsonResponse &&
       typeof jsonResponse.code === 'number' &&
       jsonResponse.code >= 400
     ) {
-      console.error('API 호출 실패 (서버 응답 코드 오류): ', url, jsonResponse);
-      throw new Error(jsonResponse.message || '서버에서 오류를 반환했습니다.');
+      const apiError = ErrorFactory.createApiError(
+        ErrorCodes.API_SERVER_ERROR,
+        jsonResponse.code,
+        endpoint,
+        method,
+        jsonResponse.message || '서버에서 오류를 반환했습니다.'
+      );
+      throw apiError;
     }
 
-    // HTTP 응답이 실패 상태(4xx, 5xx)일 경우 (기존 로직 유지)
-    // 이 부분은 서버가 명시적으로 HTTP 상태 코드 자체를 4xx/5xx로 보내는 경우를 대비합니다.
+    // HTTP 응답이 실패 상태(4xx, 5xx)일 경우
     if (!res.ok) {
-      // 위에서 jsonResponse를 이미 파싱했으므로 다시 파싱할 필요가 없습니다.
-      console.error('API 호출 실패 (HTTP 상태 코드 오류): ', url, jsonResponse);
-      throw new Error(
+      const httpError = ErrorFactory.createApiError(
+        ErrorCodes.API_SERVER_ERROR,
+        res.status,
+        endpoint,
+        method,
         jsonResponse.message ||
           res.statusText ||
           '알 수 없는 오류가 발생했습니다.'
       );
+      throw httpError;
     }
 
-    // 모든 검사를 통과한 경우, 성공적인 응답으로 간주하여 반환합니다.
+    // 모든 검사를 통과한 경우, 성공적인 응답으로 간주하여 반환
     return jsonResponse;
   } catch (error) {
+    // 에러 로깅 및 처리
     console.error('Fetch 중 예상치 못한 오류 발생: ', error);
+
+    // 이미 ApiError인 경우 그대로 throw
+    if (error && typeof error === 'object' && 'statusCode' in error) {
+      throw error;
+    }
+
     // 네트워크 오류, JSON 파싱 오류 등 예외 처리
-    throw new Error(
+    const networkError = ErrorFactory.createApiError(
+      ErrorCodes.API_SERVER_ERROR,
+      500,
+      endpoint,
+      method,
       (error as Error).message || '네트워크 오류가 발생했습니다.'
     );
+    throw networkError;
   }
 }
 
