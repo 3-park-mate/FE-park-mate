@@ -3,19 +3,16 @@ import MyCarItem from './MyCarItem';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
 import { Plus } from 'lucide-react';
-import { VehicleDataDummy } from '@/data/myPageDummyDatas';
 
-export default function MyCarListSection() {
+export default function MyCarListSection({
+  VehiclesData,
+}: {
+  VehiclesData: { vehicleUuid: string }[];
+}) {
   return (
     <PaddedSection className="space-y-4 py-4">
-      {VehicleDataDummy.map((car) => (
-        <MyCarItem
-          key={car.userVehicleNumbersId}
-          userVehicleNumbersId={car.userVehicleNumbersId}
-          vehicleNumber={car.vehicleNumber}
-          isDefault={car.isDefault}
-          nickname={car.nickname}
-        />
+      {VehiclesData.map((item) => (
+        <MyCarItem key={item.vehicleUuid} vehicleUuid={item.vehicleUuid} />
       ))}
       <Link
         href="/my-car/add"

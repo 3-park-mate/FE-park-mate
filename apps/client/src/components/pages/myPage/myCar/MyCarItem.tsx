@@ -1,17 +1,27 @@
-import { VehicleDataType } from '@/types/myPageDataTypes';
+import { getUserVehicleDetailData } from '@/actions/user/user-service';
+import { UserVehicleDataType } from '@/types/userDataTypes';
 import { Car } from 'lucide-react';
+import DeleteCarButton from './DeleteCarButton';
 
-export default function MyCarItem({
-  vehicleNumber,
-  isDefault,
-  nickname,
+export default async function MyCarItem({
+  vehicleUuid,
   showDeleteButton = true,
-}: VehicleDataType & { showDeleteButton?: boolean }) {
+}: {
+  vehicleUuid: string;
+  showDeleteButton?: boolean;
+}) {
+  const { data: vehicleData } = (await getUserVehicleDetailData(
+    vehicleUuid
+  )) as {
+    success: true;
+    data: UserVehicleDataType;
+  };
+
   return (
     <div className="outline outline-gray-1 rounded-lg px-4 py-3">
       <div className="flex gap-1 items-center">
-        <p className="text-15px">{nickname}</p>
-        {isDefault && (
+        <p className="text-15px">{vehicleData.nickname}</p>
+        {vehicleData.defaultSelected && (
           <div className="h-[20px] text-primary-dark-50 border border-primary-dark-50 text-xs px-1 rounded-lg flex items-center">
             기본
           </div>
@@ -19,13 +29,9 @@ export default function MyCarItem({
       </div>
       <div className="flex gap-1 items-center">
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
-        <p className="text-gray-dark-2 text-sm">{vehicleNumber}</p>
+        <p className="text-gray-dark-2 text-sm">{vehicleData.vehicleNumber}</p>
       </div>
-      {showDeleteButton && (
-        <button className="pt-2 text-sm text-gray-2 cursor-pointer hover:text-gray-700">
-          삭제
-        </button>
-      )}
+      {showDeleteButton && <DeleteCarButton vehicleUuid={vehicleUuid} />}
     </div>
   );
 }
