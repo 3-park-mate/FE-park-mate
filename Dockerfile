@@ -1,6 +1,8 @@
 # 1단계: Build Stage
 FROM node:22 AS builder
 
+ENV TZ Asia/Seoul
+
 WORKDIR /app
 
 # 코드 복사
