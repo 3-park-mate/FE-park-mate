@@ -82,7 +82,6 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
     if (!map) return;
 
     if (map.getLevel() < 7) {
-      // 디바운싱 적용
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
       }
@@ -97,26 +96,22 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
     initMap();
   }, [initMap]);
 
-  // searchParams 변경 감지하여 데이터 새로 가져오기
+  // searchParams 변경 감지
   useEffect(() => {
     const currentSearchParams = searchParams.toString();
 
-    // searchParams가 변경되었고, 지도가 초기화된 상태에서만 데이터를 새로 가져옴
     if (currentSearchParams !== lastSearchParamsRef.current && mapRef.current) {
       lastSearchParamsRef.current = currentSearchParams;
-      lastBoundsRef.current = ''; // bounds 캐시 초기화하여 강제로 데이터 가져오기
+      lastBoundsRef.current = '';
 
-      // 디바운싱 타이머가 있다면 취소
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
       }
 
-      // 즉시 데이터 가져오기
       fetchData();
     }
   }, [searchParams, mapRef, fetchData]);
 
-  // 컴포넌트 언마운트 시 타이머 정리
   useEffect(() => {
     return () => {
       if (debounceTimerRef.current) {

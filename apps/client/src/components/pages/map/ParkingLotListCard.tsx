@@ -23,15 +23,15 @@ export default function ParkingLotListCard({
         <DotIcon className="size-4" />
         <span className="">{parkingLot.address}</span>
       </p>
-      <div className="flex gap-4 flex-nowrap overflow-x-auto scrollbar-hide mt-2">
+      <div className="flex gap-2 flex-nowrap overflow-x-auto scrollbar-hide mt-2">
         {parkingLot.imageUrls.length > 0 &&
           parkingLot.imageUrls?.map((image, index) => (
             <Image
-              className="h-[90px]"
+              className="object-cover rounded-sm"
               key={index}
               src={image.imageUrl}
               alt={image.imageUrl}
-              width={90}
+              width={120}
               height={90}
             />
           ))}
