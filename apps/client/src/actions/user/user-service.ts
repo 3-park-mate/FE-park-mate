@@ -18,10 +18,18 @@ export async function getUserInfoData(): Promise<
       redirect('/error');
     }
     const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
 
     const res = await api.get<CommonResponseType<UserInfoDataType>>(
       API_PREFIX,
-      `/${uuid}`
+      '',
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
     );
     console.log(res);
 
