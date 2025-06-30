@@ -20,13 +20,17 @@ export default function OptionSection({
   return (
     <PaddedSection className="bg-white py-7 mb-3" id="options">
       <ParkingLotOptionSection options={options} />
-      <hr className="my-6" />
       {evChargeTypes?.length > 0 && (
-        <EvChargeTypeSection evChargeTypes={evChargeTypes} />
+        <>
+          <hr className="my-6" />
+          <EvChargeTypeSection evChargeTypes={evChargeTypes} />
+        </>
       )}
-      <hr className="my-6" />
       {parkingSpotTypes?.length > 0 && (
-        <ParkingSpotTypeSection parkingSpotTypes={parkingSpotTypes} />
+        <>
+          <hr className="my-6" />
+          <ParkingSpotTypeSection parkingSpotTypes={parkingSpotTypes} />
+        </>
       )}
     </PaddedSection>
   );

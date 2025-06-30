@@ -23,15 +23,16 @@ export default function MapLinkButton({
       })} w-full h-auto justify-start items-center gap-5 rounded-2xl !bg-black`}
     >
       <div className="relative flex-shrink-0 w-[64px] h-[64px]">
-        <MarkerIcon
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-          !w-6 !h-6"
-        />
         <Image
           src="/img/map-thumb.png"
           alt="지도 썸네일"
-          width={64}
-          height={64}
+          fill
+          sizes="64px"
+          style={{ objectFit: 'cover' }}
+        />
+        <MarkerIcon
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+          !w-6 !h-6 z-10"
         />
       </div>
       <div className="min-w-0 flex-1">

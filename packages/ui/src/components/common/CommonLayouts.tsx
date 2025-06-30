@@ -74,10 +74,15 @@ export function FixedBottomSection({
 export function CommonPriceBadge({
   children,
   className,
+  IntervalMinutes = 60,
 }: {
   children: React.ReactNode;
   className?: string;
+  IntervalMinutes?: number;
 }) {
+  const intervalText =
+    IntervalMinutes === 60 ? '1시간' : `${IntervalMinutes}분`;
+
   return (
     <div
       className={cn(
@@ -86,7 +91,7 @@ export function CommonPriceBadge({
       )}
     >
       {children}
-      <span className="text-[10px] text-black/70">/1시간</span>
+      <span className="text-[10px] text-black/70">/{intervalText}</span>
     </div>
   );
 }

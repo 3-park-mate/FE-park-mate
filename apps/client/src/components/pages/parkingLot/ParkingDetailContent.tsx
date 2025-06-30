@@ -48,7 +48,7 @@ export default function ParkingDetailContent({
           imageUrls={imageUrls.map((img) => img.imageUrl)}
         />
       )}
-      <ReviewSection />
+      <ReviewSection parkingLotUuid={parkingLotUuid} />
     </section>
   );
 }

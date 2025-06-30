@@ -4,7 +4,11 @@ import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
 
-export default function ReviewSection() {
+export default function ReviewSection({
+  parkingLotUuid,
+}: {
+  parkingLotUuid: string;
+}) {
   return (
     <PaddedSection className="bg-white py-7" id="reviews">
       <h2 className="text-lg font-semibold">
@@ -18,7 +22,7 @@ export default function ReviewSection() {
           </div>
         ))}
         <Link
-          href="#"
+          href={`/reviews/${parkingLotUuid}`}
           className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-white !text-black mt-4`}
           style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
         >

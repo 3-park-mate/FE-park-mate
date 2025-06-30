@@ -6,24 +6,40 @@ import {
   parkingOperationDummy,
   reviewSummaryDummy,
 } from '@/data/parkingDummyDatas';
-import { getParkingLotById } from '@/actions/parking/parking-service';
+import {
+  getDailyOperationById,
+  getParkingLotById,
+} from '@/actions/parking/parking-service';
 import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
+import NotFoundLayout from '@/components/common/NotFoundLayout';
 
 export default async function page({
   params,
 }: {
   params: Promise<{ parkingLotUuid: string }>;
 }) {
-  const fallback = <div>주차장을 찾을 수 없습니다.</div>;
+  const fallback = (
+    <NotFoundLayout
+      heading="주차장이 존재하지 않습니다."
+      subheading="잘못된 url 접근이 아닌지 확인해 주세요."
+      buttonHref="/"
+    />
+  );
 
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
 
-  const res = await getParkingLotById(parkingLotUuid);
-  if (!res.success) return fallback;
+  const [parkingLotRes, operationRes] = await Promise.all([
+    getParkingLotById(parkingLotUuid),
+    getDailyOperationById(parkingLotUuid),
+  ]);
 
-  const parkingLotData = res.data;
-  if (!parkingLotData) return fallback;
+  if (!parkingLotRes.success || !operationRes.success || !parkingLotRes.data) {
+    return fallback;
+  }
+
+  const parkingLotData = parkingLotRes.data;
+  const operationData = operationRes.data;
 
   return (
     <>
@@ -31,13 +47,14 @@ export default async function page({
       <main className="pb-32 bg-inner-background-gray">
         <InfoWithThumbnail
           thumbImageUrl={parkingLotData.thumbnailUrl}
-          baseFee={parkingOperationDummy.baseFee}
+          baseFee={operationData.baseFee}
           name={parkingLotData.name}
           averageRating={reviewSummaryDummy.averageRating}
           totalReviews={reviewSummaryDummy.totalReviews}
           distance={100}
           capacity={parkingLotData.capacity}
           parkingLotType={parkingLotData.parkingLotType}
+          baseIntervalMinutes={operationData.baseIntervalMinutes}
         />
         <DetailMenuButtons
           hostUuid={parkingLotData.hostUuid}
@@ -45,7 +62,8 @@ export default async function page({
           isActive={parkingOperationDummy.isActive}
           like={parkingLotData.likeCount}
           dislike={parkingLotData.dislikeCount}
-          baseFee={parkingOperationDummy.baseFee}
+          baseFee={operationData.baseFee}
+          baseIntervalMinutes={operationData.baseIntervalMinutes}
         />
         <ParkingDetailTabBar />
         <ParkingDetailContent
