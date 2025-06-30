@@ -63,7 +63,6 @@ export default function SignInForm() {
           '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
         handleAlert(message);
       }
-      router.push('/');
     } catch (_error) {
       setLoading(false);
     }
