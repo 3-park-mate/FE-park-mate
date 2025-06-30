@@ -78,7 +78,7 @@ export default function EditProfileForm({
         errorMessage={modalMessage}
       />
       <form
-        className="space-y-5"
+        className="space-y-4"
         onKeyDown={handleKeyDown}
         onSubmit={handleSubmit(onSubmit)}
       >

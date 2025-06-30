@@ -15,6 +15,7 @@ import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
+import { CommonCheckbox } from '@repo/ui/components/common/CommonCheckbox';
 
 export default function AddMyCarForm() {
   const router = useRouter();
@@ -27,16 +28,17 @@ export default function AddMyCarForm() {
     modalMessage,
     handleAlert,
   } = useAlertWithLoading();
-  const { register, handleSubmit, control } = useForm<UserVehicleDataType>({
-    resolver: zodResolver(addMyCarSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      vehicleNumber: '',
-      nickname: '',
-      defaultSelected: false,
-    },
-  });
+  const { register, handleSubmit, control, setValue } =
+    useForm<UserVehicleDataType>({
+      resolver: zodResolver(addMyCarSchema),
+      mode: 'onChange',
+      reValidateMode: 'onChange',
+      defaultValues: {
+        vehicleNumber: '',
+        nickname: '',
+        defaultSelected: false,
+      },
+    });
   const { errors, isValid } = useFormState({
     control,
   });
@@ -49,6 +51,10 @@ export default function AddMyCarForm() {
     handleAlert('차량이 등록되었습니다.');
     setLoading(false);
     setIsSuccess(true);
+  };
+
+  const handleDefaultSelectedChange = (checked: boolean) => {
+    setValue('defaultSelected', checked);
   };
 
   return (
@@ -68,7 +74,7 @@ export default function AddMyCarForm() {
       <form
         onKeyDown={handleKeyDown}
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5 px-6"
+        className="space-y-4 px-6"
       >
         <FormHeading>차량 정보를 입력해 주세요.</FormHeading>
         <CommonInputWithLabel
@@ -87,6 +93,17 @@ export default function AddMyCarForm() {
           maxLength={10}
           {...register('nickname')}
         />
+        <div className="flex items-center space-x-2 ps-1">
+          <CommonCheckbox
+            id="defaultSelected"
+            theme="primary"
+            {...register('defaultSelected')}
+            onCheckedChange={handleDefaultSelectedChange}
+          />
+          <label htmlFor="defaultSelected" className="text-sm text-gray-800">
+            기본 차량으로 설정
+          </label>
+        </div>
         <CommonButton
           disabled={!isValid || loading}
           type="submit"

@@ -2,6 +2,7 @@ import { getUserVehicleDetailData } from '@/actions/user/user-service';
 import { UserVehicleDataType } from '@/types/userDataTypes';
 import { Car } from 'lucide-react';
 import DeleteCarButton from './DeleteCarButton';
+import SetDefaultCarButton from './SetDefaultCarButton';
 
 export default async function MyCarItem({
   vehicleUuid,
@@ -31,7 +32,12 @@ export default async function MyCarItem({
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
         <p className="text-gray-dark-2 text-sm">{vehicleData.vehicleNumber}</p>
       </div>
-      {showDeleteButton && <DeleteCarButton vehicleUuid={vehicleUuid} />}
+      <div className="space-x-1.5">
+        {showDeleteButton && <DeleteCarButton vehicleUuid={vehicleUuid} />}
+        {!vehicleData.defaultSelected && (
+          <SetDefaultCarButton vehicleUuid={vehicleUuid} />
+        )}
+      </div>
     </div>
   );
 }
