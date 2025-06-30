@@ -3,9 +3,10 @@
 import { SheetTrigger } from '@repo/ui/components/base/sheet';
 import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AvailableSpotsResponseType } from './CheckAvailableSpotsContent';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
+import { toLocalISOString } from '@/utils/datetimeUtils';
 
 export default function CheckAvailableSpotsTrigger({
   parkingLotUuid,
@@ -30,8 +31,8 @@ export default function CheckAvailableSpotsTrigger({
     try {
       const res = await getAvailableSpots(
         parkingLotUuid,
-        selectedDateTime.entryDateTime.toISOString().replace(/Z$/, ''),
-        selectedDateTime.exitDateTime.toISOString().replace(/Z$/, '')
+        toLocalISOString(selectedDateTime.entryDateTime),
+        toLocalISOString(selectedDateTime.exitDateTime)
       );
 
       if (res.success) {

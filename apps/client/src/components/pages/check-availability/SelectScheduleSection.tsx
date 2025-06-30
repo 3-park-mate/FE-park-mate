@@ -21,6 +21,13 @@ export default function SelectScheduleSection({
   const [operations, setOperations] = useState<OperationsInfo[] | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
 
+  const availableDays = useMemo(() => {
+    return operations?.map((op) => op.operationDate) ?? [];
+  }, [operations]);
+
+  const { dateRange, timeRange, handleDateChange, handleTimeChange, reset } =
+    useSchedulePicker(availableDays);
+
   useEffect(() => {
     if (!parkingLotUuid) return;
     getOperationsById(
@@ -32,28 +39,17 @@ export default function SelectScheduleSection({
     });
   }, [parkingLotUuid, currentMonth]);
 
-  const availableDays = useMemo(() => {
-    return operations?.map((op) => op.operationDate) ?? [];
-  }, [operations]);
-
-  const {
-    dateRange,
-    selectedDateTime,
-    handleDateChange,
-    handleTimeChange,
-    reset,
-  } = useSchedulePicker(availableDays);
-
   const handleMonthChange = (date: Date) => {
     setCurrentMonth({ year: date.getFullYear(), month: date.getMonth() + 1 });
   };
-
   useEffect(() => {
-    if (dateRange?.from && dateRange.to) {
-      endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (dateRange?.from && dateRange?.to) {
+      endRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [dateRange]);
-
+  useEffect(() => {
+    console.log(dateRange, timeRange);
+  }, [dateRange, timeRange]);
   return (
     <section className="flex flex-col gap-3 justify-center pb-28">
       <p className="text-xs text-right px-3 cursor-pointer" onClick={reset}>
@@ -75,7 +71,8 @@ export default function SelectScheduleSection({
       <div ref={endRef} />
       <CheckAvailableSpotsSheet
         parkingLotUuid={parkingLotUuid || ''}
-        selectedDateTime={selectedDateTime}
+        dateRange={dateRange}
+        timeRange={timeRange}
       />
     </section>
   );
