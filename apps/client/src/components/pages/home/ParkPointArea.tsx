@@ -1,13 +1,12 @@
-import { getUserInfoData } from '@/actions/user/user-service';
-import { UserInfoDataType } from '@/types/userDataTypes';
+import { getUserPointData } from '@/actions/user/user-service';
 import { buttonVariants } from '@repo/ui/components/base/button';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 import Link from 'next/link';
 
 export default async function ParkPointArea() {
-  const { data: userData } = (await getUserInfoData()) as {
+  const { data: userData } = (await getUserPointData()) as {
     success: true;
-    data: UserInfoDataType;
+    data: { point: number };
   };
 
   return (

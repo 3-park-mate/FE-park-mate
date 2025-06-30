@@ -30,6 +30,41 @@ export async function getUserInfoData(): Promise<
           'X-User-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getUserPointData(): Promise<
+  ApiResponse<{ point: number }>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<{ point: number }>>(
+      API_PREFIX,
+      '/point',
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        cache: 'no-cache',
       }
     );
     console.log(res);
