@@ -3,6 +3,7 @@ import {
   MyPageMenuDataType,
   ParkingDatailTabMenuType,
 } from '@/types/initialDataTypes';
+import { ParkingSpotTypeWithEV } from '@/types/parkingDataTypes';
 import { ReservationStatus } from '@/types/reservationDataTypes';
 import ACSingleIcon from '@repo/ui/components/icon/ACSingleIcon';
 import ACThreePhaseIcon from '@repo/ui/components/icon/ACThreePhaseIcon';
@@ -149,5 +150,40 @@ export const statusBadgeMap: Record<
   COMPLETED: {
     label: '사용 완료',
     className: 'bg-green-500 text-white font-medium',
+  },
+};
+
+export const SelectParkingSpotCardMap: Record<
+  ParkingSpotTypeWithEV,
+  {
+    label: string;
+    selectedClass: string;
+    unselectedClass: string;
+  }
+> = {
+  EV: {
+    label: '전기차',
+    selectedClass: 'bg-green-gray/30 ring-green text-green-700 shadow-lg',
+    unselectedClass: 'bg-green-gray/30 border-gray-1 text-gray-2',
+  },
+  SMALL: {
+    label: '경차',
+    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
+    unselectedClass: 'bg-secondary-gray/40 border-none text-gray-2',
+  },
+  COMPACT: {
+    label: '소형차',
+    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
+    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
+  },
+  STANDARD: {
+    label: '중형차',
+    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
+    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
+  },
+  LARGE: {
+    label: '대형차',
+    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
+    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
   },
 };

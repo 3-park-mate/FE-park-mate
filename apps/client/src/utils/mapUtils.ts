@@ -1,5 +1,5 @@
-import { SearchLocationResultType } from '@/types/filterInfoType';
 import { MapInfo } from '@/types/mapDataTypes';
+import { SearchLocationResultType } from '@/types/searchDataTypes';
 
 export const updateMapState = (
   map: kakao.maps.Map,
@@ -49,7 +49,7 @@ export const coordtoAddressUtil = (position: {
   lat: number;
   lng: number;
 }): Promise<string | null> => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     console.log(position.lat, position.lng);
     const geocoder = new kakao.maps.services.Geocoder();
     console.log(geocoder);
@@ -62,7 +62,7 @@ export const coordtoAddressUtil = (position: {
         const address = result[0]?.address || result[0]?.road_address || null;
         resolve(address?.address_name || '');
       } else {
-        resolve('현재 위치 정보를 확인할 수 없습니다.');
+        reject(new Error('주소를 변환할 수 없습니다.'));
       }
     });
   });

@@ -78,6 +78,13 @@ export type ParkingLotType = 'PUBLIC' | 'PRIVATE' | 'COMMERCIAL';
 
 export type ParkingSpotType = 'SMALL' | 'COMPACT' | 'STANDARD' | 'LARGE';
 
+export type ParkingSpotTypeWithEV =
+  | 'EV'
+  | 'SMALL'
+  | 'COMPACT'
+  | 'STANDARD'
+  | 'LARGE';
+
 export type EVChargeType =
   | 'AC_SINGLE'
   | 'DC_COMBO'
@@ -135,4 +142,17 @@ export interface GetParkingLotsInBoxRequestType {
 
 export interface ParkingLotsInBoxResponseType {
   parkingLots: ParkingLotSimpleInfoType[];
+}
+
+export interface OperationsInfo {
+  parkingOperationUuid: string;
+  parkingLotUuid: string;
+  operationDate: string;
+  validStartTime: string;
+  validEndTime: string;
+  baseIntervalMinutes: number;
+  baseFee: number;
+  extraIntervalMinutes: number;
+  extraFee: number;
+  discountRate: number;
 }

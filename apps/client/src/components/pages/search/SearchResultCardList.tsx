@@ -1,11 +1,11 @@
 'use client';
 
-import { SearchLocationResultType } from '@/types/filterInfoType';
 import { cn } from '@repo/ui/lib/utils';
 import { useEffect } from 'react';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { MapPin } from 'lucide-react';
 import MapRedirectButton from './MapRedirectButton';
+import { SearchLocationResultType } from '@/types/searchDataTypes';
 
 export default function SearchResultCardList({
   results,

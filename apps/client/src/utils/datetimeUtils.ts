@@ -93,3 +93,20 @@ export const formatDuration = (startIso: string, endIso: string) => {
   }
   return `${minutes}분`;
 };
+/**
+ * combineDateAndTime 함수는 날짜(Date)와 시간 문자열("HH:mm" 형식)을
+ * 합쳐서 하나의 Date 객체로 만들어주는 함수입니다.
+ */
+export const combineDateAndTime = (date: Date, time: string): Date | null => {
+  const [hoursStr, minutesStr] = time.split(':');
+  const hours = Number(hoursStr);
+  const minutes = Number(minutesStr);
+  if (isNaN(hours) || isNaN(minutes)) return null;
+
+  const result = new Date(date);
+  result.setHours(hours);
+  result.setMinutes(minutes);
+  result.setSeconds(0);
+  result.setMilliseconds(0);
+  return result;
+};

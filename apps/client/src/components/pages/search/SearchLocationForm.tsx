@@ -1,11 +1,11 @@
 'use client';
 
-import { SearchLocationResultType } from '@/types/filterInfoType';
 import { useCallback, useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { searchLocationByKeywordUtil } from '@/utils/mapUtils';
 import SearchInputSection from './SearchInputSection';
 import SearchResultSection from './SearchResultSection';
+import { SearchLocationResultType } from '@/types/searchDataTypes';
 
 export default function SearchLocationForm() {
   const [loading] = useKakaoLoader({
