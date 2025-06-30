@@ -1,6 +1,6 @@
 'use client';
 
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { RefObject, useCallback, useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
@@ -18,6 +18,11 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
 
   const [parkingLotList, setParkingLotList] =
     useState<ParkingLotsInBoxResponseType>({ parkingLots: [] });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastBoundsRef = useRef<string>('');
+  const lastSearchParamsRef = useRef<string>('');
 
   const centerMapToCurrentLocation = useCallback(async () => {
     try {
@@ -38,43 +43,82 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
 
   const fetchData = useCallback(async () => {
     const map = mapRef.current;
-    if (!map) return;
+    if (!map || isLoading) return;
 
     const sw = map.getBounds().getSouthWest();
     const ne = map.getBounds().getNorthEast();
 
-    const evParam = searchParams.get('ev') === 'true';
-    const start = searchParams.get('start') || '';
-    const end = searchParams.get('end') || '';
+    // 현재 bounds를 문자열로 변환하여 중복 요청 방지
+    const currentBounds = `${sw.getLat()},${sw.getLng()},${ne.getLat()},${ne.getLng()}`;
+    if (lastBoundsRef.current === currentBounds) return;
 
-    const data = await getParkingLotsInBox({
-      swLat: sw.getLat(),
-      swLng: sw.getLng(),
-      neLat: ne.getLat(),
-      neLng: ne.getLng(),
-      isEvChargingAvailable: evParam,
-      startDateTime: start,
-      endDateTime: end,
-    });
-    setParkingLotList(data);
-  }, [mapRef, searchParams]);
+    lastBoundsRef.current = currentBounds;
+    setIsLoading(true);
 
-  const handleMapChange = () => {
+    try {
+      const evParam = searchParams.get('ev') === 'true';
+      const start = searchParams.get('start') || '';
+      const end = searchParams.get('end') || '';
+
+      const data = await getParkingLotsInBox({
+        swLat: sw.getLat(),
+        swLng: sw.getLng(),
+        neLat: ne.getLat(),
+        neLng: ne.getLng(),
+        isEvChargingAvailable: evParam,
+        startDateTime: start,
+        endDateTime: end,
+      });
+      setParkingLotList(data);
+    } catch (error) {
+      console.error('주차장 데이터를 가져오는데 실패했습니다:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [mapRef, searchParams, isLoading]);
+
+  const handleMapChange = useCallback(() => {
     const map = mapRef.current;
     if (!map) return;
 
     if (map.getLevel() < 7) {
-      fetchData();
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      debounceTimerRef.current = setTimeout(() => {
+        fetchData();
+      }, 300);
     }
-  };
+  }, [mapRef, fetchData]);
 
   useEffect(() => {
     initMap();
   }, [initMap]);
 
+  // searchParams 변경 감지
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const currentSearchParams = searchParams.toString();
+
+    if (currentSearchParams !== lastSearchParamsRef.current && mapRef.current) {
+      lastSearchParamsRef.current = currentSearchParams;
+      lastBoundsRef.current = '';
+
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      fetchData();
+    }
+  }, [searchParams, mapRef, fetchData]);
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   return {
     center,
@@ -82,5 +126,6 @@ export default function useMap(mapRef: RefObject<kakao.maps.Map | null>) {
     handleMapChange,
     parkingLotList,
     fetchData,
+    isLoading,
   };
 }

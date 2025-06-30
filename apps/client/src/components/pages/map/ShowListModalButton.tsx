@@ -1,4 +1,3 @@
-import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { cn } from '@repo/ui/lib/utils';
 import { AlignJustifyIcon } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
@@ -10,7 +9,6 @@ export default function ShowListModalButton({
   setIsOpenListModal: Dispatch<SetStateAction<boolean>>;
   className?: string;
 }) {
-  const { setGnbNavBar } = useGnbNavBarStore();
   return (
     <button
       className={cn(
@@ -19,7 +17,6 @@ export default function ShowListModalButton({
       )}
       onClick={() => {
         setIsOpenListModal(true);
-        setGnbNavBar(false);
       }}
     >
       <AlignJustifyIcon className="size-4" />
