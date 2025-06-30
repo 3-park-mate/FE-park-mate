@@ -3,7 +3,11 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
-import { EditProfileDataType, UserInfoDataType } from '@/types/userDataTypes';
+import {
+  EditProfileDataType,
+  UserInfoDataType,
+  UserVehicleDataType,
+} from '@/types/userDataTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
@@ -145,6 +149,110 @@ export async function EditUserInfoData(
       success: true,
       data: res.data,
     };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function getUserVehiclesData(): Promise<
+  ApiResponse<{ vehicleUuid: string }>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<{ vehicleUuid: string }>>(
+      API_PREFIX,
+      '/userVehicle',
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getUserVehicleDetailData(
+  vehicleUuid: string
+): Promise<ApiResponse<UserVehicleDataType>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<UserVehicleDataType>>(
+      API_PREFIX,
+      `/userVehicle/${vehicleUuid}`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function addUserVehicleAction(
+  userVehicleData: Partial<UserVehicleDataType>
+): Promise<ApiResponse<string>> {
+  const payload: Partial<UserVehicleDataType> = { ...userVehicleData };
+  console.log('payload: ', payload);
+
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      return { success: false, message: '로그인 해주세요.' };
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.post<CommonResponseType<string>>(
+      API_PREFIX,
+      '/userVehicle',
+      payload,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return { success: true, data: res.data };
   } catch (error) {
     return {
       success: false,
