@@ -26,6 +26,7 @@ import AlertModal from '@repo/ui/components/common/AlertModal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { operationEditSchema } from '@/schemas/operationEditSchema';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { toLocalISOString } from '@/utils/datetimeUtils';
 
 function getInitialFormValues(
   operation?: OperationDataType
@@ -84,7 +85,7 @@ export default function OperationEditDialog({
     setLoading(true);
 
     const toISO = (time: string) => {
-      return new Date(`${selectedDate}T${time}:00`).toISOString();
+      return toLocalISOString(new Date(`${selectedDate}T${time}:00`));
     };
 
     const payload: OperationStoreDataType = {
