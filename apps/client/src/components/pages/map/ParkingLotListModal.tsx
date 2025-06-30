@@ -1,4 +1,3 @@
-import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
@@ -7,19 +6,21 @@ import ParkingLotListCard from './ParkingLotListCard';
 import ShowListModalButton from './ShowListModalButton';
 import Link from 'next/link';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function ParkingLotListModal({
   isOpenListModal,
   clickMarker,
   setIsOpenListModal,
   parkingLotList,
+  isLoading,
 }: {
   isOpenListModal: boolean;
   clickMarker: ParkingLotSimpleInfoType | null;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   parkingLotList: ParkingLotsInBoxResponseType;
+  isLoading: boolean;
 }) {
-  const { setGnbNavBar } = useGnbNavBarStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,7 +41,7 @@ export default function ParkingLotListModal({
       <div
         ref={modalRef}
         className={cn(
-          'fixed bottom-0 w-full max-w-[600px] max-h-1/2 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-30 cursor-pointer',
+          'fixed bottom-0 w-full max-w-[600px] max-h-2/5 rounded-t-3xl overflow-y-scroll scrollbar-hide bg-white z-30 cursor-pointer',
           'transform transition-transform duration-300 ease-in-out h-1/2',
           isOpenListModal ? 'translate-y-0' : 'translate-y-full'
         )}
@@ -50,26 +51,31 @@ export default function ParkingLotListModal({
             'sticky top-0 w-full bg-white py-2.5',
             isScrolled && 'shadow-sm'
           )}
+          onClick={() => {
+            setIsOpenListModal(false);
+          }}
         >
-          <ChevronDown
-            className="mx-auto size-7 text-gray-2"
-            onClick={() => {
-              setIsOpenListModal(false);
-              setGnbNavBar(true);
-            }}
-          />
+          <ChevronDown className="mx-auto size-7 text-gray-2" />
         </div>
         <ul>
-          {parkingLotList.parkingLots.map((data, index) => (
-            <li key={data.parkingLotUuid} className="py-3 px-6">
-              <Link href={`parking-lot/${data.parkingLotUuid}`}>
-                <ParkingLotListCard parkingLot={data} />
-                {index !== parkingLotList.parkingLots.length - 1 && (
-                  <hr className=" mt-5" />
-                )}
-              </Link>
-            </li>
-          ))}
+          {isLoading ? (
+            <DotSpinner className="mx-auto my-10 size-12 fill-primary text-xl" />
+          ) : parkingLotList.parkingLots.length > 0 ? (
+            parkingLotList.parkingLots.map((data, index) => (
+              <li key={data.parkingLotUuid} className="py-3 px-6">
+                <Link href={`parking-lot/${data.parkingLotUuid}`}>
+                  <ParkingLotListCard parkingLot={data} />
+                  {index !== parkingLotList.parkingLots.length - 1 && (
+                    <hr className=" mt-5" />
+                  )}
+                </Link>
+              </li>
+            ))
+          ) : (
+            <p className="text-center mt-15">
+              현재 위치에 등록된 주차장이 존재하지 않습니다.
+            </p>
+          )}
         </ul>
       </div>
       {!isOpenListModal && !clickMarker && (

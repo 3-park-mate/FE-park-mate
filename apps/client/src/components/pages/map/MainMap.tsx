@@ -21,13 +21,14 @@ export default function MainMap() {
   const [clickMarker, setClickMarker] =
     useState<ParkingLotSimpleInfoType | null>();
   const [mapLevel, setMapLevel] = useState(5);
-  const [isOpenListModal, setIsOpenListModal] = useState<boolean>(true);
+  const [isOpenListModal, setIsOpenListModal] = useState<boolean>(false);
   const {
     center,
     centerMapToCurrentLocation,
     handleMapChange,
     parkingLotList,
     fetchData,
+    isLoading,
   } = useMap(mapRef);
 
   const { setGnbNavBar } = useGnbNavBarStore();
@@ -74,6 +75,7 @@ export default function MainMap() {
         clickMarker={clickMarker || null}
         setIsOpenListModal={setIsOpenListModal}
         parkingLotList={parkingLotList}
+        isLoading={isLoading}
       />
     </>
   );
