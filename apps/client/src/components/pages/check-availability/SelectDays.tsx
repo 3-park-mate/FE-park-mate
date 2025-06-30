@@ -24,6 +24,7 @@ export default function SelectDays({
   return (
     <Calendar
       mode="range"
+      id="dateRange"
       selected={selected}
       onSelect={onSelect}
       onMonthChange={onMonthChange}

@@ -17,6 +17,7 @@ import { cn } from '@repo/ui/lib/utils';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import AmountInfo from './AmountInfo';
+import { formatDate } from '@/utils/datetimeUtils';
 
 export type AvailableSpotsResponseType = Partial<
   Record<ParkingSpotTypeWithEV, number>
@@ -35,10 +36,10 @@ export default function CheckAvailableSpotsContent({
   const [spot, setSpot] = useState<ParkingSpotTypeWithEV | undefined>();
 
   const from = selectedDateTime.entryDateTime
-    ? format(selectedDateTime.entryDateTime, 'yyyy.MM.dd HH:mm')
+    ? formatDate(selectedDateTime.entryDateTime.toString())
     : '';
   const to = selectedDateTime.exitDateTime
-    ? format(selectedDateTime.exitDateTime, 'yyyy.MM.dd HH:mm')
+    ? formatDate(selectedDateTime.exitDateTime.toString())
     : '';
 
   const displayData = availableSpots ?? {};
@@ -54,7 +55,7 @@ export default function CheckAvailableSpotsContent({
       className="fixed left-1/2 -translate-x-1/2 bottom-0 gap-2 w-full bg-white rounded-t-2xl px-8 pb-28 max-w-[600px] z-50"
     >
       <SheetTitle className="mt-10 text-xl">잔여 주차면 수</SheetTitle>
-      <p className="text-md leading-2">
+      <p className="text-md ">
         {from} - {to}
       </p>
 
