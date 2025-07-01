@@ -43,7 +43,7 @@ export default function LocationHeader({
       <Link href="/search-location">
         <SearchIcon className="size-[24px] flex-none cursor-pointer" />
       </Link>
-      <AlertBell count={4} />
+      <AlertBell />
     </HeaderLayout>
   );
 }
