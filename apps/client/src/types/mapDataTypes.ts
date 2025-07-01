@@ -41,3 +41,10 @@ export interface initMapProps {
   entry: string;
   exit: string;
 }
+
+export interface FilterScheduleType {
+  selectedDateTime: {
+    entryDateTime: Date | null;
+    exitDateTime: Date | null;
+  };
+}

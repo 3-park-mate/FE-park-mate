@@ -20,7 +20,7 @@ export function FilterEvChargeBadge() {
     <button
       onClick={toggleEv}
       className={cn(
-        'rounded-full px-2 shadow-md flex items-center gap-1',
+        'rounded-full px-2 shadow-md flex items-center gap-1 h-8',
         currentEv
           ? 'bg-primary text-white fill-white'
           : 'bg-gray-light-1 text-gray-2'
