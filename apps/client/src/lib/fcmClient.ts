@@ -23,7 +23,7 @@ export const initializeFcmClient = async (): Promise<void> => {
       const notificationTitle: string | undefined = payload.notification?.title;
       const notificationOptions: NotificationOptions = {
         body: payload.notification?.body,
-        icon: payload.notification?.icon || '/firebase-logo.png',
+        icon: payload.notification?.icon || '/img/car-thumb.png',
       };
       if (notificationTitle) {
         new Notification(notificationTitle, notificationOptions);

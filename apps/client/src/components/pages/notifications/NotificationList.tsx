@@ -53,10 +53,12 @@ export default function NotificationList() {
       {notifications.map((notification) => (
         <NotificationItem
           key={notification.notificationId}
+          notificationId={notification.notificationId}
           title={notification.title}
           content={notification.content}
           sendAt={notification.sendAt}
-          // type={notification.type}
+          status={notification.status}
+          type={notification.type}
         />
       ))}
       <div ref={loaderRef} className="pb-4 h-10">

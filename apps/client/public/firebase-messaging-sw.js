@@ -29,7 +29,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/car-thumb.png',
+    icon: '/img/car-thumb.png',
   };
 
   if (notificationTitle) {

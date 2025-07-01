@@ -1,23 +1,45 @@
-import { CheckCircle, MessageSquareText } from 'lucide-react';
+import { readNotificationAction } from '@/actions/notification/notification-service';
+import { NotificationType } from '@/types/notificationDataTypes';
+import {
+  AlertCircle,
+  CalendarCheck,
+  CalendarX,
+  CheckCircle,
+  MessageSquareText,
+  ParkingCircle,
+} from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function NotificationItem({
   title,
+  notificationId,
   content,
   sendAt,
-  // type,
+  status,
+  type,
 }: {
   title: string;
+  notificationId: string;
   content: string;
   sendAt: string;
+  status: 'SENT' | 'READ';
+  type: NotificationType;
 }) {
-  let type = 'info';
   const getIconStyle = () => {
     switch (type) {
-      case 'success':
+      case 'USER_PARKING_ENTRY':
         return 'bg-green-500 text-white';
-      case 'info':
+      case 'RESERVATION_CREATED':
         return 'bg-blue-500 text-white';
-      case 'chat':
+      case 'RESERVATION_MODIFIED':
+        return 'bg-yellow-500 text-white';
+      case 'RESERVATION_CANCELED':
+        return 'bg-red-500 text-white';
+      case 'EMPTY_SPOT_AVAILABLE':
+        return 'bg-cyan-600 text-white';
+      case 'PARKING_EXIT_REMINDER':
+        return 'bg-orange-500 text-white';
+      case 'CHAT_MESSAGE':
         return 'bg-purple-500 text-white';
       default:
         return 'bg-gray-500 text-white';
@@ -26,16 +48,36 @@ export default function NotificationItem({
 
   const getIconContent = () => {
     switch (type) {
-      case 'success':
+      case 'USER_PARKING_ENTRY':
         return <CheckCircle size={20} />;
-      case 'info':
+      case 'RESERVATION_CREATED':
         return <span>P</span>;
-      case 'chat':
+      case 'RESERVATION_MODIFIED':
+        return <CalendarCheck size={20} />;
+      case 'RESERVATION_CANCELED':
+        return <CalendarX size={20} />;
+      case 'EMPTY_SPOT_AVAILABLE':
+        return <span>P</span>;
+      case 'PARKING_EXIT_REMINDER':
+        return <AlertCircle size={20} />;
+      case 'CHAT_MESSAGE':
         return <MessageSquareText size={20} />;
       default:
         return null;
     }
   };
+
+  useEffect(() => {
+    if (status != 'READ') {
+      readNotificationAction(notificationId)
+        .then(() => {
+          console.log(`알림 ${notificationId} 읽음 처리 완료.`);
+        })
+        .catch((error) => {
+          console.error(`알림 ${notificationId} 읽음 처리 실패:`, error);
+        });
+    }
+  }, [notificationId, status]);
 
   const formatRelativeTime = (isoTime: string) => {
     const timeDiff = Date.now() - new Date(isoTime).getTime();
@@ -50,7 +92,10 @@ export default function NotificationItem({
   };
 
   return (
-    <div className="flex items-start gap-3 p-4 rounded-lg bg-white">
+    <div className="relative flex items-start gap-3 p-4 rounded-lg bg-white">
+      {status !== 'READ' && (
+        <span className="absolute top-4 right-4 w-2 h-2 bg-red-2 rounded-full" />
+      )}
       <div
         className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${getIconStyle()}`}
       >

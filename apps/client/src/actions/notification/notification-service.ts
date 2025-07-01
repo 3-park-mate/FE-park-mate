@@ -76,3 +76,71 @@ export async function getNotificationsData({
     redirect('/error');
   }
 }
+
+export async function readNotificationAction(
+  notificationId: string
+): Promise<ApiResponse<null>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+    console.log(uuid);
+
+    const res = await api.patch<CommonResponseType<NotificationResponse>>(
+      API_PREFIX,
+      `/notifications/${notificationId}/user`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: null,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getUnreadNotificationCount(): Promise<
+  ApiResponse<number>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+    console.log(uuid);
+
+    const res = await api.get<CommonResponseType<number>>(
+      API_PREFIX,
+      '/notifications/user/unread-count',
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
