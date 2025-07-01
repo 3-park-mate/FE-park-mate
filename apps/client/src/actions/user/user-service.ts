@@ -295,3 +295,39 @@ export async function DeleteUserVehicleAction(
     };
   }
 }
+
+export async function UpdateDefaultVehicleAction(
+  vehicleUuid: string
+): Promise<ApiResponse<string>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      return { success: false, message: '로그인 해주세요.' };
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.put<CommonResponseType<string>>(
+      API_PREFIX,
+      `/userVehicle/${vehicleUuid}`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}

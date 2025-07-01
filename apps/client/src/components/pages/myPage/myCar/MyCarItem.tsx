@@ -32,10 +32,13 @@ export default async function MyCarItem({
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
         <p className="text-gray-dark-2 text-sm">{vehicleData.vehicleNumber}</p>
       </div>
-      <div className="space-x-1.5">
+      <div className="space-x-1.5 flex items-center pt-2 text-sm">
         {showDeleteButton && <DeleteCarButton vehicleUuid={vehicleUuid} />}
         {!vehicleData.defaultSelected && (
-          <SetDefaultCarButton vehicleUuid={vehicleUuid} />
+          <>
+            <p className="text-gray-dark-1">|</p>{' '}
+            <SetDefaultCarButton vehicleUuid={vehicleUuid} />
+          </>
         )}
       </div>
     </div>

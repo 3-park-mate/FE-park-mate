@@ -4,10 +4,10 @@ import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 import Link from 'next/link';
 
 export default async function ParkPointArea() {
-  const { data: userData } = (await getUserPointData()) as {
-    success: true;
-    data: { point: number };
-  };
+  const res = await getUserPointData();
+  if (!res.success) return;
+  const userData = res.data;
+  if (!userData) return;
 
   return (
     <PaddedLayout className="flex justify-between items-center pt-3 pb-5">

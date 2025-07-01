@@ -25,7 +25,7 @@ export default function DeleteCarButton({
     setLoading(true);
     const res = await DeleteUserVehicleAction(vehicleUuid);
     if (!res.success) return handleAlert(res.message);
-    handleAlert('차량이 삭제되었습니다.');
+    handleAlert(res.data);
     setLoading(false);
     setIsSuccess(true);
   };
@@ -33,7 +33,7 @@ export default function DeleteCarButton({
   return (
     <>
       <button
-        className="pt-2 text-sm text-gray-2 cursor-pointer hover:text-gray-700"
+        className="text-gray-2 cursor-pointer"
         onClick={() => handleAlert('정말로 삭제하시겠습니까?')}
         disabled={loading}
       >
