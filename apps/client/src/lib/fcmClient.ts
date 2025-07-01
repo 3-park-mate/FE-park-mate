@@ -1,35 +1,12 @@
+'use client';
+import { sendTokenToServer } from '@/actions/notification/notification-service';
 import { messaging, getToken, onMessage } from '@/utils/firebase';
 import { MessagePayload } from 'firebase/messaging';
-
-const sendTokenToServer = async (token: string): Promise<void> => {
-  try {
-    const response = await fetch('/api/save-fcm-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Token sent to server:', data);
-    } else {
-      const errorData = await response.json();
-      console.error('Failed to send token to server:', errorData);
-    }
-  } catch (error) {
-    console.error('Error sending token to server:', error);
-  }
-};
 
 export const initializeFcmClient = async (): Promise<void> => {
   if ('serviceWorker' in navigator) {
     try {
-      const registration = await navigator.serviceWorker.register(
-        '/firebase-messaging-sw.js'
-      );
-      //   console.log('Service Worker registered successfully:', registration);
+      await navigator.serviceWorker.register('/firebase-messaging-sw.js');
       await requestNotificationPermissionAndGetToken();
     } catch (error) {
       console.error('Service Worker registration failed:', error);
@@ -70,7 +47,7 @@ const requestNotificationPermissionAndGetToken = async (): Promise<void> => {
       });
       if (currentToken) {
         console.log('FCM Registration Token:', currentToken);
-        // await sendTokenToServer(currentToken);
+        await sendTokenToServer(currentToken);
       } else {
         console.log(
           'No registration token available. Request permission to generate one.'
