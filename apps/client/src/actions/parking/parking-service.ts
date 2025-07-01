@@ -70,7 +70,6 @@ export async function getWeeklyOperationById(
 export async function getParkingLotsInBox(
   data: GetParkingLotsInBoxRequestType
 ) {
-  console.log(data);
   try {
     const query: Record<string, string> = {
       swLat: data.swLat.toString(),
@@ -94,7 +93,7 @@ export async function getParkingLotsInBox(
       query,
       { cache: 'no-cache' }
     );
-    console.log(query);
+    console.log(query, '요청 테스트');
     console.log(res.data);
 
     return res.data;
