@@ -331,3 +331,37 @@ export async function UpdateDefaultVehicleAction(
     };
   }
 }
+
+export async function getFavoritesData(): Promise<
+  ApiResponse<{ parkingLotUuid: string }[]>
+> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<{ parkingLotUuid: string }[]>>(
+      API_PREFIX,
+      `/favorites`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}

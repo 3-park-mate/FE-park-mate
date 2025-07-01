@@ -1,24 +1,20 @@
-import OptionsDropdown from '@/components/common/OptionsDropdown';
+import { getFavoritesData } from '@/actions/user/user-service';
 import GnbNavBar from '@/components/layouts/GnbNavBar';
 import SimpleHeader from '@/components/layouts/SimpleHeader';
 import FavoriteListSection from '@/components/pages/favorites/FavoriteListSection';
-import { favoritesSortMenu } from '@/data/initialDatas';
 import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
-import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
-export default function page() {
+export default async function page() {
+  const { data: favoriteDatas } = (await getFavoritesData()) as {
+    success: true;
+    data: { parkingLotUuid: string }[];
+  };
+
   return (
     <>
       <SimpleHeader title="즐겨찾기" />
       <main className="pb-32">
-        <PaddedLayout>
-          <OptionsDropdown
-            className="pt-1 pb-3"
-            paramKey="sort"
-            options={favoritesSortMenu}
-          />
-          <FavoriteListSection favoriteDatas={parkingCarouselItemsDummy} />
-        </PaddedLayout>
+        <FavoriteListSection favoriteDatas={parkingCarouselItemsDummy} />
       </main>
       <GnbNavBar />
     </>
