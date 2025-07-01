@@ -1,13 +1,14 @@
-'use client';
-
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { parseInitMapParams } from '@/utils/mapUtils';
 import { useSearchParams } from 'next/navigation';
 
 export function useMapInit() {
   const searchParams = useSearchParams();
-  const initParams = parseInitMapParams(searchParams);
+  const initParams = useMemo(
+    () => parseInitMapParams(searchParams),
+    [searchParams]
+  );
 
   const [center, setCenter] = useState({
     lat: initParams.lat || 37.5714,

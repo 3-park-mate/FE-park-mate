@@ -104,7 +104,7 @@ export function parseInitMapParams(
   const lngValid = !isNaN(lng);
 
   return {
-    parkingLotUuid: searchParams.get('parkingLotUuid') || '',
+    parkingLotUuid: searchParams.get('uuid') || '',
     lat: latValid ? lat : undefined,
     lng: lngValid ? lng : undefined,
     ev: searchParams.get('ev') === 'true',

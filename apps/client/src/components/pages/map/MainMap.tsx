@@ -10,17 +10,14 @@ import FilterButtonSection from './FilterButtonSection';
 import ShowListModalButton from './ShowListModalButton';
 import { useMapInit } from '@/hooks/map/useMapInit';
 import { useParkingLotsFetcher } from '@/hooks/map/useParkingLotFetcher';
-import { useClickMarkerFromUuid } from '@/hooks/map/useFocusedMarker';
+import { useClickMarkerFromUuid } from '@/hooks/map/useClickMarkerFromUuid';
 
 export default function MainMap() {
   useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY || '',
     libraries: ['services', 'clusterer'],
   });
-
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const hasFetchedRef = useRef(false);
-  const [isOpenListModal, setIsOpenListModal] = useState(false);
 
   const { center, centerMapToCurrentLocation, initParams } = useMapInit();
   const { parkingLotList, fetchData, isLoading } = useParkingLotsFetcher(
@@ -32,19 +29,25 @@ export default function MainMap() {
     parkingLotList
   );
 
-  const { setGnbNavBar } = useGnbNavBarStore();
+  const hasFetchedRef = useRef(false);
+  const [isOpenListModal, setIsOpenListModal] = useState(false);
 
-  const handleMapChange = () => {
-    const map = mapRef.current;
-    if (!map) return;
-    if (map.getLevel() < 7) {
-      fetchData();
-    }
-  };
+  const { setGnbNavBar } = useGnbNavBarStore();
 
   useEffect(() => {
     setGnbNavBar(!clickMarker);
   }, [clickMarker, setGnbNavBar]);
+
+  useEffect(() => {
+    if (mapRef.current && clickMarker) {
+      const latlng = new kakao.maps.LatLng(
+        clickMarker.latitude,
+        clickMarker.longitude
+      );
+      mapRef.current.setCenter(latlng);
+    }
+    console.log(clickMarker);
+  }, [clickMarker]);
 
   return (
     <>
@@ -53,8 +56,8 @@ export default function MainMap() {
         center={center}
         level={5}
         className="absolute w-full h-full z-0"
-        onDragEnd={handleMapChange}
-        onZoomChanged={handleMapChange}
+        onDragEnd={fetchData}
+        onZoomChanged={fetchData}
         onClick={() => {
           setClickMarker(null);
           setIsOpenListModal(false);

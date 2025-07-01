@@ -70,7 +70,6 @@ export async function getWeeklyOperationById(
 export async function getParkingLotsInBox(
   data: GetParkingLotsInBoxRequestType
 ) {
-  console.log(data);
   try {
     const query: Record<string, string> = {
       swLat: data.swLat.toString(),

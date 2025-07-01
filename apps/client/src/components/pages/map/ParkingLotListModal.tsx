@@ -3,8 +3,6 @@ import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
-import ShowListModalButton from './ShowListModalButton';
-import Link from 'next/link';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
