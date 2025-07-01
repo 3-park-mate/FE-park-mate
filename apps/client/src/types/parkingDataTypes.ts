@@ -162,3 +162,11 @@ export interface ParkingLotOptionDataType {
   name: string;
   label: string;
 }
+
+export interface ParkingLotSimpleDataType {
+  parkingLotUuid: string;
+  thumbnailUrl: string;
+  name: string;
+  address: string;
+  rating: number;
+}

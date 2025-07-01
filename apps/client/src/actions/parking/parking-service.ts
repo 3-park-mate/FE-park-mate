@@ -6,6 +6,7 @@ import {
   OperationsInfo,
   ParkingLotOptionDataType,
   ParkingLotResponseDataType,
+  ParkingLotSimpleDataType,
   ParkingLotsInBoxResponseType,
   WeeklyOperationInfo,
 } from '@/types/parkingDataTypes';
@@ -202,6 +203,25 @@ export async function getParkingLotOptions(): Promise<
     return {
       success: true,
       data: res.data.options,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getSimpleParkingLotById(
+  parkingLotUuid: string
+): Promise<ApiResponse<ParkingLotSimpleDataType>> {
+  try {
+    const res = await api.get<CommonResponseType<ParkingLotSimpleDataType>>(
+      READ_API_PREFIX,
+      `/${parkingLotUuid}/simple`,
+      undefined
+    );
+
+    return {
+      success: true,
+      data: res.data,
     };
   } catch (_error) {
     redirect('/error');

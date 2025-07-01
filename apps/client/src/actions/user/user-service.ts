@@ -355,7 +355,6 @@ export async function getFavoritesData(): Promise<
         cache: 'no-cache',
       }
     );
-    console.log(res);
 
     return {
       success: true,
