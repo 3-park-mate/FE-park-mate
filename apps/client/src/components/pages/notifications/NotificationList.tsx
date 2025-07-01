@@ -5,6 +5,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { NotificationItemDataType } from '@/types/notificationDataTypes';
 import { getNotificationsData } from '@/actions/notification/notification-service';
 import { PAGE_SIZE } from '@/constants/constants';
+import NotificationItemSkeleton from './NotificationItemSkeleton';
 
 export default function NotificationList() {
   const {
@@ -39,8 +40,8 @@ export default function NotificationList() {
     return (
       <PaddedSection className="py-4 space-y-2">
         {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="pb-4">
-            스켈레톤
+          <div key={index}>
+            <NotificationItemSkeleton />
           </div>
         ))}
       </PaddedSection>
@@ -59,7 +60,7 @@ export default function NotificationList() {
         />
       ))}
       <div ref={loaderRef} className="pb-4 h-10">
-        {isLoading && <div>로딩</div>}
+        {isLoading && <NotificationItemSkeleton />}
       </div>
       {notifications.length === 0 && !isLoading && !hasMore && (
         <p className="text-center text-gray-500">새로운 알림이 없습니다.</p>
