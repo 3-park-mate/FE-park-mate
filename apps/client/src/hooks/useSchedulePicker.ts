@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { eachDayOfInterval, format } from 'date-fns';
 import { combineDateAndTime } from '@/utils/datetimeUtils';
 
-export function useSchedulePicker(availableDays: string[]) {
+export function useSchedulePicker(availableDays?: string[]) {
   const [dateRange, setDateRange] = useState<DateRange>();
   const [timeRange, setTimeRange] = useState({ entryTime: '', exitTime: '' });
 
@@ -20,6 +20,11 @@ export function useSchedulePicker(availableDays: string[]) {
       return;
     }
 
+    if (!availableDays || availableDays.length === 0) {
+      setDateRange(range);
+      return;
+    }
+
     const days = eachDayOfInterval({ start: range.from, end: range.to });
     const allAvailable = days.every((date) =>
       availableDays.includes(format(date, 'yyyy-MM-dd'))
@@ -31,6 +36,23 @@ export function useSchedulePicker(availableDays: string[]) {
       reset();
     }
   };
+  const selectedDateTime = useMemo(() => {
+    if (
+      dateRange?.from &&
+      dateRange.to &&
+      timeRange.entryTime &&
+      timeRange.exitTime
+    ) {
+      return {
+        entryDateTime: combineDateAndTime(dateRange.from, timeRange.entryTime),
+        exitDateTime: combineDateAndTime(dateRange.to, timeRange.exitTime),
+      };
+    }
+    return {
+      entryDateTime: null,
+      exitDateTime: null,
+    };
+  }, [dateRange, timeRange]);
 
   const handleTimeChange = (type: 'entry' | 'exit', value: string) => {
     setTimeRange((prev) => ({
@@ -42,6 +64,7 @@ export function useSchedulePicker(availableDays: string[]) {
   return {
     dateRange,
     timeRange,
+    selectedDateTime,
     handleDateChange,
     handleTimeChange,
     reset,

@@ -38,6 +38,6 @@ export interface initMapProps {
   lat: number;
   lng: number;
   ev: boolean;
-  entry: Date | null;
-  exit: Date | null;
+  entry: string;
+  exit: string;
 }

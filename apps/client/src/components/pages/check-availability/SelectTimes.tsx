@@ -2,16 +2,18 @@
 
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { formatDateParts } from '@/utils/datetimeUtils';
+import { cn } from '@repo/ui/lib/utils';
 
 interface Props {
   from: Date;
   to: Date;
   onChange: (type: 'entry' | 'exit', value: string) => void;
+  className?: string;
 }
 
-export default function SelectTimes({ from, to, onChange }: Props) {
+export default function SelectTimes({ from, to, onChange, className }: Props) {
   return (
-    <div className="flex gap-5">
+    <div className={cn('flex gap-5', className)}>
       <CommonInputWithLabel
         id="entryTime"
         label={`입차시간 ${formatDateParts(from.toString()).date}`}

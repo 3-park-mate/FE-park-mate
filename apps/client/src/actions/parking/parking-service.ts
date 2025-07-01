@@ -79,12 +79,12 @@ export async function getParkingLotsInBox(
       isEvChargingAvailable: data.isEvChargingAvailable.toString(),
     };
 
-    if (data.startDateTime) {
-      query.startDateTime = data.startDateTime;
+    if (data.entry) {
+      query.startDateTime = data.entry;
     }
 
-    if (data.endDateTime) {
-      query.endDateTime = data.endDateTime;
+    if (data.exit) {
+      query.endDateTime = data.exit;
     }
 
     const res = await api.get<CommonResponseType<ParkingLotsInBoxResponseType>>(

@@ -1,9 +1,13 @@
 import { CalendarIcon } from 'lucide-react';
+import { ButtonHTMLAttributes } from 'react';
 
-export function ScheduleButton() {
+export function FilterScheduleBadge(
+  props: ButtonHTMLAttributes<HTMLButtonElement>
+) {
   return (
     <button
       type="button"
+      {...props}
       className="rounded-full px-4 py-2 shadow-md flex items-center gap-1.5 bg-gray-light-1 text-gray-2"
     >
       <CalendarIcon className="size-4 stroke-3 stroke-gray-2" />

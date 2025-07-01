@@ -25,8 +25,13 @@ export default function SelectScheduleSection({
     return operations?.map((op) => op.operationDate) ?? [];
   }, [operations]);
 
-  const { dateRange, timeRange, handleDateChange, handleTimeChange, reset } =
-    useSchedulePicker(availableDays);
+  const {
+    dateRange,
+    selectedDateTime,
+    handleDateChange,
+    handleTimeChange,
+    reset,
+  } = useSchedulePicker(availableDays);
 
   useEffect(() => {
     if (!parkingLotUuid) return;
@@ -47,9 +52,7 @@ export default function SelectScheduleSection({
       endRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [dateRange]);
-  useEffect(() => {
-    console.log(dateRange, timeRange);
-  }, [dateRange, timeRange]);
+
   return (
     <section className="flex flex-col gap-3 justify-center pb-28">
       <p className="text-xs text-right px-3 cursor-pointer" onClick={reset}>
@@ -71,8 +74,7 @@ export default function SelectScheduleSection({
       <div ref={endRef} />
       <CheckAvailableSpotsSheet
         parkingLotUuid={parkingLotUuid || ''}
-        dateRange={dateRange}
-        timeRange={timeRange}
+        selectedDateTime={selectedDateTime}
       />
     </section>
   );

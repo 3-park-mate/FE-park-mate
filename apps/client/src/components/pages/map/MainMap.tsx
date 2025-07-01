@@ -6,11 +6,11 @@ import CurrentLocationButton from './CurrentLocationButton ';
 import MapMarkers from './MapMarkers';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import ParkingLotListModal from './ParkingLotListModal';
-import FilterButtonSection from './FilterButtonSection';
 import ShowListModalButton from './ShowListModalButton';
 import { useMapInit } from '@/hooks/map/useMapInit';
 import { useParkingLotsFetcher } from '@/hooks/map/useParkingLotFetcher';
 import { useClickMarkerFromUuid } from '@/hooks/map/useClickMarkerFromUuid';
+import FilterMapSection from './filter/FilterMapSection';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -51,7 +51,7 @@ export default function MainMap() {
 
   return (
     <>
-      <FilterButtonSection />
+      <FilterMapSection />
       <Map
         center={center}
         level={5}

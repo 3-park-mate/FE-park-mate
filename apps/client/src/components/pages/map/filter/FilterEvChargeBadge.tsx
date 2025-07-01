@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/lib/utils';
 import { ZapIcon } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export function EvChargeButton() {
+export function FilterEvChargeBadge() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
