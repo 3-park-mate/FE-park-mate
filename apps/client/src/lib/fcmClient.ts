@@ -3,6 +3,8 @@ import { sendTokenToServer } from '@/actions/notification/notification-service';
 import { messaging, getToken, onMessage } from '@/utils/firebase';
 import { MessagePayload } from 'firebase/messaging';
 
+const FCM_TOKEN_LOCAL_STORAGE_KEY = 'fcm_token';
+
 export const initializeFcmClient = async (): Promise<void> => {
   if ('serviceWorker' in navigator) {
     try {
@@ -15,10 +17,9 @@ export const initializeFcmClient = async (): Promise<void> => {
     console.warn('Service Worker is not supported in this browser.');
   }
 
-  // Foreground message handler
   if (messaging) {
     onMessage(messaging, (payload: MessagePayload) => {
-      console.log('Message received. ', payload);
+      console.log('메시지 수신됨. ', payload);
       const notificationTitle: string | undefined = payload.notification?.title;
       const notificationOptions: NotificationOptions = {
         body: payload.notification?.body,
@@ -33,7 +34,7 @@ export const initializeFcmClient = async (): Promise<void> => {
 
 const requestNotificationPermissionAndGetToken = async (): Promise<void> => {
   if (!messaging) {
-    console.warn('FCM Messaging not available.');
+    console.warn('FCM Messaging을 사용할 수 없습니다.');
     return;
   }
 
@@ -41,22 +42,28 @@ const requestNotificationPermissionAndGetToken = async (): Promise<void> => {
     const permission: NotificationPermission =
       await Notification.requestPermission();
     if (permission === 'granted') {
-      console.log('Notification permission granted.');
       const currentToken: string | null = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
       });
+
       if (currentToken) {
-        console.log('FCM Registration Token:', currentToken);
-        await sendTokenToServer(currentToken);
+        const storedToken = localStorage.getItem(FCM_TOKEN_LOCAL_STORAGE_KEY);
+
+        // 저장된 토큰이 없는 경우에만 서버로 전송
+        if (currentToken !== storedToken) {
+          console.log('토큰 전송:', currentToken);
+          await sendTokenToServer(currentToken);
+          localStorage.setItem(FCM_TOKEN_LOCAL_STORAGE_KEY, currentToken); // 새로운 토큰을 저장
+        }
       } else {
-        console.log(
-          'No registration token available. Request permission to generate one.'
-        );
+        localStorage.removeItem(FCM_TOKEN_LOCAL_STORAGE_KEY);
       }
     } else {
-      console.log('Unable to get permission to notify.');
+      console.log('알림 권한을 얻을 수 없습니다.');
+      localStorage.removeItem(FCM_TOKEN_LOCAL_STORAGE_KEY);
     }
   } catch (err) {
-    console.error('An error occurred while retrieving token. ', err);
+    console.error('토큰 검색 중 오류 발생: ', err);
+    localStorage.removeItem(FCM_TOKEN_LOCAL_STORAGE_KEY);
   }
 };
