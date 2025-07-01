@@ -5,7 +5,7 @@ export default function page() {
   return (
     <div className="bg-gray-light-1 min-h-screen">
       <PageHeader title="알림" />
-      <main className="pb-8">
+      <main>
         <NotificationList />
       </main>
     </div>

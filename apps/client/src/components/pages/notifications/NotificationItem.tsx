@@ -1,12 +1,16 @@
-import { NotificationDataType } from '@/types/notificationDataTypes';
 import { CheckCircle, MessageSquareText } from 'lucide-react';
 
 export default function NotificationItem({
   title,
   content,
-  time,
-  type,
-}: NotificationDataType) {
+  sendAt,
+  // type,
+}: {
+  title: string;
+  content: string;
+  sendAt: string;
+}) {
+  let type = 'info';
   const getIconStyle = () => {
     switch (type) {
       case 'success':
@@ -54,9 +58,9 @@ export default function NotificationItem({
       </div>
       <div className="flex-1 min-w-0">
         <h3 className="font-semibold text-gray-900 text-15px">{title}</h3>
-        <p className="text-gray-600 text-sm leading-relaxed">{content}</p>
+        <p className="text-gray-600 text-sm whitespace-pre-line">{content}</p>
         <span className="text-gray-400 text-xs">
-          {formatRelativeTime(time)}
+          {formatRelativeTime(sendAt)}
         </span>
       </div>
     </div>

@@ -57,7 +57,7 @@ export async function getNotificationsData({
 
     const res = await api.get<CommonResponseType<NotificationResponse>>(
       API_PREFIX,
-      '/user',
+      '/notifications/user',
       query,
       {
         headers: {
