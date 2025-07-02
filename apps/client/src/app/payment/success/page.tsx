@@ -12,6 +12,8 @@ export default async function page({
 }) {
   const { paymentKey, orderId, amount } = await searchParams;
 
+  // 전달된 key 값이 유효한지 확인하는 로직 추가 예정
+
   const payload = {
     paymentKey,
     orderId,

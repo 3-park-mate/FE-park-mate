@@ -1,8 +1,7 @@
 import { PaddedSectionWithTitle } from '@repo/ui/components/common/CommonLayouts';
 import MyCarItem from '../myPage/myCar/MyCarItem';
-import { Button } from '@repo/ui/components/base/button';
 
-export default function CarSelectionSection() {
+export default function CarInfoSection() {
   return (
     <PaddedSectionWithTitle title="이용 차량 정보" className="relative">
       <MyCarItem
@@ -12,7 +11,7 @@ export default function CarSelectionSection() {
         userVehicleNumbersId={1}
         showDeleteButton={false}
       />
-      <Button className="absolute top-6 right-6 h-7">변경</Button>
+      {/* <Button className="absolute top-6 right-6 h-7">변경</Button> */}
     </PaddedSectionWithTitle>
   );
 }
