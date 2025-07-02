@@ -22,7 +22,7 @@ export default async function page({
   return (
     <div className="bg-inner-background-gray min-h-screen">
       <PageHeader title="방문자 리뷰" />
-      <main className="max-w-2xl mx-auto pb-32">
+      <main className="max-w-2xl mx-auto">
         <ReviewListHeader />
         <ReviewList parkingLotUuid={parkingLotUuid} />
       </main>

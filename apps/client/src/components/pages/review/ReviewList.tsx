@@ -7,6 +7,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReviewItemDataType } from '@/types/reviewDataTypes';
 import { getReviewsData } from '@/actions/review/review-service';
 import { PAGE_SIZE } from '@/constants/constants';
+import ReviewItemSkeleton from './ReviewItemSkeleton';
 
 export default function ReviewList({
   parkingLotUuid,
@@ -40,13 +41,24 @@ export default function ReviewList({
     },
   });
 
+  if (isLoading && reviews.length === 0) {
+    return (
+      <section className="space-y-3">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <ReviewItemSkeleton key={index} />
+        ))}
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-3">
       {reviews.map((review) => (
         <ReviewItem key={review.reviewUuid} review={review} />
       ))}
+
       <div ref={loaderRef} className="pb-4 h-10">
-        {isLoading && <div>로딩</div>}
+        {isLoading && <ReviewItemSkeleton />}
       </div>
       {reviews.length === 0 && !isLoading && !hasMore && (
         <p className="text-center text-gray-500">등록된 리뷰가 없습니다.</p>
