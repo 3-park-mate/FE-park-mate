@@ -13,12 +13,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { toLocalISOString } from '@/utils/datetimeUtils';
-import { mapFilterScheduleSchema } from '@/schemas/mapFilterScheduleSchema';
 import { ScheduleType } from '@/types/initialDataTypes';
+import { scheduleSchema } from '@/schemas/scheduleSchema';
 
 export default function FilterScheduleSheet() {
   const methods = useForm<ScheduleType>({
-    resolver: zodResolver(mapFilterScheduleSchema),
+    resolver: zodResolver(scheduleSchema),
   });
 
   const { handleSubmit } = methods;

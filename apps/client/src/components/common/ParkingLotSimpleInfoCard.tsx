@@ -1,7 +1,6 @@
 import HeadingWithSubtext from './HeadingWithSubtext';
 import Evchargetypebadges from '../pages/map/EvChargeTypeBadges';
 import RatingOverview from '../pages/map/RatingOverview';
-import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import Image from 'next/image';
 import { cn } from '@repo/ui/lib/utils';
 import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
@@ -9,13 +8,11 @@ import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 export default function ParkingLotSimpleInfoCard({
   showEvBadge = true,
   imageAlign = 'right',
-  visibleTooltip = true,
   parkingLotData,
   className,
 }: {
   showEvBadge?: boolean;
   imageAlign?: 'right' | 'left';
-  visibleTooltip?: boolean;
   parkingLotData: ParkingLotResponseDataType;
   className?: string;
 }) {
@@ -23,17 +20,15 @@ export default function ParkingLotSimpleInfoCard({
     <>
       <div className={cn('flex items-center gap-5', className)}>
         {imageAlign === 'left' && (
-          <AlwaysVisibleTooltip side="top" content="3,000원/30분">
-            <Image
-              src={
-                parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
-              }
-              alt={parkingLotData.name}
-              width={90}
-              height={90}
-              className="rounded-lg aspect-square object-cover"
-            />
-          </AlwaysVisibleTooltip>
+          <Image
+            src={
+              parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
+            }
+            alt={parkingLotData.name}
+            width={90}
+            height={90}
+            className="rounded-lg aspect-square object-cover"
+          />
         )}
         <div className="flex flex-col space-y-1">
           <HeadingWithSubtext
@@ -54,17 +49,15 @@ export default function ParkingLotSimpleInfoCard({
           />
         </div>
         {imageAlign === 'right' && (
-          <AlwaysVisibleTooltip side="top" content="3,000원/30분">
-            <Image
-              src={
-                parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
-              }
-              alt={parkingLotData.name}
-              width={90}
-              height={90}
-              className="rounded-lg ml-1 aspect-square object-cover"
-            />
-          </AlwaysVisibleTooltip>
+          <Image
+            src={
+              parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
+            }
+            alt={parkingLotData.name}
+            width={90}
+            height={90}
+            className="rounded-lg ml-1 aspect-square object-cover"
+          />
         )}
       </div>
     </>

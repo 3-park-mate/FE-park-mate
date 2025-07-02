@@ -39,8 +39,8 @@ export interface ReservationCancelDataType {
 }
 
 export interface CreateReservationRequestType {
-  // parkingLotUuid: string;
-  parkingSpotType: ParkingSpotTypeWithEV | null;
+  parkingLotUuid: string;
+  parkingSpotType: ParkingSpotTypeWithEV;
   schedule: ScheduleType;
   carNumber: string;
 }

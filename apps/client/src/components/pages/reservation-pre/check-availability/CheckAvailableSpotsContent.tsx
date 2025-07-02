@@ -2,7 +2,10 @@
 
 import ButtonWrapper from '@/components/common/ButtonWrapper';
 import { SelectParkingSpotCardMap } from '@/data/initialDatas';
-import { ParkingSpotTypeWithEV } from '@/types/parkingDataTypes';
+import {
+  AvailableSpotsResponseType,
+  ParkingSpotTypeWithEV,
+} from '@/types/parkingDataTypes';
 import { Button } from '@repo/ui/components/base/button';
 import {
   RadioGroup,
@@ -18,10 +21,6 @@ import AmountInfo from './AmountInfo';
 import { useFormContext } from 'react-hook-form';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { formatDate } from '@/utils/datetimeUtils';
-
-export type AvailableSpotsResponseType = Partial<
-  Record<ParkingSpotTypeWithEV, number>
->;
 
 export default function CheckAvailableSpotsContent({
   availableSpots,

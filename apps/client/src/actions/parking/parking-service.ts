@@ -1,7 +1,7 @@
 'use server';
-import { AvailableSpotsResponseType } from '@/components/pages/check-availability/CheckAvailableSpotsContent';
 import { api } from '@/hooks/serverFetch';
 import {
+  AvailableSpotsResponseType,
   GetParkingLotsInBoxRequestType,
   OperationsInfo,
   ParkingLotOptionDataType,

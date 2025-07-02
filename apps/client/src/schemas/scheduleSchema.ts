@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const mapFilterScheduleSchema = z
+export const scheduleSchema = z
   .object({
     entryDateTime: z.date().nullable(),
     exitDateTime: z.date().nullable(),

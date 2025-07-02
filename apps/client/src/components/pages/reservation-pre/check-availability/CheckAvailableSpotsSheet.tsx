@@ -10,16 +10,12 @@ import { useFormContext } from 'react-hook-form';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
 import { toLocalISOString } from '@/utils/datetimeUtils';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
-import ButtonWrapper from '@/components/common/ButtonWrapper';
-import AmountInfo from './AmountInfo';
-import { cn } from '@repo/ui/lib/utils';
-import { Button } from '@repo/ui/components/base/button';
 
 export default function CheckAvailableSpotsSheet({
   open,
   onOpenChange,
   parkingLotUuid,
-  onOpenConfirm, // 예약 확인 시트 열기용 콜백 추가
+  onOpenConfirm,
 }: {
   open: boolean;
   onOpenChange: (value: boolean) => void;
@@ -28,7 +24,6 @@ export default function CheckAvailableSpotsSheet({
 }) {
   const { watch } = useFormContext<CreateReservationRequestType>();
   const schedule = watch('schedule');
-  const parkingSpotType = watch('parkingSpotType');
 
   const [availableSpots, setAvailableSpots] =
     useState<AvailableSpotsResponseType | null>(null);
@@ -67,8 +62,8 @@ export default function CheckAvailableSpotsSheet({
       <CheckAvailableSpotsContent
         availableSpots={availableSpots}
         onClickReserve={() => {
-          onOpenChange(false); // 이 시트를 닫고
-          onOpenConfirm(); // 확인 시트를 연다
+          onOpenChange(false);
+          onOpenConfirm();
         }}
       />
     </Sheet>

@@ -1,6 +1,6 @@
 import { getParkingLotById } from '@/actions/parking/parking-service';
 import PageHeader from '@/components/layouts/PageHeader';
-import ReservationForm from '@/components/pages/reservation/ReservationForm';
+import ReservationForm from '@/components/pages/reservation-pre/ReservationForm';
 import { PaddedLayout } from '@repo/ui/components/common/CommonLayouts';
 
 export default async function page({

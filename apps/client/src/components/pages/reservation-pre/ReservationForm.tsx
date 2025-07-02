@@ -2,11 +2,12 @@
 
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { FormProvider, useForm } from 'react-hook-form';
-import SelectScheduleSection from '../check-availability/SelectScheduleSection';
-import CheckAvailableSpotsSheet from '../check-availability/CheckAvailableSpotsSheet';
+import SelectScheduleSection from './check-availability/SelectScheduleSection';
+import CheckAvailableSpotsSheet from './check-availability/CheckAvailableSpotsSheet';
 import { useState } from 'react';
 import ReservationConfirmSheet from './ReservationConfirmSheet';
 import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
+import { toLocalISOString } from '@/utils/datetimeUtils';
 
 export default function ReservationForm({
   parkingLotUuid,
@@ -16,16 +17,21 @@ export default function ReservationForm({
   parkingLotData: ParkingLotResponseDataType;
 }) {
   const methods = useForm<CreateReservationRequestType>({
+    mode: 'onSubmit',
     defaultValues: {
-      schedule: { entryDateTime: null, exitDateTime: null },
-      parkingSpotType: null,
+      parkingLotUuid: parkingLotUuid,
     },
   });
   const [openCheckSpotsSheet, setOpenCheckSpotsSheet] = useState(false);
   const [openConfirmSheet, setOpenConfirmSheet] = useState(false);
 
-  const onSubmit = (data: any) => {
-    console.log('예약 정보', data);
+  const onSubmit = (data: CreateReservationRequestType) => {
+    console.log(
+      '예약 정보',
+      data,
+      toLocalISOString(data.schedule.entryDateTime!),
+      toLocalISOString(data.schedule.exitDateTime!)
+    );
   };
 
   const { handleSubmit } = methods;
@@ -34,7 +40,9 @@ export default function ReservationForm({
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SelectScheduleSection
-          onClickReserve={() => setOpenCheckSpotsSheet(true)}
+          onClickReserve={() => {
+            setOpenCheckSpotsSheet(true);
+          }}
           parkingLotUuid={parkingLotUuid}
         />
         <CheckAvailableSpotsSheet

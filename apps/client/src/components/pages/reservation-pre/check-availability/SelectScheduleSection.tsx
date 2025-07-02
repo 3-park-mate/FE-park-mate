@@ -1,17 +1,18 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import SelectDays from './SelectDays';
-import { getOperationsById } from '@/actions/parking/parking-service';
-import { OperationsInfo } from '@/types/parkingDataTypes';
-import { useSchedulePicker } from '@/hooks/useSchedulePicker';
-import SelectTimes from './SelectTimes';
-import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { useFormContext } from 'react-hook-form';
-import ButtonWrapper from '@/components/common/ButtonWrapper';
+import { getOperationsById } from '@/actions/parking/parking-service';
+import { useSchedulePicker } from '@/hooks/useSchedulePicker';
+import { OperationsInfo } from '@/types/parkingDataTypes';
+import SelectDays from './SelectDays';
+import SelectTimes from './SelectTimes';
 import AmountInfo from './AmountInfo';
+import ButtonWrapper from '@/components/common/ButtonWrapper';
 import { Button } from '@repo/ui/components/base/button';
+import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { cn } from '@repo/ui/lib/utils';
+import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 
 export default function SelectScheduleSection({
   parkingLotUuid,
@@ -25,9 +26,11 @@ export default function SelectScheduleSection({
     return { year: now.getFullYear(), month: now.getMonth() + 1 };
   });
 
-  const { setValue } = useFormContext();
-
   const [operations, setOperations] = useState<OperationsInfo[] | null>(null);
+  const {
+    setValue,
+    formState: { errors },
+  } = useFormContext<CreateReservationRequestType>();
   const endRef = useRef<HTMLDivElement | null>(null);
 
   const availableDays = useMemo(() => {
@@ -44,6 +47,7 @@ export default function SelectScheduleSection({
 
   useEffect(() => {
     if (!parkingLotUuid) return;
+
     getOperationsById(
       parkingLotUuid,
       currentMonth.year,
@@ -52,10 +56,6 @@ export default function SelectScheduleSection({
       setOperations(res.success ? res.data : []);
     });
   }, [parkingLotUuid, currentMonth]);
-
-  const handleMonthChange = (date: Date) => {
-    setCurrentMonth({ year: date.getFullYear(), month: date.getMonth() + 1 });
-  };
 
   useEffect(() => {
     setValue('schedule', selectedSchedule);
@@ -66,6 +66,10 @@ export default function SelectScheduleSection({
       endRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [dateRange]);
+
+  const handleMonthChange = (date: Date) => {
+    setCurrentMonth({ year: date.getFullYear(), month: date.getMonth() + 1 });
+  };
 
   return (
     <section className="flex flex-col gap-3 justify-center pb-28">
@@ -83,7 +87,7 @@ export default function SelectScheduleSection({
         onSelect={handleDateChange}
         onMonthChange={handleMonthChange}
       />
-      {dateRange?.from && dateRange.to && (
+      {dateRange?.from && dateRange?.to && (
         <SelectTimes
           from={dateRange.from}
           to={dateRange.to}
@@ -95,8 +99,8 @@ export default function SelectScheduleSection({
         <AmountInfo />
         <Button
           onClick={onClickReserve}
-          // disabled={!isActive || loading}
           className={cn('h-12 text-md')}
+          disabled={!!errors.schedule}
         >
           예약 가능 주차면 확인
         </Button>

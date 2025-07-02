@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import SelectTimes from '../../check-availability/SelectTimes';
+import SelectTimes from '../../reservation-pre/check-availability/SelectTimes';
 import { useSchedulePicker } from '@/hooks/useSchedulePicker';
 import { Calendar } from '@repo/ui/components/base/calendar';
 import {
