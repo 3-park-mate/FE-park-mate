@@ -3,8 +3,8 @@ import {
   CommonButton,
   PaddedSection,
 } from '@repo/ui/components/common/CommonLayouts';
-import TossPaymentWidget from './TossPaymentWidget';
 import { useState } from 'react';
+import WidgetModal from './WidgetModal';
 
 export default function PaymentButton() {
   const [isOpenWidget, setIsOpentWidget] = useState(false);
@@ -26,7 +26,7 @@ export default function PaymentButton() {
         결제하기
       </CommonButton>
       {isOpenWidget && (
-        <TossPaymentWidget
+        <WidgetModal
           isOpen={isOpenWidget}
           onClose={() => {
             setIsOpentWidget(false);

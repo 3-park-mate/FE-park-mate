@@ -1,16 +1,12 @@
 'use client';
-
 import {
   CommonButton,
-  GlobalContainerView,
-  HeaderLayout,
   PaddedLayout,
 } from '@repo/ui/components/common/CommonLayouts';
 import {
   loadTossPayments,
   TossPaymentsWidgets,
 } from '@tosspayments/tosspayments-sdk';
-import { ChevronLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 function generateRandomString() {
@@ -23,7 +19,7 @@ function generateRandomString() {
 // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
 // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
 // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
-const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
+const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
 const customerKey = generateRandomString();
 
 interface Amount {
@@ -31,30 +27,7 @@ interface Amount {
   value: number;
 }
 
-export default function TossPaymentWidget({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    if (isOpen) {
-      // 모달이 열리면 body 스크롤 비활성화
-      document.body.style.overflow = 'hidden';
-    } else {
-      // 모달이 닫히면 body 스크롤 활성화
-      document.body.style.overflow = '';
-    }
-
-    // 컴포넌트 언마운트 시 초기화
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
+export default function TossPaymentWidget() {
   const [amount, setAmount] = useState<Amount>({
     currency: 'KRW',
     value: 50000,
@@ -128,23 +101,10 @@ export default function TossPaymentWidget({
   };
 
   return (
-    <GlobalContainerView className="fixed inset-0 z-50 flex flex-col bg-white outline-none">
-      <HeaderLayout className="bg-white">
-        <button
-          onClick={onClose}
-          className="absolute left-0 flex justify-center cursor-pointer"
-        >
-          <ChevronLeft className="ml-3" />
-        </button>
-        <h1 className="font-semibold">결제하기</h1>
-      </HeaderLayout>
-
+    <>
       <div className="box_section overflow-y-auto">
         <div id="payment-method" />
-        {/* 이용약관 UI */}
         <div id="agreement" />
-
-        {/* 결제하기 버튼 */}
         <PaddedLayout>
           <CommonButton
             className="mb-7"
@@ -175,6 +135,6 @@ export default function TossPaymentWidget({
           </CommonButton>
         </PaddedLayout>
       </div>
-    </GlobalContainerView>
+    </>
   );
 }
