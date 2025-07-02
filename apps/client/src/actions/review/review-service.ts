@@ -53,7 +53,6 @@ export async function getReviewSummaryData(
       '/summary',
       query
     );
-    console.log(res);
 
     return {
       success: true,
