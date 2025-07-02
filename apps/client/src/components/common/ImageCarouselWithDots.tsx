@@ -9,13 +9,16 @@ import {
 } from '@repo/ui/components/base/carousel';
 import Image from 'next/image';
 import ImageViewDialog from './ImageViewDialog';
+import { cn } from '@repo/ui/lib/utils';
 
 export default function ImageCarouselWithDots({
   images,
   showDots = true,
+  ImageClassName,
 }: {
   images: string[];
   showDots?: boolean;
+  ImageClassName?: string;
 }) {
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
@@ -48,7 +51,12 @@ export default function ImageCarouselWithDots({
               className={images.length === 1 ? 'w-full' : 'basis-5/6'}
             >
               <ImageViewDialog imgSrc={img} title="이미지 상세보기">
-                <div className="relative rounded-md overflow-hidden bg-gray-1 flex aspect-[3/2]">
+                <div
+                  className={cn(
+                    'relative rounded-md overflow-hidden bg-gray-1 flex aspect-[3/2]',
+                    ImageClassName
+                  )}
+                >
                   <Image
                     src={img}
                     alt={`이미지 ${index + 1}`}

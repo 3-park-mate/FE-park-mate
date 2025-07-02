@@ -12,6 +12,7 @@ import {
 } from '@/actions/parking/parking-service';
 import ParkingDetailTabBar from '@/components/pages/parkingLot/ParkingDetailTabBar';
 import NotFoundLayout from '@/components/common/NotFoundLayout';
+import { getReviewSummaryData } from '@/actions/review/review-service';
 
 export default async function page({
   params,
@@ -29,17 +30,25 @@ export default async function page({
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
 
-  const [parkingLotRes, operationRes] = await Promise.all([
+  const [parkingLotRes, operationRes, reviewSummaryRes] = await Promise.all([
     getParkingLotById(parkingLotUuid),
     getDailyOperationById(parkingLotUuid),
+    getReviewSummaryData(parkingLotUuid),
   ]);
 
-  if (!parkingLotRes.success || !operationRes.success || !parkingLotRes.data) {
+  if (
+    !parkingLotRes.success ||
+    !operationRes.success ||
+    !parkingLotRes.data ||
+    !reviewSummaryRes.success
+  ) {
     return fallback;
   }
 
   const parkingLotData = parkingLotRes.data;
   const operationData = operationRes.data;
+  const reviewSummaryData = reviewSummaryRes.data;
+  console.log(reviewSummaryData);
 
   return (
     <>
@@ -49,8 +58,8 @@ export default async function page({
           thumbImageUrl={parkingLotData.thumbnailUrl}
           baseFee={operationData.baseFee}
           name={parkingLotData.name}
-          averageRating={reviewSummaryDummy.averageRating}
-          totalReviews={reviewSummaryDummy.totalReviews}
+          averageRating={reviewSummaryData.averageRating}
+          totalReviews={reviewSummaryData.totalReviews}
           distance={100}
           capacity={parkingLotData.capacity}
           parkingLotType={parkingLotData.parkingLotType}
@@ -76,6 +85,7 @@ export default async function page({
           parkingSpotTypes={parkingLotData.parkingSpotTypes}
           latitude={parkingLotData.latitude}
           longitude={parkingLotData.longitude}
+          totalReviews={reviewSummaryData.totalReviews}
         />
       </main>
     </>
