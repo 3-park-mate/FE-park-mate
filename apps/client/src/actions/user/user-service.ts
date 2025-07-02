@@ -2,6 +2,7 @@
 
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
+import { ParkingLotSimpleDataType } from '@/types/parkingDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import {
   EditProfileDataType,
@@ -11,6 +12,7 @@ import {
 } from '@/types/userDataTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { getSimpleParkingLotById } from '../parking/parking-service';
 
 const API_PREFIX = `${process.env.BASE_API_URL}/user-service/api/v1/users`;
 
@@ -372,4 +374,49 @@ export async function getFavoritesData({
   } catch (_error) {
     redirect('/error');
   }
+}
+
+export async function fetchCombinedFavoriteParkingLots({
+  size,
+  cursor,
+}: {
+  size: number;
+  cursor?: number;
+}): Promise<{
+  content: ParkingLotSimpleDataType[];
+  nextCursor?: number;
+  hasNext: boolean;
+}> {
+  const favoritesRes = await getFavoritesData({ size, cursor });
+
+  if (!favoritesRes.success || !favoritesRes.data) {
+    console.error('Failed to fetch favorite UUIDs:', favoritesRes);
+    return {
+      content: [],
+      hasNext: false,
+    };
+  }
+
+  const favoriteUuids = favoritesRes.data.content;
+  const nextCursor = favoritesRes.data.nextCursor;
+  const hasNext = favoritesRes.data.hasNext;
+
+  const parkingDetailsPromises = favoriteUuids.map(async (item) => {
+    const detailRes = await getSimpleParkingLotById(item.parkingLotUuid);
+    if (detailRes.success && detailRes.data) {
+      return detailRes.data;
+    }
+    console.warn(`Failed to fetch details for UUID: ${item.parkingLotUuid}`);
+    return null;
+  });
+
+  const allLoadedDetails = (await Promise.all(parkingDetailsPromises)).filter(
+    Boolean
+  ) as ParkingLotSimpleDataType[];
+
+  return {
+    content: allLoadedDetails,
+    nextCursor,
+    hasNext,
+  };
 }

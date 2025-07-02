@@ -4,28 +4,17 @@ import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import Image from 'next/image';
 import Link from 'next/link';
 import FavoriteButton from './FavoriteButton';
-import { useFetchData } from '@/hooks/useFetchData';
+
 import { ParkingLotSimpleDataType } from '@/types/parkingDataTypes';
-import { getSimpleParkingLotById } from '@/actions/parking/parking-service';
-import { useCallback } from 'react';
 
 export default function ParkingCardItem({
-  parkingLotUuid,
+  parkingLotData,
 }: {
-  parkingLotUuid: string;
+  parkingLotData: ParkingLotSimpleDataType;
 }) {
-  const fetcher = useCallback(
-    () => getSimpleParkingLotById(parkingLotUuid),
-    [parkingLotUuid]
-  );
-
-  const { data: parkingLotData } =
-    useFetchData<ParkingLotSimpleDataType>(fetcher);
-  if (!parkingLotData) return;
-
   return (
     <div>
-      <Link href={`/parking-lot/${parkingLotUuid}`}>
+      <Link href={`/parking-lot/${parkingLotData.parkingLotUuid}`}>
         <div
           className="relative rounded-md overflow-hidden 
         bg-gray-1 flex aspect-[3/2] mb-1.5"
@@ -34,19 +23,21 @@ export default function ParkingCardItem({
             src={parkingLotData.thumbnailUrl || '/img/no-image.png'}
             alt="주차장 이미지"
             fill
-            sizes=""
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
           />
           <FavoriteButton
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              // 즐겨찾기 토글 처리
             }}
           />
         </div>
       </Link>
-      <Link href={`/parking-lot/${parkingLotUuid}`} className="inline-block">
+      <Link
+        href={`/parking-lot/${parkingLotData.parkingLotUuid}`}
+        className="inline-block"
+      >
         <p className="text-15px pb-0.5 font-semibold">{parkingLotData.name}</p>
       </Link>
       <p className="flex gap-1 text-gray-3 text-13px">

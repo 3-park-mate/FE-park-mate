@@ -26,7 +26,7 @@ export default function ParkingCarousel({
             key={index}
             className="flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px] max-w-[164px]"
           >
-            <ParkingCardItem {...item} />
+            {/* <ParkingCardItem {...item} /> */}
           </CarouselItem>
         ))}
         <CarouselItem
