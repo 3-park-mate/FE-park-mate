@@ -136,8 +136,8 @@ export interface GetParkingLotsInBoxRequestType {
   neLat: number;
   neLng: number;
   isEvChargingAvailable: boolean;
-  startDateTime?: string;
-  endDateTime?: string;
+  entry?: string;
+  exit?: string;
 }
 
 export interface ParkingLotsInBoxResponseType {

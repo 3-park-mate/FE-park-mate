@@ -38,6 +38,13 @@ export interface initMapProps {
   lat: number;
   lng: number;
   ev: boolean;
-  entry: Date | null;
-  exit: Date | null;
+  entry: string;
+  exit: string;
+}
+
+export interface FilterScheduleType {
+  selectedDateTime: {
+    entryDateTime: Date | null;
+    exitDateTime: Date | null;
+  };
 }

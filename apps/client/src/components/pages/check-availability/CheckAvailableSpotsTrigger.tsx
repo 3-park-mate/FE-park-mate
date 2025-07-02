@@ -3,7 +3,7 @@
 import { SheetTrigger } from '@repo/ui/components/base/sheet';
 import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AvailableSpotsResponseType } from './CheckAvailableSpotsContent';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
 import { toLocalISOString } from '@/utils/datetimeUtils';

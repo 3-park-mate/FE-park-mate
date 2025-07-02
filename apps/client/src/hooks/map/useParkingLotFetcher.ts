@@ -29,8 +29,8 @@ export function useParkingLotsFetcher(
         neLat: ne.getLat(),
         neLng: ne.getLng(),
         isEvChargingAvailable: initParams.ev ?? false,
-        startDateTime: initParams.entry?.toISOString() ?? '',
-        endDateTime: initParams.exit?.toISOString() ?? '',
+        entry: initParams.entry,
+        exit: initParams.exit,
       });
 
       setParkingLotList(data);
