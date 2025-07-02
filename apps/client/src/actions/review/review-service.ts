@@ -50,7 +50,7 @@ export async function getReviewSummaryData(
   try {
     const res = await api.get<CommonResponseType<ReviewSummaryDataType>>(
       READ_API_PREFIX,
-      '/ReviewSummaryDataType',
+      '/summary',
       query
     );
     console.log(res);

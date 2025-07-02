@@ -1,3 +1,4 @@
+import { getReviewSummaryData } from '@/actions/review/review-service';
 import NotFoundLayout from '@/components/common/NotFoundLayout';
 import PageHeader from '@/components/layouts/PageHeader';
 import ReviewList from '@/components/pages/review/ReviewList';
@@ -19,11 +20,20 @@ export default async function page({
   const { parkingLotUuid } = await params;
   if (!parkingLotUuid) return fallback;
 
+  const reviewSummaryRes = await getReviewSummaryData(parkingLotUuid);
+
+  if (!reviewSummaryRes.success) return fallback;
+
+  const reviewSummaryData = reviewSummaryRes.data;
+
   return (
     <div className="bg-inner-background-gray min-h-screen">
       <PageHeader title="방문자 리뷰" />
       <main className="max-w-2xl mx-auto">
-        <ReviewListHeader />
+        <ReviewListHeader
+          averageRating={reviewSummaryData.averageRating}
+          totalReviews={reviewSummaryData.totalReviews}
+        />
         <ReviewList parkingLotUuid={parkingLotUuid} />
       </main>
     </div>

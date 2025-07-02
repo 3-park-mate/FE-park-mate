@@ -7,8 +7,10 @@ import { getReviewsData } from '@/actions/review/review-service';
 
 export default async function ReviewSection({
   parkingLotUuid,
+  totalReviews,
 }: {
   parkingLotUuid: string;
+  totalReviews: number;
 }) {
   const res = await getReviewsData({ size: 3, parkingLotUuid });
   if (!res.success) return;
@@ -18,7 +20,8 @@ export default async function ReviewSection({
   return (
     <PaddedSection className="bg-white py-7" id="reviews">
       <h2 className="text-lg font-semibold">
-        방문자 리뷰 <span className="text-gray-3 text-base">349</span>
+        방문자 리뷰{' '}
+        <span className="text-gray-3 text-base">{totalReviews}</span>
       </h2>
       <section className="py-2">
         {reviewsPreviewData.map((review, index) => (
