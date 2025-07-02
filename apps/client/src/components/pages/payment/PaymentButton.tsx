@@ -1,9 +1,17 @@
+'use client';
 import {
   CommonButton,
   PaddedSection,
 } from '@repo/ui/components/common/CommonLayouts';
+import TossPaymentWidget from './TossPaymentWidget';
+import { useState } from 'react';
 
 export default function PaymentButton() {
+  const [isOpenWidget, setIsOpentWidget] = useState(false);
+  const handlePaymentClick = async () => {
+    setIsOpentWidget(true);
+  };
+
   return (
     <PaddedSection className="pt-5">
       <p className="text-13px text-gray-2 text-center break-keep pb-3">
@@ -11,9 +19,20 @@ export default function PaymentButton() {
         <br />
         서비스에 결제 정보를 제공하는 것에 동의합니다.
       </p>
-      <CommonButton className="font-bold text-base text-black">
+      <CommonButton
+        className="font-bold text-base text-black"
+        onClick={handlePaymentClick}
+      >
         결제하기
       </CommonButton>
+      {isOpenWidget && (
+        <TossPaymentWidget
+          isOpen={isOpenWidget}
+          onClose={() => {
+            setIsOpentWidget(false);
+          }}
+        />
+      )}
     </PaddedSection>
   );
 }
