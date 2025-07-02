@@ -27,7 +27,7 @@ export default function SelectScheduleSection({
 
   const {
     dateRange,
-    selectedDateTime,
+    selectedSchedule,
     handleDateChange,
     handleTimeChange,
     reset,
@@ -74,7 +74,7 @@ export default function SelectScheduleSection({
       <div ref={endRef} />
       <CheckAvailableSpotsSheet
         parkingLotUuid={parkingLotUuid || ''}
-        selectedDateTime={selectedDateTime}
+        schedule={selectedSchedule}
       />
     </section>
   );

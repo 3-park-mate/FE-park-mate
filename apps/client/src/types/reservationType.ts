@@ -30,3 +30,7 @@ export interface GetAvailableDayReponse {
 export interface GetAvailableTimeReponse {
   time: string[];
 }
+
+export interface CreateReservationRequest {
+  parkingLotUuid: string;
+}

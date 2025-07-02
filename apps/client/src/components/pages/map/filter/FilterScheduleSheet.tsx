@@ -14,10 +14,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { toLocalISOString } from '@/utils/datetimeUtils';
 import { mapFilterScheduleSchema } from '@/schemas/mapFilterScheduleSchema';
-import { FilterScheduleType } from '@/types/mapDataTypes';
+import { ScheduleType } from '@/types/initialDataTypes';
 
 export default function FilterScheduleSheet() {
-  const methods = useForm<FilterScheduleType>({
+  const methods = useForm<ScheduleType>({
     resolver: zodResolver(mapFilterScheduleSchema),
   });
 
@@ -28,8 +28,8 @@ export default function FilterScheduleSheet() {
 
   const [open, setOpen] = useState(false);
 
-  const onSubmit = (data: FilterScheduleType) => {
-    const { entryDateTime, exitDateTime } = data.selectedDateTime;
+  const onSubmit = (data: ScheduleType) => {
+    const { entryDateTime, exitDateTime } = data;
 
     const params = new URLSearchParams(searchParams.toString());
     params.set('entry', toLocalISOString(entryDateTime!));

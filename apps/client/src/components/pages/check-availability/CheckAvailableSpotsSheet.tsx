@@ -8,15 +8,14 @@ import CheckAvailableSpotsTrigger from './CheckAvailableSpotsTrigger';
 import CheckAvailableSpotsContent, {
   AvailableSpotsResponseType,
 } from './CheckAvailableSpotsContent';
+import { ScheduleType } from '@/types/initialDataTypes';
 
 export default function CheckAvailableSpotsSheet({
   parkingLotUuid,
-
-  selectedDateTime,
+  schedule,
 }: {
   parkingLotUuid: string;
-
-  selectedDateTime: { entryDateTime: Date | null; exitDateTime: Date | null };
+  schedule: ScheduleType;
 }) {
   const [availableSpots, setAvailableSpots] =
     useState<AvailableSpotsResponseType | null>(null);
@@ -27,12 +26,12 @@ export default function CheckAvailableSpotsSheet({
         <AmountInfo />
         <CheckAvailableSpotsTrigger
           parkingLotUuid={parkingLotUuid}
-          selectedDateTime={selectedDateTime}
+          schedule={schedule}
           onFetch={setAvailableSpots}
         />
       </ButtonWrapper>
       <CheckAvailableSpotsContent
-        selectedDateTime={selectedDateTime}
+        schedule={schedule}
         availableSpots={availableSpots}
       />
     </Sheet>

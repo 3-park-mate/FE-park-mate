@@ -17,29 +17,24 @@ import { cn } from '@repo/ui/lib/utils';
 import { useState } from 'react';
 import AmountInfo from './AmountInfo';
 import { formatDate } from '@/utils/datetimeUtils';
+import { ScheduleType } from '@/types/initialDataTypes';
 
 export type AvailableSpotsResponseType = Partial<
   Record<ParkingSpotTypeWithEV, number>
 >;
 
 export default function CheckAvailableSpotsContent({
-  selectedDateTime,
+  schedule,
   availableSpots,
 }: {
-  selectedDateTime: {
-    entryDateTime: Date | null;
-    exitDateTime: Date | null;
-  };
+  schedule: ScheduleType;
   availableSpots: AvailableSpotsResponseType | null;
 }) {
+  const { entryDateTime, exitDateTime } = schedule;
   const [spot, setSpot] = useState<ParkingSpotTypeWithEV | undefined>();
 
-  const from = selectedDateTime.entryDateTime
-    ? formatDate(selectedDateTime.entryDateTime.toString())
-    : '';
-  const to = selectedDateTime.exitDateTime
-    ? formatDate(selectedDateTime.exitDateTime.toString())
-    : '';
+  const from = entryDateTime ? formatDate(entryDateTime.toString()) : '';
+  const to = exitDateTime ? formatDate(exitDateTime.toString()) : '';
 
   const displayData = availableSpots ?? {};
   const sortedEntries = Object.entries(displayData).sort(([a], [b]) => {
