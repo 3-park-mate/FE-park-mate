@@ -1,20 +1,19 @@
 'use client';
 import ImageCarouselWithDots from '@/components/common/ImageCarouselWithDots';
 import VoteButtons from '@/components/common/VoteButtons';
+import { MAX_REVIEW_CONTENT_LENGTH } from '@/constants/constants';
 import { ReviewItemDataType } from '@/types/reviewDataTypes';
 import { PaddedLayout, Rating } from '@repo/ui/components/common/CommonLayouts';
 import { useState } from 'react';
 
-const MAX_CONTENT_LENGTH = 150;
-
 export default function ReviewItem({ review }: { review: ReviewItemDataType }) {
   const [showFullContent, setShowFullContent] = useState(false);
 
-  const isContentTooLong = review.content.length > MAX_CONTENT_LENGTH;
+  const isContentTooLong = review.content.length > MAX_REVIEW_CONTENT_LENGTH;
   const displayedContent =
     showFullContent || !isContentTooLong
       ? review.content
-      : `${review.content.substring(0, MAX_CONTENT_LENGTH)}...`;
+      : `${review.content.substring(0, MAX_REVIEW_CONTENT_LENGTH)}...`;
 
   const toggleShowFullContent = () => {
     setShowFullContent((prev) => !prev);
