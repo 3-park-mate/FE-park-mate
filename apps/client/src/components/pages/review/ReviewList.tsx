@@ -1,30 +1,56 @@
+'use client';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import ReviewItem from './ReviewItem';
 import { mockReviews } from '@/data/reviewDummyDatas';
 import OptionsDropdown from '@/components/common/OptionsDropdown';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { ReviewItemDataType } from '@/types/reviewDataTypes';
+import { getReviewsData } from '@/actions/review/review-service';
+import { PAGE_SIZE } from '@/constants/constants';
 
-export default function ReviewList() {
+export default function ReviewList({
+  parkingLotUuid,
+}: {
+  parkingLotUuid: string;
+}) {
+  const {
+    items: reviews,
+    isLoading,
+    hasMore,
+    loaderRef,
+  } = useInfiniteScroll<ReviewItemDataType, string>({
+    fetchData: async (cursor) => {
+      const res = await getReviewsData({
+        size: PAGE_SIZE,
+        cursor,
+        parkingLotUuid,
+      });
+      if (res.success) {
+        return {
+          content: res.data.content,
+          cursor: res.data.cursor,
+          hasNext: res.data.hasNext,
+        };
+      }
+      throw new Error('Failed to fetch');
+    },
+    filterDuplicateItems: (existing, newItems) => {
+      const existingCodes = new Set(existing.map((item) => item.reviewUuid));
+      return newItems.filter((item) => !existingCodes.has(item.reviewUuid));
+    },
+  });
+
   return (
-    <div className="max-w-2xl mx-auto">
-      <PaddedSection className="flex justify-between py-5">
-        <h2 className="text-lg font-semibold flex-shrink-0">
-          방문자 리뷰<span className="ps-1 text-gray-3 text-base">349</span>
-        </h2>
-        <OptionsDropdown
-          paramKey="sort"
-          options={[
-            { label: '최신순', value: 'latest' },
-            { label: '별점 높은순', value: 'high-rate' },
-            { label: '별점 낮은순', value: 'low-rate' },
-          ]}
-        />
-      </PaddedSection>
-
-      <section className="space-y-3">
-        {mockReviews.map((review) => (
-          <ReviewItem key={review.id} review={review} />
-        ))}
-      </section>
-    </div>
+    <section className="space-y-3">
+      {reviews.map((review) => (
+        <ReviewItem key={review.reviewUuid} review={review} />
+      ))}
+      <div ref={loaderRef} className="pb-4 h-10">
+        {isLoading && <div>로딩</div>}
+      </div>
+      {reviews.length === 0 && !isLoading && !hasMore && (
+        <p className="text-center text-gray-500">등록된 리뷰가 없습니다.</p>
+      )}
+    </section>
   );
 }
