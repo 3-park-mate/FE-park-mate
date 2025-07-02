@@ -14,27 +14,28 @@ import {
   SheetTitle,
 } from '@repo/ui/components/base/sheet';
 import { cn } from '@repo/ui/lib/utils';
-import { useState } from 'react';
 import AmountInfo from './AmountInfo';
+import { useFormContext } from 'react-hook-form';
+import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { formatDate } from '@/utils/datetimeUtils';
-import { ScheduleType } from '@/types/initialDataTypes';
 
 export type AvailableSpotsResponseType = Partial<
   Record<ParkingSpotTypeWithEV, number>
 >;
 
 export default function CheckAvailableSpotsContent({
-  schedule,
   availableSpots,
+  onClickReserve,
 }: {
-  schedule: ScheduleType;
   availableSpots: AvailableSpotsResponseType | null;
+  onClickReserve: () => void;
 }) {
-  const { entryDateTime, exitDateTime } = schedule;
-  const [spot, setSpot] = useState<ParkingSpotTypeWithEV | undefined>();
-
-  const from = entryDateTime ? formatDate(entryDateTime.toString()) : '';
-  const to = exitDateTime ? formatDate(exitDateTime.toString()) : '';
+  const { watch, setValue } = useFormContext<CreateReservationRequestType>();
+  const selectedType = watch('parkingSpotType');
+  const schedule = watch('schedule');
+  if (!schedule?.entryDateTime || !schedule?.exitDateTime) {
+    return null;
+  }
 
   const displayData = availableSpots ?? {};
   const sortedEntries = Object.entries(displayData).sort(([a], [b]) => {
@@ -50,18 +51,21 @@ export default function CheckAvailableSpotsContent({
     >
       <SheetTitle className="mt-10 text-xl">잔여 주차면 수</SheetTitle>
       <p className="text-md ">
-        {from} - {to}
+        {formatDate(schedule.entryDateTime.toString())} -{' '}
+        {formatDate(schedule.exitDateTime.toString())}
       </p>
 
       <RadioGroup
-        value={spot}
-        onValueChange={(value: ParkingSpotTypeWithEV) => setSpot(value)}
+        value={selectedType}
         className="grid grid-cols-2 gap-2 mt-7"
+        onValueChange={(type: string) => {
+          setValue('parkingSpotType', type as ParkingSpotTypeWithEV);
+        }}
       >
         {sortedEntries.map(([type, count]) => {
           const parkingSpotType = type as ParkingSpotTypeWithEV;
           const config = SelectParkingSpotCardMap[parkingSpotType];
-          const isSelected = spot === parkingSpotType;
+          const isSelected = selectedType === parkingSpotType;
 
           return (
             <div
@@ -93,11 +97,11 @@ export default function CheckAvailableSpotsContent({
 
       <ButtonWrapper className="flex justify-between items-center border-t-1 pt-4">
         <AmountInfo type="total" />
-        {/* 예약으로 가는 로직 실행 */}
         <Button
+          onClick={onClickReserve}
           className={cn(
             'px-10 h-12 text-lg',
-            spot ? 'bg-primary' : 'bg-gray-1'
+            selectedType ? 'bg-primary' : 'bg-gray-1'
           )}
         >
           예약하기

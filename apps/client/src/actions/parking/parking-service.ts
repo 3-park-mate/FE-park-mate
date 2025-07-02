@@ -163,10 +163,8 @@ export async function getAvailableSpots(
   exitTime: string
 ): Promise<ApiResponse<AvailableSpotsResponseType>> {
   try {
-    const query: Record<string, string> = {
-      entryTime: entryTime.toString(),
-      exitTime: exitTime.toString(),
-    };
+    const query = { entryTime, exitTime };
+
     const res = await api.get<CommonResponseType<AvailableSpotsResponseType>>(
       PARKING_API_PREFIX,
       `/${parkingLotUuid}/spots/available`,
