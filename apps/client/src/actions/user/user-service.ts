@@ -5,6 +5,7 @@ import { api } from '@/hooks/serverFetch';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import {
   EditProfileDataType,
+  FavoritesResponseDataType,
   UserInfoDataType,
   UserVehicleDataType,
 } from '@/types/userDataTypes';
@@ -332,9 +333,18 @@ export async function UpdateDefaultVehicleAction(
   }
 }
 
-export async function getFavoritesData(): Promise<
-  ApiResponse<{ parkingLotUuid: string }[]>
-> {
+export async function getFavoritesData({
+  size,
+  cursor,
+}: {
+  size: number;
+  cursor?: number;
+}): Promise<ApiResponse<FavoritesResponseDataType>> {
+  const query: Record<string, string> = {
+    size: size.toString(),
+    ...(cursor !== undefined && { cursor: cursor.toString() }),
+  };
+
   try {
     const session = await getServerSession(options);
     if (!session) {
@@ -343,16 +353,15 @@ export async function getFavoritesData(): Promise<
     const uuid = session.user.uuid;
     const accessToken = session.user.accessToken;
 
-    const res = await api.get<CommonResponseType<{ parkingLotUuid: string }[]>>(
+    const res = await api.get<CommonResponseType<FavoritesResponseDataType>>(
       API_PREFIX,
-      `/favorites`,
-      undefined,
+      `/favorites/cursor`,
+      query,
       {
         headers: {
           'X-User-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
-        cache: 'no-cache',
       }
     );
 

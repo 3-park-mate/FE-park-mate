@@ -14,3 +14,9 @@ export interface UserVehicleDataType {
   nickname: string;
   defaultSelected: boolean;
 }
+
+export interface FavoritesResponseDataType {
+  content: { parkingLotUuid: string }[];
+  hasNext: boolean;
+  nextCursor: number;
+}
