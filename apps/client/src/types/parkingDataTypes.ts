@@ -172,6 +172,14 @@ export interface OperationsInfo {
   discountRate: number;
 }
 
+export interface ParkingLotSimpleDataType {
+  parkingLotUuid: string;
+  thumbnailUrl: string;
+  name: string;
+  address: string;
+  rating: number;
+}
+
 export interface ParkingLotOptionDataType {
   id: number;
   name: string;
