@@ -1,8 +1,9 @@
 'use client';
+import { EditUserInfoData } from '@/actions/user/user-service';
 import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import { editProfileSchema } from '@/schemas/editProfileSchema';
-import { EditProfileDataType } from '@/types/userDataTypes';
-import { handleKeyDown } from '@/utils/formUtils';
+import { EditProfileDataType, UserInfoDataType } from '@/types/userDataTypes';
+import { formatPhoneNumber, handleKeyDown } from '@/utils/formUtils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AlertModal from '@repo/ui/components/common/AlertModal';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
@@ -11,7 +12,11 @@ import EditFormButtons from '@repo/ui/components/common/EditFormButtons';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function EditProfileForm() {
+export default function EditProfileForm({
+  userData,
+}: {
+  userData: UserInfoDataType;
+}) {
   const {
     loading,
     setLoading,
@@ -23,6 +28,7 @@ export default function EditProfileForm() {
   const [isEditing, setIsEditing] = useState(false);
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { isValid },
   } = useForm<EditProfileDataType>({
@@ -30,39 +36,38 @@ export default function EditProfileForm() {
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
-      name: '홍길동',
-      phoneNumber: '010-1234-5678',
+      name: userData.name || '',
+      phoneNumber: formatPhoneNumber(userData.phoneNumber || ''),
     },
   });
 
   const onSubmit = async (data: EditProfileDataType) => {
     setLoading(true);
-    console.log('로그인 데이터:', data);
-    // try {
-    //   const res = await signIn('credentials', {
-    //     email: data.email,
-    //     password: data.password,
-    //     // callbackUrl: '/',
-    //     redirect: false,
-    //   });
-    //   console.log(res);
+    const editProfileData: EditProfileDataType = {
+      name: data.name,
+      phoneNumber: data.phoneNumber.replace(/-/g, ''),
+    };
+    console.log('data: ', editProfileData);
 
-    //   if (res?.ok) {
-    //     router.push(res.url ?? '/');
-    //   } else {
-    //     const message =
-    //       res?.error ??
-    //       '로그인 중 알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.';
-    //     setModalErrorMessage(message);
-    //     setErrorModalOpen(true);
-    //     setIsLoading(false);
-    //   }
-    //   router.push('/');
-    // } catch (error) {
-    //   setIsLoading(false);
-    // }
+    const res = await EditUserInfoData(editProfileData);
+    if (!res.success) return handleAlert(res.message);
+
     handleAlert('유저 정보가 정상적으로 변경되었습니다.');
     setIsEditing(false);
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, selectionStart } = e.target;
+    const inputType =
+      e.nativeEvent instanceof InputEvent ? e.nativeEvent.inputType : undefined;
+
+    const newFormattedValue = formatPhoneNumber(
+      value,
+      inputType,
+      selectionStart ?? value.length
+    );
+
+    setValue('phoneNumber', newFormattedValue);
   };
 
   return (
@@ -73,7 +78,7 @@ export default function EditProfileForm() {
         errorMessage={modalMessage}
       />
       <form
-        className="space-y-5"
+        className="space-y-4"
         onKeyDown={handleKeyDown}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -91,7 +96,7 @@ export default function EditProfileForm() {
           placeholder="010-1234-5678"
           maxLength={13}
           readOnly={loading || !isEditing}
-          {...register('phoneNumber')}
+          {...register('phoneNumber', { onChange: handlePhoneNumberChange })}
         />
         <EditFormButtons
           isEditing={isEditing}

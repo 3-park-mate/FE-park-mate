@@ -1,6 +1,5 @@
 import ActiveIconWithBadge from '@/components/common/ActiveIconWithBadge';
 import { ParkingSpotType } from '@/types/parkingDataTypes';
-import { cn } from '@repo/ui/lib/utils';
 import { Car } from 'lucide-react';
 
 const parkingSpotTypeIconMap: Record<ParkingSpotType, React.ElementType> = {

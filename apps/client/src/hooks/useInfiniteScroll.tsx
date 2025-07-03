@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+interface FetchDataResult<T, CursorType> {
+  content: T[];
+  nextCursor?: CursorType;
+  cursor?: CursorType;
+  hasNext: boolean;
+}
+
 interface UseInfiniteScrollProps<T, CursorType> {
-  fetchData: (cursor?: CursorType) => Promise<{
-    content: T[];
-    nextCursor?: CursorType;
-    hasNext: boolean;
-  }>;
+  fetchData: (cursor?: CursorType) => Promise<FetchDataResult<T, CursorType>>;
   initialCursor?: CursorType;
   filterDuplicateItems?: (existingItems: T[], newItems: T[]) => T[];
 }
 
-export function useInfiniteScroll<T, CursorType>({
+export function useInfiniteScroll<T, CursorType = string | number>({
   fetchData,
   initialCursor,
   filterDuplicateItems = (existing, newItems) => newItems,
@@ -26,9 +29,14 @@ export function useInfiniteScroll<T, CursorType>({
 
     setIsLoading(true);
     try {
-      const { content, nextCursor, hasNext } = await fetchData(cursor);
+      const result = await fetchData(cursor);
+      const { content, hasNext } = result;
+
+      const newCursor =
+        result.nextCursor !== undefined ? result.nextCursor : result.cursor;
+
       setItems((prev) => [...prev, ...filterDuplicateItems(prev, content)]);
-      setCursor(nextCursor);
+      setCursor(newCursor);
       setHasMore(hasNext);
     } catch (error) {
       console.error('Failed to load more items:', error);
@@ -39,7 +47,6 @@ export function useInfiniteScroll<T, CursorType>({
 
   useEffect(() => {
     loadMoreItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

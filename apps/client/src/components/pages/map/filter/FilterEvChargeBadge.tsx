@@ -4,7 +4,7 @@ import { cn } from '@repo/ui/lib/utils';
 import { ZapIcon } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export function EvChargeButton() {
+export function FilterEvChargeBadge() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -20,7 +20,7 @@ export function EvChargeButton() {
     <button
       onClick={toggleEv}
       className={cn(
-        'rounded-full px-2 shadow-md flex items-center gap-1',
+        'rounded-full px-2 shadow-md flex items-center gap-1 h-8',
         currentEv
           ? 'bg-primary text-white fill-white'
           : 'bg-gray-light-1 text-gray-2'

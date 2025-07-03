@@ -58,7 +58,7 @@ export default function InfoWithThumbnail({
           </div>
           <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
-            {averageRating} ({totalReviews})
+            {averageRating.toFixed(1)} ({totalReviews})
           </Rating>
           <div className="flex items-center gap-4 text-sm">
             <IconWithText Icon={MapPin}>{distance}m</IconWithText>

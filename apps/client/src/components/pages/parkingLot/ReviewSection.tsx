@@ -3,22 +3,31 @@ import ReviewItem from './ReviewItem';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
+import { getReviewsData } from '@/actions/review/review-service';
 
-export default function ReviewSection({
+export default async function ReviewSection({
   parkingLotUuid,
+  totalReviews,
 }: {
   parkingLotUuid: string;
+  totalReviews: number;
 }) {
+  const res = await getReviewsData({ size: 3, parkingLotUuid });
+  if (!res.success) return;
+
+  const reviewsPreviewData = res.data.content;
+
   return (
     <PaddedSection className="bg-white py-7" id="reviews">
       <h2 className="text-lg font-semibold">
-        방문자 리뷰 <span className="text-gray-3 text-base">349</span>
+        방문자 리뷰{' '}
+        <span className="text-gray-3 text-base">{totalReviews}</span>
       </h2>
       <section className="py-2">
-        {Array.from({ length: 3 }).map((_, index) => (
+        {reviewsPreviewData.map((review, index) => (
           <div key={index}>
-            <ReviewItem />
-            {index !== 2 && <hr className="my-2" />}
+            <ReviewItem review={review} />
+            {index !== reviewsPreviewData.length - 1 && <hr className="my-2" />}
           </div>
         ))}
         <Link

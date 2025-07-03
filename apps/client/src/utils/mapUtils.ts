@@ -108,9 +108,7 @@ export function parseInitMapParams(
     lat: latValid ? lat : undefined,
     lng: lngValid ? lng : undefined,
     ev: searchParams.get('ev') === 'true',
-    entry: searchParams.get('entry')
-      ? new Date(searchParams.get('entry')!)
-      : null,
-    exit: searchParams.get('exit') ? new Date(searchParams.get('exit')!) : null,
+    entry: searchParams.get('entry') || '',
+    exit: searchParams.get('exit') || '',
   };
 }

@@ -1,5 +1,5 @@
 import { statusBadgeMap } from '@/data/initialDatas';
-import { ReservationItemDataType } from '@/types/reservationDataTypes';
+import { ReservationListItemDataType } from '@/types/reservationDataTypes';
 import { formatDate } from '@/utils/datetimeUtils';
 import { CommonBadge } from '@repo/ui/components/common/CommonLayouts';
 import { Car, ChevronRight } from 'lucide-react';
@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function MyReservationItem({
   data,
 }: {
-  data: ReservationItemDataType;
+  data: ReservationListItemDataType;
 }) {
   const badge = statusBadgeMap[data.status];
   return (

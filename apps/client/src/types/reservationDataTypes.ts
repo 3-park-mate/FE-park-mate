@@ -1,3 +1,5 @@
+import { ParkingSpotTypeWithEV } from './parkingDataTypes';
+
 export type ReservationStatus =
   | 'WAITING'
   | 'CONFIRMED'
@@ -24,8 +26,19 @@ export interface ReservationItemDataType {
   paymentType: PaymentType;
 }
 
+export interface ReservationListItemDataType {
+  reservationCode: string;
+  parkingSpotName: string;
+  parkingLotUuid: string;
+  parkingLotName: string;
+  vehicleNumber: string;
+  entryTime: string;
+  exitTime: string;
+  status: ReservationStatus;
+}
+
 export interface ReservationListResponse {
-  content: ReservationItemDataType[];
+  content: ReservationListItemDataType[];
   hasNext: boolean;
   nextCursor: number;
 }
@@ -33,4 +46,16 @@ export interface ReservationListResponse {
 export interface ReservationCancelDataType {
   reservationCode: string;
   cancelReason: string;
+}
+
+export interface CreateReservationRequestType {
+  parkingLotUuid: string;
+  parkingSpotType: ParkingSpotTypeWithEV;
+  entryTime: string;
+  exitTime: string;
+  carNumber: string;
+}
+
+export interface CreateReservationResponseType {
+  reservationCode: string;
 }

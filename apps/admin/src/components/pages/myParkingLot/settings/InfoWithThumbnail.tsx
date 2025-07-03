@@ -17,7 +17,7 @@ export default function InfoWithThumbnail({
   capacity: number;
   address: string;
 }) {
-  const isOperating = true;
+  // const isOperating = true;
   return (
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
@@ -43,7 +43,7 @@ export default function InfoWithThumbnail({
           </div> */}
           <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
-            {averageRating} ({totalReviews})
+            {averageRating.toFixed(1)} ({totalReviews})
           </Rating>
           <div className="flex flex-col gap-1 text-sm">
             <IconWithText Icon={MapPin}>{address}</IconWithText>

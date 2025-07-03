@@ -76,7 +76,7 @@ export default function ParkingLotListModal({
             ))
           ) : (
             <p className="text-center mt-15">
-              현재 위치에 등록된 주차장이 존재하지 않습니다.
+              예약 가능한 주차장이 존재하지 않습니다.
             </p>
           )}
         </ul>
