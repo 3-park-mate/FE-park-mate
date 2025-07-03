@@ -26,9 +26,11 @@ export default function ConfirmReservationSheet({
   onOpenChange: (value: boolean) => void;
   onSubmit: () => void;
 }) {
-  const { register, watch } = useFormContext<CreateReservationRequestType>();
+  const { register, watch, getValues } =
+    useFormContext<CreateReservationRequestType>();
   const endRef = useRef<HTMLDivElement | null>(null);
-  const schedule = watch('schedule');
+  const entryTime = watch('entryTime');
+  const exitTime = watch('exitTime');
   const parkingSpotType = watch('parkingSpotType');
 
   useEffect(() => {
@@ -40,12 +42,7 @@ export default function ConfirmReservationSheet({
     }
   }, [open]);
 
-  if (
-    !open ||
-    !schedule?.entryDateTime ||
-    !schedule?.exitDateTime ||
-    !parkingSpotType
-  ) {
+  if (!open || !entryTime || !exitTime || !parkingSpotType) {
     return null;
   }
 
@@ -62,9 +59,8 @@ export default function ConfirmReservationSheet({
         />
         <section className="overflow-y-scroll scrollbar-hide">
           <ReservationSummaryCard
-            schedule={schedule}
+            reservationInfo={getValues()}
             parkingLotData={parkingLotData}
-            parkingSpotType={parkingSpotType}
           />
           {/* 드롭다운으로 변경 + 내 차량 조회 연결 */}
           <div className="my-8 space-y-3">

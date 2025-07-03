@@ -1,4 +1,3 @@
-import { ScheduleType } from './initialDataTypes';
 import { ParkingSpotTypeWithEV } from './parkingDataTypes';
 
 export type ReservationStatus =
@@ -52,6 +51,11 @@ export interface ReservationCancelDataType {
 export interface CreateReservationRequestType {
   parkingLotUuid: string;
   parkingSpotType: ParkingSpotTypeWithEV;
-  schedule: ScheduleType;
+  entryTime: string;
+  exitTime: string;
   carNumber: string;
+}
+
+export interface CreateReservationResponseType {
+  reservationCode: string;
 }

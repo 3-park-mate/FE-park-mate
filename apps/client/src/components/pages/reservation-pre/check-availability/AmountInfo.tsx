@@ -20,7 +20,7 @@ export default function AmountInfo({
       )}
       <p className="font-semibold">
         3,000원
-        <span className="ml-1 text-gray-2 text-sm">/30분</span>
+        <span className="ml-1 text-gray-2 text-sm">/ 30분</span>
       </p>
     </div>
   );

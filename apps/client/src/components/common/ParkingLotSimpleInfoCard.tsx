@@ -21,9 +21,7 @@ export default function ParkingLotSimpleInfoCard({
       <div className={cn('flex items-center gap-5', className)}>
         {imageAlign === 'left' && (
           <Image
-            src={
-              parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
-            }
+            src={parkingLotData.thumbnailUrl || `/img/no-image.png`}
             alt={parkingLotData.name}
             width={90}
             height={90}
@@ -50,9 +48,7 @@ export default function ParkingLotSimpleInfoCard({
         </div>
         {imageAlign === 'right' && (
           <Image
-            src={
-              parkingLotData.thumbnailUrl || 'https://dummyimage.com/100x100'
-            }
+            src={parkingLotData.thumbnailUrl || `/img/no-image.png`}
             alt={parkingLotData.name}
             width={90}
             height={90}

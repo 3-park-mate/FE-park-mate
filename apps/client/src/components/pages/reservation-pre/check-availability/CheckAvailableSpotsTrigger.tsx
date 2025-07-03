@@ -4,10 +4,10 @@ import { SheetTrigger } from '@repo/ui/components/base/sheet';
 import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
 import { useState } from 'react';
-import { AvailableSpotsResponseType } from './CheckAvailableSpotsContent';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
 import { toLocalISOString } from '@/utils/datetimeUtils';
 import { ScheduleType } from '@/types/initialDataTypes';
+import { AvailableSpotsResponseType } from '@/types/parkingDataTypes';
 
 export default function CheckAvailableSpotsTrigger({
   parkingLotUuid,

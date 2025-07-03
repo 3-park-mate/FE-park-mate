@@ -3,6 +3,8 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { api } from '@/hooks/serverFetch';
 import {
+  CreateReservationRequestType,
+  CreateReservationResponseType,
   ReservationCancelDataType,
   ReservationItemDataType,
   ReservationListResponse,
@@ -126,6 +128,48 @@ export async function cancelReservationAction({
     return {
       success: true,
       data: res.message,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function reserviationPreCreate(
+  reservationData: CreateReservationRequestType
+): Promise<ApiResponse<CreateReservationResponseType>> {
+  const payload: Partial<CreateReservationRequestType> = {
+    ...reservationData,
+  };
+  console.log(payload);
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.post<
+      CommonResponseType<CreateReservationResponseType>
+    >(API_PREFIX, '/pre', payload, {
+      headers: {
+        'X-User-UUID': uuid,
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+    console.log(res);
+    if (res.code !== 200) {
+      return {
+        success: false,
+        message: res.message,
+      };
+    }
+    return {
+      success: true,
+      data: res.data,
     };
   } catch (error) {
     return {

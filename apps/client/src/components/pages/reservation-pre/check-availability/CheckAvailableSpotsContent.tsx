@@ -19,8 +19,8 @@ import {
 import { cn } from '@repo/ui/lib/utils';
 import AmountInfo from './AmountInfo';
 import { useFormContext } from 'react-hook-form';
-import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { formatDate } from '@/utils/datetimeUtils';
+import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 
 export default function CheckAvailableSpotsContent({
   availableSpots,
@@ -31,8 +31,9 @@ export default function CheckAvailableSpotsContent({
 }) {
   const { watch, setValue } = useFormContext<CreateReservationRequestType>();
   const selectedType = watch('parkingSpotType');
-  const schedule = watch('schedule');
-  if (!schedule?.entryDateTime || !schedule?.exitDateTime) {
+  const entryTime = watch('entryTime');
+  const exitTime = watch('exitTime');
+  if (!entryTime || !exitTime) {
     return null;
   }
 
@@ -50,8 +51,7 @@ export default function CheckAvailableSpotsContent({
     >
       <SheetTitle className="mt-10 text-xl">잔여 주차면 수</SheetTitle>
       <p className="text-md ">
-        {formatDate(schedule.entryDateTime.toString())} -{' '}
-        {formatDate(schedule.exitDateTime.toString())}
+        {formatDate(entryTime.toString())} - {formatDate(exitTime.toString())}
       </p>
 
       <RadioGroup
@@ -97,6 +97,7 @@ export default function CheckAvailableSpotsContent({
       <ButtonWrapper className="flex justify-between items-center border-t-1 pt-4">
         <AmountInfo type="total" />
         <Button
+          type="button"
           onClick={onClickReserve}
           className={cn(
             'px-10 h-12 text-lg',
