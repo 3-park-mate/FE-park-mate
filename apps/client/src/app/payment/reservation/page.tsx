@@ -1,5 +1,5 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import CarInfoSection from '@/components/pages/payment/CarInfoSection';
+import CarSelectionSection from '@/components/pages/payment/CarSelectionSection';
 import ReservationOrderInfo from '@/components/pages/payment/ReservationOrderInfo';
 import OrderSummarySection from '@/components/pages/payment/OrderSummarySection';
 import PaymentButton from '@/components/pages/payment/PaymentButton';
@@ -45,7 +45,7 @@ export default async function page({
           exitTime={reservationData.exitTime}
           amount={30000}
         />
-        <CarInfoSection vehicleNumber={reservationData.vehicleNumber} />
+        <CarSelectionSection vehicleNumber={reservationData.vehicleNumber} />
         <PaymentMethodSection />
         <OrderSummarySection />
         <PaymentButton />

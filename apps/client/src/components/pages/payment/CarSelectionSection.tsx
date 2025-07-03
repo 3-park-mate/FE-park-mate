@@ -1,7 +1,7 @@
 import { PaddedSectionWithTitle } from '@repo/ui/components/common/CommonLayouts';
 import MyCarItem from '../myPage/myCar/MyCarItem';
 
-export default function CarInfoSection({
+export default function CarSelectionSection({
   vehicleNumber,
 }: {
   vehicleNumber: string;
