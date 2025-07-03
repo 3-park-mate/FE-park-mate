@@ -1,9 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import HeadingWithSubtext from '../../common/HeadingWithSubtext';
-import RatingOverview from './RatingOverview';
-import Image from 'next/image';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';

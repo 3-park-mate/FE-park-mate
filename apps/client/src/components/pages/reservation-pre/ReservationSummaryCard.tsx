@@ -8,12 +8,10 @@ import ParkingLotSimpleInfoCard from '@/components/common/ParkingLotSimpleInfoCa
 import InfoRow from '@/components/common/InfoRow';
 
 export default function ReservationSummaryCard({
-  schedule,
-  parkingSpotType,
+  reservationInfo,
   parkingLotData,
 }: {
-  schedule: CreateReservationRequestType['schedule'];
-  parkingSpotType: CreateReservationRequestType['parkingSpotType'];
+  reservationInfo: CreateReservationRequestType;
   parkingLotData: ParkingLotResponseDataType;
 }) {
   return (
@@ -30,21 +28,22 @@ export default function ReservationSummaryCard({
           <InfoRow
             label="입차"
             value={
-              `${formatDateParts(schedule.entryDateTime!.toString()).date} ` +
-              `${formatDateParts(schedule.entryDateTime!.toString()).time}`
+              `${formatDateParts(reservationInfo.entryTime!.toString()).date} ` +
+              `${formatDateParts(reservationInfo.entryTime!.toString()).time}`
             }
           />
           <InfoRow
             label="출차"
             value={
-              `${formatDateParts(schedule.exitDateTime!.toString()).date} ` +
-              `${formatDateParts(schedule.exitDateTime!.toString()).time}`
+              `${formatDateParts(reservationInfo.exitTime!.toString()).date} ` +
+              `${formatDateParts(reservationInfo.exitTime!.toString()).time}`
             }
           />
           <InfoRow
             label="타입"
             value={
-              ParkingSpotLabelMap[parkingSpotType!]?.label ?? parkingSpotType
+              ParkingSpotLabelMap[reservationInfo.parkingSpotType!]?.label ??
+              reservationInfo.parkingSpotType
             }
           />
         </div>

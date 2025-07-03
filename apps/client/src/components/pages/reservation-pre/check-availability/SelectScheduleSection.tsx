@@ -13,6 +13,7 @@ import { Button } from '@repo/ui/components/base/button';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { cn } from '@repo/ui/lib/utils';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
+import { toLocalISOString } from '@/utils/datetimeUtils';
 
 export default function SelectScheduleSection({
   parkingLotUuid,
@@ -58,7 +59,10 @@ export default function SelectScheduleSection({
   }, [parkingLotUuid, currentMonth]);
 
   useEffect(() => {
-    setValue('schedule', selectedSchedule);
+    if (selectedSchedule.entryDateTime && selectedSchedule.exitDateTime) {
+      setValue('entryTime', toLocalISOString(selectedSchedule.entryDateTime));
+      setValue('exitTime', toLocalISOString(selectedSchedule.exitDateTime));
+    }
   }, [selectedSchedule, setValue]);
 
   useEffect(() => {
@@ -76,7 +80,7 @@ export default function SelectScheduleSection({
       <HeadingWithDesc
         heading="일정 선택"
         subHeading="입출차 시간을 선택하고 타입별 잔여 수를 확인하세요."
-        className="pt-3"
+        className="pt-10"
       />
       <p className="text-xs text-right px-3 cursor-pointer" onClick={reset}>
         초기화
@@ -98,9 +102,10 @@ export default function SelectScheduleSection({
       <ButtonWrapper className="flex items-center justify-between border-t-1 pt-4 bg-white">
         <AmountInfo />
         <Button
+          type="button"
           onClick={onClickReserve}
           className={cn('h-12 text-md')}
-          disabled={!!errors.schedule}
+          disabled={!!errors.exitTime}
         >
           예약 가능 주차면 확인
         </Button>

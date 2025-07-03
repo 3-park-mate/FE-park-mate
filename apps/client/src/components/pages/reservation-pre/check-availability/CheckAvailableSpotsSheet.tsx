@@ -2,14 +2,12 @@
 
 import { Sheet } from '@repo/ui/components/base/sheet';
 import { useEffect, useState } from 'react';
-import CheckAvailableSpotsContent, {
-  AvailableSpotsResponseType,
-} from './CheckAvailableSpotsContent';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { useFormContext } from 'react-hook-form';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
-import { toLocalISOString } from '@/utils/datetimeUtils';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import CheckAvailableSpotsContent from './CheckAvailableSpotsContent';
+import { AvailableSpotsResponseType } from '@/types/parkingDataTypes';
 
 export default function CheckAvailableSpotsSheet({
   open,
@@ -23,22 +21,18 @@ export default function CheckAvailableSpotsSheet({
   onOpenConfirm: () => void;
 }) {
   const { watch } = useFormContext<CreateReservationRequestType>();
-  const schedule = watch('schedule');
+  const entryTime = watch('entryTime');
+  const exitTime = watch('exitTime');
 
   const [availableSpots, setAvailableSpots] =
     useState<AvailableSpotsResponseType | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchAvailableSpots = async () => {
-    if (schedule.entryDateTime === null || schedule.exitDateTime === null)
-      return;
+    if (entryTime === null || exitTime === null) return;
     setLoading(true);
     try {
-      const res = await getAvailableSpots(
-        parkingLotUuid,
-        toLocalISOString(schedule.entryDateTime),
-        toLocalISOString(schedule.exitDateTime)
-      );
+      const res = await getAvailableSpots(parkingLotUuid, entryTime, exitTime);
 
       setAvailableSpots(res.success ? res.data : {});
     } catch (err) {
