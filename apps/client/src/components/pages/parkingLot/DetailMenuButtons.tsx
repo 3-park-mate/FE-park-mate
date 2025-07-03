@@ -38,7 +38,7 @@ export default function DetailMenuButtons({
     try {
       const res = await AddFavoriteAction(parkingLotUuid);
       if (res.success) {
-        handleAlert('즐겨찾기 추가 성공');
+        handleAlert(res.data);
       } else {
         handleAlert(res.message);
       }

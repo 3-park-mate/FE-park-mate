@@ -1,10 +1,10 @@
 'use client';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import UsingInfoItem from './parkingInfo/UsingInfoItem';
-import { ReservationItemDataType } from '@/types/reservationDataTypes';
 import { getReservationsData } from '@/actions/reservation/reservation-service';
 import { PAGE_SIZE } from '@/constants/constants';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { ReservationListItemDataType } from '@/types/reservationDataTypes';
 
 export default function UsingStatusSection() {
   const {
@@ -12,7 +12,7 @@ export default function UsingStatusSection() {
     isLoading,
     hasMore,
     loaderRef,
-  } = useInfiniteScroll<ReservationItemDataType, number>({
+  } = useInfiniteScroll<ReservationListItemDataType, number>({
     fetchData: async (cursor) => {
       const res = await getReservationsData({
         size: PAGE_SIZE,

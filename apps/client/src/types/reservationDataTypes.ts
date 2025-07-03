@@ -27,8 +27,19 @@ export interface ReservationItemDataType {
   paymentType: PaymentType;
 }
 
+export interface ReservationListItemDataType {
+  reservationCode: string;
+  parkingSpotName: string;
+  parkingLotUuid: string;
+  parkingLotName: string;
+  vehicleNumber: string;
+  entryTime: string;
+  exitTime: string;
+  status: ReservationStatus;
+}
+
 export interface ReservationListResponse {
-  content: ReservationItemDataType[];
+  content: ReservationListItemDataType[];
   hasNext: boolean;
   nextCursor: number;
 }

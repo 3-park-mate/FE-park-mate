@@ -163,6 +163,16 @@ export interface ParkingLotOptionDataType {
   label: string;
 }
 
+
+export interface ParkingLotSimpleDataType {
+  parkingLotUuid: string;
+  thumbnailUrl: string;
+  name: string;
+  address: string;
+  rating: number;
+}
+
 export type AvailableSpotsResponseType = Partial<
   Record<ParkingSpotTypeWithEV, number>
 >;
+
