@@ -1,5 +1,6 @@
+'use client';
 import Image from 'next/image';
-import { Car, MapPin } from 'lucide-react';
+import { Car } from 'lucide-react';
 import {
   CommonPriceBadge,
   IconWithText,
@@ -7,24 +8,25 @@ import {
 } from '@repo/ui/components/common/CommonLayouts';
 import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
 import { ParkingLotType } from '@/types/parkingDataTypes';
+import DistanceLabel from './DistanceLabel';
 
 export default function InfoWithThumbnail({
+  parkingLotUuid,
   thumbImageUrl,
   baseFee,
   name,
   averageRating,
   totalReviews,
-  distance,
   capacity,
   parkingLotType,
   baseIntervalMinutes,
 }: {
+  parkingLotUuid: string;
   thumbImageUrl?: string;
   baseFee?: number;
   name: string;
   averageRating: number;
   totalReviews: number;
-  distance: number;
   capacity: number;
   parkingLotType: ParkingLotType;
   baseIntervalMinutes?: number;
@@ -63,7 +65,7 @@ export default function InfoWithThumbnail({
             {averageRating.toFixed(1)} ({totalReviews})
           </Rating>
           <div className="flex items-center gap-4 text-sm">
-            <IconWithText Icon={MapPin}>{distance}m</IconWithText>
+            <DistanceLabel parkingLotUuid={parkingLotUuid} />
             <IconWithText Icon={Car}>{capacity}면</IconWithText>
           </div>
         </div>

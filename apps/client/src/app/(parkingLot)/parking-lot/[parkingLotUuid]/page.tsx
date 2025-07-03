@@ -51,12 +51,12 @@ export default async function page({
       <PageHeader title={parkingLotData.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
         <InfoWithThumbnail
+          parkingLotUuid={parkingLotUuid}
           thumbImageUrl={parkingLotData.thumbnailUrl}
           baseFee={operationData?.baseFee}
           name={parkingLotData.name}
           averageRating={reviewSummaryData.averageRating}
           totalReviews={reviewSummaryData.totalReviews}
-          distance={100}
           capacity={parkingLotData.capacity}
           parkingLotType={parkingLotData.parkingLotType}
           baseIntervalMinutes={operationData?.baseIntervalMinutes}

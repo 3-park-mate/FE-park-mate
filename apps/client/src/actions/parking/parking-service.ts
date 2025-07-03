@@ -206,3 +206,39 @@ export async function getParkingLotOptions(): Promise<
     redirect('/error');
   }
 }
+
+export async function getParkingLotDistance({
+  parkingLotUuid,
+  latitude,
+  longitude,
+}: {
+  parkingLotUuid: string;
+  latitude: number;
+  longitude: number;
+}): Promise<ApiResponse<{ distance: number }>> {
+  const query: Record<string, string> = {
+    latitude: latitude.toString(),
+    longitude: longitude.toString(),
+  };
+  try {
+    const res = await api.get<CommonResponseType<{ distance: number }>>(
+      READ_API_PREFIX,
+      `/${parkingLotUuid}/distance`,
+      query,
+      {
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}

@@ -32,7 +32,7 @@ export default function MapLinkButton({
         />
         <MarkerIcon
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          !w-6 !h-6 z-10"
+          !w-6 !h-6 z-5"
         />
       </div>
       <div className="min-w-0 flex-1">

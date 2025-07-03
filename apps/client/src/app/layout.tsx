@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth';
 import { options } from './api/auth/[...nextauth]/options';
 import { FcmInitializer } from '@/components/common/FcmInitializer';
 import { Toaster } from '@repo/ui/components/base/sonner';
+import { LocationInitializer } from '@/components/common/LocationInitializer';
 
 export const metadata: Metadata = {
   title: {
@@ -31,6 +32,7 @@ export default async function RootLayout({
           <GlobalContainerView>
             {children}
             {isAuth && <FcmInitializer />}
+            <LocationInitializer />
             <Toaster position="top-center" richColors />
           </GlobalContainerView>
         </AuthContextProvider>
