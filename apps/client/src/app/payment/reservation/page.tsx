@@ -1,5 +1,5 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import CarSelectionSection from '@/components/pages/payment/CarSelectionSection';
+import CarInfoSection from '@/components/pages/payment/CarInfoSection';
 import ReservationOrderInfo from '@/components/pages/payment/ReservationOrderInfo';
 import OrderSummarySection from '@/components/pages/payment/OrderSummarySection';
 import PaymentButton from '@/components/pages/payment/PaymentButton';
@@ -7,6 +7,7 @@ import PaymentMethodSection from '@/components/pages/payment/PaymentMethodSectio
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
 import { notFound } from 'next/navigation';
 import { getParkingLotOverviewById } from '@/actions/parking/parking-service';
+import { getUserPointData } from '@/actions/user/user-service';
 
 export default async function page({
   searchParams,
@@ -30,9 +31,14 @@ export default async function page({
   const overviewRes = await getParkingLotOverviewById(
     reservationData.parkingLotUuid
   );
-  if (!overviewRes.success || res.data === null) notFound();
+  if (!overviewRes.success || overviewRes.data === null) notFound();
 
   const overviewData = overviewRes.data;
+
+  const userPointRes = await getUserPointData();
+  if (!userPointRes.success || userPointRes.data === null) notFound();
+
+  const userPointData = userPointRes.data;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -44,9 +50,10 @@ export default async function page({
           entryTime={reservationData.entryTime}
           exitTime={reservationData.exitTime}
           amount={30000}
+          thumbnailUrl={overviewData.thumbnailUrl}
         />
-        <CarSelectionSection vehicleNumber={reservationData.vehicleNumber} />
-        <PaymentMethodSection />
+        <CarInfoSection vehicleNumber={reservationData.vehicleNumber} />
+        <PaymentMethodSection userPoint={userPointData.point} />
         <OrderSummarySection />
         <PaymentButton />
       </main>

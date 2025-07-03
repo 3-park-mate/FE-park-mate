@@ -5,7 +5,11 @@ import {
 } from '@repo/ui/components/base/radio-group';
 import { Button } from '@repo/ui/components/base/button';
 
-export default function PaymentMethodSection() {
+export default function PaymentMethodSection({
+  userPoint,
+}: {
+  userPoint: number;
+}) {
   return (
     <PaddedSectionWithTitle title="결제수단">
       <RadioGroup defaultValue="point">
@@ -17,7 +21,9 @@ export default function PaymentMethodSection() {
         <div className="ms-6.5 flex justify-between items-center bg-white px-5 py-3 rounded-lg border border-primary shadow-sm">
           <div>
             <p className="text-gray-3 text-sm">보유 포인트</p>
-            <h2 className="text-xl font-semibold">1,000원</h2>
+            <h2 className="text-xl font-semibold">
+              {userPoint.toLocaleString()}원
+            </h2>
           </div>
           <Button>충전</Button>
         </div>
