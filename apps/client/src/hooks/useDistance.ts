@@ -1,18 +1,10 @@
-'use client';
-
-import { getParkingLotDistance } from '@/actions/parking/parking-service';
 import { useFetchData } from '@/hooks/useFetchData';
 import { useLocationStore } from '@/store/useLocationStore';
-import { IconWithText } from '@repo/ui/components/common/CommonLayouts';
-import { MapPin } from 'lucide-react';
 import { useCallback } from 'react';
 import { ApiResponse } from '@/types/responseDataTypes';
+import { getParkingLotDistance } from '@/actions/parking/parking-service';
 
-export default function DistanceLabel({
-  parkingLotUuid,
-}: {
-  parkingLotUuid: string;
-}) {
+export function useDistance(parkingLotUuid: string): number | null {
   const { latitude, longitude } = useLocationStore();
 
   const fetcher = useCallback((): Promise<
@@ -30,7 +22,5 @@ export default function DistanceLabel({
 
   const { data } = useFetchData<{ distance: number }>(fetcher);
 
-  if (data?.distance == null) return null;
-
-  return <IconWithText Icon={MapPin}>{data.distance}m</IconWithText>;
+  return data?.distance ?? null;
 }

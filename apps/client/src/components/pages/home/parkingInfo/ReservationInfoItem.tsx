@@ -7,6 +7,7 @@ import { Button, buttonVariants } from '@repo/ui/components/base/button';
 import { ReservationInfoItemDataType } from '@/types/reservationType';
 import Link from 'next/link';
 import ParkingQRModal from './qrModal/ParkingQRModal';
+import { useDistance } from '@/hooks/useDistance';
 
 export default function ReservationInfoItem({
   parkingLotUuid,
@@ -18,6 +19,7 @@ export default function ReservationInfoItem({
 }: ReservationInfoItemDataType) {
   const [isOpen, setIsOpen] = useState(false);
   const [isQRModalOpen, setQRModalOpen] = useState(false);
+  const distance = useDistance(parkingLotUuid);
 
   return (
     <>
@@ -35,7 +37,7 @@ export default function ReservationInfoItem({
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}
-        parkingLotDistance={100}
+        parkingLotDistance={distance ?? undefined}
         onQRClick={() => setQRModalOpen(true)}
       />
       <div>

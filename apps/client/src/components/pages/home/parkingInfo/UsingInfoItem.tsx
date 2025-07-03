@@ -5,11 +5,11 @@ import ParkingTime from './ParkingTime';
 import ParkingProgress from './ParkingProgress';
 import InfoToggleButton from './InfoToggleButton';
 import ParkingQRModal from './qrModal/ParkingQRModal';
+import { useDistance } from '@/hooks/useDistance';
 
 export default function UsingInfoItem({
   parkingLotUuid,
   parkingLotName,
-  parkingLotDistance,
   parkingSpotName,
   vehicleNumber,
   entryTime,
@@ -17,7 +17,6 @@ export default function UsingInfoItem({
 }: {
   parkingLotUuid: string;
   parkingLotName: string;
-  parkingLotDistance: number;
   parkingSpotName: string;
   vehicleNumber: string;
   entryTime: string;
@@ -25,6 +24,7 @@ export default function UsingInfoItem({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isQRModalOpen, setQRModalOpen] = useState(false);
+  const distance = useDistance(parkingLotUuid);
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function UsingInfoItem({
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}
-        parkingLotDistance={parkingLotDistance}
+        parkingLotDistance={distance ?? undefined}
         onQRClick={() => setQRModalOpen(true)}
       />
       <div>

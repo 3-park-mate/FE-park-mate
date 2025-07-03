@@ -45,7 +45,6 @@ export default function UsingStatusSection() {
           key={item.reservationCode}
           parkingLotUuid={item.parkingLotUuid}
           parkingLotName={item.parkingLotName}
-          parkingLotDistance={100}
           parkingSpotName={item.parkingSpotName}
           vehicleNumber={item.vehicleNumber}
           entryTime={item.entryTime}
