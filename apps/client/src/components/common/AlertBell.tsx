@@ -1,21 +1,47 @@
+// components/AlertBell.tsx
 'use client';
-import { getUnreadNotificationCount } from '@/actions/notification/notification-service';
 import { useCustomSession } from '@/context/SessionContext';
-import { useFetchData } from '@/hooks/useFetchData';
 import { cn } from '@repo/ui/lib/utils';
 import { BellIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useNotificationStore } from '@/store/useNotificationStore';
+import {
+  initializeFcmClient,
+  requestNotificationPermissionAndGetToken,
+} from '@/lib/fcmClient';
 
 export default function AlertBell({ className }: { className?: string }) {
   const isSession = useCustomSession();
+  const { unreadCount, fetchUnreadCount } = useNotificationStore(); // onNotificationReceived는 initializeFcmClient에서 직접 호출
+
+  useEffect(() => {
+    if (isSession) {
+      initializeFcmClient();
+      requestNotificationPermissionAndGetToken();
+      fetchUnreadCount();
+
+      if ('serviceWorker' in navigator) {
+        const messageListener = (event: MessageEvent) => {
+          if (event.data && event.data.type === 'notification-received') {
+            fetchUnreadCount();
+          }
+        };
+        navigator.serviceWorker.addEventListener('message', messageListener);
+
+        return () => {
+          navigator.serviceWorker.removeEventListener(
+            'message',
+            messageListener
+          );
+        };
+      }
+    }
+  }, [isSession, fetchUnreadCount]);
+
   if (!isSession) {
     return null;
   }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data: unreadCount = 0 } = useFetchData<number>(
-    getUnreadNotificationCount
-  );
 
   const count = Number(unreadCount);
 

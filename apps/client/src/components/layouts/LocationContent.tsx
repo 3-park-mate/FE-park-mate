@@ -1,12 +1,11 @@
 'use client';
-
-import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { coordtoAddressUtil } from '@/utils/mapUtils';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { cn } from '@repo/ui/lib/utils';
 import { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import LocationPermissionModal from '../common/LocationPermissionModal';
+import { useLocationStore } from '@/store/useLocationStore';
 
 export default function LocationContent({ className }: { className?: string }) {
   const [loading] = useKakaoLoader({
@@ -16,23 +15,24 @@ export default function LocationContent({ className }: { className?: string }) {
 
   const [location, setLocation] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const { latitude, longitude } = useLocationStore();
 
   useEffect(() => {
     const setCurrentLocation = async () => {
-      try {
-        const { lat, lng } = await getCurrentCoordsUtil();
-        const address = await coordtoAddressUtil({
-          lat: lat,
-          lng: lng,
-        });
-        setLocation(address || '');
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
+      if (latitude != null && longitude != null) {
+        try {
+          const address = await coordtoAddressUtil({
+            lat: latitude,
+            lng: longitude,
+          });
+          setLocation(address || '');
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
-
     if (!loading) {
       setCurrentLocation();
     }

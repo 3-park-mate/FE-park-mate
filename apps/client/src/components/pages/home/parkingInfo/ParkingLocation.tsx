@@ -16,7 +16,8 @@ export default function ParkingLocation({
       <div>
         <ParkingSpotDetail
           name={parkingLotName}
-          locations={`${parkingLotDistance}m · ${parkingSpotName}`}
+          parkingLotDistance={parkingLotDistance}
+          parkingSpotName={parkingSpotName}
         />
         <p className="flex items-center gap-1 text-gray-3 text-13px">
           <Car fill="currentColor" className="text-gray-light-2" size={18} />

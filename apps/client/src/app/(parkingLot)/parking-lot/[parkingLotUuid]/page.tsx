@@ -3,10 +3,6 @@ import InfoWithThumbnail from '@/components/pages/parkingLot/InfoWithThumbnail';
 import DetailMenuButtons from '@/components/pages/parkingLot/DetailMenuButtons';
 import ParkingDetailContent from '@/components/pages/parkingLot/ParkingDetailContent';
 import {
-  parkingOperationDummy,
-  reviewSummaryDummy,
-} from '@/data/parkingDummyDatas';
-import {
   getDailyOperationById,
   getParkingLotById,
 } from '@/actions/parking/parking-service';
@@ -55,24 +51,23 @@ export default async function page({
       <PageHeader title={parkingLotData.name} isShadow={false} />
       <main className="pb-32 bg-inner-background-gray">
         <InfoWithThumbnail
+          parkingLotUuid={parkingLotUuid}
           thumbImageUrl={parkingLotData.thumbnailUrl}
-          baseFee={operationData.baseFee}
+          baseFee={operationData?.baseFee}
           name={parkingLotData.name}
           averageRating={reviewSummaryData.averageRating}
           totalReviews={reviewSummaryData.totalReviews}
-          distance={100}
           capacity={parkingLotData.capacity}
           parkingLotType={parkingLotData.parkingLotType}
-          baseIntervalMinutes={operationData.baseIntervalMinutes}
+          baseIntervalMinutes={operationData?.baseIntervalMinutes}
         />
         <DetailMenuButtons
           hostUuid={parkingLotData.hostUuid}
           parkingLotUuid={parkingLotUuid}
-          isActive={parkingOperationDummy.isActive}
           like={parkingLotData.likeCount}
           dislike={parkingLotData.dislikeCount}
-          baseFee={operationData.baseFee}
-          baseIntervalMinutes={operationData.baseIntervalMinutes}
+          baseFee={operationData?.baseFee}
+          baseIntervalMinutes={operationData?.baseIntervalMinutes}
         />
         <ParkingDetailTabBar />
         <ParkingDetailContent

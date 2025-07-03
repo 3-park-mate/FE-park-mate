@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import { Car, MapPin } from 'lucide-react';
 import {
@@ -7,28 +8,30 @@ import {
 } from '@repo/ui/components/common/CommonLayouts';
 import BadgeCheckIcon from '@repo/ui/components/icon/BadgeCheckIcon';
 import { ParkingLotType } from '@/types/parkingDataTypes';
+import { useDistance } from '@/hooks/useDistance';
 
 export default function InfoWithThumbnail({
+  parkingLotUuid,
   thumbImageUrl,
   baseFee,
   name,
   averageRating,
   totalReviews,
-  distance,
   capacity,
   parkingLotType,
   baseIntervalMinutes,
 }: {
+  parkingLotUuid: string;
   thumbImageUrl?: string;
-  baseFee: number;
+  baseFee?: number;
   name: string;
   averageRating: number;
   totalReviews: number;
-  distance: number;
   capacity: number;
   parkingLotType: ParkingLotType;
-  baseIntervalMinutes: number;
+  baseIntervalMinutes?: number;
 }) {
+  const distance = useDistance(parkingLotUuid);
   return (
     <section className="relative">
       <div className="aspect-[155/102] flex items-center justify-center relative">
@@ -49,19 +52,21 @@ export default function InfoWithThumbnail({
                 <BadgeCheckIcon size={14} />
               </div>
             )}
-            <CommonPriceBadge
-              className="text-black"
-              IntervalMinutes={baseIntervalMinutes}
-            >
-              {baseFee.toLocaleString()}원
-            </CommonPriceBadge>
+            {baseFee && baseIntervalMinutes && (
+              <CommonPriceBadge
+                className="text-black"
+                IntervalMinutes={baseIntervalMinutes}
+              >
+                {baseFee.toLocaleString()}원
+              </CommonPriceBadge>
+            )}
           </div>
           <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">
             {averageRating.toFixed(1)} ({totalReviews})
           </Rating>
           <div className="flex items-center gap-4 text-sm">
-            <IconWithText Icon={MapPin}>{distance}m</IconWithText>
+            {distance && <IconWithText Icon={MapPin}>{distance}m</IconWithText>}
             <IconWithText Icon={Car}>{capacity}면</IconWithText>
           </div>
         </div>

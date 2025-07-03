@@ -7,7 +7,7 @@ import { ParkingLotSimpleInfoType } from './mapDataTypes';
 export interface ParkingLocationDataType {
   parkingLotUuid: string;
   parkingLotName: string;
-  parkingLotDistance: number;
+  parkingLotDistance?: number;
   parkingSpotName: string;
   vehicleNumber: string;
 }
