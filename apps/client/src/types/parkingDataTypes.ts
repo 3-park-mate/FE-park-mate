@@ -162,3 +162,7 @@ export interface ParkingLotOptionDataType {
   name: string;
   label: string;
 }
+
+export type AvailableSpotsResponseType = Partial<
+  Record<ParkingSpotTypeWithEV, number>
+>;

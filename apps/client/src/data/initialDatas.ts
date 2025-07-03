@@ -187,3 +187,14 @@ export const SelectParkingSpotCardMap: Record<
     unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
   },
 };
+
+export const ParkingSpotLabelMap: Record<
+  ParkingSpotTypeWithEV,
+  { label: string }
+> = {
+  EV: { label: '전기차' },
+  SMALL: { label: '경차' },
+  COMPACT: { label: '소형차' },
+  STANDARD: { label: '중형차' },
+  LARGE: { label: '대형차' },
+};

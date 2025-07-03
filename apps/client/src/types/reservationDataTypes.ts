@@ -1,3 +1,6 @@
+import { ScheduleType } from './initialDataTypes';
+import { ParkingSpotTypeWithEV } from './parkingDataTypes';
+
 export type ReservationStatus =
   | 'WAITING'
   | 'CONFIRMED'
@@ -33,4 +36,11 @@ export interface ReservationListResponse {
 export interface ReservationCancelDataType {
   reservationCode: string;
   cancelReason: string;
+}
+
+export interface CreateReservationRequestType {
+  parkingLotUuid: string;
+  parkingSpotType: ParkingSpotTypeWithEV;
+  schedule: ScheduleType;
+  carNumber: string;
 }
