@@ -19,7 +19,7 @@ export default function MainMap() {
   });
   const mapRef = useRef<kakao.maps.Map | null>(null);
 
-  const { center, centerMapToCurrentLocation, initParams } = useMapInit();
+  const { center, centerMapToCurrentLocation, initParams } = useMapInit(mapRef);
   const { parkingLotList, fetchData, isLoading } = useParkingLotsFetcher(
     mapRef,
     initParams
@@ -81,7 +81,10 @@ export default function MainMap() {
           />
         )}
       </Map>
-      <CurrentLocationButton onClick={centerMapToCurrentLocation} />
+      <CurrentLocationButton
+        className={((clickMarker || isOpenListModal) && 'bottom-75') || ''}
+        onClick={centerMapToCurrentLocation}
+      />
       <ParkingLotListModal
         isOpenListModal={isOpenListModal}
         setClickMarker={setClickMarker}
