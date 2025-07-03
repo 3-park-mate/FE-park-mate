@@ -32,3 +32,12 @@ export interface ParkingLotSimpleInfoType {
   distance: number;
   availableSpotCount: number;
 }
+
+export interface initMapProps {
+  parkingLotUuid: string;
+  lat: number;
+  lng: number;
+  ev: boolean;
+  entry: string;
+  exit: string;
+}

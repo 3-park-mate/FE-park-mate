@@ -108,6 +108,15 @@ export const api = {
   ) =>
     serverFetch<T>(baseApiUrl, endpoint, { method: 'PUT', body, ...options }),
 
+  patch: <T>(
+    baseApiUrl: string,
+    endpoint: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    body?: any,
+    options?: Omit<RequestOptions, 'method' | 'body'>
+  ) =>
+    serverFetch<T>(baseApiUrl, endpoint, { method: 'PATCH', body, ...options }),
+
   del: <T>(
     baseApiUrl: string,
     endpoint: string,

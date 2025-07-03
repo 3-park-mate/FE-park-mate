@@ -3,20 +3,18 @@ import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
-import ShowListModalButton from './ShowListModalButton';
-import Link from 'next/link';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function ParkingLotListModal({
   isOpenListModal,
-  clickMarker,
+  setClickMarker,
   setIsOpenListModal,
   parkingLotList,
   isLoading,
 }: {
   isOpenListModal: boolean;
-  clickMarker: ParkingLotSimpleInfoType | null;
+  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
   setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   parkingLotList: ParkingLotsInBoxResponseType;
   isLoading: boolean;
@@ -62,25 +60,27 @@ export default function ParkingLotListModal({
             <DotSpinner className="mx-auto my-10 size-12 fill-primary text-xl" />
           ) : parkingLotList.parkingLots.length > 0 ? (
             parkingLotList.parkingLots.map((data, index) => (
-              <li key={data.parkingLotUuid} className="py-3 px-6">
-                <Link href={`parking-lot/${data.parkingLotUuid}`}>
-                  <ParkingLotListCard parkingLot={data} />
-                  {index !== parkingLotList.parkingLots.length - 1 && (
-                    <hr className=" mt-5" />
-                  )}
-                </Link>
+              <li
+                key={data.parkingLotUuid}
+                className="py-3 px-6"
+                onClick={() => {
+                  setClickMarker(data);
+                  setIsOpenListModal(false);
+                }}
+              >
+                <ParkingLotListCard parkingLot={data} />
+                {index !== parkingLotList.parkingLots.length - 1 && (
+                  <hr className=" mt-5" />
+                )}
               </li>
             ))
           ) : (
             <p className="text-center mt-15">
-              현재 위치에 등록된 주차장이 존재하지 않습니다.
+              예약 가능한 주차장이 존재하지 않습니다.
             </p>
           )}
         </ul>
       </div>
-      {!isOpenListModal && !clickMarker && (
-        <ShowListModalButton setIsOpenListModal={setIsOpenListModal} />
-      )}
     </>
   );
 }

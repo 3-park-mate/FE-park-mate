@@ -1,7 +1,7 @@
 'use server';
-import { AvailableSpotsResponseType } from '@/components/pages/check-availability/CheckAvailableSpotsContent';
 import { api } from '@/hooks/serverFetch';
 import {
+  AvailableSpotsResponseType,
   GetParkingLotsInBoxRequestType,
   OperationsInfo,
   ParkingLotOptionDataType,
@@ -71,7 +71,6 @@ export async function getWeeklyOperationById(
 export async function getParkingLotsInBox(
   data: GetParkingLotsInBoxRequestType
 ) {
-  console.log(data);
   try {
     const query: Record<string, string> = {
       swLat: data.swLat.toString(),
@@ -81,12 +80,12 @@ export async function getParkingLotsInBox(
       isEvChargingAvailable: data.isEvChargingAvailable.toString(),
     };
 
-    if (data.startDateTime) {
-      query.startDateTime = data.startDateTime;
+    if (data.entry) {
+      query.startDateTime = data.entry;
     }
 
-    if (data.endDateTime) {
-      query.endDateTime = data.endDateTime;
+    if (data.exit) {
+      query.endDateTime = data.exit;
     }
 
     const res = await api.get<CommonResponseType<ParkingLotsInBoxResponseType>>(
@@ -95,7 +94,7 @@ export async function getParkingLotsInBox(
       query,
       { cache: 'no-cache' }
     );
-    console.log(query);
+    console.log(query, '요청 테스트');
     console.log(res.data);
 
     return res.data;
@@ -165,10 +164,8 @@ export async function getAvailableSpots(
   exitTime: string
 ): Promise<ApiResponse<AvailableSpotsResponseType>> {
   try {
-    const query: Record<string, string> = {
-      entryTime: entryTime.toString(),
-      exitTime: exitTime.toString(),
-    };
+    const query = { entryTime, exitTime };
+
     const res = await api.get<CommonResponseType<AvailableSpotsResponseType>>(
       PARKING_API_PREFIX,
       `/${parkingLotUuid}/spots/available`,

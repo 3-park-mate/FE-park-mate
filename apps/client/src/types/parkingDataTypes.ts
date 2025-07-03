@@ -136,8 +136,8 @@ export interface GetParkingLotsInBoxRequestType {
   neLat: number;
   neLng: number;
   isEvChargingAvailable: boolean;
-  startDateTime?: string;
-  endDateTime?: string;
+  entry?: string;
+  exit?: string;
 }
 
 export interface ParkingLotsInBoxResponseType {
@@ -163,6 +163,7 @@ export interface ParkingLotOptionDataType {
   label: string;
 }
 
+
 export interface ParkingLotSimpleDataType {
   parkingLotUuid: string;
   thumbnailUrl: string;
@@ -170,3 +171,8 @@ export interface ParkingLotSimpleDataType {
   address: string;
   rating: number;
 }
+
+export type AvailableSpotsResponseType = Partial<
+  Record<ParkingSpotTypeWithEV, number>
+>;
+

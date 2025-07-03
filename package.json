@@ -35,12 +35,14 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@hookform/resolvers": "^5.0.1",
     "date-fns": "^4.1.0",
+    "firebase": "^11.9.1",
     "lucide-react": "^0.476.0",
     "next-auth": "^4.24.11",
     "react-daum-postcode": "^3.2.0",
     "react-day-picker": "8.10.1",
     "react-hook-form": "^7.56.4",
     "react-kakao-maps-sdk": "^1.1.27",
+    "sonner": "^2.0.5",
     "zod": "^3.25.30"
   }
 }

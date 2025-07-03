@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 
 interface Props {
-  availableDays: string[];
+  availableDays?: string[];
   onSelect: (range: DateRange | undefined) => void;
   selected: DateRange | undefined;
   onMonthChange?: (date: Date) => void;
@@ -18,8 +18,11 @@ export default function SelectDays({
   onMonthChange,
 }: Props) {
   const availableSet = new Set(availableDays);
+
   const isAvailable = (date: Date) =>
-    availableSet.has(format(date, 'yyyy-MM-dd'));
+    availableDays === undefined || availableDays.length === 0
+      ? true
+      : availableSet.has(format(date, 'yyyy-MM-dd'));
 
   return (
     <Calendar

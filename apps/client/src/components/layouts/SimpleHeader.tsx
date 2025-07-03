@@ -45,7 +45,7 @@ export default function SimpleHeader({
         </p>
       </div>
 
-      <AlertBell count={4} />
+      <AlertBell />
     </HeaderLayout>
   );
 }
