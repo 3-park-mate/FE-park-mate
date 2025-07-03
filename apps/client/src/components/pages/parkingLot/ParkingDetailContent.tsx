@@ -18,6 +18,7 @@ export default function ParkingDetailContent({
   parkingSpotTypes,
   latitude,
   longitude,
+  totalReviews,
 }: {
   mainAddress: string;
   parkingLotUuid: string;
@@ -28,6 +29,7 @@ export default function ParkingDetailContent({
   parkingSpotTypes: ParkingSpotType[];
   latitude: number;
   longitude: number;
+  totalReviews: number;
 }) {
   return (
     <section className="space-y-3">
@@ -48,7 +50,10 @@ export default function ParkingDetailContent({
           imageUrls={imageUrls.map((img) => img.imageUrl)}
         />
       )}
-      <ReviewSection parkingLotUuid={parkingLotUuid} />
+      <ReviewSection
+        parkingLotUuid={parkingLotUuid}
+        totalReviews={totalReviews}
+      />
     </section>
   );
 }

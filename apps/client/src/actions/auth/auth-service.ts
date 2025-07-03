@@ -159,6 +159,7 @@ export async function getUserEmailData(): Promise<ApiResponse<string>> {
       redirect('/error');
     }
     const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
 
     const res = await api.get<CommonResponseType<string>>(
       API_PREFIX,
@@ -167,6 +168,7 @@ export async function getUserEmailData(): Promise<ApiResponse<string>> {
       {
         headers: {
           'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
         },
       }
     );

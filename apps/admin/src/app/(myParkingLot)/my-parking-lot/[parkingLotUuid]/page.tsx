@@ -8,6 +8,7 @@ import ParkmateLinkButton from '@/components/pages/myParkingLot/settings/Parkmat
 import ParkingSettingsTabBar from '@/components/pages/myParkingLot/settings/ParkingSettingsTabBar';
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
+import { getReviewSummaryData } from '@/actions/review/review-service';
 
 export default async function page({
   params,
@@ -28,8 +29,21 @@ export default async function page({
   const res = await getParkingLotById(parkingLotUuid);
   if (!res.success) return fallback;
 
-  const parkingLotData = res.data;
-  if (!parkingLotData) return fallback;
+  const [parkingLotRes, reviewSummaryRes] = await Promise.all([
+    getParkingLotById(parkingLotUuid),
+    getReviewSummaryData(parkingLotUuid),
+  ]);
+
+  if (
+    !parkingLotRes.success ||
+    !parkingLotRes.data ||
+    !reviewSummaryRes.success
+  ) {
+    return fallback;
+  }
+
+  const parkingLotData = parkingLotRes.data;
+  const reviewSummaryData = reviewSummaryRes.data;
 
   const session = await getServerSession(options);
   if (session?.user.uuid != parkingLotData.hostUuid) return fallback;
@@ -41,8 +55,8 @@ export default async function page({
         <InfoWithThumbnail
           thumbImageUrl={parkingLotData.thumbnailUrl}
           name={parkingLotData.name}
-          averageRating={1}
-          totalReviews={1}
+          averageRating={reviewSummaryData.averageRating}
+          totalReviews={reviewSummaryData.totalReviews}
           capacity={parkingLotData.capacity}
           address={parkingLotData.address}
         />

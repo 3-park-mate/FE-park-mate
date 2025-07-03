@@ -4,7 +4,9 @@ import { Star } from 'lucide-react';
 export default function FavoriteButton({
   className,
   ...buttonProps
-}: { className?: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: {
+  className?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button className="cursor-pointer" {...buttonProps}>
       <Star
