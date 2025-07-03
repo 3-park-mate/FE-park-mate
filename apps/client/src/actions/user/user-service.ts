@@ -114,7 +114,7 @@ export async function AddFavoriteAction(
     );
     console.log(res);
 
-    return { success: true, data: res.message };
+    return { success: true, data: res.data };
   } catch (error) {
     return {
       success: false,
@@ -152,7 +152,44 @@ export async function DeleteFavoriteAction(
     );
     console.log(res);
 
-    return { success: true, data: res.message };
+    return { success: true, data: res.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
+
+export async function checkIsFavorite(
+  parkingLotUuid: string
+): Promise<ApiResponse<boolean>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+
+    const res = await api.get<CommonResponseType<boolean>>(
+      API_PREFIX,
+      `/favorites/check/${parkingLotUuid}`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        cache: 'no-cache',
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
   } catch (error) {
     return {
       success: false,
