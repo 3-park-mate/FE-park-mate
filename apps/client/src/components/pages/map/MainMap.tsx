@@ -19,7 +19,7 @@ export default function MainMap() {
   });
   const mapRef = useRef<kakao.maps.Map | null>(null);
 
-  const { center, centerMapToCurrentLocation, initParams } = useMapInit(mapRef);
+  const { center, centerMapToCurrentLocation, initParams } = useMapInit();
   const { parkingLotList, fetchData, isLoading } = useParkingLotsFetcher(
     mapRef,
     initParams
