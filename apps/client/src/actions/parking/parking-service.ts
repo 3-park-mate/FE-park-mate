@@ -5,6 +5,7 @@ import {
   GetParkingLotsInBoxRequestType,
   OperationsInfo,
   ParkingLotOptionDataType,
+  ParkingLotOverviewData,
   ParkingLotResponseDataType,
   ParkingLotsInBoxResponseType,
   WeeklyOperationInfo,
@@ -24,10 +25,32 @@ export async function getParkingLotById(
       `/${parkingLotUuid}`,
       undefined,
       {
-        cache: 'no-cache',
+        cache: 'force-cache',
       }
     );
-    // console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getParkingLotOverviewById(
+  parkingLotUuid: string
+): Promise<ApiResponse<ParkingLotOverviewData>> {
+  try {
+    const res = await api.get<CommonResponseType<ParkingLotOverviewData>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}`,
+      undefined,
+      {
+        cache: 'force-cache',
+      }
+    );
+    console.log(res);
 
     return {
       success: true,

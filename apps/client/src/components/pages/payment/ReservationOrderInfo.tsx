@@ -1,3 +1,4 @@
+import { formatDate, formatDuration } from '@/utils/datetimeUtils';
 import {
   IconWithText,
   PaddedSectionWithTitle,
@@ -5,44 +6,54 @@ import {
 import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 
-export default function ReservationOrderInfo() {
+export default function ReservationOrderInfo({
+  parkingLotName,
+  address,
+  entryTime,
+  exitTime,
+  amount,
+}: {
+  parkingLotName: string;
+  address: string;
+  entryTime: string;
+  exitTime: string;
+  amount: number;
+}) {
   return (
     <PaddedSectionWithTitle title="주문상세">
       <dl className="space-y-2 text-sm text-gray-600">
-        {/* <div className="flex justify-between">
-          <dt>주문 코드</dt>
-          <dd>ORD12345678</dd>
-        </div> */}
         <div className="flex items-center gap-3 pt-1">
           <Image
-            src="https://dummyimage.com/155x102"
+            src="/img/no-image.png"
             alt="thumbnail"
             width={70}
             height={70}
             className="rounded-xl aspect-square object-cover"
           />
           <div>
-            <h1 className="font-bold text-lg text-black">주차장이름</h1>
-            <IconWithText Icon={MapPin}>주소주소</IconWithText>
+            <h1 className="font-bold text-lg text-black">{parkingLotName}</h1>
+            <IconWithText Icon={MapPin}>{address}</IconWithText>
           </div>
         </div>
         <hr className="my-5" />
         <div className="flex justify-between">
           <dt>입차 시간</dt>
-          <dd>2025-06-26 10:00</dd>
+          <dd>{formatDate(entryTime)}</dd>
         </div>
         <div className="flex justify-between">
           <dt>출차 시간</dt>
-          <dd>2025-06-26 12:30</dd>
+          <dd>{formatDate(exitTime)}</dd>
         </div>
         <hr className="my-5" />
         <div className="flex justify-between">
           <dt>총 이용 시간</dt>
-          <dd className="font-semibold text-black">2시간 30분</dd>
+          <dd className="font-semibold text-black">
+            {formatDuration(entryTime, exitTime)}
+          </dd>
         </div>
         <div className="flex justify-between">
           <dt>이용 요금</dt>
-          <dd className="font-bold text-black">3,000원</dd>
+          <dd className="font-bold text-black">{amount.toLocaleString()}원</dd>
         </div>
       </dl>
     </PaddedSectionWithTitle>

@@ -123,6 +123,21 @@ export interface ParkingLotResponseDataType {
   dislikeCount: number;
 }
 
+export interface ParkingLotOverviewData {
+  hostUuid: string;
+  parkingLotType: ParkingLotType;
+  name: string;
+  phoneNumber: string;
+  capacity: number;
+  registeredCapacity: number;
+  mainAddress: string;
+  detailAddress: string;
+  latitude: number;
+  longitude: number;
+  isEvChargingAvailable: boolean;
+  extraInfo: string;
+}
+
 export interface WeeklyOperationInfo {
   dayOfWeek: string;
   dayOfMonth: number;

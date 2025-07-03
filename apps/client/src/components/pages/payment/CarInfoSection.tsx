@@ -1,11 +1,15 @@
 import { PaddedSectionWithTitle } from '@repo/ui/components/common/CommonLayouts';
 import MyCarItem from '../myPage/myCar/MyCarItem';
 
-export default function CarInfoSection() {
+export default function CarInfoSection({
+  vehicleNumber,
+}: {
+  vehicleNumber: string;
+}) {
   return (
     <PaddedSectionWithTitle title="이용 차량 정보" className="relative">
       <MyCarItem
-        vehicleNumber="12가1234"
+        vehicleNumber={vehicleNumber}
         isDefault
         nickname="차량별명"
         userVehicleNumbersId={1}
