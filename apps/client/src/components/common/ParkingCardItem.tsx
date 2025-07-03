@@ -26,12 +26,7 @@ export default function ParkingCardItem({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
           />
-          <FavoriteButton
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          />
+          <FavoriteButton />
         </div>
       </Link>
       <Link
@@ -44,7 +39,9 @@ export default function ParkingCardItem({
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
         {parkingLotData.address}
       </p>
-      {parkingLotData.rating > 0 && <Rating>{parkingLotData.rating}</Rating>}
+      {parkingLotData.rating > 0 && (
+        <Rating>{parkingLotData.rating.toFixed(1)}</Rating>
+      )}
     </div>
   );
 }
