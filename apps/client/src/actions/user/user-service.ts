@@ -181,7 +181,7 @@ export async function checkIsFavorite(
           'X-User-UUID': uuid,
           'Authorization': `Bearer ${accessToken}`,
         },
-        cache: 'no-cache',
+        cache: 'force-cache',
       }
     );
     console.log(res);
