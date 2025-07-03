@@ -20,14 +20,14 @@ export default function InfoWithThumbnail({
   baseIntervalMinutes,
 }: {
   thumbImageUrl?: string;
-  baseFee: number;
+  baseFee?: number;
   name: string;
   averageRating: number;
   totalReviews: number;
   distance: number;
   capacity: number;
   parkingLotType: ParkingLotType;
-  baseIntervalMinutes: number;
+  baseIntervalMinutes?: number;
 }) {
   return (
     <section className="relative">
@@ -49,12 +49,14 @@ export default function InfoWithThumbnail({
                 <BadgeCheckIcon size={14} />
               </div>
             )}
-            <CommonPriceBadge
-              className="text-black"
-              IntervalMinutes={baseIntervalMinutes}
-            >
-              {baseFee.toLocaleString()}원
-            </CommonPriceBadge>
+            {baseFee && baseIntervalMinutes && (
+              <CommonPriceBadge
+                className="text-black"
+                IntervalMinutes={baseIntervalMinutes}
+              >
+                {baseFee.toLocaleString()}원
+              </CommonPriceBadge>
+            )}
           </div>
           <h1 className="text-2xl font-bold mb-2 text-shadow-lg">{name}</h1>
           <Rating className="mb-3">

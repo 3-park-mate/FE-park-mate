@@ -10,7 +10,6 @@ import AlertModal from '@repo/ui/components/common/AlertModal';
 export default function DetailMenuButtons({
   hostUuid,
   parkingLotUuid,
-  isActive,
   like,
   dislike,
   baseFee,
@@ -18,21 +17,14 @@ export default function DetailMenuButtons({
 }: {
   hostUuid: string;
   parkingLotUuid: string;
-  isActive: boolean;
   like: number;
   dislike: number;
-  baseFee: number;
-  baseIntervalMinutes: number;
+  baseFee?: number;
+  baseIntervalMinutes?: number;
 }) {
   // hostUuid => 채팅
-  const {
-    loading,
-    setLoading,
-    alertModalOpen,
-    setAlertModalOpen,
-    modalMessage,
-    handleAlert,
-  } = useAlertWithLoading();
+  const { alertModalOpen, setAlertModalOpen, modalMessage, handleAlert } =
+    useAlertWithLoading();
 
   const handleAddFavorite = async () => {
     try {
@@ -69,7 +61,6 @@ export default function DetailMenuButtons({
       </nav>
       <ReservationButton
         parkingLotUuid={parkingLotUuid}
-        isActive={isActive}
         baseFee={baseFee}
         baseIntervalMinutes={baseIntervalMinutes}
       />
