@@ -4,7 +4,7 @@ import { getReservationsData } from '@/actions/reservation/reservation-service';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import MyReservationItem from './MyReservationItem';
 import MyReservationItemSkeleton from './MyReservationItemSkeleton';
-import { ReservationItemDataType } from '@/types/reservationDataTypes';
+import { ReservationListItemDataType } from '@/types/reservationDataTypes';
 import { PAGE_SIZE } from '@/constants/constants';
 
 export default function ActiveReservations() {
@@ -13,7 +13,7 @@ export default function ActiveReservations() {
     isLoading,
     hasMore,
     loaderRef,
-  } = useInfiniteScroll<ReservationItemDataType, number>({
+  } = useInfiniteScroll<ReservationListItemDataType, number>({
     fetchData: async (cursor) => {
       const res = await getReservationsData({
         size: PAGE_SIZE,

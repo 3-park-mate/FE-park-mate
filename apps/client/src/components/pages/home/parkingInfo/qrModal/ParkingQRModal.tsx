@@ -28,7 +28,7 @@ export default function ParkingQRModal({
           onClick={onClose}
           className="absolute left-0 flex justify-center cursor-pointer"
         >
-          <ChevronLeft className="ml-3" />
+          <ChevronLeft className="ml-5" />
         </button>
         <h1 className="font-semibold">입출차 등록 QR</h1>
       </HeaderLayout>

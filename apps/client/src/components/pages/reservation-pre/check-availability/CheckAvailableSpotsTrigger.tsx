@@ -4,35 +4,30 @@ import { SheetTrigger } from '@repo/ui/components/base/sheet';
 import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
 import { useState } from 'react';
-import { AvailableSpotsResponseType } from './CheckAvailableSpotsContent';
 import { getAvailableSpots } from '@/actions/parking/parking-service';
 import { toLocalISOString } from '@/utils/datetimeUtils';
+import { ScheduleType } from '@/types/initialDataTypes';
+import { AvailableSpotsResponseType } from '@/types/parkingDataTypes';
 
 export default function CheckAvailableSpotsTrigger({
   parkingLotUuid,
-  selectedDateTime,
+  schedule,
   onFetch,
 }: {
   parkingLotUuid: string;
-  selectedDateTime: {
-    entryDateTime: Date | null;
-    exitDateTime: Date | null;
-  };
+  schedule: ScheduleType;
   onFetch: (data: AvailableSpotsResponseType) => void;
 }) {
   const [loading, setLoading] = useState(false);
+  const { entryDateTime, exitDateTime } = schedule;
   const handleClick = async () => {
-    if (
-      selectedDateTime.entryDateTime === null ||
-      selectedDateTime.exitDateTime === null
-    )
-      return;
+    if (entryDateTime === null || exitDateTime === null) return;
     setLoading(true);
     try {
       const res = await getAvailableSpots(
         parkingLotUuid,
-        toLocalISOString(selectedDateTime.entryDateTime),
-        toLocalISOString(selectedDateTime.exitDateTime)
+        toLocalISOString(entryDateTime),
+        toLocalISOString(exitDateTime)
       );
 
       if (res.success) {
@@ -49,9 +44,7 @@ export default function CheckAvailableSpotsTrigger({
     }
   };
 
-  const isActive =
-    selectedDateTime.entryDateTime !== null &&
-    selectedDateTime.exitDateTime !== null;
+  const isActive = entryDateTime !== null && exitDateTime !== null;
 
   return (
     <SheetTrigger asChild>

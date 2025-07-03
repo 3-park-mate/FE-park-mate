@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { RefObject, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentCoordsUtil } from '@/utils/geolocationUtils';
 import { parseInitMapParams } from '@/utils/mapUtils';
 import { useSearchParams } from 'next/navigation';
 
-export function useMapInit() {
+export function useMapInit(mapRef: RefObject<kakao.maps.Map | null>) {
   const searchParams = useSearchParams();
   const initParams = useMemo(
     () => parseInitMapParams(searchParams),
@@ -19,10 +19,15 @@ export function useMapInit() {
     try {
       const { lat, lng } = await getCurrentCoordsUtil();
       setCenter({ lat, lng });
+
+      if (mapRef.current) {
+        const kakaoLatLng = new kakao.maps.LatLng(lat, lng);
+        mapRef.current.setCenter(kakaoLatLng);
+      }
     } catch (e) {
       console.error('현재 위치 가져오기 실패:', e);
     }
-  }, []);
+  }, [mapRef]);
 
   useEffect(() => {
     if (initParams.lat && initParams.lng) {

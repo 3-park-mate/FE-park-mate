@@ -1,11 +1,13 @@
 'use server';
-import { AvailableSpotsResponseType } from '@/components/pages/check-availability/CheckAvailableSpotsContent';
 import { api } from '@/hooks/serverFetch';
 import {
+  AvailableSpotsResponseType,
   GetParkingLotsInBoxRequestType,
   OperationsInfo,
   ParkingLotOptionDataType,
+  ParkingLotOverviewData,
   ParkingLotResponseDataType,
+  ParkingLotSimpleDataType,
   ParkingLotsInBoxResponseType,
   WeeklyOperationInfo,
 } from '@/types/parkingDataTypes';
@@ -24,10 +26,32 @@ export async function getParkingLotById(
       `/${parkingLotUuid}`,
       undefined,
       {
-        cache: 'no-cache',
+        cache: 'force-cache',
       }
     );
-    // console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getParkingLotOverviewById(
+  parkingLotUuid: string
+): Promise<ApiResponse<ParkingLotOverviewData>> {
+  try {
+    const res = await api.get<CommonResponseType<ParkingLotOverviewData>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}`,
+      undefined,
+      {
+        cache: 'force-cache',
+      }
+    );
+    console.log(res);
 
     return {
       success: true,
@@ -163,10 +187,8 @@ export async function getAvailableSpots(
   exitTime: string
 ): Promise<ApiResponse<AvailableSpotsResponseType>> {
   try {
-    const query: Record<string, string> = {
-      entryTime: entryTime.toString(),
-      exitTime: exitTime.toString(),
-    };
+    const query = { entryTime, exitTime };
+
     const res = await api.get<CommonResponseType<AvailableSpotsResponseType>>(
       PARKING_API_PREFIX,
       `/${parkingLotUuid}/spots/available`,
@@ -201,6 +223,25 @@ export async function getParkingLotOptions(): Promise<
     return {
       success: true,
       data: res.data.options,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
+
+export async function getSimpleParkingLotById(
+  parkingLotUuid: string
+): Promise<ApiResponse<ParkingLotSimpleDataType>> {
+  try {
+    const res = await api.get<CommonResponseType<ParkingLotSimpleDataType>>(
+      READ_API_PREFIX,
+      `/${parkingLotUuid}/simple`,
+      undefined
+    );
+
+    return {
+      success: true,
+      data: res.data,
     };
   } catch (_error) {
     redirect('/error');

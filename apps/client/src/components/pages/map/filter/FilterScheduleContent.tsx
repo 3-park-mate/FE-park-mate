@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import SelectTimes from '../../check-availability/SelectTimes';
+import SelectTimes from '../../reservation-pre/check-availability/SelectTimes';
 import { useSchedulePicker } from '@/hooks/useSchedulePicker';
 import { Calendar } from '@repo/ui/components/base/calendar';
 import {
@@ -16,7 +16,7 @@ export default function FilterScheduleContent() {
 
   const {
     dateRange,
-    selectedDateTime,
+    selectedSchedule,
     handleDateChange,
     handleTimeChange,
     reset,
@@ -31,8 +31,13 @@ export default function FilterScheduleContent() {
   }, [dateRange]);
 
   useEffect(() => {
-    setValue('selectedDateTime', selectedDateTime, { shouldValidate: true });
-  }, [selectedDateTime, setValue]);
+    setValue('entryDateTime', selectedSchedule.entryDateTime, {
+      shouldValidate: true,
+    });
+    setValue('exitDateTime', selectedSchedule.exitDateTime, {
+      shouldValidate: true,
+    });
+  }, [selectedSchedule, setValue]);
 
   return (
     <PaddedLayout>

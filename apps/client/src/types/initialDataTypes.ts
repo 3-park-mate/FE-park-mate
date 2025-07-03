@@ -33,3 +33,8 @@ export interface ParkingDatailTabMenuType {
   label: string;
   id: string;
 }
+
+export interface ScheduleType {
+  entryDateTime: Date | null;
+  exitDateTime: Date | null;
+}

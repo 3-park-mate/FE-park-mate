@@ -20,6 +20,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.1.1(react-hook-form@7.57.0(react@19.1.0))
+      '@tosspayments/tosspayments-sdk':
+        specifier: ^2.3.5
+        version: 2.3.5
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1778,6 +1781,9 @@ packages:
 
   '@tailwindcss/postcss@4.1.10':
     resolution: {integrity: sha512-B+7r7ABZbkXJwpvt2VMnS6ujcDoR2OOcFaqrLIo1xbcdxje4Vf+VgJdBzNNbrAjBj/rLZ66/tlQ1knIGNLKOBQ==}
+
+  '@tosspayments/tosspayments-sdk@2.3.5':
+    resolution: {integrity: sha512-XHi6e9LrF02vm4vuhrt8B4BaDUuyL0sQtdp21HITCUFdyRRB+lQKLZSRcBb8VTpymrCISlg/j8mT2r/QlJmipg==}
 
   '@types/conventional-commits-parser@5.0.1':
     resolution: {integrity: sha512-7uz5EHdzz2TqoMfV7ee61Egf5y6NkcO4FB/1iCCQnbeiI1F3xzv3vK5dBCXUCLQgGYS+mUeigK1iKQzvED+QnQ==}
@@ -5901,6 +5907,8 @@ snapshots:
       '@tailwindcss/oxide': 4.1.10
       postcss: 8.5.5
       tailwindcss: 4.1.10
+
+  '@tosspayments/tosspayments-sdk@2.3.5': {}
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:

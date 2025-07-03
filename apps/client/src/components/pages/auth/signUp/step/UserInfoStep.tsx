@@ -1,5 +1,6 @@
 import { useStepValidation } from '@/hooks/useStepValidation';
 import { SignUpStoreDataType } from '@/types/authDataTypes';
+import { formatPhoneNumber } from '@/utils/formUtils';
 import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabel';
 import { FormHeading } from '@repo/ui/components/common/CommonLayouts';
 import { StepButtons } from '@repo/ui/components/common/StepButtons';
@@ -20,29 +21,18 @@ export default function UserInfoStep({
   const { isStepValid } = useStepValidation<SignUpStoreDataType>(VERIFY_FIELDS);
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[^\d]/g, '');
-    let formattedValue = rawValue;
-    if (rawValue.length > 6) {
-      formattedValue = `${rawValue.slice(0, 3)}-${rawValue.slice(
-        3,
-        7
-      )}-${rawValue.slice(7, 11)}`;
-    } else if (rawValue.length > 3) {
-      formattedValue = `${rawValue.slice(0, 3)}-${rawValue.slice(3, 7)}`;
-    }
-    if (
-      e.nativeEvent instanceof InputEvent &&
-      e.nativeEvent.inputType === 'deleteContentBackward'
-    ) {
-      const cursorPosition = e.target.selectionStart ?? formattedValue.length;
-      if (formattedValue[cursorPosition - 1] === '-') {
-        formattedValue =
-          formattedValue.slice(0, cursorPosition - 1) +
-          formattedValue.slice(cursorPosition);
-      }
-    }
+    const { value, selectionStart } = e.target;
 
-    setValue('phoneNumber', formattedValue);
+    const inputType =
+      e.nativeEvent instanceof InputEvent ? e.nativeEvent.inputType : undefined;
+
+    const newFormattedValue = formatPhoneNumber(
+      value,
+      inputType,
+      selectionStart ?? value.length
+    );
+
+    setValue('phoneNumber', newFormattedValue);
   };
 
   return (

@@ -123,6 +123,21 @@ export interface ParkingLotResponseDataType {
   dislikeCount: number;
 }
 
+export interface ParkingLotOverviewData {
+  hostUuid: string;
+  parkingLotType: ParkingLotType;
+  name: string;
+  phoneNumber: string;
+  capacity: number;
+  registeredCapacity: number;
+  mainAddress: string;
+  detailAddress: string;
+  latitude: number;
+  longitude: number;
+  isEvChargingAvailable: boolean;
+  extraInfo: string;
+}
+
 export interface WeeklyOperationInfo {
   dayOfWeek: string;
   dayOfMonth: number;
@@ -157,8 +172,20 @@ export interface OperationsInfo {
   discountRate: number;
 }
 
+export interface ParkingLotSimpleDataType {
+  parkingLotUuid: string;
+  thumbnailUrl: string;
+  name: string;
+  address: string;
+  rating: number;
+}
+
 export interface ParkingLotOptionDataType {
   id: number;
   name: string;
   label: string;
 }
+
+export type AvailableSpotsResponseType = Partial<
+  Record<ParkingSpotTypeWithEV, number>
+>;

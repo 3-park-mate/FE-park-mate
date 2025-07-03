@@ -1,6 +1,8 @@
 'use client';
+import { addUserVehicleAction } from '@/actions/user/user-service';
+import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import { addMyCarSchema } from '@/schemas/addMyCarSchema';
-import { AddMyCarDataType } from '@/types/myPageDataTypes';
+import { UserVehicleDataType } from '@/types/userDataTypes';
 import { handleKeyDown } from '@/utils/formUtils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AlertModal from '@repo/ui/components/common/AlertModal';
@@ -9,30 +11,50 @@ import {
   CommonButton,
   FormHeading,
 } from '@repo/ui/components/common/CommonLayouts';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
+import { CommonCheckbox } from '@repo/ui/components/common/CommonCheckbox';
 
 export default function AddMyCarForm() {
-  const [alertModalOpen, setAlertModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const { register, handleSubmit, control } = useForm<AddMyCarDataType>({
-    resolver: zodResolver(addMyCarSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      vehicleNumber: '',
-      nickname: '',
-      isDefault: false,
-    },
-  });
+  const router = useRouter();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const {
+    loading,
+    setLoading,
+    alertModalOpen,
+    setAlertModalOpen,
+    modalMessage,
+    handleAlert,
+  } = useAlertWithLoading();
+  const { register, handleSubmit, control, setValue } =
+    useForm<UserVehicleDataType>({
+      resolver: zodResolver(addMyCarSchema),
+      mode: 'onChange',
+      reValidateMode: 'onChange',
+      defaultValues: {
+        vehicleNumber: '',
+        nickname: '',
+        defaultSelected: false,
+      },
+    });
   const { errors, isValid } = useFormState({
     control,
   });
 
-  const onSubmit = (data: AddMyCarDataType) => {
-    console.log('차량 등록 데이터:', data);
-    setModalMessage(`등록되었습니다.`);
-    setAlertModalOpen(true);
+  const onSubmit = async (userVehicleData: UserVehicleDataType) => {
+    setLoading(true);
+    console.log('data: ', userVehicleData);
+    const res = await addUserVehicleAction(userVehicleData);
+    if (!res.success) return handleAlert(res.message);
+    handleAlert('차량이 등록되었습니다.');
+    setLoading(false);
+    setIsSuccess(true);
+  };
+
+  const handleDefaultSelectedChange = (checked: boolean) => {
+    setValue('defaultSelected', checked);
   };
 
   return (
@@ -41,11 +63,18 @@ export default function AddMyCarForm() {
         open={alertModalOpen}
         onOpenChange={setAlertModalOpen}
         errorMessage={modalMessage}
+        onConfirm={
+          isSuccess
+            ? () => {
+                router.push('/my-car');
+              }
+            : undefined
+        }
       />
       <form
         onKeyDown={handleKeyDown}
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5 px-6"
+        className="space-y-4 px-6"
       >
         <FormHeading>차량 정보를 입력해 주세요.</FormHeading>
         <CommonInputWithLabel
@@ -64,8 +93,23 @@ export default function AddMyCarForm() {
           maxLength={10}
           {...register('nickname')}
         />
-        <CommonButton disabled={!isValid} type="submit" className="mt-3">
-          차량 등록
+        <div className="flex items-center space-x-2 ps-1">
+          <CommonCheckbox
+            id="defaultSelected"
+            theme="primary"
+            {...register('defaultSelected')}
+            onCheckedChange={handleDefaultSelectedChange}
+          />
+          <label htmlFor="defaultSelected" className="text-sm text-gray-800">
+            기본 차량으로 설정
+          </label>
+        </div>
+        <CommonButton
+          disabled={!isValid || loading}
+          type="submit"
+          className="mt-3"
+        >
+          {loading ? <DotSpinner /> : '차량 등록'}
         </CommonButton>
       </form>
     </>

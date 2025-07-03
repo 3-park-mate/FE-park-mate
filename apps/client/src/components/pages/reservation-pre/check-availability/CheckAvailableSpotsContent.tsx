@@ -2,7 +2,10 @@
 
 import ButtonWrapper from '@/components/common/ButtonWrapper';
 import { SelectParkingSpotCardMap } from '@/data/initialDatas';
-import { ParkingSpotTypeWithEV } from '@/types/parkingDataTypes';
+import {
+  AvailableSpotsResponseType,
+  ParkingSpotTypeWithEV,
+} from '@/types/parkingDataTypes';
 import { Button } from '@repo/ui/components/base/button';
 import {
   RadioGroup,
@@ -14,32 +17,25 @@ import {
   SheetTitle,
 } from '@repo/ui/components/base/sheet';
 import { cn } from '@repo/ui/lib/utils';
-import { useState } from 'react';
 import AmountInfo from './AmountInfo';
+import { useFormContext } from 'react-hook-form';
 import { formatDate } from '@/utils/datetimeUtils';
-
-export type AvailableSpotsResponseType = Partial<
-  Record<ParkingSpotTypeWithEV, number>
->;
+import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 
 export default function CheckAvailableSpotsContent({
-  selectedDateTime,
   availableSpots,
+  onClickReserve,
 }: {
-  selectedDateTime: {
-    entryDateTime: Date | null;
-    exitDateTime: Date | null;
-  };
   availableSpots: AvailableSpotsResponseType | null;
+  onClickReserve: () => void;
 }) {
-  const [spot, setSpot] = useState<ParkingSpotTypeWithEV | undefined>();
-
-  const from = selectedDateTime.entryDateTime
-    ? formatDate(selectedDateTime.entryDateTime.toString())
-    : '';
-  const to = selectedDateTime.exitDateTime
-    ? formatDate(selectedDateTime.exitDateTime.toString())
-    : '';
+  const { watch, setValue } = useFormContext<CreateReservationRequestType>();
+  const selectedType = watch('parkingSpotType');
+  const entryTime = watch('entryTime');
+  const exitTime = watch('exitTime');
+  if (!entryTime || !exitTime) {
+    return null;
+  }
 
   const displayData = availableSpots ?? {};
   const sortedEntries = Object.entries(displayData).sort(([a], [b]) => {
@@ -55,18 +51,20 @@ export default function CheckAvailableSpotsContent({
     >
       <SheetTitle className="mt-10 text-xl">잔여 주차면 수</SheetTitle>
       <p className="text-md ">
-        {from} - {to}
+        {formatDate(entryTime.toString())} - {formatDate(exitTime.toString())}
       </p>
 
       <RadioGroup
-        value={spot}
-        onValueChange={(value: ParkingSpotTypeWithEV) => setSpot(value)}
+        value={selectedType}
         className="grid grid-cols-2 gap-2 mt-7"
+        onValueChange={(type: string) => {
+          setValue('parkingSpotType', type as ParkingSpotTypeWithEV);
+        }}
       >
         {sortedEntries.map(([type, count]) => {
           const parkingSpotType = type as ParkingSpotTypeWithEV;
           const config = SelectParkingSpotCardMap[parkingSpotType];
-          const isSelected = spot === parkingSpotType;
+          const isSelected = selectedType === parkingSpotType;
 
           return (
             <div
@@ -98,11 +96,12 @@ export default function CheckAvailableSpotsContent({
 
       <ButtonWrapper className="flex justify-between items-center border-t-1 pt-4">
         <AmountInfo type="total" />
-        {/* 예약으로 가는 로직 실행 */}
         <Button
+          type="button"
+          onClick={onClickReserve}
           className={cn(
             'px-10 h-12 text-lg',
-            spot ? 'bg-primary' : 'bg-gray-1'
+            selectedType ? 'bg-primary' : 'bg-gray-1'
           )}
         >
           예약하기

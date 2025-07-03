@@ -3,13 +3,14 @@ import MenuIconListItem from '@/components/common/MenuIconListItem';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { MessageCircle, Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 import ReservationButton from './ReservationButton';
-import { AddFavoriteAction } from '@/actions/user/user-service';
-import { useAlertWithLoading } from '@/hooks/useAlertWithLoading';
 import AlertModal from '@repo/ui/components/common/AlertModal';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useFavoriteStatus } from '@/hooks/useFavoriteStatus';
 
 export default function DetailMenuButtons({
   hostUuid,
   parkingLotUuid,
+  isActive,
   like,
   dislike,
   baseFee,
@@ -17,27 +18,36 @@ export default function DetailMenuButtons({
 }: {
   hostUuid: string;
   parkingLotUuid: string;
+  isActive: boolean;
   like: number;
   dislike: number;
-  baseFee?: number;
-  baseIntervalMinutes?: number;
+  baseFee: number;
+  baseIntervalMinutes: number;
 }) {
-  // hostUuid => 채팅
-  const { alertModalOpen, setAlertModalOpen, modalMessage, handleAlert } =
-    useAlertWithLoading();
+  const {
+    isFavorited,
+    isInitialLoadComplete,
+    handleAddFavorite,
+    alertModalOpen,
+    setAlertModalOpen,
+    modalMessage,
+  } = useFavoriteStatus({ parkingLotUuid });
 
-  const handleAddFavorite = async () => {
-    try {
-      const res = await AddFavoriteAction(parkingLotUuid);
-      if (res.success) {
-        handleAlert('즐겨찾기 추가 성공');
-      } else {
-        handleAlert(res.message);
-      }
-    } catch (e) {
-      console.error('오류:', e);
-    }
-  };
+  if (!isInitialLoadComplete) {
+    return (
+      <PaddedSection className="py-5 space-y-5 bg-white flex justify-center items-center h-[152px]">
+        <DotSpinner />
+      </PaddedSection>
+    );
+  }
+
+  if (!isInitialLoadComplete) {
+    return (
+      <PaddedSection className="py-5 space-y-5 bg-white flex justify-center items-center h-[152px]">
+        <DotSpinner />
+      </PaddedSection>
+    );
+  }
 
   return (
     <PaddedSection className="py-5 space-y-5 bg-white">
@@ -50,7 +60,11 @@ export default function DetailMenuButtons({
       <nav>
         <ul className="flex justify-between gap-4">
           <MenuIconListItem Icon={MessageCircle}>채팅</MenuIconListItem>
-          <MenuIconListItem Icon={Star} onClick={handleAddFavorite}>
+          <MenuIconListItem
+            Icon={Star}
+            onClick={handleAddFavorite}
+            iconClassName={isFavorited ? 'text-[#ffc800]' : ''}
+          >
             즐겨찾기
           </MenuIconListItem>
           <MenuIconListItem Icon={ThumbsUp}>좋아요 {like}</MenuIconListItem>
@@ -61,6 +75,7 @@ export default function DetailMenuButtons({
       </nav>
       <ReservationButton
         parkingLotUuid={parkingLotUuid}
+        isActive={isActive}
         baseFee={baseFee}
         baseIntervalMinutes={baseIntervalMinutes}
       />

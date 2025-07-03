@@ -23,6 +23,7 @@ export default function ParkingCardItem({
             src={thumbnailUrl || `/img/no-image.png`}
             alt="주차장 이미지"
             fill
+            sizes=""
             className="object-cover"
           />
           <div

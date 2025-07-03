@@ -4,7 +4,7 @@ import CommonInputWithLabel from '@repo/ui/components/common/CommonInputWithLabe
 import { formatDateParts } from '@/utils/datetimeUtils';
 import { cn } from '@repo/ui/lib/utils';
 import { useFormContext } from 'react-hook-form';
-import { FilterScheduleType } from '@/types/mapDataTypes';
+import { ScheduleType } from '@/types/initialDataTypes';
 
 interface Props {
   from: Date;
@@ -17,12 +17,10 @@ export default function SelectTimes({ from, to, onChange, className }: Props) {
   const {
     getValues,
     formState: { errors },
-  } = useFormContext<FilterScheduleType>();
+  } = useFormContext<ScheduleType>();
 
-  const { entryDateTime, exitDateTime } = getValues().selectedDateTime;
-
-  const showErrorMessage =
-    !!entryDateTime && !!exitDateTime && !!errors.selectedDateTime;
+  const { entryDateTime, exitDateTime } = getValues();
+  const showErrorMessage = !!entryDateTime && !!exitDateTime && !!errors;
 
   return (
     <div className={cn('flex items-center gap-5', className)}>
@@ -40,7 +38,7 @@ export default function SelectTimes({ from, to, onChange, className }: Props) {
         onChange={(e) => onChange('exit', e.target.value)}
         reserveErrorMessageSpace
         errorMessage={
-          showErrorMessage ? errors.selectedDateTime?.message : undefined
+          showErrorMessage ? errors.exitDateTime?.message : undefined
         }
       />
     </div>

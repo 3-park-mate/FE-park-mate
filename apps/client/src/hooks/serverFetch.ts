@@ -120,6 +120,13 @@ export const api = {
   del: <T>(
     baseApiUrl: string,
     endpoint: string,
-    options?: Omit<RequestOptions, 'method'>
-  ) => serverFetch<T>(baseApiUrl, endpoint, { method: 'DELETE', ...options }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    body?: any,
+    options?: Omit<RequestOptions, 'method' | 'body'>
+  ) =>
+    serverFetch<T>(baseApiUrl, endpoint, {
+      method: 'DELETE',
+      body,
+      ...options,
+    }),
 };
