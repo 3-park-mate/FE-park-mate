@@ -66,8 +66,6 @@ jobs:
           echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/admin/.env.production
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/admin/.env.production
 
-
-
       - name: Build and Push Multi-App
         run: |
           docker build -t turbo-multi-app:latest .
@@ -82,6 +80,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: |
             docker-compose-frontend.yml
+            apps/client/.env.production
+            apps/admin/.env.production
           target: "~/"
 
       - name: Deploy on EC2 via SSH
