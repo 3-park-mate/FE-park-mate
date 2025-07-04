@@ -367,7 +367,7 @@ export function PaddedSectionWithTitle({
 }: {
   title?: string;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <section className={cn('p-6 bg-white', className)}>

@@ -8,13 +8,13 @@ export default function CarSelectionSection({
 }) {
   return (
     <PaddedSectionWithTitle title="이용 차량 정보" className="relative">
-      <MyCarItem
+      {/* <MyCarItem
         vehicleNumber={vehicleNumber}
         isDefault
         nickname="차량별명"
         userVehicleNumbersId={1}
         showDeleteButton={false}
-      />
+      /> */}
       {/* <Button className="absolute top-6 right-6 h-7">변경</Button> */}
     </PaddedSectionWithTitle>
   );

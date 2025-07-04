@@ -10,7 +10,6 @@ import { useFavoriteStatus } from '@/hooks/useFavoriteStatus';
 export default function DetailMenuButtons({
   hostUuid,
   parkingLotUuid,
-  isActive,
   like,
   dislike,
   baseFee,
@@ -18,7 +17,6 @@ export default function DetailMenuButtons({
 }: {
   hostUuid: string;
   parkingLotUuid: string;
-  isActive: boolean;
   like: number;
   dislike: number;
   baseFee: number;
@@ -75,7 +73,6 @@ export default function DetailMenuButtons({
       </nav>
       <ReservationButton
         parkingLotUuid={parkingLotUuid}
-        isActive={isActive}
         baseFee={baseFee}
         baseIntervalMinutes={baseIntervalMinutes}
       />
