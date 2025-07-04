@@ -1,4 +1,5 @@
 'use client';
+import { createOrderAction } from '@/actions/order/order-service';
 import { PaymentType } from '@/types/reservationDataTypes';
 import {
   CommonButton,
@@ -8,6 +9,7 @@ import {
   loadTossPayments,
   TossPaymentsWidgets,
 } from '@tosspayments/tosspayments-sdk';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 function generateRandomString() {
@@ -31,6 +33,7 @@ export default function TossPaymentWidget({
   paymentType: PaymentType;
   userUuid: string;
 }) {
+  const router = useRouter();
   const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
   const customerKey = userUuid;
 
@@ -105,6 +108,13 @@ export default function TossPaymentWidget({
   //   await widgets!.setAmount(amount);
   // };
 
+  const searchParams = useSearchParams();
+  const reservationCode = searchParams.get('reservationCode');
+  if (reservationCode === null) {
+    router.push('/payment/fail');
+    return;
+  }
+
   return (
     <>
       <div className="box_section overflow-y-auto">
@@ -119,6 +129,12 @@ export default function TossPaymentWidget({
             // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
             onClick={async () => {
               try {
+                await createOrderAction({
+                  orderType: 'RESERVATION',
+                  productCode: reservationCode,
+                  amount: amount.value,
+                  paymentType,
+                });
                 // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
                 // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                 await widgets!.requestPayment({
@@ -133,6 +149,7 @@ export default function TossPaymentWidget({
               } catch (error) {
                 // 에러 처리하기
                 console.error(error);
+                router.push('/payment/fail');
               }
             }}
           >

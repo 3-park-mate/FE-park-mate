@@ -19,11 +19,7 @@ export default async function page({
   const { reservationCode } = await searchParams;
 
   const res = await getReservationDetailData(reservationCode);
-  if (
-    !res.success ||
-    res.data === null
-    // || res.data.status != 'WAITING'
-  )
+  if (!res.success || res.data === null || res.data.status != 'WAITING')
     notFound();
 
   const session = await getServerSession(options);
