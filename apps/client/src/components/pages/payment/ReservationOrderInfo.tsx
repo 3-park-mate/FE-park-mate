@@ -12,19 +12,21 @@ export default function ReservationOrderInfo({
   entryTime,
   exitTime,
   amount,
+  thumbnailUrl,
 }: {
   parkingLotName: string;
   address: string;
   entryTime: string;
   exitTime: string;
   amount: number;
+  thumbnailUrl: string;
 }) {
   return (
     <PaddedSectionWithTitle title="주문상세">
       <dl className="space-y-2 text-sm text-gray-600">
         <div className="flex items-center gap-3 pt-1">
           <Image
-            src="/img/no-image.png"
+            src={thumbnailUrl ?? `/img/no-image.png`}
             alt="thumbnail"
             width={70}
             height={70}
