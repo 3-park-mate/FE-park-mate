@@ -1,3 +1,4 @@
+import { getParkingLotOverviewById } from '@/actions/parking/parking-service';
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
 import NotFoundLayout from '@/components/common/NotFoundLayout';
 import PageHeader from '@/components/layouts/PageHeader';
@@ -25,11 +26,22 @@ export default async function page({
   const reservationData = res.data;
   if (!reservationData) return fallback;
 
+  const overviewRes = await getParkingLotOverviewById(
+    reservationData.parkingLotUuid
+  );
+  if (!overviewRes.success) return fallback;
+
+  const overviewData = overviewRes.data;
+  if (!overviewData) return fallback;
+
   return (
     <>
       <PageHeader className="bg-inner-background-gray" title="예약 상세" />
       <main className="pb-32 ">
-        <ReservationDetail reservationData={reservationData} />
+        <ReservationDetail
+          reservationData={reservationData}
+          overviewData={overviewData}
+        />
       </main>
     </>
   );

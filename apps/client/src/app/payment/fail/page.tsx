@@ -17,7 +17,7 @@ export default async function page({
         <h1 className="font-semibold">결제 실패</h1>
       </HeaderLayout>
       <main className="flex-1 flex items-center justify-center">
-        <PaymentFail />
+        <PaymentFail message={message} code={code} />
       </main>
     </div>
   );

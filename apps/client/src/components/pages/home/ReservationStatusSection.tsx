@@ -17,7 +17,7 @@ export default function ReservationStatusSection() {
       const res = await getReservationsData({
         size: PAGE_SIZE,
         cursor,
-        status: ['WAITING', 'CONFIRMED'],
+        status: ['CONFIRMED'],
       });
       if (res.success) {
         return {
