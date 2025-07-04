@@ -5,14 +5,14 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import AddressSection from './AddressSection';
 import ReservationActionButtons from '@/components/common/ReservationActionButtons';
 import OrderInfoSection from './OrderInfoSection';
-import { ReservationItemDataType } from '@/types/reservationDataTypes';
+import { ReservationListItemDataType } from '@/types/reservationDataTypes';
 import { ParkingLotOverviewData } from '@/types/parkingDataTypes';
 
 export default function ReservationDetail({
   reservationData,
   overviewData,
 }: {
-  reservationData: ReservationItemDataType;
+  reservationData: ReservationListItemDataType;
   overviewData: ParkingLotOverviewData;
 }) {
   const entry = formatDateParts(reservationData.entryTime);

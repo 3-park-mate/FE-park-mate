@@ -53,7 +53,7 @@ export default async function page({
         />
         <CarInfoSection vehicleNumber={reservationData.vehicleNumber} />
         <PaymentMethodSection userPoint={userPointData.point} />
-        <OrderSummarySection />
+        <OrderSummarySection amount={reservationData.amount} />
         <PaymentButton />
       </main>
     </div>

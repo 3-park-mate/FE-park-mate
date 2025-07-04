@@ -7,6 +7,7 @@ import {
   CreateReservationResponseType,
   ReservationCancelDataType,
   ReservationItemDataType,
+  ReservationListItemDataType,
   ReservationListResponse,
   ReservationStatus,
 } from '@/types/reservationDataTypes';
@@ -65,7 +66,7 @@ export async function getReservationsData({
 
 export async function getReservationDetailData(
   reservationCode: string
-): Promise<ApiResponse<ReservationItemDataType>> {
+): Promise<ApiResponse<ReservationListItemDataType>> {
   try {
     const session = await getServerSession(options);
     if (!session) {
@@ -75,7 +76,7 @@ export async function getReservationDetailData(
     const accessToken = session.user.accessToken;
     console.log('accessToken:', accessToken);
 
-    const res = await api.get<CommonResponseType<ReservationItemDataType>>(
+    const res = await api.get<CommonResponseType<ReservationListItemDataType>>(
       API_PREFIX,
       `/${reservationCode}`,
       undefined,
