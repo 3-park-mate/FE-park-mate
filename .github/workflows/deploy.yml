@@ -35,22 +35,22 @@ jobs:
           mkdir -p apps/client apps/admin
                
           echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY_CLIENT }}" > apps/client/.env.production
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" > apps/client/.env.production
-          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" > apps/client/.env.production
-          echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" > apps/client/.env.production
-          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" > apps/client/.env.production
-          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" > apps/client/.env.production
-          echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" > apps/client/.env.production
-          echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" > apps/client/.env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" >> apps/client/.env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" >> apps/client/.env.production
+          echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" >> apps/client/.env.production
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" >> apps/client/.env.production
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" >> apps/client/.env.production
+          echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" >> apps/client/.env.production
+          echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" >> apps/client/.env.production
           
           
 #          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/client/.env.production
@@ -105,22 +105,22 @@ jobs:
             mkdir -p ~/env
             
             echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY_CLIENT }}" > ~/env/.env.front
-            echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" > ~/env/.env.front
-            echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" > ~/env/.env.front
-            echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" > ~/env/.env.front
-            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" > ~/env/.env.front
-            echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" > ~/env/.env.front
-            echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" > ~/env/.env.front
-            echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" > ~/env/.env.front
+            echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" >> ~/env/.env.front
+            echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" >> ~/env/.env.front
+            echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" >> ~/env/.env.front
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" >> ~/env/.env.front
+            echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" >> ~/env/.env.front
+            echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" >> ~/env/.env.front
             
             echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > ~/env/.env.front
             echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> ~/env/.env.front
