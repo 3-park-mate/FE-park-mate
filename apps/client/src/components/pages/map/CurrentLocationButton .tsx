@@ -12,6 +12,7 @@ export default function CurrentLocationButton({
   return (
     <>
       <button
+        type="button"
         onClick={onClick}
         className={cn('absolute bottom-25 right-5 z-50', className)}
       >

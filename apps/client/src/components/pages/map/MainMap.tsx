@@ -82,8 +82,12 @@ export default function MainMap() {
         )}
       </Map>
       <CurrentLocationButton
-        className={((clickMarker || isOpenListModal) && 'bottom-75') || ''}
-        onClick={centerMapToCurrentLocation}
+        className={
+          (clickMarker && 'bottom-1/3') ||
+          (isOpenListModal && 'bottom-3/7') ||
+          ''
+        }
+        onClick={() => centerMapToCurrentLocation()}
       />
       <ParkingLotListModal
         isOpenListModal={isOpenListModal}
