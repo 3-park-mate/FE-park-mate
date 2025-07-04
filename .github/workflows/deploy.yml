@@ -33,7 +33,7 @@ jobs:
       - name: Generate .env.production for ParkMate Turbo Repo
         run: |
           mkdir -p apps/client apps/admin
-               
+          
           echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY_CLIENT }}" > apps/client/.env.production
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" >> apps/client/.env.production
           echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" >> apps/client/.env.production
@@ -64,14 +64,11 @@ jobs:
           echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> apps/admin/.env.production
           echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> apps/admin/.env.production
           echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/admin/.env.production
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/admin/.env.production
-
       - name: Build and Push Multi-App
         run: |
           docker build -t turbo-multi-app:latest .
           docker tag turbo-multi-app:latest ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
-
       - name: Copy docker-compose and .env to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -80,8 +77,6 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: |
             docker-compose-frontend.yml
-            apps/client/.env.production
-            apps/admin/.env.production
           target: "~/"
 
       - name: Deploy on EC2 via SSH
