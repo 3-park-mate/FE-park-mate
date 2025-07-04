@@ -28,16 +28,15 @@ export default async function page({
 
   const reservationData = res.data;
 
-  const overviewRes = await getParkingLotOverviewById(
-    reservationData.parkingLotUuid
-  );
-  if (!overviewRes.success || overviewRes.data === null) notFound();
+  const [overviewRes, userPointRes] = await Promise.all([
+    getParkingLotOverviewById(reservationData.parkingLotUuid),
+    getUserPointData(),
+  ]);
+
+  if (!overviewRes.success || !overviewRes.data) notFound();
+  if (!userPointRes.success || !userPointRes.data) notFound();
 
   const overviewData = overviewRes.data;
-
-  const userPointRes = await getUserPointData();
-  if (!userPointRes.success || userPointRes.data === null) notFound();
-
   const userPointData = userPointRes.data;
 
   return (
