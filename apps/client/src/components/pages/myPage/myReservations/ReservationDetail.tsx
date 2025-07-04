@@ -6,11 +6,14 @@ import AddressSection from './AddressSection';
 import ReservationActionButtons from '@/components/common/ReservationActionButtons';
 import OrderInfoSection from './OrderInfoSection';
 import { ReservationItemDataType } from '@/types/reservationDataTypes';
+import { ParkingLotOverviewData } from '@/types/parkingDataTypes';
 
 export default function ReservationDetail({
   reservationData,
+  overviewData,
 }: {
   reservationData: ReservationItemDataType;
+  overviewData: ParkingLotOverviewData;
 }) {
   const entry = formatDateParts(reservationData.entryTime);
   const exit = formatDateParts(reservationData.exitTime);
@@ -37,11 +40,17 @@ export default function ReservationDetail({
     <PaddedSection className="space-y-6 py-5">
       <DetailInfo
         reservationCode={reservationData.reservationCode}
-        parkingLotThumbnailUrl={reservationData.parkingLotThumbnailUrl}
         parkingLotName={reservationData.parkingLotName}
         status={reservationData.status}
+        thumbnailUrl={overviewData.thumbnailUrl}
       />
-      <AddressSection />
+      <AddressSection
+        parkingLotUuid={reservationData.parkingLotUuid}
+        mainAddress={overviewData.mainAddress}
+        detailAddress={overviewData.detailAddress}
+        latitude={overviewData.latitude}
+        longitude={overviewData.longitude}
+      />
       <ReservationInfoList timeItems={timeItems} infoItems={infoItems} />
       <hr />
       <OrderInfoSection />
