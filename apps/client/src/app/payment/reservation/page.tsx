@@ -1,13 +1,13 @@
 import PageHeader from '@/components/layouts/PageHeader';
 import CarInfoSection from '@/components/pages/payment/CarInfoSection';
 import ReservationOrderInfo from '@/components/pages/payment/ReservationOrderInfo';
-import OrderSummarySection from '@/components/pages/payment/OrderSummarySection';
-import PaymentButton from '@/components/pages/payment/PaymentButton';
-import PaymentMethodSection from '@/components/pages/payment/PaymentMethodSection';
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
 import { notFound } from 'next/navigation';
 import { getParkingLotOverviewById } from '@/actions/parking/parking-service';
 import { getUserPointData } from '@/actions/user/user-service';
+import PaymentCheckout from '@/components/pages/payment/PaymentCheckout';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 
 export default async function page({
   searchParams,
@@ -25,6 +25,10 @@ export default async function page({
     // || res.data.status != 'WAITING'
   )
     notFound();
+
+  const session = await getServerSession(options);
+  if (!session) return notFound();
+  const userUuid = session.user.uuid;
 
   const reservationData = res.data;
 
@@ -52,9 +56,11 @@ export default async function page({
           thumbnailUrl={overviewData.thumbnailUrl}
         />
         <CarInfoSection vehicleNumber={reservationData.vehicleNumber} />
-        <PaymentMethodSection userPoint={userPointData.point} />
-        <OrderSummarySection amount={reservationData.amount} />
-        <PaymentButton />
+        <PaymentCheckout
+          point={userPointData.point}
+          amount={reservationData.amount}
+          userUuid={userUuid}
+        />
       </main>
     </div>
   );

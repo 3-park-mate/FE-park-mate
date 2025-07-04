@@ -6,13 +6,20 @@ import {
 import { ChevronLeft } from 'lucide-react';
 import { useEffect } from 'react';
 import TossPaymentWidget from './TossPaymentWidget';
+import { PaymentType } from '@/types/reservationDataTypes';
 
 export default function WidgetModal({
   isOpen,
   onClose,
+  amount,
+  paymentType,
+  userUuid,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  amount: number;
+  paymentType: PaymentType;
+  userUuid: string;
 }) {
   useEffect(() => {
     if (isOpen) {
@@ -38,7 +45,11 @@ export default function WidgetModal({
         </button>
         <h1 className="font-semibold">결제하기</h1>
       </HeaderLayout>
-      <TossPaymentWidget />
+      <TossPaymentWidget
+        amount={amount}
+        paymentType={paymentType}
+        userUuid={userUuid}
+      />
     </GlobalContainerView>
   );
 }
