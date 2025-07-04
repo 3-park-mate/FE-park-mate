@@ -1,0 +1,141 @@
+name: Frontend Deploy to ECR and EC2
+
+on:
+  push:
+    branches:
+      - dev
+      - chore/cicd-setup
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Generate .env.production for ParkMate Turbo Repo
+        run: |
+          mkdir -p apps/client apps/admin
+               
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY_CLIENT }}" > apps/client/.env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" > apps/client/.env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" > apps/client/.env.production
+          echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" > apps/client/.env.production
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" > apps/client/.env.production
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" > apps/client/.env.production
+          echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" > apps/client/.env.production
+          echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" > apps/client/.env.production
+          
+          
+#          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_CLIENT_URL }}" > apps/client/.env.production
+#          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> apps/client/.env.production
+#          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> apps/client/.env.production
+#          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> apps/client/.env.production
+#          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" >> apps/client/.env.production
+#          echo "AWS_REGION=${{ secrets.FE_AWS_REGION }}" >> apps/client/.env.production
+#          echo "AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" >> apps/client/.env.production
+#          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> apps/client/.env.production
+#          echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> apps/client/.env.production
+#          echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> apps/client/.env.production
+#          echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> apps/client/.env.production
+#          echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/client/.env.production
+
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_ADMIN_URL }}" > apps/admin/.env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> apps/admin/.env.production
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> apps/admin/.env.production
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> apps/admin/.env.production
+          echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" >> apps/admin/.env.production
+          echo "AWS_REGION=${{ secrets.FE_AWS_REGION }}" >> apps/admin/.env.production
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" >> apps/admin/.env.production
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> apps/admin/.env.production
+          echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> apps/admin/.env.production
+          echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> apps/admin/.env.production
+          echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> apps/admin/.env.production
+          echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> apps/admin/.env.production
+
+      - name: Build and Push Multi-App
+        run: |
+          docker build -t turbo-multi-app:latest .
+          docker tag turbo-multi-app:latest ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
+
+      - name: Copy docker-compose and .env to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: |
+            docker-compose-frontend.yml
+          target: "~/"
+
+      - name: Deploy on EC2 via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            mkdir -p ~/env
+            
+            echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY_CLIENT }}" > ~/env/.env.front
+            echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_CLIENT }}" > ~/env/.env.front
+            echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_CLIENT }}" > ~/env/.env.front
+            echo "BASE_API_URL=${{ secrets.BASE_API_URL_CLIENT }}" > ~/env/.env.front
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID_CLIENT }}" > ~/env/.env.front
+            echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" > ~/env/.env.front
+            echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" > ~/env/.env.front
+            echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" > ~/env/.env.front
+            
+            echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" > ~/env/.env.front
+            echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> ~/env/.env.front
+            echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> ~/env/.env.front
+            echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> ~/env/.env.front
+            echo "NEXT_PUBLIC_KAKAO_JS_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_JS_KEY }}" >> ~/env/.env.front
+            echo "AWS_REGION=${{ secrets.FE_AWS_REGION }}" >> ~/env/.env.front
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.FE_AWS_ACCESS_KEY_ID }}" >> ~/env/.env.front
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.FE_AWS_SECRET_ACCESS_KEY }}" >> ~/env/.env.front
+            echo "AWS_BUCKET_NAME=${{ secrets.FE_AWS_BUCKET_NAME }}" >> ~/env/.env.front
+            echo "AWS_BUCKET_URL=${{ secrets.FE_AWS_BUCKET_URL }}" >> ~/env/.env.front
+            echo "BASE_API_URL=${{ secrets.BASE_API_URL }}" >> ~/env/.env.front
+            echo "AWS_CLOUDFRONT_DOMAIN=${{ secrets.FE_AWS_CLOUDFRONT_DOMAIN }}" >> ~/env/.env.front
+            
+            docker pull ${{ steps.login-ecr.outputs.registry }}/turbo-multi-app:latest
+            docker compose -f docker-compose-frontend.yml down
+            docker compose -f docker-compose-frontend.yml up -d
+            docker image prune -f
