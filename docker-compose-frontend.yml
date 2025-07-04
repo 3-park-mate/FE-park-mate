@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  frontend-client:
+    container_name: frontend-client-service
+    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/turbo-multi-app
+    ports:
+      - "3000:3000"
+    restart: always
+    command: pnpm --filter=client start
+    networks:
+      - backend
+
+  frontend-admin:
+    container_name: frontend-admin-service
+    image: 090188239653.dkr.ecr.ap-northeast-2.amazonaws.com/turbo-multi-app
+    ports:
+      - "3001:3000"
+    restart: always
+    command: pnpm --filter=admin start
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
