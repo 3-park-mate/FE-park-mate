@@ -53,8 +53,8 @@ export default function ReservationDetail({
       />
       <ReservationInfoList timeItems={timeItems} infoItems={infoItems} />
       <hr />
-      <OrderInfoSection />
-      <hr />
+      {/* <OrderInfoSection />
+      <hr /> */}
       <ReservationActionButtons
         showQrButton={canCancel}
         showCancelButton={canCancel}

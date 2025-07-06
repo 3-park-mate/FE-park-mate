@@ -3,8 +3,15 @@ import OrderInfoSection from '../myPage/myReservations/OrderInfoSection';
 import Link from 'next/link';
 import { buttonVariants } from '@repo/ui/components/base/button';
 import { CircleCheck } from 'lucide-react';
+import { OrderDetailDataType } from '@/types/orderDataTypes';
 
-export default function ReservationSuccess() {
+export default function ReservationSuccess({
+  orderData,
+  reservationCode,
+}: {
+  orderData: OrderDetailDataType;
+  reservationCode: string;
+}) {
   return (
     <PaddedSection className="space-y-6 w-full flex flex-col">
       <section className="flex flex-col justify-center items-center gap-3">
@@ -14,10 +21,10 @@ export default function ReservationSuccess() {
         />
         <h2 className="text-15px text-gray-800">주차장 예약이 완료되었어요.</h2>
       </section>
-      <OrderInfoSection />
+      <OrderInfoSection orderData={orderData} />
       <section className="flex flex-col gap-3">
         <Link
-          href="#"
+          href={`/my-reservation/${reservationCode}`}
           className={`${buttonVariants({ variant: 'default' })} h-11`}
         >
           예약 내역 바로가기
