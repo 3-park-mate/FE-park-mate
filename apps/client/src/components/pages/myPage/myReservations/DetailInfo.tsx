@@ -5,22 +5,22 @@ import Image from 'next/image';
 
 export default function DetailInfo({
   reservationCode,
-  parkingLotThumbnailUrl,
   parkingLotName,
   status,
+  thumbnailUrl,
 }: {
   reservationCode: string;
-  parkingLotThumbnailUrl: string;
   parkingLotName: string;
   status: ReservationStatus;
+  thumbnailUrl: string;
 }) {
   const badge = statusBadgeMap[status];
   return (
     <section>
-      <p className="text-gray-2 text-xs pb-1">예약코드 : {reservationCode}</p>
+      {/* <p className="text-gray-2 text-xs pb-1">예약코드 : {reservationCode}</p> */}
       <div className="flex  items-center gap-3">
         <Image
-          src={parkingLotThumbnailUrl}
+          src={thumbnailUrl ?? '/img/no-image.png'}
           alt="thumbnail"
           width={70}
           height={70}

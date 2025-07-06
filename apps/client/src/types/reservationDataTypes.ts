@@ -32,6 +32,7 @@ export interface ReservationListItemDataType {
   parkingLotUuid: string;
   parkingLotName: string;
   vehicleNumber: string;
+  amount: number;
   entryTime: string;
   exitTime: string;
   status: ReservationStatus;

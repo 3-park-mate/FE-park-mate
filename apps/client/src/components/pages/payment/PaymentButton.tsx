@@ -5,8 +5,17 @@ import {
 } from '@repo/ui/components/common/CommonLayouts';
 import { useState } from 'react';
 import WidgetModal from './WidgetModal';
+import { PaymentType } from '@/types/reservationDataTypes';
 
-export default function PaymentButton() {
+export default function PaymentButton({
+  amount,
+  paymentType,
+  userUuid,
+}: {
+  amount: number;
+  paymentType: PaymentType;
+  userUuid: string;
+}) {
   const [isOpenWidget, setIsOpentWidget] = useState(false);
   const handlePaymentClick = async () => {
     setIsOpentWidget(true);
@@ -31,6 +40,9 @@ export default function PaymentButton() {
           onClose={() => {
             setIsOpentWidget(false);
           }}
+          amount={amount}
+          paymentType={paymentType}
+          userUuid={userUuid}
         />
       )}
     </PaddedSection>

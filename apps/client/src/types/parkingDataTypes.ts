@@ -136,6 +136,7 @@ export interface ParkingLotOverviewData {
   longitude: number;
   isEvChargingAvailable: boolean;
   extraInfo: string;
+  thumbnailUrl: string;
 }
 
 export interface WeeklyOperationInfo {

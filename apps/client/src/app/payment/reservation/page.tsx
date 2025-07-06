@@ -1,12 +1,13 @@
 import PageHeader from '@/components/layouts/PageHeader';
-import CarSelectionSection from '@/components/pages/payment/CarSelectionSection';
+import CarInfoSection from '@/components/pages/payment/CarInfoSection';
 import ReservationOrderInfo from '@/components/pages/payment/ReservationOrderInfo';
-import OrderSummarySection from '@/components/pages/payment/OrderSummarySection';
-import PaymentButton from '@/components/pages/payment/PaymentButton';
-import PaymentMethodSection from '@/components/pages/payment/PaymentMethodSection';
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
 import { notFound } from 'next/navigation';
 import { getParkingLotOverviewById } from '@/actions/parking/parking-service';
+import { getUserPointData } from '@/actions/user/user-service';
+import PaymentCheckout from '@/components/pages/payment/PaymentCheckout';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 
 export default async function page({
   searchParams,
@@ -18,21 +19,25 @@ export default async function page({
   const { reservationCode } = await searchParams;
 
   const res = await getReservationDetailData(reservationCode);
-  if (
-    !res.success ||
-    res.data === null
-    // || res.data.status != 'WAITING'
-  )
+  if (!res.success || res.data === null || res.data.status != 'WAITING')
     notFound();
+
+  const session = await getServerSession(options);
+  if (!session) return notFound();
+  const userUuid = session.user.uuid;
 
   const reservationData = res.data;
 
-  const overviewRes = await getParkingLotOverviewById(
-    reservationData.parkingLotUuid
-  );
-  if (!overviewRes.success || res.data === null) notFound();
+  const [overviewRes, userPointRes] = await Promise.all([
+    getParkingLotOverviewById(reservationData.parkingLotUuid),
+    getUserPointData(),
+  ]);
+
+  if (!overviewRes.success || !overviewRes.data) notFound();
+  if (!userPointRes.success || !userPointRes.data) notFound();
 
   const overviewData = overviewRes.data;
+  const userPointData = userPointRes.data;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -44,11 +49,14 @@ export default async function page({
           entryTime={reservationData.entryTime}
           exitTime={reservationData.exitTime}
           amount={30000}
+          thumbnailUrl={overviewData.thumbnailUrl}
         />
-        <CarSelectionSection vehicleNumber={reservationData.vehicleNumber} />
-        <PaymentMethodSection />
-        <OrderSummarySection />
-        <PaymentButton />
+        <CarInfoSection vehicleNumber={reservationData.vehicleNumber} />
+        <PaymentCheckout
+          point={userPointData.point}
+          amount={reservationData.amount}
+          userUuid={userUuid}
+        />
       </main>
     </div>
   );

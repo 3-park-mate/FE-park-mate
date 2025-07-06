@@ -1,5 +1,7 @@
+import { requestPaymentAction } from '@/actions/payment/payment-service';
 import ReservationSuccess from '@/components/pages/payment/ReservationSuccess';
 import { HeaderLayout } from '@repo/ui/components/common/CommonLayouts';
+import { redirect } from 'next/navigation';
 
 export default async function page({
   searchParams,
@@ -12,14 +14,34 @@ export default async function page({
 }) {
   const { paymentKey, orderId, amount } = await searchParams;
 
-  // 전달된 key 값이 유효한지 확인하는 로직 추가 예정
+  if (!paymentKey || !orderId || !amount) {
+    console.error('필수 결제 파라미터 누락:', { paymentKey, orderId, amount });
+    redirect('/payment/fail?message=missing_params');
+  }
+
+  const numericAmount = Number(amount);
+  if (isNaN(numericAmount)) {
+    console.error('유효하지 않은 amount 값:', amount);
+    redirect('/payment/fail?message=invalid_amount');
+  }
 
   const payload = {
     paymentKey,
     orderId,
-    amount: Number(amount),
+    amount: numericAmount,
   };
-  console.log(payload);
+  console.log('결제 승인 요청 페이로드:', payload);
+
+  const res = await requestPaymentAction(payload);
+
+  if (!res.success) {
+    console.error('결제 승인 실패:', res.message);
+    redirect(
+      `/payment/fail?message=${encodeURIComponent(res.message || '결제 승인 중 오류가 발생했습니다.')}`
+    );
+  }
+
+  console.log('결제 승인 성공:', res.data);
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -1,4 +1,6 @@
 'use client';
+import { createOrderAction } from '@/actions/order/order-service';
+import { PaymentType } from '@/types/reservationDataTypes';
 import {
   CommonButton,
   PaddedLayout,
@@ -7,30 +9,37 @@ import {
   loadTossPayments,
   TossPaymentsWidgets,
 } from '@tosspayments/tosspayments-sdk';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 function generateRandomString() {
   if (typeof window !== 'undefined') {
     return window.btoa(Math.random().toString()).slice(0, 20);
   }
-  return ''; // 서버 환경일 경우 기본값 반환
+  return '';
 }
-
-// TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
-// TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-// @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
-const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
-const customerKey = generateRandomString();
 
 interface Amount {
   currency: string;
   value: number;
 }
 
-export default function TossPaymentWidget() {
+export default function TossPaymentWidget({
+  amount: paymentAmount,
+  paymentType,
+  userUuid,
+}: {
+  amount: number;
+  paymentType: PaymentType;
+  userUuid: string;
+}) {
+  const router = useRouter();
+  const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
+  const customerKey = userUuid;
+
   const [amount, setAmount] = useState<Amount>({
     currency: 'KRW',
-    value: 50000,
+    value: paymentAmount,
   });
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
@@ -57,7 +66,6 @@ export default function TossPaymentWidget() {
     }
 
     fetchPaymentWidgets();
-    // eslint-disable-next-line
   }, [clientKey, customerKey]);
 
   useEffect(() => {
@@ -95,10 +103,17 @@ export default function TossPaymentWidget() {
     // eslint-disable-next-line
   }, [widgets]);
 
-  const updateAmount = async (amount: Amount) => {
-    setAmount(amount);
-    await widgets!.setAmount(amount);
-  };
+  // const updateAmount = async (amount: Amount) => {
+  //   setAmount(amount);
+  //   await widgets!.setAmount(amount);
+  // };
+
+  const searchParams = useSearchParams();
+  const reservationCode = searchParams.get('reservationCode');
+  if (reservationCode === null) {
+    router.push('/payment/fail');
+    return;
+  }
 
   return (
     <>
@@ -114,20 +129,27 @@ export default function TossPaymentWidget() {
             // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
             onClick={async () => {
               try {
+                await createOrderAction({
+                  orderType: 'RESERVATION',
+                  productCode: reservationCode,
+                  amount: amount.value,
+                  paymentType,
+                });
                 // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
                 // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                 await widgets!.requestPayment({
                   orderId: generateRandomString(),
-                  orderName: '토스 티셔츠 외 2건',
+                  orderName: '파크메이트 주차권',
                   successUrl: window.location.origin + '/payment/success',
                   failUrl: window.location.origin + '/payment/fail',
-                  customerEmail: 'customer123@gmail.com',
-                  customerName: '김토스',
-                  customerMobilePhone: '01012341234',
+                  // customerEmail: 'customer123@gmail.com',
+                  // customerName: '김토스',
+                  // customerMobilePhone: '01012341234',
                 });
               } catch (error) {
                 // 에러 처리하기
                 console.error(error);
+                router.push('/payment/fail');
               }
             }}
           >

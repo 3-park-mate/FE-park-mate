@@ -24,19 +24,29 @@ export default async function ReviewSection({
         <span className="text-gray-3 text-base">{totalReviews}</span>
       </h2>
       <section className="py-2">
-        {reviewsPreviewData.map((review, index) => (
-          <div key={index}>
-            <ReviewItem review={review} />
-            {index !== reviewsPreviewData.length - 1 && <hr className="my-2" />}
-          </div>
-        ))}
-        <Link
-          href={`/reviews/${parkingLotUuid}`}
-          className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-white !text-black mt-4`}
-          style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
-        >
-          리뷰 전체보기 <ChevronRight />
-        </Link>
+        {reviewsPreviewData.length === 0 ? (
+          <p className="text-center text-15px text-gray-400 py-10">
+            등록된 리뷰가 없습니다.
+          </p>
+        ) : (
+          <>
+            {reviewsPreviewData.map((review, index) => (
+              <div key={index}>
+                <ReviewItem review={review} />
+                {index !== reviewsPreviewData.length - 1 && (
+                  <hr className="my-2" />
+                )}
+              </div>
+            ))}
+            <Link
+              href={`/reviews/${parkingLotUuid}`}
+              className={`${buttonVariants({ variant: 'default' })} w-full h-10 bg-white !text-black mt-4`}
+              style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+            >
+              리뷰 전체보기 <ChevronRight />
+            </Link>
+          </>
+        )}
       </section>
     </PaddedSection>
   );

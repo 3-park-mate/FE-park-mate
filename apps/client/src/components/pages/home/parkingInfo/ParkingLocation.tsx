@@ -28,12 +28,7 @@ export default function ParkingLocation({
         onClick={onQRClick}
         className="bg-white w-12 aspect-square rounded-lg drop-shadow-lg flex justify-center items-center cursor-pointer"
       >
-        <Image
-          src="https://dummyimage.com/32x32"
-          alt="qr-image"
-          width={32}
-          height={32}
-        />
+        <Image src="/img/qr-image.png" alt="qr-image" width={32} height={32} />
       </button>
     </div>
   );

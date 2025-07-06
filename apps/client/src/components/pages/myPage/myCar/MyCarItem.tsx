@@ -6,22 +6,37 @@ import SetDefaultCarButton from './SetDefaultCarButton';
 
 export default async function MyCarItem({
   vehicleUuid,
+  fallbackVehicleData,
   showDeleteButton = true,
 }: {
-  vehicleUuid: string;
+  vehicleUuid?: string;
+  fallbackVehicleData?: Partial<
+    Pick<UserVehicleDataType, 'nickname' | 'vehicleNumber' | 'defaultSelected'>
+  >;
   showDeleteButton?: boolean;
 }) {
-  const { data: vehicleData } = (await getUserVehicleDetailData(
-    vehicleUuid
-  )) as {
-    success: true;
-    data: UserVehicleDataType;
-  };
+  let vehicleData: Partial<
+    Pick<UserVehicleDataType, 'nickname' | 'vehicleNumber' | 'defaultSelected'>
+  >;
+
+  if (vehicleUuid) {
+    const { data } = (await getUserVehicleDetailData(vehicleUuid)) as {
+      success: true;
+      data: UserVehicleDataType;
+    };
+    vehicleData = data;
+  } else if (fallbackVehicleData) {
+    vehicleData = fallbackVehicleData;
+  } else {
+    return;
+  }
 
   return (
     <div className="outline outline-gray-1 rounded-lg px-4 py-3">
       <div className="flex gap-1 items-center">
-        <p className="text-15px">{vehicleData.nickname}</p>
+        {vehicleData.nickname && (
+          <p className="text-15px">{vehicleData.nickname}</p>
+        )}
         {vehicleData.defaultSelected && (
           <div className="h-[20px] text-primary-dark-50 border border-primary-dark-50 text-xs px-1 rounded-lg flex items-center">
             기본
@@ -30,17 +45,23 @@ export default async function MyCarItem({
       </div>
       <div className="flex gap-1 items-center">
         <Car fill="currentColor" className="text-gray-light-2" size={18} />
-        <p className="text-gray-dark-2 text-sm">{vehicleData.vehicleNumber}</p>
+        <p className="text-gray-dark-2 text-sm">
+          {vehicleData.vehicleNumber ?? ''}
+        </p>
       </div>
-      <div className="space-x-1.5 flex items-center pt-2 text-sm">
-        {showDeleteButton && <DeleteCarButton vehicleUuid={vehicleUuid} />}
-        {!vehicleData.defaultSelected && (
-          <>
-            <p className="text-gray-dark-1">|</p>{' '}
-            <SetDefaultCarButton vehicleUuid={vehicleUuid} />
-          </>
-        )}
-      </div>
+      {(showDeleteButton || (!vehicleData.defaultSelected && vehicleUuid)) && (
+        <div className="space-x-1.5 flex items-center pt-2 text-sm">
+          {showDeleteButton && vehicleUuid && (
+            <DeleteCarButton vehicleUuid={vehicleUuid} />
+          )}
+          {!vehicleData.defaultSelected && vehicleUuid && (
+            <>
+              <p className="text-gray-dark-1">|</p>{' '}
+              <SetDefaultCarButton vehicleUuid={vehicleUuid} />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
