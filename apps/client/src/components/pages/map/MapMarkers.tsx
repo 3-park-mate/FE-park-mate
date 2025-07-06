@@ -6,27 +6,31 @@ import {
   MapMarker,
 } from 'react-kakao-maps-sdk';
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
-import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
-import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
-import { SetStateAction } from 'react';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
+import { useMapStore } from '@/store/useMapStore';
 
 export default function MapMarkers({
-  mapLevel,
+  mapRef,
   clickMarker,
-  markerData,
-  setIsOpenListModal,
+  parkingLotList,
   setClickMarker,
 }: {
-  mapLevel: number;
+  mapRef: kakao.maps.Map;
   clickMarker: ParkingLotSimpleInfoType | null;
-  markerData: ParkingLotsInBoxResponseType;
-  setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
+  parkingLotList: ParkingLotsInBoxResponseType;
   setClickMarker: (id: ParkingLotSimpleInfoType) => void;
 }) {
-  const { setGnbNavBar } = useGnbNavBarStore();
+  const setIsOpenSimpleModal = useMapStore(
+    (state) => state.setIsOpenSimpleModal
+  );
+
+  const handleClickMarker = (data: ParkingLotSimpleInfoType) => {
+    setClickMarker(data);
+    setIsOpenSimpleModal(true);
+  };
+
   return (
     <>
       <MarkerClusterer
@@ -35,22 +39,17 @@ export default function MapMarkers({
         minLevel={6}
         minClusterSize={1}
       >
-        {markerData.parkingLots.map((data) => (
+        {parkingLotList.parkingLots.map((data) => (
           <MapMarker
             key={`marker-${data.parkingLotUuid}`}
             position={{ lat: data.latitude, lng: data.longitude }}
-            clickable={true}
-            onClick={() => {
-              setIsOpenListModal(false);
-              setGnbNavBar(false);
-              setClickMarker(data);
-            }}
+            clickable={false}
           />
         ))}
       </MarkerClusterer>
 
-      {mapLevel <= 5 &&
-        markerData.parkingLots.map((data) => (
+      {mapRef.getLevel() <= 5 &&
+        parkingLotList.parkingLots.map((data) => (
           <CustomOverlayMap
             key={`overlay-${data.parkingLotUuid}`}
             position={{ lat: data.latitude, lng: data.longitude }}
@@ -62,9 +61,7 @@ export default function MapMarkers({
             <div
               className="relative"
               onClick={() => {
-                setIsOpenListModal(false);
-                setGnbNavBar(false);
-                setClickMarker(data);
+                handleClickMarker(data);
               }}
             >
               {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
@@ -75,8 +72,6 @@ export default function MapMarkers({
             </div>
           </CustomOverlayMap>
         ))}
-
-      {clickMarker && <ParkingLotSimpleInfoModal clickMarker={clickMarker} />}
     </>
   );
 }

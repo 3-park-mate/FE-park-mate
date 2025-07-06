@@ -6,7 +6,6 @@ export default function CurrentLocationButton({
   className,
 }: {
   onClick: () => void;
-
   className?: string;
 }) {
   return (

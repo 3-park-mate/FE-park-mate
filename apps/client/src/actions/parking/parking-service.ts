@@ -100,7 +100,9 @@ export async function getParkingLotsInBox(
       swLng: data.swLng.toString(),
       neLat: data.neLat.toString(),
       neLng: data.neLng.toString(),
-      isEvChargingAvailable: data.isEvChargingAvailable.toString(),
+      isEvChargingAvailable: data.isEvChargingAvailable
+        ? data.isEvChargingAvailable.toString()
+        : 'false',
     };
 
     if (data.entry) {

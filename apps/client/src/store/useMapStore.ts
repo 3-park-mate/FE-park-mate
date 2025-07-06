@@ -1,73 +1,44 @@
-import { ScheduleType } from '@/types/initialDataTypes';
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import { create } from 'zustand';
 
 interface MapState {
-  mapInfo: {
-    center: { lat: number | null; lng: number | null };
-    level: number | null;
-  };
-  filterInfo: {
-    filterSchedule: ScheduleType | null;
-    filterEv: boolean;
-  };
-  modalInfo: {
-    simpleModal: ParkingLotSimpleInfoType | null;
-    openListModal: boolean;
-  };
-  setCenter: (lat: number, lng: number) => void;
+  center: { lat: number | undefined; lng: number | undefined };
+  level: number;
+  setCenter: (coords: { lat: number; lng: number }) => void;
   setLevel: (level: number) => void;
-  setClickMarker: (data: ParkingLotSimpleInfoType) => void;
-  setFilterSchedule: (schedule: ScheduleType) => void;
-  setFilterEv: (ev: boolean) => void;
 }
 
-export const useMapStore = create<MapState>((set, get) => ({
-  mapInfo: {
-    center: { lat: null, lng: null },
-    level: null,
+interface MapModalState {
+  isOpenSimpleModal: boolean;
+  isOpenListModal: boolean;
+  setIsOpenSimpleModal: (isOpen: boolean) => void;
+  setIsOpenListModal: (isOpen: boolean) => void;
+  clearSelection: () => void;
+}
+
+export const useMapStore = create<MapModalState & MapState>((set, get) => ({
+  center: { lat: undefined, lng: undefined },
+  level: 5,
+  setCenter: (coords) => {
+    set({ center: { lat: coords.lat, lng: coords.lng } });
   },
-  filterInfo: {
-    filterSchedule: null,
-    filterEv: false,
+  setLevel: (level) => {
+    set({ level: level });
   },
-  modalInfo: {
-    simpleModal: null,
-    openListModal: false,
+  isOpenListModal: false,
+  isOpenSimpleModal: false,
+  setIsOpenSimpleModal: (isOpen) => {
+    set({ isOpenSimpleModal: isOpen });
   },
-  setCenter: (lat, lng) =>
-    set((state) => ({
-      mapInfo: {
-        ...state.mapInfo,
-        center: { lat, lng },
-      },
-    })),
-  setLevel: (level) =>
-    set((state) => ({
-      mapInfo: {
-        ...state.mapInfo,
-        level: level,
-      },
-    })),
-  setClickMarker: (data) =>
-    set((state) => ({
-      mapInfo: {
-        ...state.mapInfo,
-        clickMarker: data,
-      },
-    })),
-  setFilterSchedule: (schedule) =>
-    set((state) => ({
-      filterInfo: {
-        ...state.filterInfo,
-        filterSchedule: schedule,
-      },
-    })),
-  setFilterEv: (ev) =>
-    set((state) => ({
-      filterInfo: {
-        ...state.filterInfo,
-        filterEv: ev,
-      },
-    })),
+
+  setIsOpenListModal: (isOpen) => {
+    set({ isOpenListModal: isOpen });
+  },
+  clearSelection: () => {
+    if (get().isOpenSimpleModal) {
+      set({ isOpenSimpleModal: false });
+    }
+    if (get().isOpenListModal) {
+      set({ isOpenListModal: false });
+    }
+  },
 }));

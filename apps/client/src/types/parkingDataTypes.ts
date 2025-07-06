@@ -151,7 +151,7 @@ export interface GetParkingLotsInBoxRequestType {
   swLng: number;
   neLat: number;
   neLng: number;
-  isEvChargingAvailable: boolean;
+  isEvChargingAvailable?: boolean;
   entry?: string;
   exit?: string;
 }

@@ -1,26 +1,27 @@
+'use client';
+
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
-import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import { useMapStore } from '@/store/useMapStore';
 
 export default function ParkingLotListModal({
-  isOpenListModal,
   setClickMarker,
-  setIsOpenListModal,
   parkingLotList,
   isLoading,
 }: {
-  isOpenListModal: boolean;
   setClickMarker: (id: ParkingLotSimpleInfoType) => void;
-  setIsOpenListModal: React.Dispatch<SetStateAction<boolean>>;
   parkingLotList: ParkingLotsInBoxResponseType;
   isLoading: boolean;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const isOpenListModal = useMapStore((state) => state.isOpenListModal);
+  const setIsOpenListModal = useMapStore((state) => state.setIsOpenListModal);
 
   useEffect(() => {
     const target = modalRef.current;
