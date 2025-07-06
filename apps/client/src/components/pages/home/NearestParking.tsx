@@ -1,9 +1,100 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import ParkingCarousel from '@/components/common/ParkingCarousel';
-import { parkingCarouselItemsDummy } from '@/data/parkingDummyDatas';
+import ParkingCardItemSkeleton from '@/components/common/ParkingCardItemSkeleton';
+import { useLocationStore } from '@/store/useLocationStore';
+import { getParkingLotsInBox } from '@/actions/parking/parking-service';
+import { getReviewSummaryData } from '@/actions/review/review-service';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import ParkingCarouselSkeleton from '@/components/common/ParkingCarouselSkeleton';
+
+interface ReviewSummaryDataType {
+  averageRating: number;
+}
+
+function getBoundingBox(
+  lat: number,
+  lng: number,
+  radiusInMeters: number = 500
+) {
+  const R = 111000;
+  const deltaLat = radiusInMeters / R;
+  const deltaLng = radiusInMeters / (R * Math.cos((lat * Math.PI) / 180));
+
+  return {
+    swLat: lat - deltaLat,
+    swLng: lng - deltaLng,
+    neLat: lat + deltaLat,
+    neLng: lng + deltaLng,
+  };
+}
 
 export default function NearestParking() {
+  const { latitude, longitude } = useLocationStore();
+  const [carouselDatasWithRating, setCarouselDatasWithRating] = useState<
+    ParkingLotSimpleInfoType[]
+  >([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchParkingAndRatings = async () => {
+      if (latitude == null || longitude == null) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      const box = getBoundingBox(latitude, longitude, 1000);
+
+      try {
+        const parkingRes = await getParkingLotsInBox({
+          ...box,
+          isEvChargingAvailable: false,
+        });
+
+        const parkingLots = parkingRes.parkingLots;
+
+        const parkingLotsWithRatings = await Promise.all(
+          parkingLots.map(async (parkingLot) => {
+            try {
+              const reviewSummaryRes = await getReviewSummaryData(
+                parkingLot.parkingLotUuid
+              );
+              const rating =
+                reviewSummaryRes.success && reviewSummaryRes.data
+                  ? reviewSummaryRes.data.averageRating
+                  : 0;
+
+              return {
+                ...parkingLot,
+                rating: rating,
+              };
+            } catch (err) {
+              console.error(
+                `Failed to load review for ${parkingLot.name}:`,
+                err
+              );
+              return {
+                ...parkingLot,
+                rating: 0,
+              };
+            }
+          })
+        );
+        setCarouselDatasWithRating(parkingLotsWithRatings);
+      } catch (err) {
+        console.error('Failed to load parking lots or reviews:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchParkingAndRatings();
+  }, [latitude, longitude]);
+
   return (
     <section className="pl-6">
       <div className="flex items-center justify-between">
@@ -17,7 +108,12 @@ export default function NearestParking() {
           </p>
         </Link>
       </div>
-      <ParkingCarousel carouselDatas={parkingCarouselItemsDummy} />
+
+      {isLoading ? (
+        <ParkingCarouselSkeleton />
+      ) : (
+        <ParkingCarousel carouselDatas={carouselDatasWithRating} />
+      )}
     </section>
   );
 }

@@ -3,7 +3,6 @@ import { Rating } from '@repo/ui/components/common/CommonLayouts';
 import MarkerIcon from '@repo/ui/components/icon/MarkerIcon';
 import Image from 'next/image';
 import Link from 'next/link';
-import FavoriteButton from './FavoriteButton';
 
 import { ParkingLotSimpleDataType } from '@/types/parkingDataTypes';
 
@@ -12,6 +11,10 @@ export default function ParkingCardItem({
 }: {
   parkingLotData: ParkingLotSimpleDataType;
 }) {
+  const displayRating =
+    typeof parkingLotData.rating === 'number'
+      ? parkingLotData.rating.toFixed(1)
+      : '0.0';
   return (
     <div>
       <Link href={`/parking-lot/${parkingLotData.parkingLotUuid}`}>
@@ -26,7 +29,7 @@ export default function ParkingCardItem({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
           />
-          <FavoriteButton />
+          {/* <FavoriteButton /> */}
         </div>
       </Link>
       <Link
@@ -37,11 +40,12 @@ export default function ParkingCardItem({
       </Link>
       <p className="flex gap-1 text-gray-3 text-13px">
         <MarkerIcon size={12} className="text-gray-light-2 shrink-0 mt-[3px]" />
-        {parkingLotData.address}
+        {parkingLotData.distance
+          ? `${parkingLotData.distance}km`
+          : parkingLotData.address}
       </p>
-      {parkingLotData.rating > 0 && (
-        <Rating>{parkingLotData.rating.toFixed(1)}</Rating>
-      )}
+
+      <Rating>{displayRating}</Rating>
     </div>
   );
 }

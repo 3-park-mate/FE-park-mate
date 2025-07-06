@@ -175,10 +175,11 @@ export interface OperationsInfo {
 
 export interface ParkingLotSimpleDataType {
   parkingLotUuid: string;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   name: string;
-  address: string;
-  rating: number;
+  address?: string;
+  rating?: number;
+  distance?: number;
 }
 
 export interface ParkingLotOptionDataType {

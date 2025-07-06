@@ -3,18 +3,21 @@ import ReservationStatusSection from '@/components/pages/home/ReservationStatusS
 import UsingStatusSection from '@/components/pages/home/UsingStatusSection';
 import { getServerSession } from 'next-auth';
 import { options } from '../api/auth/[...nextauth]/options';
+import HomeGuestSection from '@/components/pages/home/HomeGuestSection';
 
 export default async function page() {
   const session = await getServerSession(options);
   return (
     <>
-      {session && (
+      {session ? (
         <HomeTabMenuBar
           tabContents={{
             reservationParking: <ReservationStatusSection />,
             currentParking: <UsingStatusSection />,
           }}
         />
+      ) : (
+        <HomeGuestSection />
       )}
     </>
   );

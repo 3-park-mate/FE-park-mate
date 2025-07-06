@@ -31,6 +31,7 @@ export interface ParkingLotSimpleInfoType {
   longitude: number;
   distance: number;
   availableSpotCount: number;
+  rating?: number;
 }
 
 export interface initMapProps {
