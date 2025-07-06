@@ -20,7 +20,6 @@ export default function MainMap() {
     libraries: ['services', 'clusterer'],
   });
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const isOpenSimpleModal = useMapStore((state) => state.isOpenSimpleModal);
   const isOpenListModal = useMapStore((state) => state.isOpenListModal);
   const center = useMapStore((state) => state.center);
   const setCenter = useMapStore((state) => state.setCenter);

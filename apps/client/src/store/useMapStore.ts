@@ -3,7 +3,10 @@ import { create } from 'zustand';
 interface MapState {
   center: { lat: number | undefined; lng: number | undefined };
   level: number;
-  setCenter: (coords: { lat: number; lng: number }) => void;
+  setCenter: (coords: {
+    lat: number | undefined;
+    lng: number | undefined;
+  }) => void;
   setLevel: (level: number) => void;
 }
 

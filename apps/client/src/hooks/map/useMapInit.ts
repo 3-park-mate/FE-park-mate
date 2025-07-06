@@ -16,9 +16,9 @@ export function useMapInit(mapRef: RefObject<kakao.maps.Map | null>) {
   const centerMapToCurrentLocation = useCallback(async () => {
     try {
       const { lat, lng } = await getCurrentCoordsUtil();
-      setCenter({ lat, lng });
       if (mapRef.current) {
         mapRef.current.setCenter(new kakao.maps.LatLng(lat, lng));
+        setCenter({ lat, lng });
       }
     } catch (e) {
       console.error('현재 위치 가져오기 실패:', e);
