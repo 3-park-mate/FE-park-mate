@@ -7,13 +7,16 @@ import ReservationActionButtons from '@/components/common/ReservationActionButto
 import OrderInfoSection from './OrderInfoSection';
 import { ReservationListItemDataType } from '@/types/reservationDataTypes';
 import { ParkingLotOverviewData } from '@/types/parkingDataTypes';
+import { OrderDetailDataType } from '@/types/orderDataTypes';
 
 export default function ReservationDetail({
   reservationData,
   overviewData,
+  orderData,
 }: {
   reservationData: ReservationListItemDataType;
   overviewData: ParkingLotOverviewData;
+  orderData: OrderDetailDataType;
 }) {
   const entry = formatDateParts(reservationData.entryTime);
   const exit = formatDateParts(reservationData.exitTime);
@@ -53,8 +56,13 @@ export default function ReservationDetail({
       />
       <ReservationInfoList timeItems={timeItems} infoItems={infoItems} />
       <hr />
-      {/* <OrderInfoSection />
-      <hr /> */}
+      {orderData && (
+        <>
+          {' '}
+          <OrderInfoSection orderData={orderData} />
+          <hr />
+        </>
+      )}
       <ReservationActionButtons
         showQrButton={canCancel}
         showCancelButton={canCancel}

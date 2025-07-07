@@ -89,3 +89,40 @@ export async function getOrderDetailData(
     };
   }
 }
+
+export async function getOrderDataByCode(
+  productCode: string
+): Promise<ApiResponse<OrderDetailDataType>> {
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+    console.log('accessToken:', accessToken);
+
+    const res = await api.get<CommonResponseType<OrderDetailDataType>>(
+      API_PREFIX,
+      `/product/${productCode}`,
+      undefined,
+      {
+        headers: {
+          'X-User-UUID': uuid,
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}
