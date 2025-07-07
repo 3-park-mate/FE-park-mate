@@ -67,7 +67,7 @@ export default function ConfirmReservationSheet({
             <label className="block text-xl font-medium">차량 번호</label>
             <Input
               placeholder="예: 12가 3456"
-              {...register('carNumber', { required: true })}
+              {...register('vehicleNumber', { required: true })}
             />
           </div>
           <div ref={endRef} />
