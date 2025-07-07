@@ -16,7 +16,9 @@ export const options: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        console.log('credentials', credentials);
+        let email;
+        if (credentials.email === 'guest-login') email = 'guestuser@a.com';
+        else email = credentials.email;
         try {
           const res = await fetch(
             `${process.env.BASE_API_URL}/auth-service/api/v1/user/login`,
@@ -24,7 +26,7 @@ export const options: NextAuthOptions = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                email: credentials.email,
+                email: email,
                 password: credentials.password,
               }),
               cache: 'no-cache',
