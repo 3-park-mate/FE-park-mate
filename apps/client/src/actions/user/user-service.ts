@@ -353,6 +353,7 @@ export async function DeleteUserVehicleAction(
     const res = await api.del<CommonResponseType<string>>(
       API_PREFIX,
       `/userVehicle/${vehicleUuid}`,
+      undefined,
       {
         headers: {
           'X-User-UUID': uuid,
