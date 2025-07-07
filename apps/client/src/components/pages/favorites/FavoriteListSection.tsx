@@ -44,21 +44,23 @@ export default function FavoriteListSection() {
   }
 
   return (
-    <PaddedSection className="grid grid-cols-2 gap-4 py-4">
-      {favoriteParkingLots.map((parkingLotData) => (
-        <ParkingCardItem
-          key={parkingLotData.parkingLotUuid}
-          parkingLotData={parkingLotData}
-        />
-      ))}
-      <div ref={loaderRef} className="pb-4 h-10">
-        {isLoading && <ParkingCardItemSkeleton />}
-      </div>
+    <>
+      <PaddedSection className="grid grid-cols-2 gap-4 py-4">
+        {favoriteParkingLots.map((parkingLotData) => (
+          <ParkingCardItem
+            key={parkingLotData.parkingLotUuid}
+            parkingLotData={parkingLotData}
+          />
+        ))}
+        <div ref={loaderRef} className="pb-4 h-10">
+          {isLoading && <ParkingCardItemSkeleton />}
+        </div>
+      </PaddedSection>
       {favoriteParkingLots.length === 0 && !isLoading && !hasMore && (
         <p className="text-center text-gray-500">
           즐겨찾기한 주차장이 없습니다.
         </p>
       )}
-    </PaddedSection>
+    </>
   );
 }

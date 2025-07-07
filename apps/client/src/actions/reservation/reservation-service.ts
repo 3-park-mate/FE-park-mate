@@ -6,7 +6,6 @@ import {
   CreateReservationRequestType,
   CreateReservationResponseType,
   ReservationCancelDataType,
-  ReservationItemDataType,
   ReservationListItemDataType,
   ReservationListResponse,
   ReservationStatus,

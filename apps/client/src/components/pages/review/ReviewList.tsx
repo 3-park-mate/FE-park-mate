@@ -1,8 +1,5 @@
 'use client';
-import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import ReviewItem from './ReviewItem';
-import { mockReviews } from '@/data/reviewDummyDatas';
-import OptionsDropdown from '@/components/common/OptionsDropdown';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReviewItemDataType } from '@/types/reviewDataTypes';
 import { getReviewsData } from '@/actions/review/review-service';

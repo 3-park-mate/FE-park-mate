@@ -15,14 +15,8 @@ export default function ParkingInfoEditForm({
   name: string;
   extraInfo: string;
 }) {
-  const {
-    loading,
-    setLoading,
-    alertModalOpen,
-    setAlertModalOpen,
-    modalMessage,
-    handleAlert,
-  } = useAlertWithLoading();
+  const { loading, alertModalOpen, setAlertModalOpen, modalMessage } =
+    useAlertWithLoading();
   const [isEditing, setIsEditing] = useState(false);
 
   return (

@@ -42,7 +42,7 @@ export default function OperationEditFields() {
         }
       },
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value;
+        const value = e.target.value;
         if (value === '') {
           setValue(fieldName, 0 as any);
         } else {

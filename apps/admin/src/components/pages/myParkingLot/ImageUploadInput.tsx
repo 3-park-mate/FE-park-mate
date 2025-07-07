@@ -7,7 +7,7 @@ import { useFormContext, useFormState } from 'react-hook-form';
 
 export default function ImageUploadInput() {
   const { setValue, getValues } = useFormContext();
-  const { errors, touchedFields } = useFormState<AddParkingLotStoreDataType>();
+  const { errors } = useFormState<AddParkingLotStoreDataType>();
   const [images, setImages] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
