@@ -24,7 +24,7 @@ export default function ReservationSuccess({
       <OrderInfoSection orderData={orderData} />
       <section className="flex flex-col gap-3">
         <Link
-          href={`/my-reservation/${reservationCode}`}
+          href={`/my-reservations/${reservationCode}`}
           className={`${buttonVariants({ variant: 'default' })} h-11`}
         >
           예약 내역 바로가기
