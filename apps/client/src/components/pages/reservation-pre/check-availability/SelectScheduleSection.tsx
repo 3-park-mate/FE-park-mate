@@ -80,11 +80,9 @@ export default function SelectScheduleSection({
       <p
         className="text-xs text-right px-3 cursor-pointer"
         onClick={() => {
-          {
-            reset();
-            setValue('entryTime', '');
-            setValue('exitTime', '');
-          }
+          reset();
+          setValue('entryTime', '');
+          setValue('exitTime', '');
         }}
       >
         초기화
