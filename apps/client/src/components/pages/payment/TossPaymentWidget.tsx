@@ -12,13 +12,6 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function generateRandomString() {
-  if (typeof window !== 'undefined') {
-    return window.btoa(Math.random().toString()).slice(0, 20);
-  }
-  return '';
-}
-
 interface Amount {
   currency: string;
   value: number;
@@ -138,7 +131,7 @@ export default function TossPaymentWidget({
 
                 if (orderRes.success) {
                   await widgets!.requestPayment({
-                    orderId: generateRandomString(),
+                    orderId: orderRes.data.orderCode,
                     orderName: '파크메이트 주차권',
                     successUrl:
                       window.location.origin +
