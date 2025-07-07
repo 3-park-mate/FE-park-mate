@@ -22,6 +22,8 @@ export default function FilterScheduleContent() {
     reset,
   } = useSchedulePicker();
 
+  const today = new Date();
+
   useEffect(() => {
     if (dateRange?.from && dateRange?.to) {
       setTimeout(() => {
@@ -56,6 +58,7 @@ export default function FilterScheduleContent() {
           selected={dateRange}
           onSelect={handleDateChange}
           className="w-full px-1"
+          disabled={{ before: today }}
         />
         {dateRange?.from && dateRange.to && (
           <SelectTimes

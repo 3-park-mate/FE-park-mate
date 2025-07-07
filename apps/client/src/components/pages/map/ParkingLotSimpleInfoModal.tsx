@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
@@ -13,29 +13,25 @@ import { useFetchData } from '@/hooks/useFetchData';
 import ParkingLotSimpleInfoCard from '@/components/common/ParkingLotSimpleInfoCard';
 
 export default function ParkingLotSimpleInfoModal({
-  clickMarker,
+  selectedParkingLot,
 }: {
-  clickMarker: ParkingLotSimpleInfoType;
+  selectedParkingLot: ParkingLotSimpleInfoType;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const fetcher = useCallback(
-    () => getParkingLotById(clickMarker.parkingLotUuid),
-    [clickMarker.parkingLotUuid]
+    () => getParkingLotById(selectedParkingLot.parkingLotUuid),
+    [selectedParkingLot.parkingLotUuid]
   );
 
   const { data: parkingLotData, loading } =
     useFetchData<ParkingLotResponseDataType>(fetcher);
 
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
-
   return (
     <div
       className={cn(
-        'fixed bottom-7 left-1/2 transform -translate-x-1/2 w-23/24 max-w-[600px] px-4 transition-all duration-200 ease-in-out',
-        isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+        'fixed bottom-7 left-1/2 transform -translate-x-1/2 w-23/24 max-w-[600px] px-4 transition-all duration-200 ease-in-out z-50',
+        selectedParkingLot
+          ? 'translate-y-0 opacity-100'
+          : 'translate-y-10 opacity-0'
       )}
     >
       {loading || !parkingLotData ? (
@@ -47,7 +43,7 @@ export default function ParkingLotSimpleInfoModal({
           <DotSpinner className="fill-primary size-8" />
         </div>
       ) : (
-        <Link href={`parking-lot/${clickMarker.parkingLotUuid}`}>
+        <Link href={`parking-lot/${selectedParkingLot.parkingLotUuid}`}>
           <AlwaysVisibleTooltip side="top" content="3,000원/30분">
             <ParkingLotSimpleInfoCard
               parkingLotData={parkingLotData}
@@ -61,7 +57,8 @@ export default function ParkingLotSimpleInfoModal({
         <CommonButton className="bg-primary text-[20px] h-12 text-white">
           예약하기
           <span className="text-17px tracking-tighter">
-            ( {clickMarker.availableSpotCount} / {parkingLotData?.capacity} )
+            ( {selectedParkingLot.availableSpotCount} /{' '}
+            {parkingLotData?.capacity} )
           </span>
         </CommonButton>
       </div>

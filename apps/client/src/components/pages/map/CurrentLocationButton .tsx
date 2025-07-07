@@ -6,12 +6,12 @@ export default function CurrentLocationButton({
   className,
 }: {
   onClick: () => void;
-
   className?: string;
 }) {
   return (
     <>
       <button
+        type="button"
         onClick={onClick}
         className={cn('absolute bottom-25 right-5 z-50', className)}
       >

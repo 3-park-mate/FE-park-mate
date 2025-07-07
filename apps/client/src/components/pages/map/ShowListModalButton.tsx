@@ -1,14 +1,13 @@
+import { useMapStore } from '@/store/useMapStore';
 import { cn } from '@repo/ui/lib/utils';
 import { AlignJustifyIcon } from 'lucide-react';
-import { Dispatch, SetStateAction } from 'react';
 
 export default function ShowListModalButton({
-  setIsOpenListModal,
   className,
 }: {
-  setIsOpenListModal: Dispatch<SetStateAction<boolean>>;
   className?: string;
 }) {
+  const setIsOpenListModal = useMapStore((state) => state.setIsOpenListModal);
   return (
     <button
       className={cn(

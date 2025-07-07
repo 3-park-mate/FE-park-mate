@@ -24,7 +24,7 @@ export function useClickMarkerFromUuid(
         hasFocusedRef.current = true;
       }
     }
-  }, [uuid, parkingLotList]);
+  }, [uuid, parkingLotList.parkingLots]);
 
   return { clickMarker, setClickMarker };
 }

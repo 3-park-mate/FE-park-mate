@@ -1,8 +1,9 @@
 'use client';
 
+import { useMapStore } from '@/store/useMapStore';
 import { cn } from '@repo/ui/lib/utils';
 import { MousePointer2Icon } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function MapRedirectButton({
   icon: Icon = MousePointer2Icon,
@@ -19,13 +20,32 @@ export default function MapRedirectButton({
   subText?: string;
   position?: { lat: number | undefined; lng: number | undefined };
 }) {
+  const router = useRouter();
+  const setCenter = useMapStore((state) => state.setCenter);
+  const handleSubmit = (
+    position: {
+      lat: number | undefined;
+      lng: number | undefined;
+    },
+    location: string | undefined,
+    address: string | undefined
+  ) => {
+    setCenter({ lat: undefined, lng: undefined });
+    if (position.lat !== undefined && position.lng !== undefined) {
+      const loc = location ?? address ?? '';
+      router.replace(`/map?lat=${position.lat}&lng=${position.lng}&loc=${loc}`);
+      setCenter({ lat: position.lat, lng: position.lng });
+    } else {
+      router.replace(`/map`);
+    }
+  };
   return (
-    <Link
-      href={`/map?lat=${position.lat}&lng=${position.lng}`}
+    <div
       className={cn(
         'flex w-full items-center gap-3 bg-white border-1 rounded-lg py-4 px-4 cursor-pointer',
         className
       )}
+      onClick={() => handleSubmit(position, label, subText)}
     >
       <Icon
         className={cn('size-15 flex-shrink-0  rounded-lg p-3.5', IconclassName)}
@@ -36,6 +56,6 @@ export default function MapRedirectButton({
           {subText}
         </span>
       </p>
-    </Link>
+    </div>
   );
 }
