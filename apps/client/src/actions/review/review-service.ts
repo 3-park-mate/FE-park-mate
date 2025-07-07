@@ -7,7 +7,6 @@ import {
 } from '@/types/reviewDataTypes';
 import { redirect } from 'next/navigation';
 
-const API_PREFIX = `${process.env.BASE_API_URL}/review-service/api/v1/reviews`;
 const READ_API_PREFIX = `${process.env.BASE_API_URL}/review-read-service/api/v1/reviews`;
 
 export async function getReviewsData({
