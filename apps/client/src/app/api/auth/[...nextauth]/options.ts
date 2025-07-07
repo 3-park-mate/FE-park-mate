@@ -17,7 +17,7 @@ export const options: NextAuthOptions = {
           return null;
         }
         let email;
-        if (credentials.email === 'guest-login') email = 'guestuser@a.com';
+        if (credentials.email === 'guest-login') email = process.env.GUEST_ID;
         else email = credentials.email;
         try {
           const res = await fetch(
