@@ -53,7 +53,10 @@ export default function ParkingLotSimpleInfoModal({
         </Link>
       )}
 
-      <div className="flex mt-5 justify-between items-center gap-0">
+      <Link
+        href={`/reservation-pre/${selectedParkingLot.parkingLotUuid}`}
+        className="flex mt-5 justify-between items-center gap-0"
+      >
         <CommonButton className="bg-primary text-[20px] h-12 text-white">
           예약하기
           <span className="text-17px tracking-tighter">
@@ -61,7 +64,7 @@ export default function ParkingLotSimpleInfoModal({
             {parkingLotData?.capacity} )
           </span>
         </CommonButton>
-      </div>
+      </Link>
     </div>
   );
 }

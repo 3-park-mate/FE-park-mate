@@ -11,7 +11,9 @@ export default async function page({
   const fallback = <div>주차장을 찾을 수 없습니다.</div>;
 
   const { parkingLotUuid } = await params;
+
   if (!parkingLotUuid) return fallback;
+
   const res = await getParkingLotById(parkingLotUuid);
   if (!res.success) return fallback;
 
