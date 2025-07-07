@@ -60,7 +60,7 @@ export default async function page({
           capacity={parkingLotData.capacity}
           address={parkingLotData.address}
         />
-        <ParkmateLinkButton />
+        <ParkmateLinkButton parkingLotUuid={parkingLotUuid} />
         <ParkingSettingsTabBar />
         <section className="my-4 space-y-3">
           <ParkingOperationEdit parkingLotUuid={parkingLotUuid} />

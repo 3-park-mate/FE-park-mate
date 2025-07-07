@@ -46,7 +46,8 @@ export default function InfoWithThumbnail({
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
           <div className="flex justify-between items-start mb-2">
-            {parkingLotType === 'COMMERCIAL' && (
+            {(parkingLotType === 'COMMERCIAL' ||
+              parkingLotType === 'PRIVATE') && (
               <div className="flex items-center gap-2">
                 <span className="text-sm">파크메이트 주차장</span>
                 <BadgeCheckIcon size={14} />

@@ -18,9 +18,12 @@ export default function SignInBottomNotice() {
           해당 페이지는 <b>관리자 전용</b> 로그인 페이지입니다.
         </li>
         <li>
-          <Link href="#" className="text-secondary font-semibold underline">
+          <a
+            href="https://parkmate.shop"
+            className="text-secondary font-semibold underline"
+          >
             파크메이트 서비스 바로가기
-          </Link>
+          </a>
         </li>
       </ul>
     </PaddedSection>
