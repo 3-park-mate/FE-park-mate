@@ -22,13 +22,18 @@ export default function MapRedirectButton({
 }) {
   const router = useRouter();
   const setCenter = useMapStore((state) => state.setCenter);
-  const handleSubmit = (position: {
-    lat: number | undefined;
-    lng: number | undefined;
-  }) => {
+  const handleSubmit = (
+    position: {
+      lat: number | undefined;
+      lng: number | undefined;
+    },
+    location: string | undefined,
+    address: string | undefined
+  ) => {
     setCenter({ lat: undefined, lng: undefined });
     if (position.lat !== undefined && position.lng !== undefined) {
-      router.replace(`/map?lat=${position.lat}&lng=${position.lng}`);
+      const loc = location ?? address ?? '';
+      router.replace(`/map?lat=${position.lat}&lng=${position.lng}&loc=${loc}`);
       setCenter({ lat: position.lat, lng: position.lng });
     } else {
       router.replace(`/map`);
@@ -40,7 +45,7 @@ export default function MapRedirectButton({
         'flex w-full items-center gap-3 bg-white border-1 rounded-lg py-4 px-4 cursor-pointer',
         className
       )}
-      onClick={() => handleSubmit(position)}
+      onClick={() => handleSubmit(position, label, subText)}
     >
       <Icon
         className={cn('size-15 flex-shrink-0  rounded-lg p-3.5', IconclassName)}

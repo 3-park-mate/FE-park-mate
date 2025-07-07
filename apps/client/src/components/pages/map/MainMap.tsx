@@ -24,6 +24,8 @@ export default function MainMap() {
 
   const isOpenListModal = useMapStore((state) => state.isOpenListModal);
   const center = useMapStore((state) => state.center);
+  const level = useMapStore((state) => state.level);
+  const setLevel = useMapStore((state) => state.setLevel);
   const setCenter = useMapStore((state) => state.setCenter);
   const clearSelection = useMapStore((state) => state.clearSelection);
 
@@ -45,6 +47,7 @@ export default function MainMap() {
     fetchData();
     const center = mapRef.getCenter();
     setCenter({ lat: center.getLat(), lng: center.getLng() });
+    setLevel(mapRef.getLevel());
   };
 
   useEffect(() => {
@@ -75,7 +78,7 @@ export default function MainMap() {
             ? { lat: center.lat, lng: center.lng }
             : { lat: 37.5714, lng: 126.9768 }
         }
-        level={5}
+        level={level}
         className="absolute w-full h-full z-0"
         onDragEnd={handleChange}
         onZoomChanged={handleChange}
