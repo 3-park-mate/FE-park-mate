@@ -14,6 +14,7 @@ export function useMapInit(mapRef: RefObject<kakao.maps.Map | null>) {
   );
 
   const centerMapToCurrentLocation = useCallback(async () => {
+    const FALLBACK_COORDS = { lat: 37.5714, lng: 126.9768 };
     try {
       const { lat, lng } = await getCurrentCoordsUtil();
       if (mapRef.current) {
@@ -21,9 +22,13 @@ export function useMapInit(mapRef: RefObject<kakao.maps.Map | null>) {
         setCenter({ lat, lng });
       }
     } catch (e) {
+      mapRef.current?.setCenter(
+        new kakao.maps.LatLng(FALLBACK_COORDS.lat, FALLBACK_COORDS.lng)
+      );
+      setCenter(FALLBACK_COORDS);
       console.error('현재 위치 가져오기 실패:', e);
     }
-  }, [setCenter, mapRef]);
+  }, [mapRef, setCenter]);
 
   useEffect(() => {
     const isCenterEmpty = !center.lat || !center.lng;

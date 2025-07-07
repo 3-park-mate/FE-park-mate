@@ -13,6 +13,7 @@ import FilterMapSection from './filter/FilterMapSection';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useMapStore } from '@/store/useMapStore';
+import CarLoader from '@repo/ui/components/common/CarLoader';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -20,12 +21,14 @@ export default function MainMap() {
     libraries: ['services', 'clusterer'],
   });
   const mapRef = useRef<kakao.maps.Map | null>(null);
+
   const isOpenListModal = useMapStore((state) => state.isOpenListModal);
   const center = useMapStore((state) => state.center);
   const setCenter = useMapStore((state) => state.setCenter);
+  const clearSelection = useMapStore((state) => state.clearSelection);
+
   const setGnbNavBar = useGnbNavBarStore((state) => state.setGnbNavBar);
 
-  const clearSelection = useMapStore((state) => state.clearSelection);
   const { centerMapToCurrentLocation, initParams } = useMapInit(mapRef);
   const { parkingLotList, fetchData, isLoading } = useParkingLotsFetcher(
     mapRef,
@@ -40,25 +43,28 @@ export default function MainMap() {
 
   const handleChange = (mapRef: kakao.maps.Map) => {
     fetchData();
-    setCenter({
-      lat: mapRef.getCenter().getLat(),
-      lng: mapRef.getCenter().getLng(),
-    });
+    const center = mapRef.getCenter();
+    setCenter({ lat: center.getLat(), lng: center.getLng() });
   };
 
   useEffect(() => {
     setGnbNavBar(!clickMarker);
-    if (clickMarker?.latitude && clickMarker.longitude) {
-      mapRef.current?.setCenter(
-        new kakao.maps.LatLng(clickMarker?.latitude, clickMarker?.longitude)
-      );
-      setCenter({ lat: clickMarker?.latitude, lng: clickMarker?.longitude });
+
+    if (clickMarker && mapRef.current) {
+      const { latitude, longitude } = clickMarker;
+      const position = new kakao.maps.LatLng(latitude, longitude);
+      mapRef.current.setCenter(position);
+      setCenter({ lat: latitude, lng: longitude });
     }
   }, [clickMarker, setGnbNavBar, setCenter]);
 
   useEffect(() => {
     setClickMarker(null);
   }, [setClickMarker]);
+
+  if (!hasFetchedRef) {
+    return <CarLoader />;
+  }
 
   return (
     <>
@@ -86,7 +92,7 @@ export default function MainMap() {
         }}
         isPanto
       >
-        {parkingLotList.parkingLots.length > 0 && mapRef.current && (
+        {mapRef.current && (
           <MapMarkers
             mapRef={mapRef.current}
             parkingLotList={parkingLotList}
