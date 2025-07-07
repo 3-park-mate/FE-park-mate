@@ -1,3 +1,4 @@
+import { getOrderDataByCode } from '@/actions/order/order-service';
 import { getParkingLotOverviewById } from '@/actions/parking/parking-service';
 import { getReservationDetailData } from '@/actions/reservation/reservation-service';
 import NotFoundLayout from '@/components/common/NotFoundLayout';
@@ -20,17 +21,22 @@ export default async function page({
   const { reservationCode } = await params;
   if (!reservationCode) return fallback;
 
-  const res = await getReservationDetailData(reservationCode);
-  if (!res.success) return fallback;
+  const [resDetail, resOrder] = await Promise.all([
+    getReservationDetailData(reservationCode),
+    getOrderDataByCode(reservationCode),
+  ]);
 
-  const reservationData = res.data;
+  if (!resDetail.success) return fallback;
+  const reservationData = resDetail.data;
   if (!reservationData) return fallback;
+
+  if (!resOrder.success) return fallback;
+  const orderData = resOrder.data;
 
   const overviewRes = await getParkingLotOverviewById(
     reservationData.parkingLotUuid
   );
   if (!overviewRes.success) return fallback;
-
   const overviewData = overviewRes.data;
   if (!overviewData) return fallback;
 
@@ -41,6 +47,7 @@ export default async function page({
         <ReservationDetail
           reservationData={reservationData}
           overviewData={overviewData}
+          orderData={orderData}
         />
       </main>
     </>

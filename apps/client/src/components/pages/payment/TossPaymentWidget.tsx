@@ -129,23 +129,26 @@ export default function TossPaymentWidget({
             // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
             onClick={async () => {
               try {
-                await createOrderAction({
+                const orderRes = await createOrderAction({
                   orderType: 'RESERVATION',
                   productCode: reservationCode,
                   amount: amount.value,
                   paymentType,
                 });
-                // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                await widgets!.requestPayment({
-                  orderId: generateRandomString(),
-                  orderName: '파크메이트 주차권',
-                  successUrl: window.location.origin + '/payment/success',
-                  failUrl: window.location.origin + '/payment/fail',
-                  // customerEmail: 'customer123@gmail.com',
-                  // customerName: '김토스',
-                  // customerMobilePhone: '01012341234',
-                });
+
+                if (orderRes.success) {
+                  await widgets!.requestPayment({
+                    orderId: generateRandomString(),
+                    orderName: '파크메이트 주차권',
+                    successUrl:
+                      window.location.origin +
+                      `/payment/success?orderCode=${orderRes.data.orderCode}&reserevationCode=${reservationCode}`,
+                    failUrl: window.location.origin + '/payment/fail',
+                    // customerEmail: 'customer123@gmail.com',
+                    // customerName: '김토스',
+                    // customerMobilePhone: '01012341234',
+                  });
+                }
               } catch (error) {
                 // 에러 처리하기
                 console.error(error);
