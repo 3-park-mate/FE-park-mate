@@ -1,5 +1,5 @@
 import SearchLocationForm from '@/components/pages/search/SearchLocationForm';
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 export default function page() {
   return (

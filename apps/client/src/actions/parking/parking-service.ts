@@ -9,6 +9,7 @@ import {
   ParkingLotResponseDataType,
   ParkingLotSimpleDataType,
   ParkingLotsInBoxResponseType,
+  ParkingSearchResponseDataType,
   WeeklyOperationInfo,
 } from '@/types/parkingDataTypes';
 import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
@@ -283,5 +284,34 @@ export async function getParkingLotDistance({
       success: false,
       message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
     };
+  }
+}
+
+export async function getParkingSearchDatas({
+  size,
+  cursor,
+  keyword,
+}: {
+  size: number;
+  cursor?: number;
+  keyword: string;
+}): Promise<ApiResponse<ParkingSearchResponseDataType>> {
+  const query: Record<string, string> = {
+    size: size.toString(),
+    keyword,
+    ...(cursor !== undefined && { cursor: cursor.toString() }),
+  };
+  try {
+    const res = await api.get<
+      CommonResponseType<ParkingSearchResponseDataType>
+    >(READ_API_PREFIX, '', query);
+    console.log(res);
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
   }
 }

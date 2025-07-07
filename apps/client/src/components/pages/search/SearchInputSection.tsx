@@ -1,15 +1,16 @@
 import { cn } from '@repo/ui/lib/utils';
-import React from 'react';
 import SearchInput from './SearchInput';
 
 export default function SearchInputSection({
   inputValue,
   setInputValue,
   isScrolled = false,
+  type = 'location',
 }: {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   isScrolled?: boolean;
+  type?: 'location' | 'parking';
 }) {
   return (
     <section
@@ -19,8 +20,14 @@ export default function SearchInputSection({
       )}
     >
       <div className="bg-white w-full py-6 px-5 rounded-2xl">
-        <p className="text-xl font-semibold mb-3 mx-1">위치 검색</p>
-        <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+        <p className="text-xl font-semibold mb-3 mx-1">
+          {type === 'location' ? '위치 검색' : '주차장 검색'}
+        </p>
+        <SearchInput
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          type={type}
+        />
       </div>
     </section>
   );

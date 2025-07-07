@@ -191,3 +191,17 @@ export interface ParkingLotOptionDataType {
 export type AvailableSpotsResponseType = Partial<
   Record<ParkingSpotTypeWithEV, number>
 >;
+
+export interface ParkingSearchDataType {
+  parkingLotUuid: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
+export interface ParkingSearchResponseDataType {
+  content: ParkingSearchDataType[];
+  hasNext: boolean;
+  nextCursor: string;
+}
