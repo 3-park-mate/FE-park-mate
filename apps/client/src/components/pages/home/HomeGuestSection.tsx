@@ -5,8 +5,8 @@ import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 
 export default function HomeGuestSection() {
   return (
-    <PaddedSection className="py-7">
-      <p className="text-center text-gray-700 text-15px py-12">
+    <PaddedSection className="py-10 space-y-3">
+      <p className="text-center text-gray-700 text-sm">
         지금 로그인하고 주차장을 탐색해 보세요.
       </p>
       <section className="flex flex-col">

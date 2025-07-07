@@ -41,7 +41,7 @@ export default function NearestParking() {
       }
 
       setIsLoading(true);
-      const box = getBoundingBox(latitude, longitude, 1000);
+      const box = getBoundingBox(latitude, longitude, 2000);
 
       try {
         const parkingRes = await getParkingLotsInBox({
@@ -89,13 +89,17 @@ export default function NearestParking() {
     fetchParkingAndRatings();
   }, [latitude, longitude]);
 
+  if (!isLoading && carouselDatasWithRating.length === 0) {
+    return null;
+  }
+
   return (
     <section className="pl-6">
       <div className="flex items-center justify-between">
         <h2 className="text-[22px] font-bold py-4">
           주변 주차장을 둘러보세요.
         </h2>
-        <Link href="#" className="mr-6">
+        <Link href="/map" className="mr-6">
           <p className="flex items-center gap-0.5 text-13px text-gray-2">
             전체보기
             <ChevronRight size={14} />

@@ -45,7 +45,7 @@ export default function ParkingCarousel({
           className="flex flex-col flex-[0_0_auto] min-w-[155px] min-[500px]:min-w-[180px]
             justify-center items-center pb-6 pr-6"
         >
-          <Link href="#">
+          <Link href="/map">
             <ChevronRightCircle
               className="text-gray-dark-1"
               size={45}
