@@ -6,12 +6,12 @@ import {
 import ParkingCardItem from './ParkingCardItem';
 import { ChevronRightCircle } from 'lucide-react';
 import Link from 'next/link';
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoWithRatingType } from '@/types/mapDataTypes';
 
 export default function ParkingCarousel({
   carouselDatas,
 }: {
-  carouselDatas: ParkingLotSimpleInfoType[];
+  carouselDatas: ParkingLotSimpleInfoWithRatingType[];
 }) {
   return (
     <Carousel

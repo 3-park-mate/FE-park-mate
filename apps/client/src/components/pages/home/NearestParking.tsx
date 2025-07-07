@@ -1,19 +1,13 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import ParkingCarousel from '@/components/common/ParkingCarousel';
-import ParkingCardItemSkeleton from '@/components/common/ParkingCardItemSkeleton';
 import { useLocationStore } from '@/store/useLocationStore';
 import { getParkingLotsInBox } from '@/actions/parking/parking-service';
 import { getReviewSummaryData } from '@/actions/review/review-service';
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoWithRatingType } from '@/types/mapDataTypes';
 import ParkingCarouselSkeleton from '@/components/common/ParkingCarouselSkeleton';
-
-interface ReviewSummaryDataType {
-  averageRating: number;
-}
 
 function getBoundingBox(
   lat: number,
@@ -35,7 +29,7 @@ function getBoundingBox(
 export default function NearestParking() {
   const { latitude, longitude } = useLocationStore();
   const [carouselDatasWithRating, setCarouselDatasWithRating] = useState<
-    ParkingLotSimpleInfoType[]
+    ParkingLotSimpleInfoWithRatingType[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
 
