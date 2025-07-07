@@ -142,7 +142,7 @@ export default function TossPaymentWidget({
                     orderName: '파크메이트 주차권',
                     successUrl:
                       window.location.origin +
-                      `/payment/success?orderCode=${orderRes.data.orderCode}&reserevationCode=${reservationCode}`,
+                      `/payment/success?orderCode=${orderRes.data.orderCode}&reservationCode=${reservationCode}`,
                     failUrl: window.location.origin + '/payment/fail',
                     // customerEmail: 'customer123@gmail.com',
                     // customerName: '김토스',
