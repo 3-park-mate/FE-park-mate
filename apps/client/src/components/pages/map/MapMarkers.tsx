@@ -5,10 +5,9 @@ import {
   CustomOverlayMap,
   MapMarker,
 } from 'react-kakao-maps-sdk';
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoWithReviewType } from '@/types/mapDataTypes';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
-import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import { useMapStore } from '@/store/useMapStore';
 
 export default function MapMarkers({
@@ -18,21 +17,21 @@ export default function MapMarkers({
   setClickMarker,
 }: {
   mapRef: kakao.maps.Map;
-  clickMarker: ParkingLotSimpleInfoType | null;
-  parkingLotList: ParkingLotsInBoxResponseType;
-  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
+  clickMarker: ParkingLotSimpleInfoWithReviewType | null;
+  parkingLotList: ParkingLotSimpleInfoWithReviewType[];
+  setClickMarker: (id: ParkingLotSimpleInfoWithReviewType) => void;
 }) {
   const setIsOpenSimpleModal = useMapStore(
     (state) => state.setIsOpenSimpleModal
   );
 
-  const handleClickMarker = (data: ParkingLotSimpleInfoType) => {
+  const handleClickMarker = (data: ParkingLotSimpleInfoWithReviewType) => {
     setClickMarker(data);
     setIsOpenSimpleModal(true);
   };
 
   return (
-    parkingLotList.parkingLots.length > 0 && (
+    parkingLotList.length > 0 && (
       <>
         <MarkerClusterer
           gridSize={70}
@@ -40,7 +39,7 @@ export default function MapMarkers({
           minLevel={6}
           minClusterSize={1}
         >
-          {parkingLotList.parkingLots.map((data) => (
+          {parkingLotList.map((data) => (
             <MapMarker
               key={`marker-${data.parkingLotUuid}`}
               position={{ lat: data.latitude, lng: data.longitude }}
@@ -50,7 +49,7 @@ export default function MapMarkers({
         </MarkerClusterer>
 
         {mapRef.getLevel() <= 5 &&
-          parkingLotList.parkingLots.map((data) => (
+          parkingLotList.map((data) => (
             <CustomOverlayMap
               key={`overlay-${data.parkingLotUuid}`}
               position={{ lat: data.latitude, lng: data.longitude }}

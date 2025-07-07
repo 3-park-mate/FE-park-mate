@@ -6,24 +6,37 @@ import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleToolti
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
 import Link from 'next/link';
 import { getParkingLotById } from '@/actions/parking/parking-service';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
+import {
+  ParkingLotResponseDataType,
+  ReviewSummaryDataType,
+} from '@/types/parkingDataTypes';
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useFetchData } from '@/hooks/useFetchData';
 import ParkingLotSimpleInfoCard from '@/components/common/ParkingLotSimpleInfoCard';
+import { getReviewSummaryData } from '@/actions/review/review-service';
 
 export default function ParkingLotSimpleInfoModal({
   selectedParkingLot,
 }: {
   selectedParkingLot: ParkingLotSimpleInfoType;
 }) {
-  const fetcher = useCallback(
+  const parkingLotFetcher = useCallback(
     () => getParkingLotById(selectedParkingLot.parkingLotUuid),
     [selectedParkingLot.parkingLotUuid]
   );
 
-  const { data: parkingLotData, loading } =
-    useFetchData<ParkingLotResponseDataType>(fetcher);
+  const { data: parkingLotData, loading: loadingParkingLot } =
+    useFetchData<ParkingLotResponseDataType>(parkingLotFetcher);
+
+  const reviewSummaryFetcher = useCallback(
+    () => getReviewSummaryData(selectedParkingLot.parkingLotUuid),
+    [selectedParkingLot.parkingLotUuid]
+  );
+  const { data: reviewSummaryData, loading: loadingReviews } =
+    useFetchData<ReviewSummaryDataType>(reviewSummaryFetcher);
+
+  const isLoading = loadingParkingLot || loadingReviews;
 
   return (
     <div
@@ -34,7 +47,7 @@ export default function ParkingLotSimpleInfoModal({
           : 'translate-y-10 opacity-0'
       )}
     >
-      {loading || !parkingLotData ? (
+      {isLoading || !parkingLotData || !reviewSummaryData ? (
         <div
           className={cn(
             'rounded-2xl px-[24px] py-[18px] bg-white shadow-xl flex justify-center items-center min-h-[130px]'
@@ -46,6 +59,7 @@ export default function ParkingLotSimpleInfoModal({
         <Link href={`parking-lot/${selectedParkingLot.parkingLotUuid}`}>
           <AlwaysVisibleTooltip side="top" content="3,000원/30분">
             <ParkingLotSimpleInfoCard
+              reviewSummaryData={reviewSummaryData}
               parkingLotData={parkingLotData}
               className="rounded-2xl px-4.5 py-4 bg-white shadow-xl justify-between"
             />

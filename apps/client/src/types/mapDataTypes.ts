@@ -48,6 +48,22 @@ export interface ParkingLotSimpleInfoWithRatingType {
   rating: number;
 }
 
+export interface ParkingLotSimpleInfoWithReviewType {
+  parkingLotUuid: string;
+  name: string;
+  address?: string;
+  thumbnailUrl: string | null;
+  imageUrls: {
+    imageUrl: string;
+  }[];
+  latitude: number;
+  longitude: number;
+  distance: number;
+  availableSpotCount: number;
+  rating: number;
+  totalReviews: number;
+}
+
 export interface initMapProps {
   parkingLotUuid: string;
   lat: number;

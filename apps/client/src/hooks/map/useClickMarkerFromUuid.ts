@@ -1,30 +1,23 @@
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
-import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
+import { ParkingLotSimpleInfoWithReviewType } from '@/types/mapDataTypes';
 import { useEffect, useRef, useState } from 'react';
 
 export function useClickMarkerFromUuid(
   uuid: string,
-  parkingLotList: ParkingLotsInBoxResponseType
+  parkingLotList: ParkingLotSimpleInfoWithReviewType[]
 ) {
   const [clickMarker, setClickMarker] =
-    useState<ParkingLotSimpleInfoType | null>(null);
+    useState<ParkingLotSimpleInfoWithReviewType | null>(null);
   const hasFocusedRef = useRef(false);
 
   useEffect(() => {
-    if (
-      uuid &&
-      !hasFocusedRef.current &&
-      parkingLotList.parkingLots.length > 0
-    ) {
-      const matched = parkingLotList.parkingLots.find(
-        (p) => p.parkingLotUuid === uuid
-      );
+    if (uuid && !hasFocusedRef.current && parkingLotList.length > 0) {
+      const matched = parkingLotList.find((p) => p.parkingLotUuid === uuid);
       if (matched) {
         setClickMarker(matched);
         hasFocusedRef.current = true;
       }
     }
-  }, [uuid, parkingLotList.parkingLots]);
+  }, [parkingLotList, uuid]);
 
   return { clickMarker, setClickMarker };
 }

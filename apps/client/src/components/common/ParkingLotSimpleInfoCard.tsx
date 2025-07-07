@@ -4,16 +4,19 @@ import RatingOverview from '../pages/map/RatingOverview';
 import Image from 'next/image';
 import { cn } from '@repo/ui/lib/utils';
 import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
+import { ReviewSummaryDataType } from '@/types/reviewDataTypes';
 
 export default function ParkingLotSimpleInfoCard({
   showEvBadge = true,
   imageAlign = 'right',
   parkingLotData,
+  reviewSummaryData,
   className,
 }: {
   showEvBadge?: boolean;
   imageAlign?: 'right' | 'left';
   parkingLotData: ParkingLotResponseDataType;
+  reviewSummaryData?: ReviewSummaryDataType;
   className?: string;
 }) {
   return (
@@ -39,12 +42,13 @@ export default function ParkingLotSimpleInfoCard({
           {parkingLotData?.evChargeTypes && showEvBadge && (
             <Evchargetypebadges evChargeTypes={parkingLotData?.evChargeTypes} />
           )}
-          <RatingOverview
-            reviewCount={1}
-            averageRating={4.5}
-            likeCount={parkingLotData?.likeCount}
-            dislikeCount={parkingLotData?.dislikeCount}
-          />
+          {reviewSummaryData && (
+            <RatingOverview
+              reviewSummaryData={reviewSummaryData}
+              likeCount={parkingLotData?.likeCount}
+              dislikeCount={parkingLotData?.dislikeCount}
+            />
+          )}
         </div>
         {imageAlign === 'right' && (
           <Image

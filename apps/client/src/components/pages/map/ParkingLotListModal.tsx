@@ -1,11 +1,10 @@
 'use client';
 
-import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoWithReviewType } from '@/types/mapDataTypes';
 import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
-import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useMapStore } from '@/store/useMapStore';
 
@@ -14,8 +13,8 @@ export default function ParkingLotListModal({
   parkingLotList,
   isLoading,
 }: {
-  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
-  parkingLotList: ParkingLotsInBoxResponseType;
+  setClickMarker: (id: ParkingLotSimpleInfoWithReviewType) => void;
+  parkingLotList: ParkingLotSimpleInfoWithReviewType[];
   isLoading: boolean;
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,8 +58,8 @@ export default function ParkingLotListModal({
         <ul>
           {isLoading ? (
             <DotSpinner className="mx-auto my-10 size-12 fill-primary text-xl" />
-          ) : parkingLotList.parkingLots.length > 0 ? (
-            parkingLotList.parkingLots.map((data, index) => (
+          ) : parkingLotList.length > 0 ? (
+            parkingLotList.map((data, index) => (
               <li
                 key={data.parkingLotUuid}
                 className="py-3 px-6"
@@ -69,8 +68,8 @@ export default function ParkingLotListModal({
                   setIsOpenListModal(false);
                 }}
               >
-                <ParkingLotListCard parkingLot={data} />
-                {index !== parkingLotList.parkingLots.length - 1 && (
+                <ParkingLotListCard parkingLotInfo={data} />
+                {index !== parkingLotList.length - 1 && (
                   <hr className=" mt-5" />
                 )}
               </li>
