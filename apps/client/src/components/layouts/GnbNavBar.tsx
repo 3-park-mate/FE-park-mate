@@ -1,12 +1,22 @@
 'use client';
 
-import React from 'react';
 import { GnbMenu } from './GnbMenu';
 import { gnbMenuData } from '@/data/gnbMenuData';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function GnbNavBar() {
+  const pathname = usePathname();
+
   const active = useGnbNavBarStore((state) => state.active);
+  const setActive = useGnbNavBarStore((state) => state.setGnbNavBar);
+
+  useEffect(() => {
+    if (pathname !== '/map') {
+      setActive(true);
+    }
+  }, [pathname, setActive]);
 
   return (
     active && (

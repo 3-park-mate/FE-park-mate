@@ -1,5 +1,6 @@
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
+import Link from 'next/link';
 import React from 'react';
 
 export default function ReservationButton({
@@ -21,12 +22,17 @@ export default function ReservationButton({
           side="bottom"
           content={`${intervalText} ${baseFee.toLocaleString()}원`}
         >
-          <CommonButton
-            className="bg-primary"
-            disabled={!baseFee || !baseIntervalMinutes}
+          <Link
+            href={`/reservation-pre/${parkingLotUuid}`}
+            className="flex mt-5 justify-between items-center gap-0"
           >
-            예약하기
-          </CommonButton>
+            <CommonButton
+              className="bg-primary"
+              disabled={!baseFee || !baseIntervalMinutes}
+            >
+              예약하기
+            </CommonButton>
+          </Link>
         </AlwaysVisibleTooltip>
       ) : (
         <CommonButton className="bg-primary" disabled>
