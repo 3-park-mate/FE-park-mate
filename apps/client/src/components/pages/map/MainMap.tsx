@@ -14,6 +14,7 @@ import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useMapStore } from '@/store/useMapStore';
 import CarLoader from '@repo/ui/components/common/CarLoader';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -61,13 +62,9 @@ export default function MainMap() {
     }
   }, [clickMarker, setGnbNavBar, setCenter]);
 
-  useEffect(() => {
-    setClickMarker(null);
-  }, [setClickMarker]);
-
-  if (!hasFetchedRef) {
-    return <CarLoader />;
-  }
+  // useEffect(() => {
+  //   setClickMarker(null);
+  // }, [setClickMarker]);
 
   return (
     <>
@@ -97,17 +94,22 @@ export default function MainMap() {
       >
         {mapRef.current && (
           <MapMarkers
-            mapRef={mapRef.current}
             parkingLotList={parkingLotList}
             clickMarker={clickMarker || null}
             setClickMarker={setClickMarker}
           />
         )}
       </Map>
+      {/* {isLoading && (
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 flex flex-col items-center">
+          <DotSpinner />
+          <p>주차장 정보 불러오는 중..</p>
+        </div>
+      )} */}
       <CurrentLocationButton
         className={
-          (clickMarker && 'bottom-1/3') ||
-          (isOpenListModal && 'bottom-3/7') ||
+          (clickMarker && 'bottom-[250px]') ||
+          (isOpenListModal && 'bottom-[300px]') ||
           ''
         }
         onClick={() => centerMapToCurrentLocation()}

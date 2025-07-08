@@ -16,10 +16,8 @@ export default function RatingOverview({
       {(averageRating !== undefined || totalReviews !== undefined) && (
         <p className="flex items-center gap-0.5">
           <Star fill="currentColor" className="text-yellow-2" size={14} />
-          {typeof reviewSummaryData === 'number' && (
-            <span>{averageRating}</span>
-          )}
-          {typeof totalReviews === 'number' && (
+          {reviewSummaryData && <span>{averageRating}</span>}
+          {totalReviews && (
             <span>{totalReviews < 999 ? `(${totalReviews})` : `(999+)`}</span>
           )}
         </p>

@@ -11,12 +11,10 @@ import SelectedMarker from './SelectedMarker';
 import { useMapStore } from '@/store/useMapStore';
 
 export default function MapMarkers({
-  mapRef,
   clickMarker,
   parkingLotList,
   setClickMarker,
 }: {
-  mapRef: kakao.maps.Map;
   clickMarker: ParkingLotSimpleInfoWithReviewType | null;
   parkingLotList: ParkingLotSimpleInfoWithReviewType[];
   setClickMarker: (id: ParkingLotSimpleInfoWithReviewType) => void;
@@ -48,30 +46,29 @@ export default function MapMarkers({
           ))}
         </MarkerClusterer>
 
-        {mapRef.getLevel() <= 5 &&
-          parkingLotList.map((data) => (
-            <CustomOverlayMap
-              key={`overlay-${data.parkingLotUuid}`}
-              position={{ lat: data.latitude, lng: data.longitude }}
-              clickable={true}
-              zIndex={
-                clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
-              }
+        {parkingLotList.map((data) => (
+          <CustomOverlayMap
+            key={`overlay-${data.parkingLotUuid}`}
+            position={{ lat: data.latitude, lng: data.longitude }}
+            clickable={true}
+            zIndex={
+              clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
+            }
+          >
+            <div
+              className="relative"
+              onClick={() => {
+                handleClickMarker(data);
+              }}
             >
-              <div
-                className="relative"
-                onClick={() => {
-                  handleClickMarker(data);
-                }}
-              >
-                {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
-                  <SelectedMarker />
-                ) : (
-                  <BasicMarker availableSpots={data.availableSpotCount} />
-                )}
-              </div>
-            </CustomOverlayMap>
-          ))}
+              {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
+                <SelectedMarker />
+              ) : (
+                <BasicMarker availableSpots={data.availableSpotCount} />
+              )}
+            </div>
+          </CustomOverlayMap>
+        ))}
       </>
     )
   );

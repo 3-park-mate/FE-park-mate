@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { Ref, RefObject, useCallback, useEffect, useRef } from 'react';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
@@ -50,7 +50,7 @@ export default function ParkingLotSimpleInfoModal({
       {isLoading || !parkingLotData || !reviewSummaryData ? (
         <div
           className={cn(
-            'rounded-2xl px-[24px] py-[18px] bg-white shadow-xl flex justify-center items-center min-h-[130px]'
+            'rounded-2xl px-[24px] py-[18px] bg-white shadow-xl flex justify-center items-center min-h-[120px]'
           )}
         >
           <DotSpinner className="fill-primary size-8" />
@@ -66,16 +66,18 @@ export default function ParkingLotSimpleInfoModal({
           </AlwaysVisibleTooltip>
         </Link>
       )}
-
-      <div className="flex mt-5 justify-between items-center gap-0">
+      <Link
+        href={`/reservation-pre/${selectedParkingLot.parkingLotUuid}`}
+        className="flex mt-5 justify-between items-center gap-0"
+      >
         <CommonButton className="bg-primary text-[20px] h-12 text-white">
           예약하기
           <span className="text-17px tracking-tighter">
             ( {selectedParkingLot.availableSpotCount} /{' '}
             {parkingLotData?.capacity} )
           </span>
-        </CommonButton>
-      </div>
+        </CommonButton>{' '}
+      </Link>
     </div>
   );
 }
