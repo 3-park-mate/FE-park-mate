@@ -38,8 +38,6 @@ export default function ParkingLotSimpleInfoModal({
 
   const isLoading = loadingParkingLot || loadingReviews;
 
-  if (!selectedParkingLot) return;
-
   return (
     <div
       className={cn(

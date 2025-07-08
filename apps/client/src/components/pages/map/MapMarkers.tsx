@@ -5,32 +5,33 @@ import {
   CustomOverlayMap,
   MapMarker,
 } from 'react-kakao-maps-sdk';
-import { ParkingLotSimpleInfoWithReviewType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
 import { useMapStore } from '@/store/useMapStore';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function MapMarkers({
   clickMarker,
   parkingLotList,
   setClickMarker,
 }: {
-  clickMarker: ParkingLotSimpleInfoWithReviewType | null;
-  parkingLotList: ParkingLotSimpleInfoWithReviewType[];
-  setClickMarker: (id: ParkingLotSimpleInfoWithReviewType) => void;
+  clickMarker: ParkingLotSimpleInfoType | null;
+  parkingLotList: ParkingLotsInBoxResponseType;
+  setClickMarker: (id: ParkingLotSimpleInfoType) => void;
 }) {
   const level = useMapStore((state) => state.level);
   const setIsOpenSimpleModal = useMapStore(
     (state) => state.setIsOpenSimpleModal
   );
 
-  const handleClickMarker = (data: ParkingLotSimpleInfoWithReviewType) => {
+  const handleClickMarker = (data: ParkingLotSimpleInfoType) => {
     setClickMarker(data);
     setIsOpenSimpleModal(true);
   };
 
   return (
-    parkingLotList.length > 0 && (
+    parkingLotList.parkingLots.length > 0 && (
       <>
         <MarkerClusterer
           gridSize={70}
@@ -38,7 +39,7 @@ export default function MapMarkers({
           minLevel={6}
           minClusterSize={1}
         >
-          {parkingLotList.map((data) => (
+          {parkingLotList.parkingLots.map((data) => (
             <MapMarker
               key={`marker-${data.parkingLotUuid}`}
               position={{ lat: data.latitude, lng: data.longitude }}
@@ -48,7 +49,7 @@ export default function MapMarkers({
         </MarkerClusterer>
 
         {level < 6 &&
-          parkingLotList.map((data) => (
+          parkingLotList.parkingLots.map((data) => (
             <CustomOverlayMap
               key={`overlay-${data.parkingLotUuid}`}
               position={{ lat: data.latitude, lng: data.longitude }}

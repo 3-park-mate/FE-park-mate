@@ -3,11 +3,11 @@ import Evchargetypebadges from '../pages/map/EvChargeTypeBadges';
 import RatingOverview from '../pages/map/RatingOverview';
 import Image from 'next/image';
 import { cn } from '@repo/ui/lib/utils';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { ReviewSummaryDataType } from '@/types/reviewDataTypes';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ParkingLotSimpleInfoCard({
-  showEvBadge = true,
+  showEvBadge = false,
   imageAlign = 'right',
   parkingLotData,
   reviewSummaryData,
@@ -39,9 +39,7 @@ export default function ParkingLotSimpleInfoCard({
           >
             {parkingLotData?.address}
           </HeadingWithSubtext>
-          {parkingLotData?.evChargeTypes && showEvBadge && (
-            <Evchargetypebadges evChargeTypes={parkingLotData?.evChargeTypes} />
-          )}
+          {showEvBadge && <Evchargetypebadges />}
           {reviewSummaryData && (
             <RatingOverview
               reviewSummaryData={reviewSummaryData}

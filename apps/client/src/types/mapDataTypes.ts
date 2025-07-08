@@ -31,6 +31,10 @@ export interface ParkingLotSimpleInfoType {
   longitude: number;
   distance: number;
   availableSpotCount: number;
+  rating: number;
+  totalReviews: number;
+  likeCount: number;
+  dislikeCount: number;
 }
 
 export interface ParkingLotSimpleInfoWithRatingType {
@@ -46,22 +50,6 @@ export interface ParkingLotSimpleInfoWithRatingType {
   distance: number;
   availableSpotCount: number;
   rating: number;
-}
-
-export interface ParkingLotSimpleInfoWithReviewType {
-  parkingLotUuid: string;
-  name: string;
-  address?: string;
-  thumbnailUrl: string | null;
-  imageUrls: {
-    imageUrl: string;
-  }[];
-  latitude: number;
-  longitude: number;
-  distance: number;
-  availableSpotCount: number;
-  rating: number;
-  totalReviews: number;
 }
 
 export interface initMapProps {

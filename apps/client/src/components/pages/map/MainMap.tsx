@@ -13,8 +13,6 @@ import FilterMapSection from './filter/FilterMapSection';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useMapStore } from '@/store/useMapStore';
-import DotSpinner from '@repo/ui/components/icon/DotSpinner';
-import ClockSpinner from '@repo/ui/components/icon/ClockSpinner';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -92,11 +90,6 @@ export default function MainMap() {
           />
         )}
       </Map>
-      {isLoading && (
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <ClockSpinner />
-        </div>
-      )}
       <CurrentLocationButton
         className={
           (clickMarker && 'bottom-[250px]') ||

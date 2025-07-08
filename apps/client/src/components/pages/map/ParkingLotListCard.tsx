@@ -1,4 +1,4 @@
-import { ParkingLotSimpleInfoWithReviewType } from '@/types/mapDataTypes';
+import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import { DotIcon } from 'lucide-react';
 import React from 'react';
 import RatingOverview from './RatingOverview';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function ParkingLotListCard({
   parkingLotInfo,
 }: {
-  parkingLotInfo: ParkingLotSimpleInfoWithReviewType;
+  parkingLotInfo: ParkingLotSimpleInfoType;
 }) {
   return (
     <>
@@ -17,8 +17,8 @@ export default function ParkingLotListCard({
           averageRating: parkingLotInfo.rating,
           totalReviews: parkingLotInfo.totalReviews,
         }}
-        likeCount={300}
-        dislikeCount={5}
+        likeCount={parkingLotInfo.likeCount}
+        dislikeCount={parkingLotInfo.dislikeCount}
       />
       <p className="flex items-center text-gray-2 text-sm">
         <span className="">{parkingLotInfo.distance}km </span>
