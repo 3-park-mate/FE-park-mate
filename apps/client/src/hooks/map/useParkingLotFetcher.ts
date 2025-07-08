@@ -12,6 +12,7 @@ export function useParkingLotsFetcher(
 
   const [isLoading, setIsLoading] = useState(false);
   const isLoadingRef = useRef(false);
+
   const fetchData = useCallback(async () => {
     const map = mapRef.current;
     if (!map || isLoadingRef.current || map.getLevel() > 7) return;

@@ -13,6 +13,7 @@ import FilterMapSection from './filter/FilterMapSection';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useMapStore } from '@/store/useMapStore';
+import throttle from 'lodash/throttle';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -50,6 +51,8 @@ export default function MainMap() {
     fetchData();
   };
 
+  const throttleHandleChange = useRef(throttle(handleChange, 3000)).current;
+
   useEffect(() => {
     setGnbNavBar(!clickMarker);
     if (!clickMarker || !mapRef.current) return;
@@ -67,8 +70,8 @@ export default function MainMap() {
         center={{ lat: center.lat, lng: center.lng }}
         level={level}
         className="absolute w-full h-full z-0"
-        onDragEnd={handleChange}
-        onZoomChanged={handleChange}
+        onDragEnd={throttleHandleChange}
+        onZoomChanged={throttleHandleChange}
         onClick={() => {
           setClickMarker(null);
           clearSelection();
