@@ -21,7 +21,7 @@ export default function SelectDays({
 
   const isAvailable = (date: Date) =>
     availableDays === undefined || availableDays.length === 0
-      ? true
+      ? false
       : availableSet.has(format(date, 'yyyy-MM-dd'));
 
   return (

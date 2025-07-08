@@ -13,7 +13,7 @@ import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { useEffect, useRef } from 'react';
 import ReservationSummaryCard from './ReservationSummaryCard';
-import ReservationSubmitButton from './ReservationSubmitButton';
+import ReservationSheetButton from './check-availability/CheckAvailableSpotsButton';
 
 export default function ConfirmReservationSheet({
   parkingLotData,
@@ -67,12 +67,17 @@ export default function ConfirmReservationSheet({
             <label className="block text-xl font-medium">차량 번호</label>
             <Input
               placeholder="예: 12가 3456"
-              {...register('carNumber', { required: true })}
+              {...register('vehicleNumber', { required: true })}
             />
           </div>
           <div ref={endRef} />
         </section>
-        <ReservationSubmitButton onSubmit={onSubmit} />
+        <ReservationSheetButton
+          type="submit"
+          onClick={onSubmit}
+          label="결제하기"
+          className="px-10 text-xl"
+        />
         <SheetDescription />
       </SheetContent>
     </Sheet>

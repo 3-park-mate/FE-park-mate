@@ -66,6 +66,7 @@ export default function ParkingLotSimpleInfoModal({
           </AlwaysVisibleTooltip>
         </Link>
       )}
+
       <Link
         href={`/reservation-pre/${selectedParkingLot.parkingLotUuid}`}
         className="flex mt-5 justify-between items-center gap-0"
@@ -76,7 +77,7 @@ export default function ParkingLotSimpleInfoModal({
             ( {selectedParkingLot.availableSpotCount} /{' '}
             {parkingLotData?.capacity} )
           </span>
-        </CommonButton>{' '}
+        </CommonButton>
       </Link>
     </div>
   );

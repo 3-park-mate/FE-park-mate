@@ -36,6 +36,7 @@ export function useSchedulePicker(availableDays?: string[]) {
       reset();
     }
   };
+
   const selectedSchedule = useMemo(() => {
     if (
       dateRange?.from &&
