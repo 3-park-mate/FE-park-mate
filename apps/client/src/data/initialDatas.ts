@@ -163,28 +163,28 @@ export const SelectParkingSpotCardMap: Record<
 > = {
   EV: {
     label: '전기차',
-    selectedClass: 'bg-green-gray/30 ring-green text-green-700 shadow-lg',
-    unselectedClass: 'bg-green-gray/30 border-gray-1 text-gray-2',
+    selectedClass: 'bg-green/25 ring-green/80 ring-2 text-primary-dark',
+    unselectedClass: 'bg-green-gray/50 border-none text-black',
   },
   SMALL: {
     label: '경차',
-    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
-    unselectedClass: 'bg-secondary-gray/40 border-none text-gray-2',
+    selectedClass: 'bg-primary-light/20  ring-primary ring-2 text-primary-dark',
+    unselectedClass: 'bg-white border-none text-black',
   },
   COMPACT: {
     label: '소형차',
-    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
-    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
+    selectedClass: 'bg-primary-light/20  ring-primary ring-2 text-primary-dark',
+    unselectedClass: 'bg-white border-none text-black',
   },
   STANDARD: {
     label: '중형차',
-    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
-    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
+    selectedClass: 'bg-primary-light/20  ring-primary ring-2 text-primary-dark',
+    unselectedClass: 'bg-white border-none text-black',
   },
   LARGE: {
     label: '대형차',
-    selectedClass: 'bg-secondary-gray/40  ring-secondary text-secondary-50',
-    unselectedClass: 'bg-secondary-gray/40 border-gray-1 text-gray-2',
+    selectedClass: 'bg-primary-light/20  ring-primary ring-2 text-primary-dark',
+    unselectedClass: 'bg-white border-none text-black',
   },
 };
 

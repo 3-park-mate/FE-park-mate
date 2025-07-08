@@ -63,6 +63,7 @@ export default function CheckAvailableSpotsContent({
           const parkingSpotType = type as ParkingSpotTypeWithEV;
           const config = SelectParkingSpotCardMap[parkingSpotType];
           const isSelected = selectedType === parkingSpotType;
+          const disable = count === 0;
 
           return (
             <div
@@ -71,7 +72,8 @@ export default function CheckAvailableSpotsContent({
                 'cursor-pointer ring-1 ring-gray-1 rounded-xl px-3 pt-2 pb-3 mb-2 shadow-lg',
                 parkingSpotType === 'EV' && 'col-span-2 mb-6',
                 config.unselectedClass,
-                isSelected ? config.selectedClass : config.unselectedClass
+                isSelected ? config.selectedClass : config.unselectedClass,
+                disable && 'bg-gray-1/70'
               )}
             >
               <RadioGroupItem
@@ -85,7 +87,18 @@ export default function CheckAvailableSpotsContent({
                 className="flex flex-col items-center"
               >
                 <p className="text-sm font-medium">{config.label}</p>
-                <p className="text-lg font-bold leading-5">{count}면</p>
+
+                <p
+                  className={cn(
+                    'text-lg font-bold leading-5',
+                    disable && 'text-gray-2'
+                  )}
+                >
+                  {count}면
+                  {disable && (
+                    <span className="text-sm font-medium"> (예약 불가)</span>
+                  )}
+                </p>
               </label>
             </div>
           );
