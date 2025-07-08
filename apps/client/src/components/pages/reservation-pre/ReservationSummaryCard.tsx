@@ -2,10 +2,10 @@
 
 import { formatDateParts } from '@/utils/datetimeUtils';
 import { ParkingSpotLabelMap } from '@/data/initialDatas';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import ParkingLotSimpleInfoCard from '@/components/common/ParkingLotSimpleInfoCard';
 import InfoRow from '@/components/common/InfoRow';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ReservationSummaryCard({
   reservationInfo,

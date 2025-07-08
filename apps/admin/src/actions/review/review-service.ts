@@ -18,7 +18,7 @@ export async function getReviewSummaryData(
       '/summary',
       query
     );
-
+    console.log(res.data);
     return {
       success: true,
       data: res.data,

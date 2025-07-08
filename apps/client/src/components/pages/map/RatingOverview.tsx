@@ -1,24 +1,24 @@
+import { ReviewSummaryDataType } from '@/types/reviewDataTypes';
 import { Star, ThumbsDown, ThumbsUp } from 'lucide-react';
 
 export default function RatingOverview({
-  averageRating,
-  reviewCount,
+  reviewSummaryData,
   likeCount,
   dislikeCount,
 }: {
-  averageRating?: number;
-  reviewCount?: number;
+  reviewSummaryData: ReviewSummaryDataType;
   likeCount?: number;
   dislikeCount?: number;
 }) {
+  const { averageRating, totalReviews } = reviewSummaryData;
   return (
     <div className="flex space-x-2 text-13px">
-      {(averageRating !== undefined || reviewCount !== undefined) && (
+      {(averageRating !== undefined || totalReviews !== undefined) && (
         <p className="flex items-center gap-0.5">
           <Star fill="currentColor" className="text-yellow-2" size={14} />
-          {typeof averageRating === 'number' && <span>{averageRating}</span>}
-          {typeof reviewCount === 'number' && (
-            <span>{reviewCount < 999 ? `(${reviewCount})` : `(999+)`}</span>
+          {reviewSummaryData && <span>{averageRating}</span>}
+          {totalReviews && (
+            <span>{totalReviews < 999 ? `(${totalReviews})` : `(999+)`}</span>
           )}
         </p>
       )}

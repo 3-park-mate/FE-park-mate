@@ -8,20 +8,19 @@ import {
 import { ParkingLotSimpleInfoType } from '@/types/mapDataTypes';
 import BasicMarker from './BasicMarker';
 import SelectedMarker from './SelectedMarker';
-import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import { useMapStore } from '@/store/useMapStore';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function MapMarkers({
-  mapRef,
   clickMarker,
   parkingLotList,
   setClickMarker,
 }: {
-  mapRef: kakao.maps.Map;
   clickMarker: ParkingLotSimpleInfoType | null;
   parkingLotList: ParkingLotsInBoxResponseType;
   setClickMarker: (id: ParkingLotSimpleInfoType) => void;
 }) {
+  const level = useMapStore((state) => state.level);
   const setIsOpenSimpleModal = useMapStore(
     (state) => state.setIsOpenSimpleModal
   );
@@ -49,7 +48,7 @@ export default function MapMarkers({
           ))}
         </MarkerClusterer>
 
-        {mapRef.getLevel() <= 5 &&
+        {level < 6 &&
           parkingLotList.parkingLots.map((data) => (
             <CustomOverlayMap
               key={`overlay-${data.parkingLotUuid}`}

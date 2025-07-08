@@ -5,9 +5,9 @@ import { cn } from '@repo/ui/lib/utils';
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import ParkingLotListCard from './ParkingLotListCard';
-import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useMapStore } from '@/store/useMapStore';
+import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 
 export default function ParkingLotListModal({
   setClickMarker,
@@ -69,7 +69,7 @@ export default function ParkingLotListModal({
                   setIsOpenListModal(false);
                 }}
               >
-                <ParkingLotListCard parkingLot={data} />
+                <ParkingLotListCard parkingLotInfo={data} />
                 {index !== parkingLotList.parkingLots.length - 1 && (
                   <hr className=" mt-5" />
                 )}

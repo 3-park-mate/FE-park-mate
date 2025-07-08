@@ -6,9 +6,9 @@ import SelectScheduleSection from './check-availability/SelectScheduleSection';
 import CheckAvailableSpotsSheet from './check-availability/CheckAvailableSpotsSheet';
 import { useState } from 'react';
 import ReservationConfirmSheet from './ReservationConfirmSheet';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { reserviationPreCreate } from '@/actions/reservation/reservation-service';
 import { useRouter } from 'next/navigation';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ReservationForm({
   parkingLotUuid,

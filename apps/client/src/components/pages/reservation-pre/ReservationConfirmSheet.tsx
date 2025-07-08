@@ -9,11 +9,11 @@ import {
 import { Input } from '@repo/ui/components/base/input';
 import { useFormContext } from 'react-hook-form';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { useEffect, useRef } from 'react';
 import ReservationSummaryCard from './ReservationSummaryCard';
 import ReservationSheetButton from './check-availability/CheckAvailableSpotsButton';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ConfirmReservationSheet({
   parkingLotData,

@@ -20,22 +20,34 @@ interface MapModalState {
 
 export const useMapStore = create<MapModalState & MapState>((set, get) => ({
   center: { lat: undefined, lng: undefined },
-  level: 5,
+  level: 4,
+
+  isOpenListModal: false,
+  isOpenSimpleModal: false,
+
   setCenter: (coords) => {
     set({ center: { lat: coords.lat, lng: coords.lng } });
   },
   setLevel: (level) => {
     set({ level: level });
   },
-  isOpenListModal: false,
-  isOpenSimpleModal: false,
+
   setIsOpenSimpleModal: (isOpen) => {
-    set({ isOpenSimpleModal: isOpen });
+    const updates: Partial<MapModalState> = { isOpenSimpleModal: isOpen };
+    if (isOpen && get().isOpenListModal) {
+      updates.isOpenListModal = false;
+    }
+    set(updates);
   },
 
   setIsOpenListModal: (isOpen) => {
-    set({ isOpenListModal: isOpen });
+    const updates: Partial<MapModalState> = { isOpenListModal: isOpen };
+    if (isOpen && get().isOpenSimpleModal) {
+      updates.isOpenSimpleModal = false;
+    }
+    set(updates);
   },
+
   clearSelection: () => {
     if (get().isOpenSimpleModal) {
       set({ isOpenSimpleModal: false });

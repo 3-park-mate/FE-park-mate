@@ -1,7 +1,7 @@
 import { getParkingLotsInBox } from '@/actions/parking/parking-service';
 import { ParkingLotsInBoxResponseType } from '@/types/parkingDataTypes';
 import { parseInitMapParams } from '@/utils/mapUtils';
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useRef, useState } from 'react';
 
 export function useParkingLotsFetcher(
   mapRef: RefObject<kakao.maps.Map | null>,
@@ -12,6 +12,7 @@ export function useParkingLotsFetcher(
 
   const [isLoading, setIsLoading] = useState(false);
   const isLoadingRef = useRef(false);
+
   const fetchData = useCallback(async () => {
     const map = mapRef.current;
     if (!map || isLoadingRef.current || map.getLevel() > 7) return;
@@ -41,10 +42,6 @@ export function useParkingLotsFetcher(
       setIsLoading(false);
     }
   }, [mapRef, initParams]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   return { parkingLotList, isLoading, fetchData };
 }
