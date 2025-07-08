@@ -19,6 +19,7 @@ export default function MapMarkers({
   parkingLotList: ParkingLotSimpleInfoWithReviewType[];
   setClickMarker: (id: ParkingLotSimpleInfoWithReviewType) => void;
 }) {
+  const level = useMapStore((state) => state.level);
   const setIsOpenSimpleModal = useMapStore(
     (state) => state.setIsOpenSimpleModal
   );
@@ -46,29 +47,30 @@ export default function MapMarkers({
           ))}
         </MarkerClusterer>
 
-        {parkingLotList.map((data) => (
-          <CustomOverlayMap
-            key={`overlay-${data.parkingLotUuid}`}
-            position={{ lat: data.latitude, lng: data.longitude }}
-            clickable={true}
-            zIndex={
-              clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
-            }
-          >
-            <div
-              className="relative"
-              onClick={() => {
-                handleClickMarker(data);
-              }}
+        {level < 6 &&
+          parkingLotList.map((data) => (
+            <CustomOverlayMap
+              key={`overlay-${data.parkingLotUuid}`}
+              position={{ lat: data.latitude, lng: data.longitude }}
+              clickable={true}
+              zIndex={
+                clickMarker?.parkingLotUuid === data.parkingLotUuid ? 50 : 40
+              }
             >
-              {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
-                <SelectedMarker />
-              ) : (
-                <BasicMarker availableSpots={data.availableSpotCount} />
-              )}
-            </div>
-          </CustomOverlayMap>
-        ))}
+              <div
+                className="relative"
+                onClick={() => {
+                  handleClickMarker(data);
+                }}
+              >
+                {clickMarker?.parkingLotUuid === data.parkingLotUuid ? (
+                  <SelectedMarker />
+                ) : (
+                  <BasicMarker availableSpots={data.availableSpotCount} />
+                )}
+              </div>
+            </CustomOverlayMap>
+          ))}
       </>
     )
   );

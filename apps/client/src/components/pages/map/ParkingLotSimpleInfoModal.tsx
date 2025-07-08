@@ -1,6 +1,6 @@
 'use client';
 
-import { Ref, RefObject, useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { cn } from '@repo/ui/lib/utils';
 import AlwaysVisibleTooltip from '@repo/ui/components/common/AlwaysVisibleTooltip';
 import { CommonButton } from '@repo/ui/components/common/CommonLayouts';
@@ -37,6 +37,8 @@ export default function ParkingLotSimpleInfoModal({
     useFetchData<ReviewSummaryDataType>(reviewSummaryFetcher);
 
   const isLoading = loadingParkingLot || loadingReviews;
+
+  if (!selectedParkingLot) return;
 
   return (
     <div

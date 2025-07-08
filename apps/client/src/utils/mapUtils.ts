@@ -1,24 +1,6 @@
-import { initMapProps, MapInfo } from '@/types/mapDataTypes';
+import { initMapProps } from '@/types/mapDataTypes';
 import { SearchLocationResultType } from '@/types/searchDataTypes';
-
-export const updateMapState = (
-  map: kakao.maps.Map,
-  setMapCenter: (lat: number, lng: number, locationName: string | null) => void,
-  setMapBounds: (
-    neLat: number,
-    swLat: number,
-    neLng: number,
-    swLng: number
-  ) => void
-) => {
-  const center = map.getCenter();
-  const bounds = map.getBounds();
-  const ne = bounds.getNorthEast();
-  const sw = bounds.getSouthWest();
-
-  setMapCenter(center.getLat(), center.getLng(), null);
-  setMapBounds(ne.getLat(), sw.getLat(), ne.getLng(), sw.getLng());
-};
+import { getCurrentCoordsUtil } from './geolocationUtils';
 
 export const searchLocationByKeywordUtil = (
   keyword: string
@@ -68,32 +50,6 @@ export const coordtoAddressUtil = (position: {
   });
 };
 
-export const getMapInfo = (
-  map: kakao.maps.Map,
-  info: Array<'center' | 'bounds' | 'level'>
-): MapInfo => {
-  const center = map.getCenter();
-  const bounds = map.getBounds();
-  const level = map.getLevel();
-
-  const infoHandlers = {
-    center: () => ({ center: { lat: center.getLat(), lng: center.getLng() } }),
-    bounds: () => ({
-      bounds: {
-        swLat: bounds.getSouthWest().getLat(),
-        swLng: bounds.getSouthWest().getLng(),
-        neLat: bounds.getNorthEast().getLat(),
-        neLng: bounds.getNorthEast().getLng(),
-      },
-    }),
-    level: () => ({ level }),
-  };
-
-  return info.reduce<MapInfo>((result, key) => {
-    return { ...result, ...infoHandlers[key]() };
-  }, {});
-};
-
 export function parseInitMapParams(
   searchParams: URLSearchParams
 ): Partial<initMapProps> {
@@ -111,4 +67,37 @@ export function parseInitMapParams(
     entry: searchParams.get('entry') || '',
     exit: searchParams.get('exit') || '',
   };
+}
+
+export async function centerMapToCurrentLocation({
+  map,
+  setCenter,
+  fallback = true,
+  fallbackCoords = { lat: 37.5714, lng: 126.9768 }, // 기본 fallback: 서울
+}: {
+  map: kakao.maps.Map;
+  setCenter: (coords: { lat: number; lng: number }) => void;
+  fallback?: boolean;
+  fallbackCoords?: { lat: number; lng: number };
+}) {
+  try {
+    const { lat, lng } = await getCurrentCoordsUtil();
+    console.log('현재위치');
+
+    if (map) {
+      const latLng = new kakao.maps.LatLng(lat, lng);
+      map.setCenter(latLng);
+      setCenter({ lat, lng });
+    }
+  } catch (e) {
+    if (map && fallback) {
+      const fallback = new kakao.maps.LatLng(
+        fallbackCoords.lat,
+        fallbackCoords.lng
+      );
+      map.setCenter(fallback);
+      setCenter(fallbackCoords);
+    }
+    console.warn('현재 위치 가져오기 실패:', e);
+  }
 }

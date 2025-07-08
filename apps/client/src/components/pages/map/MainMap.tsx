@@ -13,8 +13,8 @@ import FilterMapSection from './filter/FilterMapSection';
 import ParkingLotSimpleInfoModal from './ParkingLotSimpleInfoModal';
 import { useGnbNavBarStore } from '@/store/useGnbNavBarStore';
 import { useMapStore } from '@/store/useMapStore';
-import CarLoader from '@repo/ui/components/common/CarLoader';
 import DotSpinner from '@repo/ui/components/icon/DotSpinner';
+import ClockSpinner from '@repo/ui/components/icon/ClockSpinner';
 
 export default function MainMap() {
   useKakaoLoader({
@@ -32,7 +32,7 @@ export default function MainMap() {
 
   const setGnbNavBar = useGnbNavBarStore((state) => state.setGnbNavBar);
 
-  const { centerMapToCurrentLocation, initParams } = useMapInit(mapRef);
+  const { initParams } = useMapInit();
   const { parkingLotList, fetchData, isLoading } = useParkingLotsFetcher(
     mapRef,
     initParams
@@ -44,37 +44,29 @@ export default function MainMap() {
 
   const hasFetchedRef = useRef(false);
 
-  const handleChange = (mapRef: kakao.maps.Map) => {
-    fetchData();
-    const center = mapRef.getCenter();
+  const handleChange = () => {
+    if (!mapRef.current) return;
+    const center = mapRef.current.getCenter();
     setCenter({ lat: center.getLat(), lng: center.getLng() });
-    setLevel(mapRef.getLevel());
+    setLevel(mapRef.current.getLevel());
+    fetchData();
   };
 
   useEffect(() => {
     setGnbNavBar(!clickMarker);
-
-    if (clickMarker && mapRef.current) {
-      const { latitude, longitude } = clickMarker;
-      const position = new kakao.maps.LatLng(latitude, longitude);
-      mapRef.current.setCenter(position);
-      setCenter({ lat: latitude, lng: longitude });
-    }
+    if (!clickMarker || !mapRef.current) return;
+    const { latitude, longitude } = clickMarker;
+    const position = new kakao.maps.LatLng(latitude, longitude);
+    mapRef.current.setCenter(position);
+    setCenter({ lat: latitude, lng: longitude });
   }, [clickMarker, setGnbNavBar, setCenter]);
 
-  // useEffect(() => {
-  //   setClickMarker(null);
-  // }, [setClickMarker]);
-
+  if (!center.lat || !center.lng) return;
   return (
     <>
       <FilterMapSection />
       <Map
-        center={
-          center.lat !== undefined && center.lng !== undefined
-            ? { lat: center.lat, lng: center.lng }
-            : { lat: 37.5714, lng: 126.9768 }
-        }
+        center={{ lat: center.lat, lng: center.lng }}
         level={level}
         className="absolute w-full h-full z-0"
         onDragEnd={handleChange}
@@ -100,19 +92,19 @@ export default function MainMap() {
           />
         )}
       </Map>
-      {/* {isLoading && (
+      {isLoading && (
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <DotSpinner />
-          <p>주차장 정보 불러오는 중..</p>
+          <ClockSpinner />
         </div>
-      )} */}
+      )}
       <CurrentLocationButton
         className={
           (clickMarker && 'bottom-[250px]') ||
           (isOpenListModal && 'bottom-[300px]') ||
           ''
         }
-        onClick={() => centerMapToCurrentLocation()}
+        map={mapRef.current}
+        fetchData={fetchData}
       />
       {clickMarker && (
         <ParkingLotSimpleInfoModal selectedParkingLot={clickMarker} />
