@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - dev
-      - chore/CICD-setup
+      - chore/cicd-add-env
 
 jobs:
   deploy:
@@ -51,6 +51,8 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" >> apps/client/.env.production
           echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" >> apps/client/.env.production
           echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" >> apps/client/.env.production
+          echo "QR_SIGNIN_KEY=${{ secrets.QR_SIGNIN_KEY_CLIENT }}" >> apps/client/.env.production
+          echo "GUEST_ID=${{ secrets.GUEST_ID_CLIENT }}" >> apps/client/.env.production
           
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_ADMIN }}" > apps/admin/.env.production
           echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> apps/admin/.env.production
@@ -105,6 +107,8 @@ jobs:
             echo "NEXT_PUBLIC_FIREBASE_VAPID_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_VAPID_KEY_CLIENT }}" >> ~/env/.env.front
             echo "NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY_CLIENT }}" >> ~/env/.env.front
             echo "TOSS_SECRET_KEY=${{ secrets.TOSS_SECRET_KEY_CLIENT }}" >> ~/env/.env.front
+            echo "QR_SIGNIN_KEY=${{ secrets.QR_SIGNIN_KEY_CLIENT }}" >> ~/env/.env.front
+            echo "GUEST_ID=${{ secrets.GUEST_ID_CLIENT }}" >> ~/env/.env.front
             echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> ~/env/.env.front
             echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> ~/env/.env.front
             echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> ~/env/.env.front
