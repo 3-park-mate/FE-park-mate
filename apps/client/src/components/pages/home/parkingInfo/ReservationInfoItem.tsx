@@ -33,7 +33,6 @@ export default function ReservationInfoItem({
         vehicleNumber={vehicleNumber}
       />
       <ParkingLocation
-        parkingLotUuid={parkingLotUuid}
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}

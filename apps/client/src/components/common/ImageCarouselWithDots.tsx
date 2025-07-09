@@ -20,6 +20,7 @@ export default function ImageCarouselWithDots({
   showDots?: boolean;
   ImageClassName?: string;
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [api, setApi] = React.useState<any>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
