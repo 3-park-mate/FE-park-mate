@@ -12,7 +12,7 @@ import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { useEffect, useRef } from 'react';
 import ReservationSummaryCard from './ReservationSummaryCard';
-import ReservationSheetButton from './check-availability/CheckAvailableSpotsButton';
+import ReservationSheetButton from './check-availability/ReservationSheetButton';
 import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ConfirmReservationSheet({

@@ -18,7 +18,7 @@ import { cn } from '@repo/ui/lib/utils';
 import { useFormContext } from 'react-hook-form';
 import { formatDate } from '@/utils/datetimeUtils';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
-import ReservationSheetButton from './CheckAvailableSpotsButton';
+import ReservationSheetButton from './ReservationSheetButton';
 
 export default function CheckAvailableSpotsContent({
   availableSpots,

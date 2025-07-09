@@ -11,7 +11,7 @@ import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
 import { toLocalISOString } from '@/utils/datetimeUtils';
 import ClockLoaderWithText from '../../../../../../../packages/ui/src/components/common/ClockLoaderWithText';
-import CheckAvailableSpotsButton from './CheckAvailableSpotsButton';
+import CheckAvailableSpotsButton from './ReservationSheetButton';
 
 export default function SelectScheduleSection({
   parkingLotUuid,
