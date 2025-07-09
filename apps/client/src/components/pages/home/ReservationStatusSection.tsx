@@ -49,6 +49,7 @@ export default function ReservationStatusSection() {
           entryTime={item.entryTime}
           exitTime={item.exitTime}
           vehicleNumber={item.vehicleNumber}
+          reservationCode={item.reservationCode}
         />
       ))}
       <div ref={loaderRef} className="pb-4 h-10">

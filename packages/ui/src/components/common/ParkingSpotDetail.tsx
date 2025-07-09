@@ -15,7 +15,7 @@ export default function ParkingSpotDetail({
       <p className="flex items-center gap-1 text-gray-3 text-13px">
         <MarkerIcon size={12} className="text-gray-light-2" />{' '}
         {parkingLotDistance !== undefined && parkingLotDistance !== null
-          ? `${parkingLotDistance}m · ${parkingSpotName}`
+          ? `${parkingLotDistance}km · ${parkingSpotName}`
           : parkingSpotName}
       </p>
     </>
