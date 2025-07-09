@@ -1,5 +1,4 @@
 'use client';
-import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -41,8 +40,8 @@ export default function StatisticsChart({
         borderColor: 'rgba(72, 142, 255, 0.756)',
         borderWidth: 0,
         borderRadius: {
-          topLeft: 10,
-          topRight: 10,
+          topLeft: 7,
+          topRight: 7,
           bottomLeft: 0,
           bottomRight: 0,
         },
@@ -76,7 +75,7 @@ export default function StatisticsChart({
           ) {
             const dateStr = this.getLabelForValue(val as number);
             const date = new Date(dateStr);
-            return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+            return `${date.getDate()}일`;
           },
         },
       },
@@ -113,17 +112,8 @@ export default function StatisticsChart({
   };
 
   return (
-    <PaddedSection>
-      <div
-        style={{
-          height: '300px',
-          width: '100%',
-          minWidth: '320px',
-          overflowX: 'auto',
-        }}
-      >
-        <Bar options={options} data={data} />
-      </div>
-    </PaddedSection>
+    <div className="h-[300px] w-full p-3">
+      <Bar options={options} data={data} />
+    </div>
   );
 }

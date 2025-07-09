@@ -1,5 +1,5 @@
 import MyParkingLotSection from '@/components/pages/home/MyParkingLotSection';
-import StatisticsChart from '@/components/pages/home/StatisticsChart';
+import StatisticsSection from '@/components/pages/home/StatisticsSection';
 
 const dummyDailySalesData = [
   { date: '2024-06-01', amount: 45000 },
@@ -14,7 +14,7 @@ const dummyDailySalesData = [
 export default function Home() {
   return (
     <main>
-      <StatisticsChart dailySalesList={dummyDailySalesData} />
+      <StatisticsSection dailySalesList={dummyDailySalesData} />
       <MyParkingLotSection />
     </main>
   );
