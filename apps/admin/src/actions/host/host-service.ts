@@ -5,7 +5,7 @@ import { ApiResponse, CommonResponseType } from '@/types/responseDataTypes';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-const API_PREFIX = `${process.env.BASE_API_URL}/parking-service/api/v1`;
+const API_PREFIX = `${process.env.BASE_API_URL}/host-service/api/v1/hosts/parking-lots`;
 
 export async function getDateSalesRange({
   startDate,
@@ -30,7 +30,7 @@ export async function getDateSalesRange({
 
     const res = await api.get<CommonResponseType<parkingStatisticsDataType[]>>(
       API_PREFIX,
-      '/parkingLots',
+      '/sales/weekly-range',
       query,
       {
         headers: {

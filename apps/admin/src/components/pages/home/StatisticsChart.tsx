@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 
 import type { Scale } from 'chart.js';
-import { DailySales } from '@/types/hostDataTypes';
+import { parkingStatisticsDataType } from '@/types/hostDataTypes';
 
 ChartJS.register(
   CategoryScale,
@@ -23,12 +23,24 @@ ChartJS.register(
 );
 
 export default function StatisticsChart({
-  dailySalesList,
+  staticData,
 }: {
-  dailySalesList: DailySales[];
+  staticData?: parkingStatisticsDataType;
 }) {
-  const labels = dailySalesList.map((item) => item.date);
-  const amounts = dailySalesList.map((item) => item.amount);
+  if (
+    !staticData ||
+    !staticData.dailySalesList ||
+    staticData.dailySalesList.length === 0
+  ) {
+    return (
+      <div className="h-[300px] w-full min-w-[320px] overflow-x-auto flex items-center justify-center bg-white rounded-2xl shadow-2xl">
+        <p className="text-gray-500">데이터가 없습니다.</p>
+      </div>
+    );
+  }
+
+  const labels = staticData.dailySalesList.map((item) => item.date);
+  const amounts = staticData.dailySalesList.map((item) => item.amount);
 
   const data = {
     labels: labels,
@@ -112,8 +124,13 @@ export default function StatisticsChart({
   };
 
   return (
-    <div className="h-[300px] w-full p-3">
-      <Bar options={options} data={data} />
+    <div className="p-3">
+      <div className="h-[300px] w-full mb-1">
+        <Bar options={options} data={data} />
+      </div>
+      <p className="text-center font-semibold text-15px text-gray-800">
+        {staticData.parkingLotName || '내 주차장'}
+      </p>
     </div>
   );
 }
