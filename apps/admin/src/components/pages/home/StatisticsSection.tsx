@@ -1,4 +1,7 @@
-import { getDateSalesRange } from '@/actions/host/host-service';
+import {
+  getDateSalesRange,
+  getWeeklyTotalSales,
+} from '@/actions/host/host-service';
 import StatisticsChart from '@/components/pages/home/StatisticsChart';
 import { PaddedSection } from '@repo/ui/components/common/CommonLayouts';
 import {
@@ -15,7 +18,14 @@ export default async function StatisticsSection() {
     endDate: '2024-06-07',
   });
 
-  if (!res.success || !res.data || res.data.length === 0) {
+  const totalSaleRes = await getWeeklyTotalSales();
+
+  if (
+    !res.success ||
+    !totalSaleRes.success ||
+    !res.data ||
+    res.data.length === 0
+  ) {
     return (
       <PaddedSection className="py-3">
         <div className="bg-white rounded-2xl border overflow-hidden p-4 text-center text-sm text-gray-500">
@@ -27,15 +37,7 @@ export default async function StatisticsSection() {
 
   const parkingLotStatics = res.data;
 
-  const totalWeeklySales = parkingLotStatics.reduce((sum, parkingLot) => {
-    return (
-      sum +
-      parkingLot.dailySalesList.reduce(
-        (daySum, daily) => daySum + daily.amount,
-        0
-      )
-    );
-  }, 0);
+  const totalWeeklySales = totalSaleRes.data.totalWeeklySales;
 
   return (
     <PaddedSection className="py-3">

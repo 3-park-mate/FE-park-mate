@@ -49,3 +49,42 @@ export async function getDateSalesRange({
     redirect('/error');
   }
 }
+
+export async function getWeeklyTotalSales(): Promise<
+  ApiResponse<{ totalWeeklySales: number }>
+> {
+  const query: Record<string, string> = {
+    baseDate: '2024-06-07',
+    daysBefore: '6',
+  };
+
+  try {
+    const session = await getServerSession(options);
+    if (!session) {
+      redirect('/error');
+    }
+    const uuid = session.user.uuid;
+    const accessToken = session.user.accessToken;
+    console.log('uuid:', uuid);
+
+    const res = await api.get<CommonResponseType<{ totalWeeklySales: number }>>(
+      API_PREFIX,
+      '/weekly-statistics-flexible',
+      query,
+      {
+        headers: {
+          //   'X-Host-UUID': uuid,
+          'X-Host-UUID': 'hostUuid3',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (_error) {
+    redirect('/error');
+  }
+}
