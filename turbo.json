@@ -17,7 +17,9 @@
         "AWS_BUCKET_NAME",
         "AWS_BUCKET_URL",
         "AWS_CLOUDFRONT_DOMAIN",
-        "TOSS_SECRET_KEY"
+        "TOSS_SECRET_KEY",
+        "QR_SIGNIN_KEY",
+        "GUEST_ID"
       ]
     },
     "lint": {

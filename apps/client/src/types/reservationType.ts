@@ -17,6 +17,7 @@ export interface ReservationInfoItemDataType {
   entryTime: string;
   exitTime: string;
   vehicleNumber: string;
+  reservationCode: string;
 }
 
 //

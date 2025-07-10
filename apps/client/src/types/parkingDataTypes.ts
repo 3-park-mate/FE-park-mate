@@ -5,7 +5,6 @@ import DCComboIcon from '@repo/ui/components/icon/DCComboIcon';
 import { ParkingLotSimpleInfoType } from './mapDataTypes';
 
 export interface ParkingLocationDataType {
-  parkingLotUuid: string;
   parkingLotName: string;
   parkingLotDistance?: number;
   parkingSpotName: string;

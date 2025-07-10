@@ -42,7 +42,6 @@ export default function ReservationDetail({
   return (
     <PaddedSection className="space-y-6 py-5">
       <DetailInfo
-        reservationCode={reservationData.reservationCode}
         parkingLotName={reservationData.parkingLotName}
         status={reservationData.status}
         thumbnailUrl={overviewData.thumbnailUrl}

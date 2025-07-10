@@ -47,6 +47,7 @@ export function useInfiniteScroll<T, CursorType = string | number>({
 
   useEffect(() => {
     loadMoreItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
