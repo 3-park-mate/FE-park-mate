@@ -30,7 +30,7 @@ export default function TossPaymentWidget({
   const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
   const customerKey = userUuid;
 
-  const [amount, setAmount] = useState<Amount>({
+  const [amount] = useState<Amount>({
     currency: 'KRW',
     value: paymentAmount,
   });

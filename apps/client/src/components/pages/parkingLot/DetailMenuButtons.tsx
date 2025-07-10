@@ -8,14 +8,12 @@ import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 import { useFavoriteStatus } from '@/hooks/useFavoriteStatus';
 
 export default function DetailMenuButtons({
-  hostUuid,
   parkingLotUuid,
   like,
   dislike,
   baseFee,
   baseIntervalMinutes,
 }: {
-  hostUuid: string;
   parkingLotUuid: string;
   like: number;
   dislike: number;

@@ -62,7 +62,6 @@ export default async function page({
           baseIntervalMinutes={operationData?.baseIntervalMinutes}
         />
         <DetailMenuButtons
-          hostUuid={parkingLotData.hostUuid}
           parkingLotUuid={parkingLotUuid}
           like={parkingLotData.likeCount}
           dislike={parkingLotData.dislikeCount}

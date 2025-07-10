@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       'park-mate-bucket.s3.ap-northeast-2.amazonaws.com',
     ],
   },
+  compiler: {
+    removeConsole: true,
+  },
 };
 
 export default nextConfig;

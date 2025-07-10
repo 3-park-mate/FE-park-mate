@@ -4,12 +4,10 @@ import { CommonBadge } from '@repo/ui/components/common/CommonLayouts';
 import Image from 'next/image';
 
 export default function DetailInfo({
-  reservationCode,
   parkingLotName,
   status,
   thumbnailUrl,
 }: {
-  reservationCode: string;
   parkingLotName: string;
   status: ReservationStatus;
   thumbnailUrl: string;
