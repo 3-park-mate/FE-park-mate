@@ -1,11 +1,9 @@
-import { chatPreviewItemDummyData } from '@/data/chatDatas';
-import ChatPreviewSection from '@/components/pages/chat/chat-list/ChatPreviewSection';
+import ServicePrepareAlert from '@/components/pages/chat/chat-list/ServicePrepareAlert';
 
 export default function page() {
-  const chatPreviewItems = chatPreviewItemDummyData;
   return (
     <main>
-      <ChatPreviewSection chatPreviewItems={chatPreviewItems} />
+      <ServicePrepareAlert />
     </main>
   );
 }
