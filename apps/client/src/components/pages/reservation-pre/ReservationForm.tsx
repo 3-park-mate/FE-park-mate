@@ -6,8 +6,9 @@ import SelectScheduleSection from './check-availability/SelectScheduleSection';
 import CheckAvailableSpotsSheet from './check-availability/CheckAvailableSpotsSheet';
 import { useState } from 'react';
 import ReservationConfirmSheet from './ReservationConfirmSheet';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { reserviationPreCreate } from '@/actions/reservation/reservation-service';
+import { useRouter } from 'next/navigation';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
 export default function ReservationForm({
   parkingLotUuid,
@@ -16,6 +17,7 @@ export default function ReservationForm({
   parkingLotUuid?: string;
   parkingLotData: ParkingLotResponseDataType;
 }) {
+  const router = useRouter();
   const methods = useForm<CreateReservationRequestType>({
     mode: 'onSubmit',
     defaultValues: {
@@ -32,7 +34,9 @@ export default function ReservationForm({
         alert('예약에 실패했습니다. 다시 시도해주세요.');
         return;
       }
-      console.log('저장되었습니다.');
+      router.push(
+        `/payment/reservation?reservationCode=${res.data.reservationCode}`
+      );
     } catch (error) {
       console.error('예약 중 오류 발생:', error);
       alert('시스템 오류가 발생했습니다. 나중에 다시 시도해주세요.');

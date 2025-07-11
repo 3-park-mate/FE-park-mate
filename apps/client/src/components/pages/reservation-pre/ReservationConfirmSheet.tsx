@@ -6,15 +6,16 @@ import {
   SheetDescription,
   SheetTitle,
 } from '@repo/ui/components/base/sheet';
-import { Input } from '@repo/ui/components/base/input';
 import { useFormContext } from 'react-hook-form';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
-import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 import { HeadingWithDesc } from '@repo/ui/components/common/CommonLayouts';
 import { useEffect, useRef } from 'react';
 import ReservationSummaryCard from './ReservationSummaryCard';
-import ReservationSubmitButton from './ReservationSubmitButton';
+import ReservationSheetButton from './check-availability/ReservationSheetButton';
+import { ParkingLotResponseDataType } from '@/types/parkingDataTypes';
 
+import { useGetUserVehicles } from '@/hooks/useGetUserVehicles';
+import SelectVehicleNumber from './SelectVehicleNumber';
 export default function ConfirmReservationSheet({
   parkingLotData,
   open,
@@ -26,12 +27,15 @@ export default function ConfirmReservationSheet({
   onOpenChange: (value: boolean) => void;
   onSubmit: () => void;
 }) {
-  const { register, watch, getValues } =
-    useFormContext<CreateReservationRequestType>();
+  const { watch, getValues } = useFormContext<CreateReservationRequestType>();
+
   const endRef = useRef<HTMLDivElement | null>(null);
   const entryTime = watch('entryTime');
   const exitTime = watch('exitTime');
+  const vehicleNumber = watch('vehicleNumber');
+
   const parkingSpotType = watch('parkingSpotType');
+  const { vehicles } = useGetUserVehicles();
 
   useEffect(() => {
     if (open) {
@@ -40,7 +44,7 @@ export default function ConfirmReservationSheet({
       }, 100);
       return () => clearTimeout(timeout);
     }
-  }, [open]);
+  }, [open, vehicleNumber]);
 
   if (!open || !entryTime || !exitTime || !parkingSpotType) {
     return null;
@@ -63,16 +67,15 @@ export default function ConfirmReservationSheet({
             parkingLotData={parkingLotData}
           />
           {/* 드롭다운으로 변경 + 내 차량 조회 연결 */}
-          <div className="my-8 space-y-3">
-            <label className="block text-xl font-medium">차량 번호</label>
-            <Input
-              placeholder="예: 12가 3456"
-              {...register('carNumber', { required: true })}
-            />
-          </div>
+          <SelectVehicleNumber vehicles={vehicles} />
           <div ref={endRef} />
         </section>
-        <ReservationSubmitButton onSubmit={onSubmit} />
+        <ReservationSheetButton
+          type="submit"
+          onClick={onSubmit}
+          label="결제하기"
+          className="px-10 text-xl"
+        />
         <SheetDescription />
       </SheetContent>
     </Sheet>

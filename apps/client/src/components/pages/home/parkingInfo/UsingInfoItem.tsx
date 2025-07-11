@@ -38,7 +38,6 @@ export default function UsingInfoItem({
         vehicleNumber={vehicleNumber}
       />
       <ParkingLocation
-        parkingLotUuid={parkingLotUuid}
         parkingLotName={parkingLotName}
         parkingSpotName={parkingSpotName}
         vehicleNumber={vehicleNumber}

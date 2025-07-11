@@ -54,7 +54,8 @@ export interface CreateReservationRequestType {
   parkingSpotType: ParkingSpotTypeWithEV;
   entryTime: string;
   exitTime: string;
-  carNumber: string;
+  amount: number;
+  vehicleNumber: string;
 }
 
 export interface CreateReservationResponseType {

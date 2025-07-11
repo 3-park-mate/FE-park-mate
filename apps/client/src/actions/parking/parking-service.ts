@@ -318,3 +318,40 @@ export async function getParkingSearchDatas({
     };
   }
 }
+
+export async function getCaculatedTotalAmount({
+  parkingLotUuid,
+  startDateTime,
+  endDateTime,
+}: {
+  parkingLotUuid: string;
+  startDateTime: string;
+  endDateTime: string;
+}): Promise<ApiResponse<{ amount: number }>> {
+  const query: Record<string, string> = {
+    startDateTime: startDateTime,
+    endDateTime: endDateTime,
+  };
+  console.log(query);
+
+  try {
+    const res = await api.get<CommonResponseType<{ amount: number }>>(
+      PARKING_API_PREFIX,
+      `/${parkingLotUuid}/operations/calculate`,
+      query,
+      {
+        cache: 'no-cache',
+      }
+    );
+
+    return {
+      success: true,
+      data: res.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
+  }
+}

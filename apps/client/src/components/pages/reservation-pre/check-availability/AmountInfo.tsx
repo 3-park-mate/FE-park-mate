@@ -1,27 +1,33 @@
-import React from 'react';
+import DotSpinner from '@repo/ui/components/icon/DotSpinner';
 
 export default function AmountInfo({
-  type = 'default',
-  baseFee,
-  baseIntervalMinutes,
-  totalTime,
+  amount,
+  isLoading,
+  isScheduleSelected,
 }: {
-  type?: 'default' | 'total';
-  baseFee?: number;
-  baseIntervalMinutes?: number;
-  totalTime?: number;
+  amount?: number;
+  isLoading: boolean;
+  isScheduleSelected: boolean;
 }) {
   return (
     <div>
-      {type === 'total' && (
-        <p className="font-semibold">
-          총 결제금액: <span className="text-lg">18,000원</span>
+      {isScheduleSelected ? (
+        <>
+          <p className="font-medium">총 결제금액</p>
+          {isLoading ? (
+            <DotSpinner className="mx-5" />
+          ) : (
+            <p className="text-2xl font-bold">
+              {(amount ?? 0).toLocaleString()}
+              <span className="text-xl font-semibold mx-0.5">원</span>
+            </p>
+          )}
+        </>
+      ) : (
+        <p className="leading-tight">
+          일정을 선택 후<br /> 총 결제 금액을 확인하세요
         </p>
       )}
-      <p className="font-semibold">
-        3,000원
-        <span className="ml-1 text-gray-2 text-sm">/ 30분</span>
-      </p>
     </div>
   );
 }

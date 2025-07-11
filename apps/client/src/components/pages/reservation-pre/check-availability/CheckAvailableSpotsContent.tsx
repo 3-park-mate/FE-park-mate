@@ -1,12 +1,10 @@
 'use client';
 
-import ButtonWrapper from '@/components/common/ButtonWrapper';
 import { SelectParkingSpotCardMap } from '@/data/initialDatas';
 import {
   AvailableSpotsResponseType,
   ParkingSpotTypeWithEV,
 } from '@/types/parkingDataTypes';
-import { Button } from '@repo/ui/components/base/button';
 import {
   RadioGroup,
   RadioGroupItem,
@@ -17,10 +15,10 @@ import {
   SheetTitle,
 } from '@repo/ui/components/base/sheet';
 import { cn } from '@repo/ui/lib/utils';
-import AmountInfo from './AmountInfo';
 import { useFormContext } from 'react-hook-form';
 import { formatDate } from '@/utils/datetimeUtils';
 import { CreateReservationRequestType } from '@/types/reservationDataTypes';
+import ReservationSheetButton from './ReservationSheetButton';
 
 export default function CheckAvailableSpotsContent({
   availableSpots,
@@ -65,6 +63,7 @@ export default function CheckAvailableSpotsContent({
           const parkingSpotType = type as ParkingSpotTypeWithEV;
           const config = SelectParkingSpotCardMap[parkingSpotType];
           const isSelected = selectedType === parkingSpotType;
+          const disable = count === 0;
 
           return (
             <div
@@ -73,7 +72,8 @@ export default function CheckAvailableSpotsContent({
                 'cursor-pointer ring-1 ring-gray-1 rounded-xl px-3 pt-2 pb-3 mb-2 shadow-lg',
                 parkingSpotType === 'EV' && 'col-span-2 mb-6',
                 config.unselectedClass,
-                isSelected ? config.selectedClass : config.unselectedClass
+                isSelected ? config.selectedClass : config.unselectedClass,
+                disable && 'bg-gray-1/70'
               )}
             >
               <RadioGroupItem
@@ -87,26 +87,28 @@ export default function CheckAvailableSpotsContent({
                 className="flex flex-col items-center"
               >
                 <p className="text-sm font-medium">{config.label}</p>
-                <p className="text-lg font-bold leading-5">{count}면</p>
+
+                <p
+                  className={cn(
+                    'text-lg font-bold leading-5',
+                    disable && 'text-gray-2'
+                  )}
+                >
+                  {count}면
+                  {disable && (
+                    <span className="text-sm font-medium"> (예약 불가)</span>
+                  )}
+                </p>
               </label>
             </div>
           );
         })}
       </RadioGroup>
-
-      <ButtonWrapper className="flex justify-between items-center border-t-1 pt-4">
-        <AmountInfo type="total" />
-        <Button
-          type="button"
-          onClick={onClickReserve}
-          className={cn(
-            'px-10 h-12 text-lg',
-            selectedType ? 'bg-primary' : 'bg-gray-1'
-          )}
-        >
-          예약하기
-        </Button>
-      </ButtonWrapper>
+      <ReservationSheetButton
+        onClick={onClickReserve}
+        label="예약하기"
+        className="px-10 text-xl"
+      />
       <SheetDescription />
     </SheetContent>
   );

@@ -31,6 +31,10 @@ export interface ParkingLotSimpleInfoType {
   longitude: number;
   distance: number;
   availableSpotCount: number;
+  rating: number;
+  totalReviews: number;
+  likeCount: number;
+  dislikeCount: number;
 }
 
 export interface ParkingLotSimpleInfoWithRatingType {
