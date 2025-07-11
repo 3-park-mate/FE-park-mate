@@ -293,25 +293,28 @@ export async function getParkingSearchDatas({
   keyword,
 }: {
   size: number;
-  cursor?: number;
+  cursor?: string;
   keyword: string;
 }): Promise<ApiResponse<ParkingSearchResponseDataType>> {
   const query: Record<string, string> = {
     size: size.toString(),
     keyword,
-    ...(cursor !== undefined && { cursor: cursor.toString() }),
+    ...(cursor !== undefined && { cursor }),
   };
   try {
     const res = await api.get<
       CommonResponseType<ParkingSearchResponseDataType>
-    >(READ_API_PREFIX, '', query);
+    >(READ_API_PREFIX, '/search', query);
     console.log(res);
 
     return {
       success: true,
       data: res.data,
     };
-  } catch (_error) {
-    redirect('/error');
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message || '알 수 없는 오류가 발생했습니다.',
+    };
   }
 }
