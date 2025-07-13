@@ -30,7 +30,7 @@ const withOutAuth = async (
   }
 };
 
-const withAuthList = [routes.mypage, routes.favorites];
+const withAuthList = [routes.mypage, routes.favorites, routes.reservation];
 const withOutAuthList = [routes.signIn];
 
 export default async function middleware(request: NextRequest) {
@@ -42,7 +42,7 @@ export default async function middleware(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const callbackUrl = searchParams.get('callbackUrl');
   const { pathname } = request.nextUrl;
-  const isWithAuth = withAuthList.includes(pathname);
+  const isWithAuth = withAuthList.some((route) => pathname.startsWith(route));
   const isWithOutAuth = withOutAuthList.includes(pathname);
 
   if (isWithAuth) return withAuth(request, !!accessToken);

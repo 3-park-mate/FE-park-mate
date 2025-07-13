@@ -3,4 +3,5 @@ export const routes = {
   signup: '/sign-up',
   mypage: '/my-page',
   favorites: '/favorites',
+  reservation: '/reservation-pre',
 };
